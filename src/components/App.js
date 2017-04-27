@@ -38,6 +38,9 @@ function App({ children, routes }) {
 
   return (
     <div style={s.root}>
+      <div id="header">
+        <img src="http://i35.servimg.com/u/f35/17/08/39/22/chaoti11.png" alt="Chaotic Backup" />
+      </div>
       <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
       <Interactive
         as="a"
@@ -49,7 +52,9 @@ function App({ children, routes }) {
         {generateMapMenu()}
       </nav>
       {children}
-      <div style={s.creditLine}>
+      {
+        /*
+        <div style={s.creditLine}>
         <Interactive
           as="a"
           href="http://www.rafaelpedicini.com"
@@ -61,6 +66,8 @@ function App({ children, routes }) {
           Code and concept by <span {...s.childLink}>Rafael Pedicini</span>
         </Interactive>
       </div>
+      */
+      }
     </div>
   );
 }
