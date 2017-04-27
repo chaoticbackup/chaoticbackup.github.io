@@ -27,7 +27,7 @@ function App({ children, routes }) {
             <Interactive
               as={Link}
               {...s.link}
-              to={nextPath(route)}
+              to={'/' + nextPath(route)}
             >{route.mapMenuTitle}</Interactive>
             {(index + 1) < array.length && ' / '}
           </span>

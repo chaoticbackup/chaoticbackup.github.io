@@ -30,14 +30,14 @@ function Home() {
         <Interactive
           as={Link}
           {...s.link}
-          to="/example"
+          to="/portal/example"
         >Example page</Interactive>
       </div>
       <div style={s.pageLinkContainer}>
         <Interactive
           as={Link}
           {...s.link}
-          to="/example/two-deep?field1=foo&field2=bar#boom!"
+          to="/portal/example/two-deep?field1=foo&field2=bar#boom!"
         >Example two deep with query and hash</Interactive>
       </div>
     </div>

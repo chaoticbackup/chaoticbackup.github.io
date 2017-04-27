@@ -20,7 +20,7 @@ function ExampleComponent({ children }) {
           <Interactive
             as={Link}
             {...s.link}
-            to="/example/two-deep?field1=foo&field2=bar#boom!"
+            to="/portal/example/two-deep?field1=foo&field2=bar#boom!"
           >Example two deep with query and hash</Interactive>
         </div>
       }

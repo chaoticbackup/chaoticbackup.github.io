@@ -36,7 +36,7 @@ function ExampleTwoDeepComponent({ location }) {
       <div style={s.lineContainer}>
         <Interactive
           as={Link}
-          to={`/example/two-deep${queryString}${hashFragment}`}
+          to={`/portal/example/two-deep${queryString}${hashFragment}`}
           {...s.link}
         >{linkText}</Interactive>
       </div>

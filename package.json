@@ -1,15 +1,15 @@
 {
-  "name": "spa-github-pages",
-  "version": "4.0.0",
-  "description": "Single Page Apps for GitHub Pages",
+  "name": "chaoticbackup-portal",
+  "version": "0.0.1",
+  "description": "Chaotic Backup Portal to Perim",
   "scripts": {
     "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback --progress"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafrex/spa-github-pages.git"
+    "url": "git+https://github.com/chaoticbackup/portal.git"
   },
-  "author": "Rafael Pedicini <code@rafrex.com>",
+  "author": "Danude Sandstorm",
   "license": "MIT",
   "dependencies": {
     "react": "^15.4.1",
