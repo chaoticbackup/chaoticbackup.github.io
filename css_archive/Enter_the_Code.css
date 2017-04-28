@@ -1,0 +1,190 @@
+
+/*-------------- Enter The Code --------------*/
+/*------------------------------------------------------*/
+/*-------------- Promotions --------------*/
+.adjust-promo-btn{float:right; margin-top:0;}
+.promotions-wrap{
+  width:645px;
+  background-color:#121212;
+  float:left; clear:both;
+}
+.promo-top-left{
+  width:60%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-top-left.jpg) top left no-repeat;
+  float:left;
+}
+.promo-top-left-repeat-x{
+  width:90%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-top-repeat-x.jpg) top right no-repeat;
+  float:right; clear:both;
+}
+.promo-top-right{
+  width:40%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-top-right.jpg) top right no-repeat;
+  float:right;
+}
+.promo-top-right-repeat-x{
+  width:90%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-top-repeat-x.jpg) top left no-repeat;
+  float:left; clear:both;
+}
+.promo-left-repeat-y{
+  width:645px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-left-repeat-y.jpg) top left repeat-y;
+  float:left; clear:both;
+}
+.promo-left-repeat-y2{
+  width:100%;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-left-repeat-y.jpg) top left repeat-y;
+  float:left; clear:both;
+}
+.promo-right-repeat-y{
+  width:645px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-right-repeat-y.jpg) top right repeat-y;
+  float:left; clear:both;
+}
+.promo-right-repeat-y2{
+  width:100%;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-right-repeat-y.jpg) top right repeat-y;
+  float:left; clear:both;
+}
+.promo-btm-left{
+  width:60%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-btm-left.jpg) top left no-repeat;
+  float:left;
+}
+.promo-btm-left-repeat-x{
+  width:90%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-btm-repeat-x.jpg) top right no-repeat;
+  float:right; clear:both;
+}
+.promo-btm-right{
+  width:40%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-btm-right.jpg) top right no-repeat;
+  float:right;
+}
+.promo-btm-right-repeat-x{
+  width:90%; height:27px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/promo-btm-repeat-x.jpg) top left no-repeat;
+  float:left; clear:both;
+}
+/*-------------- Population GridView --------------*/
+.enterTheCode-grid{
+  width:645px;
+  float:left; clear:both;
+}
+.enterTheCode-content-wrap{
+  width:100%;
+  margin-left:8px;
+  padding-top:1px;
+  float:left; clear:both;
+}
+.enterTheCode-upload{
+  width:86px; height:28px;
+  line-height:28px;
+  float:left;
+}
+.enterTheCode-gridview-content-wrap{
+  width:645px;
+  float:left; clear:both;
+}
+.subContent-etc-headerWrap{
+  width:615px; height:28px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left;
+}
+.subContent-etc-contentWrap{
+  width:615px;
+  float:right;
+}
+.upload-cards{
+  width:80px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.upload-cards2{width:79px; height:28px; line-height:28px; float:left;}
+
+.sort-enterTheCode-header6 {color:#FFFFFF; width: 85px; height: 28px; background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting3.jpg) -560px 0; margin: 0; padding: 0; position: relative; float: left;}
+.sort-enterTheCode-header6 div {color:#FFFFFF; margin: 0; padding: 0; list-style: none; position: absolute; top: 0;}
+.sort-enterTheCode-header6 div span { margin-left:7px;}
+.sort-enterTheCode-header6 div, .sort-enterTheCode-header6 a {color:#FFFFFF; height: 28px; display: block; left: 0; width: 85px; line-height: 28px; text-decoration:none; cursor:default;}
+
+.enterTheCode-slider-header {width:646px; cursor:pointer;}
+.enterTheCode-slider-content {overflow:hidden; background-color:#000000;}
+.enterTheCode-slider-content-wrap {width:646px; float:left;}
+.enterTheCode-subgrid-indent{width:31px; float:left;}
+/*-------------- E.T.C. Pod --------------*/
+.etc-wrap{
+  width:258px; margin:0 auto;
+}
+.etc-textfield{
+  width:100%; height:40px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/enter-the-code-textField.jpg) top left no-repeat;
+  float:left; clear:both;
+}
+.etc-enter1{margin-left:45px; float:left;}
+.etc-enter2{margin-left:15px; float:left;}
+
+.etc-textfields{
+  width:54px; height:13px;
+  margin-top:13px;
+  background:transparent;
+  border:none;
+}
+.verify-adjust{
+  margin-left:35%; margin-top:5px; text-align:center; clear:both;
+}
+.verify-etc{
+  width:100%; height:32px; line-height:32px; text-align:center;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/verify-btn-bkgrnd.jpg) top left repeat-x;
+  float:left; clear:both;
+}
+.verify-etc2{
+  width:100%; text-align:center;
+  font:12px/32px Verdana, Arial, Helvetica, sans-serif;
+  font-style:italic; font-weight:bold;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/verify-btn-bkgrnd.jpg) top left repeat;
+  float:left; clear:both;
+}
+.etc-checkbox-label{
+  cursor:pointer; line-height:22px;
+}
+.etc-card-placement{
+  width:100%; height:354px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/etc-card.jpg) center no-repeat;
+  float:left; clear:both;
+  vertical-align:middle;
+  text-align:center;
+}
+.etc-nav{
+  width:645px; height:37px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/trade-nav-bkgrnd.jpg);
+  background-position:left top;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.etc-capsules{
+  height:31px;
+  margin:0 auto;
+  margin-top:6px;
+  text-align:right;
+  margin-right:10px;
+  margin-left:-5px;
+  float:right;
+}
+.etc-capsules2{
+  height:31px;
+  margin:0 auto;
+  margin-top:6px;
+  text-align:right;
+  margin-right:10px;
+  float:left;
+}
+.etc-gridview-header-wrap{ width:645px; float:left; clear:both;}
+.etc-content-wrap2{
+  width:645px;
+  margin-left:10px;
+  float:left; clear:both;
+}

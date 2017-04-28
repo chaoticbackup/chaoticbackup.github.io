@@ -1,0 +1,430 @@
+
+/*-------------- Army Builder --------------*/
+/*------------------------------------------------------*/
+/*-------------- Structural Framework --------------*/
+.top-text{line-height:24px;}
+.top-links{line-height:31px;}
+.army-nav-wrap{width:73px; float:left;}
+.builder-pod-wrap{width:852px; float:left;}
+.army-bulid-wrap{width:835px; margin:0 auto;}
+.army-builder-header{margin-left:-340px;}
+.army-stage{
+  width:332px; height:390px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-stage-bkgrnd.jpg) top left no-repeat;
+  float:left;
+}
+.army-bulid-footer{
+  width:100%; height:38px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-footer.jpg) top left repeat-x;
+}
+.new-army-window-wrap{
+  width:500px;
+  position:absolute;
+  top:400px; left:-250px;
+  margin-left:50%;
+  margin-right:50%;
+  z-index:999;
+}
+.remove-army-window-wrap{
+  width:400px;
+  position:absolute;
+  top:400px; left:-200px;
+  margin-left:50%;
+  margin-right:50%;
+  z-index:999;
+}
+.army-list{
+  width:265px; height:368px; color:#FFFFFF;
+  background-color:#151515;
+  margin:10px 8px 12px 8px; overflow:auto;
+  float:left; clear:both;
+}
+.selectArmy-btn-active{height:23px; line-height:23px; width:247px; background:transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/select-army-btn-hover.jpg) top left repeat-x; color:#FFFFFF; text-decoration:none; padding:0; clear:both; margin:0 auto;}
+.selectArmy-btn-active div, .selectArmy-btn-active a{height: 23px; line-height:23px; width:247px; display: block; left: 0; color:#FFFFFF; text-decoration:none;}
+
+.selectArmy-btn{width:247px; height:23px; background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/select-army-btn.jpg); background-position:top left; background-repeat:repeat-x; padding:0; clear:both; margin:0 auto;}
+.selectArmy-btn div span { text-decoration:none;}
+.selectArmy-btn div, .selectArmy-btn a {height: 23px; line-height:23px; display: block; left: 0; width:247px; color:#FFFFFF; text-decoration:none;}
+.selectArmy-btn div a:hover{background:transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/select-army-btn-hover.jpg) top left repeat-x; color:#FFFFFF; text-decoration:none;}
+/*-------------- Nested Pod --------------*/
+.army-pod-content{
+  width:100%;
+  background-color:#151515;
+  float:left; clear:both;
+}
+.army-pod-top-wrap{
+  width:100%; height:42px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/pod-top-right-repeat-x.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.army-pod-top-right-repeat-x{
+  width:60%; height:42px; line-height:42px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/pod-top-right-repeat-x.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:right; margin-left:-20px;
+}
+.army-pod-top-left-repeat-x{
+  width:40%; height:42px; line-height:42px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/pod-top-right-repeat-x.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; margin-right:-20px;
+}
+.army-pod-top-right{
+  width:100%; height:42px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/pod-top-right.jpg);
+  background-position:top right;
+  background-repeat:no-repeat;
+}
+.army-pod-top-left{
+  width:100%; height:42px; line-height:38px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-pod-top-left.jpg);
+  background-position:top left;
+  background-repeat:no-repeat;
+}
+.army-pod-top-center-divide{
+  width:100%; height:42px; line-height:42px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/pod-top-center-divide.jpg);
+  background-position:top left;
+  background-repeat:no-repeat;
+  margin-left:-1px;
+  float:left; clear:both;
+}
+/*-------------- New Army --------------*/
+.army-newCopy{
+  height: 22px; margin:17px 10px 12px 0;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/confirm-cancel-addWanted-repeat-x.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:right;
+}
+.army-newCopy div div {
+  height: 22px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/newArmyBtn-left.jpg);
+  background-position:top left;
+  background-repeat:no-repeat;
+}
+.army-newCopy div div div {
+  height: 22px; text-align:center; text-decoration:none;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/newArmyBtn-right.jpg);
+  background-position:top right;
+  background-repeat:no-repeat;
+}
+  .army-newCopy div:hover {
+    height: 22px;
+    background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/confirm-cancel-addWanted-repeat-x-hover.jpg);
+    background-position:top left;
+    background-repeat:repeat-x;
+    float:left;
+  }
+  .army-newCopy div div:hover {
+    height: 22px;
+    background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/newArmyBtn-left-hover.jpg);
+    background-position:top left;
+    background-repeat:no-repeat;
+  }
+  .army-newCopy div div div:hover {
+    height: 22px;
+    background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/newArmyBtn-right-hover.jpg);
+    background-position:top right;
+    background-repeat:no-repeat;
+  }
+.army-newCopy-btn {width:100%; height: 22px; float:left; clear:both;}
+.army-newCopy-btn div, .army-newCopy-btn a {color:#FFFFFF; height: 22px; display: block; line-height:22px; text-decoration:none;}
+.army-newCopy-btn div span { padding:0 10px 0 10px;}
+/*-------------- Cards --------------*/
+.cards-pad2{
+  margin:15px 9px 15px 12px;
+  float:left; clear:both;
+}
+.stagedCards-pad{
+  width:302px;
+  margin:0 auto; margin-top:15px;
+  float:right; clear:both;
+}
+.enabled-cards{
+  width:50px; height:70px;
+  margin:0 2px 2px 0;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/card-light.gif) top left no-repeat;
+  float:left;
+}
+.dead-cards{
+  width:50px; height:70px;
+  margin:0 2px 2px 0;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/card-dark.gif) top left no-repeat;
+  float:left;
+}
+.army-cards-bkgrnd-repeat-y{
+  width:281px; height:390px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cards-bkgrnd-repeat-y.jpg);
+  background-position:top left;
+  background-repeat:repeat-y;
+  float:left;
+}
+.army-cards-bkgrnd-top{
+  width:281px; height:390px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cards-bkgrnd-top.jpg);
+  background-position:top left;
+  background-repeat:no-repeat;
+  float:left;
+}
+.army-cards-bkgrnd-btm{
+  width:281px; height:390px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cards-bkgrnd-btm.jpg);
+  background-position:bottom left;
+  background-repeat:no-repeat;
+  float:left;
+}
+.enabled-cards-hover{width:50px; height:70px; background-position:top left; background-repeat:no-repeat; margin:0 2px 2px 0; float:left;}
+.enabled-cards-hover div span { text-decoration:none;}
+.enabled-cards-hover div, .enabled-cards-hover a {height: 70px; display: block; left: 0; width: 52px; text-decoration:none;}
+.enabled-cards-hover div a:hover{background:transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/card-overlay.gif) 0 0 no-repeat; text-decoration:none; z-index:6;}
+
+.enabled-cards-hover2{width:50px; height:70px; background-position:top left; background-repeat:no-repeat; margin:0 10px 10px 0; float:left;}
+.enabled-cards-hover2 div span { text-decoration:none;}
+.enabled-cards-hover2 div, .enabled-cards-hover2 a {height: 70px; display: block; left: 0; width: 52px; text-decoration:none;}
+.enabled-cards-hover2 div a:hover{background:transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/card-overlay.gif) 0 0 no-repeat; text-decoration:none; z-index:6;}
+
+.dead-cards2{
+  width:50px; height:70px;
+  margin:0 10px 10px 0;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/card-dark.gif) top left no-repeat;
+  float:left;
+}
+.army-full-card{
+  margin:18px 9px 15px 15px;
+  float:left; clear:both;
+}
+.army-card-placement{
+  width:350px; height:350px;
+  margin:0 auto;
+  float:left;
+}
+.army-card-placement2{
+  width:250px; height:350px;
+  margin:0 auto;
+  clear:both;
+}
+/*-------------- Army Info --------------*/
+.info-pad{
+  margin:10px 9px 0 8px;
+  float:left; clear:both;
+}
+.army-info-heading1{
+  width:204px; height:38px; line-height:38px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-heading1.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.army-info-heading-pad{
+  margin:5px; height:28px; line-height:28px;
+  font:15px/28px Arial, Helvetica, sans-serif bold;
+  float:left;
+}
+.army-question-pad{
+  width:28px;
+  height:28px; line-height:28px;
+  margin:5px; float:right;
+}
+.army-help-question{
+  width:19px; height:19px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-question.gif);
+  background-position:center;
+  background-repeat:no-repeat;
+  margin-top:5px;
+}
+.army-help-question div, .army-help-question a {height: 19px; display: block; left: 0; width: 19px; text-decoration:none; float:left;}
+.army-info-content1{
+  width:204px; height:38px; line-height:38px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-content1.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.army-info-heading2{
+  width:204px; height:38px; line-height:38px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-heading2.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.army-info-content2-top{
+  width:204px; height:217px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-content2-top.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.army-info-content2-top2{
+  width:204px; height:293px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-content2-top.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.army-info-base{
+  width:220px; height:39px; margin-left:1px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-subBtm.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+}
+.army-info-bkgrnd-repeat-y{
+  width:220px; height:390px; margin-left:1px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-repeat-y.jpg);
+  background-position:top left;
+  background-repeat:repeat-y;
+  float:left;
+}
+.army-info-bkgrnd-top{
+  width:220px; height:390px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-top.jpg);
+  background-position:top left;
+  background-repeat:no-repeat;
+  float:left;
+}
+.army-info-bkgrnd-btm{
+  width:220px; height:390px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-info-btm.jpg);
+  background-position:bottom left;
+  background-repeat:no-repeat;
+  float:left;
+}
+.army-info-help{
+  height: 22px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-help-repeat-x.jpg);
+  background-position:top left;
+  background-repeat:repeat-x;
+  float:right;
+}
+.army-info-help div div {
+  height: 22px;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-help-left.jpg);
+  background-position:top left;
+  background-repeat:no-repeat;
+}
+.army-info-help div div div {
+  height: 22px; text-align:center; text-decoration:none;
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-help-right.jpg);
+  background-position:top right;
+  background-repeat:no-repeat;
+}
+  .army-info-help div:hover {
+    height: 22px;
+    background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-help-repeat-x-hover.jpg);
+    background-position:top left;
+    background-repeat:repeat-x;
+    float:left;
+  }
+  .army-info-help div div:hover {
+    height: 22px;
+    background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-help-left-hover.jpg);
+    background-position:top left;
+    background-repeat:no-repeat;
+  }
+  .army-info-help div div div:hover {
+    height: 22px;
+    background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-help-right-hover.jpg);
+    background-position:top right;
+    background-repeat:no-repeat;
+  }
+.army-info-help-btn {width:100%; height: 22px; float:left; clear:both;}
+.army-info-help-btn div, .army-info-help-btn a {color:#FFFFFF; height: 22px; display: block; line-height:22px; text-decoration:none;}
+.army-info-help-btn div span { padding:0 5px 0 5px;}
+.selectArmy-infoLabels{ font:11px Arial, Helvetica, sans-serif bold;}
+/*-------------- Sprite Nav --------------*/
+.army-00-active{background:transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px 0 no-repeat; color:#FFFFFF; text-decoration:none;}
+.army-00{width:73px; height:65px; background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg); background-position:top left; background-repeat:no-repeat; margin:0; padding:0;  float:left; clear:both;}
+.army-00 div span { text-decoration:none;}
+.army-00 div, .army-00 a {height: 65px; line-height:65px; display: block; left: 0; width: 73px; text-decoration:none;}
+.army-00 div a:hover{background:transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px 0 no-repeat; color:#FFFFFF; text-decoration:none;}
+.btn-txt{float:right; margin-right:10px; margin-top:15px;}
+
+.adjust-army-sprite-txt{margin-top:-66px;}
+#army-nav {
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) 0 -65px no-repeat;
+  width:73px; /* Width of buttons, not entire image (or half of entire image) */
+  height:388px;  /* Height of entire image */
+  margin:0 auto;
+  padding:0; float:left; clear:both;
+}
+#army-nav li { float:left; list-style:none; position:relative; }
+#army-nav li, #army-nav a {
+  height:78px; line-height:78px;  /* Each button must have the same height, define it here */
+  font-size:10px; color:#FFFFFF; text-decoration:none;
+  padding:0; display:block;
+}
+/* margin-top to set where the nav should begin */
+#army-01, #army-02, #army-03, #army-04, #army-05{ margin:0; width:73px;}
+
+#army-01 a:hover { background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -65px no-repeat; color:#FFFFFF; text-decoration:none; cursor:pointer; }
+#army-02 a:hover { background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -143px no-repeat; color:#FFFFFF; text-decoration:none; cursor:pointer; }
+#army-03 a:hover { background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -221px no-repeat; color:#FFFFFF; text-decoration:none; cursor:pointer; }
+#army-04 a:hover { background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -299px no-repeat; color:#FFFFFF; text-decoration:none; cursor:pointer; }
+#army-05 a:hover { background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -377px no-repeat; color:#FFFFFF; text-decoration:none; cursor:pointer; }
+
+#army-01-active{ width:73px; background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -65px no-repeat; color:#FFFFFF; text-decoration:none;}
+#army-02-active { width:73px; background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -143px no-repeat; color:#FFFFFF; text-decoration:none; }
+#army-03-active { width:73px; background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -221px no-repeat; color:#FFFFFF; text-decoration:none; }
+#army-04-active { width:73px; background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -299px no-repeat; color:#FFFFFF; text-decoration:none; }
+#army-05-active { width:73px; background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-sprite-nav.jpg) -73px -377px no-repeat; color:#FFFFFF; text-decoration:none; }
+/*-------------- Move / Remove Buttons --------------*/
+.removeBtn{
+  width:18px; height:18px;
+  position:relative; top:-16px; left:0;
+  margin-left:-4px; z-index:7;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/remove.gif) top left no-repeat;
+}
+.removeBtn2{
+  width:18px; height:18px;
+  position:relative; top:54px; left:0;
+  margin-left:-65px; z-index:7;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/remove.gif) bottom left no-repeat;
+  float:left;
+}
+.moveBtn{
+  width:18px; height:18px;
+  position:relative; top:-64px; left:0px; margin-left:-4px; z-index:7;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/move.gif) top left no-repeat;
+}
+.moveGroupBtn{
+  width:27px; height:18px;
+  position:relative; top:-112px; left:0px; margin-left:-4px; z-index:7;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/move-group.gif) top left no-repeat;
+}
+/*-------------- Army Layout --------------*/
+.army-card-shell{
+  width:52px; height:72px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-backCard-border.gif) top left no-repeat;
+  float:left;
+}
+.army-card-shell2{
+  width:52px; height:72px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/army-foreCard-border.gif) top left no-repeat;
+  margin-top:15px; margin-left:-65px;
+  float:left;
+}
+.place-armyCard{
+  width:50px; height:70px;
+  margin:1px;
+}
+.army-card-shell-highlighted{
+  width:50px; height:70px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/card-overlay-enabled.png) top left no-repeat;
+  margin-top:15px; margin-left:-65px;
+  float:left;
+}
+.nextSetRight{margin-right:22px;}
+.army-row1-margins{margin-left:65px; margin-top:0;}
+.army-row2-margins{margin-left:100px;}
+.army-row3-margins{margin-left:135px;}
+
+.cancel-armyAction{
+  width:50px; height:50px;
+  position:relative; top:338px; left:280px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cancel.png) top left no-repeat;
+}

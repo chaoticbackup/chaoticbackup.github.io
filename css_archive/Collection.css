@@ -1,0 +1,257 @@
+/*-------------- Collection --------------*/
+/*------------------------------------------------------*/
+/*-------------- Save/noSave Button --------------*/
+.saveBtn {
+  width:35px; height:35px; border:none; outline:none;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/save-sprite.png) 0 0 no-repeat;
+  margin:0; padding:0; text-decoration:none;
+  float:right;
+  cursor: pointer;
+}
+.saveBtn a, .saveBtn span {
+  width:35px; height:35px;
+}
+.saveBtn span{
+  display:block;
+}
+  .saveBtn a span:hover {
+    width:35px; height:35px; border:none; outline:none;
+    background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/save-sprite.png) 0 -35px no-repeat;
+    margin:0; padding:0; text-decoration:none;
+    cursor: pointer;
+  }
+.noSaveBtn {
+  width:35px; height:35px; border:none; outline:none;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/save-sprite.png) 0 -70px no-repeat;
+  margin:0; padding:0; text-decoration:none;
+  float:right;
+  cursor: pointer;
+}
+.noSaveBtn a, .noSaveBtn span {
+  width:35px; height:35px;
+}
+.noSaveBtn span{
+  display:block;
+}
+  .noSaveBtn a span:hover {
+    width:35px; height:35px; border:none; outline:none;
+    background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/save-sprite.png) 0 -105px no-repeat;
+    margin:0; padding:0; text-decoration:none;
+    cursor: pointer;
+  }
+/*-------------- Switch GridView Sprite --------------*/
+#changeCollectionView {
+  width: 66px; height: 29px;
+  background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/changeView.png);
+  margin:0 auto; padding: 0; position: relative; top: 25px;
+}
+#changeCollectionView span { display: none; }
+#changeCollectionView li {
+  margin: 0; padding: 0; list-style: none;
+  position: absolute; top: 0px;
+}
+#changeCollectionView li, #changeCollectionView a {
+  height: 29px; line-height: 29px;
+  display: block; text-align: right;
+}
+#changeCollectionView-list {left: 0px; width: 33px;}
+#changeCollectionView-card {left: 33px; width: 33px;}
+
+#changeCollectionView-list a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/changeView.png) 0px -29px no-repeat;}
+#changeCollectionView-card a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/changeView.png) -33px -29px no-repeat;}
+/*-------------- Collection CardView (expanded) --------------*/
+.cardview-tab{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:-11px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab2{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:51px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab3{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:113px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab4{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:175px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab5{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:237px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab6{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:299px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab7{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:361px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab8{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:423px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab9{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:485px; margin-top:-95px;
+  clear:both;
+}
+.cardview-tab10{
+  width:76px; height:88px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-tab.gif) 0 0 no-repeat;
+  position:relative; z-index:0; padding-bottom:10px;
+  margin-left:547px; margin-top:-95px;
+  clear:both;
+}
+.cardview-top{
+  width:646px; height:8px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-top.gif) 0 0 no-repeat;
+  position:relative; z-index:0;
+  margin-left:-20px; margin-top:-12px;
+}
+.cardview-surround{
+  width:646px; position:relative; z-index:0; padding-top:5px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-repeat-y.gif) 0 0 repeat-y;
+  margin-left:-20px; margin-top:-5px;
+}
+.cardview-btm{
+  width:646px; position:relative; z-index:0; padding-bottom:5px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/cardView-btm.gif) left bottom no-repeat;
+  padding-bottom:15px; margin-bottom:-8px;
+}
+/*-------------- Collection GridView --------------*/
+.collection-cardName{
+  width:249px; height:28px;
+  line-height:28px;
+  float:left;
+}
+.collection-cardType{
+  width:98px; height:28px;
+  line-height:28px;
+  float:left;
+}
+.collection-cardTribe{
+  width:117px; height:28px;
+  line-height:28px;
+  float:left;
+}
+.collection-cardSet{
+  width:138px; height:28px;
+  line-height:28px;
+  float:left;
+}
+.collection-rarity{
+  width:93px; height:28px;
+  line-height:28px;
+  float:left;
+}
+.expand-collection-sets{
+  width:17px; height:20px; text-align:center; line-height:20px;
+  font-size:14px; font-weight:bold;
+  margin:4px 0 4px 8px; float:left;
+}
+.attackHeader-collection-cardText{
+  width:274px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.attackHeader-collection-cardText2{
+  width:204px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.battleGearHeader-collection-cardText{
+  width:553px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.battleGearHeader-collection-cardText2{
+  width:493px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.mugicHeader-collection-cardText{
+  width:483px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.mugicHeader-collection-cardText2{
+  width:423px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.locationHeader-collection-cardText{
+  width:423px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.locationHeader-collection-cardText2{
+  width:423px; height:28px; line-height:28px;
+  background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/new-trade-subheader-divider.jpg) 0 0 no-repeat;
+  float:left;
+}
+.attack-collection-cardText2{width:273px; height:28px; line-height:28px; float:left;}
+.attack-collection-cardText2-2{width:203px; height:28px; line-height:28px; float:left;}
+.battleGear-collection-cardText2{width:552px; height:28px; line-height:28px; float:left;}
+.battleGear-collection-cardText2-2{width:492px; height:28px; line-height:28px; float:left;}
+.mugic-collection-cardText2{width:482px; height:28px; line-height:28px; float:left;}
+.mugic-collection-cardText2-2{width:422px; height:28px; line-height:28px; float:left;}
+.location-collection-cardText2{width:482px; height:28px; line-height:28px; float:left;}
+.location-collection-cardText2-2{width:422px; height:28px; line-height:28px; float:left;}
+/*-------------- Collection GridView Sorting Header--------------*/
+.sort-collection-header1 {color:#FFFFFF; width: 250px; height: 28px; background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg); margin: 0; padding: 0; position: relative; float: left;}
+.sort-collection-header1 div {color:#FFFFFF; margin: 0; padding: 0; list-style: none; position: absolute; top: 0;}
+.sort-collection-header1 div span { margin-left:7px;}
+.sort-collection-header1 div, .sort-collection-header1 a {color:#FFFFFF; height: 28px; display: block; left: 0; width: 250px; line-height: 28px; text-decoration:none;}
+.sort-collection-header1 div a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) 0 -28px no-repeat; color:#FFFFFF;}
+
+.sort-collection-header2 {color:#FFFFFF; width: 99px; height: 28px; background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -250px 0; margin: 0; padding: 0; position: relative; float: left;}
+.sort-collection-header2 div {color:#FFFFFF; margin: 0; padding: 0; list-style: none; position: absolute; top: 0;}
+.sort-collection-header2 div span { margin-left:7px;}
+.sort-collection-header2 div, .sort-collection-header2 a {color:#FFFFFF; height: 28px; display: block; left: 0; width: 99px; line-height: 28px; text-decoration:none;}
+.sort-collection-header2 div a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -250px -28px no-repeat; color:#FFFFFF;}
+
+.sort-collection-header3 {color:#FFFFFF; width: 118px; height: 28px; background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -349px 0; margin: 0; padding: 0; position: relative; float: left;}
+.sort-collection-header3 div {color:#FFFFFF; margin: 0; padding: 0; list-style: none; position: absolute; top: 0;}
+.sort-collection-header3 div span { margin-left:7px;}
+.sort-collection-header3 div, .sort-collection-header3 a {color:#FFFFFF; height: 28px; display: block; left: 0; width: 118px; line-height: 28px; text-decoration:none;}
+.sort-collection-header3 div a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -349px -28px no-repeat; color:#FFFFFF;}
+
+.sort-collection-header4 {color:#FFFFFF; width: 139px; height: 28px; background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -467px 0; margin: 0; padding: 0; position: relative; float: left;}
+.sort-collection-header4 div {color:#FFFFFF; margin: 0; padding: 0; list-style: none; position: absolute; top: 0;}
+.sort-collection-header4 div span { margin-left:7px;}
+.sort-collection-header4 div, .sort-collection-header4 a {color:#FFFFFF; height: 28px; display: block; left: 0; width: 139px; line-height: 28px; text-decoration:none;}
+.sort-collection-header4 div a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -467px -28px no-repeat; color:#FFFFFF;}
+
+.sort-collection-header5 {color:#FFFFFF; width: 94px; height: 28px; background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -606px 0; margin: 0; padding: 0; position: relative; float: left;}
+.sort-collection-header5 div {color:#FFFFFF; margin: 0; padding: 0; list-style: none; position: absolute; top: 0;}
+.sort-collection-header5 div span { margin-left:7px;}
+.sort-collection-header5 div, .sort-collection-header5 a {color:#FFFFFF; height: 28px; display: block; left: 0; width: 94px; line-height: 28px; text-decoration:none;}
+.sort-collection-header5 div a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/gridview-header-sorting4.jpg) -606px -28px no-repeat; color:#FFFFFF;}
