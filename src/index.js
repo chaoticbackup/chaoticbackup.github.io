@@ -9,14 +9,19 @@ import ExampleComponent from './components/ExampleComponent';
 import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
 
 
+
 const routes = (
-  <Route path="/portal/" mapMenuTitle="Home" component={App}>
-    <IndexRoute component={Home} />
+  <Route path="/" component={App}>
+    <Route path="portal/" mapMenuTitle="Home">
+      <IndexRoute component={Home} />
 
-    <Route path="example" mapMenuTitle="Example" component={ExampleComponent}>
-      <Route path="two-deep" mapMenuTitle="Two Deep" component={ExampleTwoDeepComponent} />
+      <Route path="example" mapMenuTitle="Example" component={ExampleComponent}>
+        <Route path="two-deep" mapMenuTitle="Two Deep" component={ExampleTwoDeepComponent} />
+      </Route>
+
+
+
     </Route>
-
     <Route path="*" mapMenuTitle="Page Not Found" component={PageNotFound} />
   </Route>
 );

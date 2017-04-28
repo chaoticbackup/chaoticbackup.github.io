@@ -27,7 +27,7 @@ function App({ children, routes }) {
             <Interactive
               as={Link}
               {...s.link}
-              to={'/' + nextPath(route)}
+              to={nextPath(route)}
             >{route.mapMenuTitle}</Interactive>
             {(index + 1) < array.length && ' / '}
           </span>
@@ -42,18 +42,19 @@ function App({ children, routes }) {
         <img src="http://i35.servimg.com/u/f35/17/08/39/22/chaoti11.png" alt="Chaotic Backup" />
       </div>
       <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
-      <Interactive
-        as="a"
-        href="https://github.com/rafrex/spa-github-pages"
-        style={s.repoLink}
-        {...s.link}
-      >https://github.com/rafrex/spa-github-pages</Interactive>
+      {/*
+        <Interactive
+          as="a"
+          href="https://github.com/rafrex/spa-github-pages"
+          style={s.repoLink}
+          {...s.link}
+        >https://github.com/rafrex/spa-github-pages</Interactive>
+      */}
       <nav style={s.mapMenu}>
         {generateMapMenu()}
       </nav>
       {children}
-      {
-        /*
+      {/*
         <div style={s.creditLine}>
         <Interactive
           as="a"
@@ -66,8 +67,7 @@ function App({ children, routes }) {
           Code and concept by <span {...s.childLink}>Rafael Pedicini</span>
         </Interactive>
       </div>
-      */
-      }
+      */}
     </div>
   );
 }
