@@ -3,6 +3,7 @@ import style from './style';
 const s = Object.create(style);
 
 s.root = {
+  backgroundColor: '#F0F0F0',
   fontFamily: 'helvetica neue, helvetica, sans-serif',
   fontWeight: '300',
   fontSize: '16px',
