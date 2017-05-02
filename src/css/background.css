@@ -1,0 +1,45 @@
+.fix-pgBkgrnd-repeat-x {
+  width:100%; height:100%;
+  position:fixed; top:0; left:0; z-index:-2;
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/bkgrnd-repeat-x.jpg);
+  background-position: top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+  overflow:none;
+}
+.fix-img-bkgrnd {
+  width:100%; height:100%;
+  position:absolute; top:0; left:0; z-index:-1;
+  background-position: center 0;
+  background-repeat: no-repeat;
+  float:left; clear:both;
+  overflow:none;
+}
+.fix-img-bkgrnd_01 {
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd.jpg);
+  background-position: center 212px;
+}
+.fix-img-bkgrnd_02 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_02.jpg);
+  background-position: center 1px;
+}
+.fix-img-bkgrnd_03 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_03.jpg);
+}
+.fix-img-bkgrnd_04 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_04.jpg);
+}
+.fix-img-bkgrnd_05 {
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_05.jpg);
+}
+.fix-img-bkgrnd_german_01 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_german_01.jpg);
+}
+.pgBkgrnd-repeat-x {
+  width:100%; z-index:0;
+  float:left; clear:both;
+}
+.img-bkgrnd {
+  width:100%; z-index:2;
+  float:left; clear:both;
+}

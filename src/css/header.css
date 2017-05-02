@@ -1,0 +1,182 @@
+/* CSS Document */
+p, div, li {
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 10px; line-height: 14px; color: #FFFFFF;
+}
+
+/*-------------- Structural Framework --------------*/
+/*------------------------------------------------------*/
+/*-------------- Page Shell --------------*/
+.legacy-header {
+   height:170px;
+   margin-top:10px;
+   /*background-color:#494949;*/
+   margin: 0 auto; padding: 0;
+ }
+ .content-wrap {
+   width:975px; z-index:2;
+   margin-left:50%; margin-right:50%;
+   position:absolute; top:0; left:-487px;
+   clear:both;
+ }
+ .header {
+   width: 975px; height: 157px;
+   text-align:center;
+   float: left;
+ }
+.headerSpriteNav-wrap {
+  width:950px;
+  height:170px;
+  margin:0 auto;
+}
+
+/*-------------- Localized Sprite Nav(s) --------------*/
+#unity-sprite {
+  width: 950px; height: 170px;
+  margin: 0; padding: 0;
+  position: relative; top: 0px;
+}
+
+#unity-sprite span { display: none; }
+
+#unity-sprite li {
+  margin: 0; padding: 0; list-style: none;
+  position: absolute; top: 0px;
+}
+#unity-sprite li, #unity-sprite a {
+  height: 120px;
+  display: block;
+  line-height: 48px;
+  text-align: right;
+}
+
+#unity-nav1 {left: 0px; width: 43px;}
+#unity-nav2 {left: 43px; width: 124px;}
+#unity-nav3 {left: 167px; width: 124px;}
+#unity-nav4 {left: 291px; width: 122px;}
+#unity-nav5 {left: 413px; width: 125px;}
+#unity-nav6 {left: 538px; width: 124px;}
+#unity-nav7 {left: 662px; width: 124px;}
+#unity-nav8 {left: 786px; width: 124px;}
+#unity-nav9 {left: 910px; width: 40px;}
+#unity-nav10 {left: 0; width: 222px;}
+
+#unityETC-sprite {
+  width: 222px; height: 22px;
+  position: relative; top:0; padding: 0; margin:0 auto;
+  margin-top:-50px;
+}
+
+#unityETC-sprite span { display: none; }
+
+#unityETC-sprite li {
+  margin: 0; padding: 0; list-style: none;
+  position: absolute; top: 0px;
+}
+
+#unityETC-sprite li, #unityETC-sprite a {
+  height: 22px; line-height: 22px;
+  display: block;
+  text-align: right;
+}
+
+/*--- Sprite Nav (english) ---*/
+#unity-sprite.ENG { background: url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png); }
+
+#unity-nav1.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -910px -170px; background-repeat:no-repeat;}
+#unity-nav10.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -364px -290px; background-repeat:no-repeat;}
+
+#unityETC-sprite.ENG { background: url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -364px -120px no-repeat; }
+
+/*--- Sprite Nav (french) ---*/
+#unity-sprite.FRA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png); }
+
+#unity-nav1.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -910px -170px; background-repeat:no-repeat;}
+
+#unityETC-sprite.FRA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -364px -120px no-repeat; }
+
+#unity-nav10.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -364px -290px; background-repeat:no-repeat;}
+
+/*--- Sprite Nav (german) ---*/
+#unity-sprite.GER { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png); }
+
+#unity-nav1.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -910px -170px; background-repeat:no-repeat;}
+
+#unityETC-sprite.GER { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -364px -120px no-repeat; }
+
+#unity-nav10.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -364px -290px; background-repeat:no-repeat;}
+
+/*--- Sprite Nav (italian) ---*/
+#unity-sprite.ITL { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png); }
+
+#unity-nav1.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -910px -170px; background-repeat:no-repeat;}
+
+#unityETC-sprite.ITL { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -364px -120px no-repeat; }
+
+#unity-nav10.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -364px -290px; background-repeat:no-repeat;}
+
+/*--- Sprite Nav (portuguese) ---*/
+#unity-sprite.PRT { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png); }
+
+#unity-nav1.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -910px -170px; background-repeat:no-repeat;}
+
+#unityETC-sprite.PRT { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -364px -120px no-repeat; }
+
+#unity-nav10.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -364px -290px; background-repeat:no-repeat;}
+
+/*--- Sprite Nav (spanish) ---*/
+#unity-sprite.SPA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png); }
+
+#unity-nav1.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -910px -170px; background-repeat:no-repeat;}
+
+#unityETC-sprite.SPA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -341px -120px no-repeat; }
+
+#unity-nav10.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -341px -290px; background-repeat:no-repeat;}
