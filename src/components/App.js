@@ -80,58 +80,85 @@ function App({ children, routes }) {
       </div>
       <div className="pgBkgrnd-repeat-x">
         <div className="img-bkgrnd">
-        <div className="legacy-header">
           <div className="content-wrap">
-            <div className="header">
-              <div id="nav">
-                <div className="zero-clear-line headerSpriteNav-wrap">
-                  <ul id="unity-sprite" className={language}>
-                    <li id="unity-nav1" className={language}></li>
-                    <li id="unity-nav2" className={language}><a href={ChangePage('collect')}><span>Collect</span></a></li>
-                    <li id="unity-nav3" className={language}><a href={ChangePage('build')}><span>Build</span></a></li>
-                    <li id="unity-nav4" className={language}><a href={ChangePage('trade')}><span>Trade</span></a></li>
-                    <li id="unity-nav5" className={language}><a href={ChangePage('centerOval')}><span>Home</span></a></li>
-                    <li id="unity-nav6" className={language}><a href={ChangePage('forum')}><span>Forums</span></a></li>
-                    <li id="unity-nav7" className={language}><a href={ChangePage('portal')}><span>Portal</span></a></li>
-                    <li id="unity-nav8" className={language}><a href={ChangePage('playNow')}><span>Play</span></a></li>
-                    <li id="unity-nav9" className={language}></li>
-                  </ul>
-                  <ul id="unityETC-sprite" className={language}>
-                    <li id="unity-nav10" className={language}><a href={ChangePage('enterTheCode')}><span>Enter the Code</span></a></li>
-                  </ul>
+            <div className="legacy legacy-header">
+              <div className="header">
+                <div id="nav">
+                  <div className="zero-clear-line headerSpriteNav-wrap">
+                    <ul id="unity-sprite" className={language}>
+                      <li id="unity-nav1" className={language}></li>
+                      <li id="unity-nav2" className={language}><a href={ChangePage('collect')}><span>Collect</span></a></li>
+                      <li id="unity-nav3" className={language}><a href={ChangePage('build')}><span>Build</span></a></li>
+                      <li id="unity-nav4" className={language}><a href={ChangePage('trade')}><span>Trade</span></a></li>
+                      <li id="unity-nav5" className={language}><a href={ChangePage('centerOval')}><span>Home</span></a></li>
+                      <li id="unity-nav6" className={language}><a href={ChangePage('forum')}><span>Forums</span></a></li>
+                      <li id="unity-nav7" className={language}><a href={ChangePage('portal')}><span>Portal</span></a></li>
+                      <li id="unity-nav8" className={language}><a href={ChangePage('playNow')}><span>Play</span></a></li>
+                      <li id="unity-nav9" className={language}></li>
+                    </ul>
+                    <ul id="unityETC-sprite" className={language}>
+                      <li id="unity-nav10" className={language}><a href={ChangePage('enterTheCode')}><span>Enter the Code</span></a></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-          <div style={s.root}>
-            <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
-            {/*
-              <Interactive
-                as="a"
-                href="https://github.com/rafrex/spa-github-pages"
-                style={s.repoLink}
-                {...s.link}
-              >https://github.com/rafrex/spa-github-pages</Interactive>
-            */}
-            <nav style={s.mapMenu}>
-              {generateMapMenu()}
-            </nav>
-            {children}
-            {/*
-              <div style={s.creditLine}>
-              <Interactive
-                as="a"
-                href="http://www.rafaelpedicini.com"
-                interactiveChild
-                focus={{}}
-                touchActive={{}}
-                touchActiveTapOnly
-              >
-                Code and concept by <span {...s.childLink}>Rafael Pedicini</span>
-              </Interactive>
+            <div style={s.root}>
+              <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
+              {/*
+                <Interactive
+                  as="a"
+                  href="https://github.com/rafrex/spa-github-pages"
+                  style={s.repoLink}
+                  {...s.link}
+                >https://github.com/rafrex/spa-github-pages</Interactive>
+              */}
+              <nav style={s.mapMenu}>
+                {generateMapMenu()}
+              </nav>
+              {children}
+              {/*
+                <div style={s.creditLine}>
+                <Interactive
+                  as="a"
+                  href="http://www.rafaelpedicini.com"
+                  interactiveChild
+                  focus={{}}
+                  touchActive={{}}
+                  touchActiveTapOnly
+                >
+                  Code and concept by <span {...s.childLink}>Rafael Pedicini</span>
+                </Interactive>
+              </div>
+              */}
             </div>
-            */}
+            <div style={{height: "150px"}} />
+            <div className="legacy legacy-footer">
+              <div className="footer-wrap">
+                <div className="footer-repeat-x">
+                  <div className="footer-left">
+                    <div className="footer-right">
+                      <div className="footer-text">
+                        <div className="footer-search"></div>
+                        <div className="footer-nav">
+                          <div className="copyright">
+                            ©2008 Chaotic USA Entertainment Group, Inc.
+                            <br />
+                            U.S. Pat 5810666 and 5954332 and other pending patent applications. All Rights Reserved.
+                          </div>
+                        </div>
+                        <div className="footer-language">
+                          <a href="javascript:showLanguageSelection();" className="page-options" title="Change Language">
+                            <img src="http://web.archive.org/web/20130304153151im_/http://chaoticgame.com/Images/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
+                            <br />English (Change Language)
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

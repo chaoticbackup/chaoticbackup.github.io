@@ -1,36 +1,92 @@
-/* CSS Document */
-p, div, li {
+
+/*-------------- Structural Framework --------------*/
+/*------------------------------------------------------*/
+.legacy p, .legacy div, .legacy li {
   font-family:Arial, Helvetica, sans-serif;
   font-size: 10px; line-height: 14px; color: #FFFFFF;
 }
 
-/*-------------- Structural Framework --------------*/
-/*------------------------------------------------------*/
-/*-------------- Page Shell --------------*/
+.content-wrap {
+  z-index:2;
+  position:absolute; top:0;
+  margin-left:50%; margin-right:50%;
+  left:-492px;
+  clear:both;
+}
+
+.content-wrap .legacy {
+  width:975px;
+}
+
+/*-------------- Background --------------*/
+.fix-pgBkgrnd-repeat-x {
+  width:100%; height:100%;
+  position:fixed; top:0; left:0; z-index:-2;
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/bkgrnd-repeat-x.jpg);
+  background-position: top left;
+  background-repeat:repeat-x;
+  float:left; clear:both;
+  overflow:none;
+}
+.fix-img-bkgrnd {
+  width:100%; height:100%;
+  position:absolute; top:0; left:0; z-index:-1;
+  background-position: center 0;
+  background-repeat: no-repeat;
+  float:left; clear:both;
+  overflow:none;
+}
+.fix-img-bkgrnd_01 {
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd.jpg);
+  background-position: center 212px;
+}
+.fix-img-bkgrnd_02 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_02.jpg);
+  background-position: center 1px;
+}
+.fix-img-bkgrnd_03 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_03.jpg);
+}
+.fix-img-bkgrnd_04 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_04.jpg);
+}
+.fix-img-bkgrnd_05 {
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_05.jpg);
+}
+.fix-img-bkgrnd_german_01 {
+  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_german_01.jpg);
+}
+.pgBkgrnd-repeat-x {
+  width:100%; z-index:0;
+  float:left; clear:both;
+}
+.img-bkgrnd {
+  width:100%; z-index:2;
+  float:left; clear:both;
+}
+
+
+/*-------------- Header --------------*/
+
 .legacy-header {
-   height:170px;
-   margin-top:10px;
-   /*background-color:#494949;*/
-   margin: 0 auto; padding: 0;
+  height:200px;
+  margin-top:10px;
+  /*background-color:#494949;*/
+  margin: 0 auto; padding: 0;
  }
- .content-wrap {
-   width:975px; z-index:2;
-   margin-left:50%; margin-right:50%;
-   position:absolute; top:0; left:-487px;
-   clear:both;
- }
- .header {
-   width: 975px; height: 157px;
-   text-align:center;
-   float: left;
- }
+
+.header {
+  width: 975px; height: 157px;
+  text-align:center;
+  float: left;
+}
+
 .headerSpriteNav-wrap {
   width:950px;
   height:170px;
   margin:0 auto;
 }
 
-/*-------------- Localized Sprite Nav(s) --------------*/
 #unity-sprite {
   width: 950px; height: 170px;
   margin: 0; padding: 0;
@@ -180,3 +236,71 @@ p, div, li {
 #unityETC-sprite.SPA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -341px -120px no-repeat; }
 
 #unity-nav10.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) -341px -290px; background-repeat:no-repeat;}
+
+/*-------------- Footer --------------*/
+/*------------------------------------------------------*/
+
+.footer-wrap {
+  max-width: 943px; height:54px;
+  margin: 0 auto;
+  clear: both;
+}
+.footer-repeat-x {
+    width: 100%; height:54px;
+    background-image:url(http://web.archive.org/web/20130304153141im_/http://chaoticgame.com/Images/footer-repeat-x.gif);
+    background-position: left top;
+    background-repeat:repeat-x;
+}
+.footer-left {
+    width: 100%; height:54px;
+    background-image:url(http://web.archive.org/web/20130304153141im_/http://chaoticgame.com/Images/footer-left.gif);
+    background-position: left top;
+    background-repeat:no-repeat;
+}
+.footer-right {
+    width: 100%; height:54px;
+    background-image:url(http://web.archive.org/web/20130304153141im_/http://chaoticgame.com/Images/footer-right.gif);
+    background-position: right top;
+    background-repeat:no-repeat;
+}
+.footer-text  {
+    width:100%; height:54px;
+    margin:0px auto;
+    float:left; clear: both;
+}
+.footer-search  {
+    width:211px; height:52px;
+    color: #FFFFFF; text-align: center;
+    padding-top:2px; float: left;
+}
+.footer-nav  {
+    width:492px; /*height:27px; */line-height:14px;
+    color: #FFFFFF; padding-top:27px; text-align: center;
+    margin:0 6px 0 6px; float:left;
+}
+.footer-nav a:link, .footer-nav a:visited {
+    color:#FFFFFF;
+    text-decoration: underline;
+}
+.footer-nav a:hover, .footer-nav a:active {
+    color:#99ffff;
+    text-decoration: underline;
+}
+.footer-language  {
+    width:205px; height:50px;
+    color: #FFFFFF; text-align: center;
+    padding-top:6px; float: left;
+}
+.copyright {
+/*    width: 955px;*/
+    margin: 0 auto; text-align:center;
+/*    padding:10px;*/
+}
+.copyright a:link, .copyright a:visited {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.copyright a:hover, .copyright a:active {
+    color:#FFFFFF;
+    text-decoration: underline;
+}
