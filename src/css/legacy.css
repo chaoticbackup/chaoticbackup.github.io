@@ -22,7 +22,7 @@
 .fix-pgBkgrnd-repeat-x {
   width:100%; height:100%;
   position:fixed; top:0; left:0; z-index:-2;
-  background-image:url(https://chaoticbackup.github.io/portal/src/img/bkgrnd-repeat-x.jpg);
+  background-image:url(../img/bkgrnd-repeat-x.jpg);
   background-position: top left;
   background-repeat:repeat-x;
   float:left; clear:both;
@@ -37,24 +37,27 @@
   overflow:none;
 }
 .fix-img-bkgrnd_01 {
-  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd.jpg);
+  background-image:url(../img/visual-bkgrnd.jpg);
   background-position: center 212px;
 }
 .fix-img-bkgrnd_02 {
-  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_02.jpg);
+  background-image:url(../img/visual-bkgrnd_02.jpg);
   background-position: center 1px;
 }
 .fix-img-bkgrnd_03 {
-  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_03.jpg);
+  background-image:url(../img/visual-bkgrnd_03.jpg);
 }
 .fix-img-bkgrnd_04 {
-  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_04.jpg);
+  background-image:url(../img/visual-bkgrnd_04.jpg);
 }
 .fix-img-bkgrnd_05 {
-  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_05.jpg);
+  background-image:url(../img/visual-bkgrnd_05.jpg);
+}
+.fix-img-bkgrnd_06 {
+  background-image:url(../img/visual-bkgrnd_06.jpg);
 }
 .fix-img-bkgrnd_german_01 {
-  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_german_01.jpg);
+  background-image:url(../img/visual-bkgrnd_german_01.jpg);
 }
 .pgBkgrnd-repeat-x {
   width:100%; z-index:0;
@@ -137,21 +140,21 @@
 }
 
 /*--- Sprite Nav (English) ---*/
-#unity-sprite.ENG { background: url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png); }
+#unity-sprite.ENG { background: url(../img/unity-sprite-nav.png); }
 
-#unity-nav1.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) 0px -170px; background-repeat:no-repeat;}
-#unity-nav2.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -43px -170px; background-repeat:no-repeat;}
-#unity-nav3.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -167px -170px; background-repeat:no-repeat;}
-#unity-nav4.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -291px -170px; background-repeat:no-repeat;}
-#unity-nav5.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -413px -170px; background-repeat:no-repeat;}
-#unity-nav6.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -538px -170px; background-repeat:no-repeat;}
-#unity-nav7.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -662px -170px; background-repeat:no-repeat;}
-#unity-nav8.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -786px -170px; background-repeat:no-repeat;}
-#unity-nav9.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -910px -170px; background-repeat:no-repeat;}
+#unity-nav1.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -910px -170px; background-repeat:no-repeat;}
 
-#unityETC-sprite.ENG { background: url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -364px -120px no-repeat; }
+#unityETC-sprite.ENG { background: url(../img/unity-sprite-nav.png) -364px -120px no-repeat; }
 
-#unity-nav10.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -364px -290px; background-repeat:no-repeat;}
+#unity-nav10.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -364px -290px; background-repeat:no-repeat;}
 
 /*--- Sprite Nav (French) ---*/
 #unity-sprite.FRA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png); }
@@ -248,19 +251,19 @@
 }
 .footer-repeat-x {
     width: 100%; height:54px;
-    background-image:url(https://chaoticbackup.github.io/portal/src/img/footer-repeat-x.gif);
+    background-image:url(../img/footer-repeat-x.gif);
     background-position: left top;
     background-repeat:repeat-x;
 }
 .footer-left {
     width: 100%; height:54px;
-    background-image:url(https://chaoticbackup.github.io/portal/src/img/footer-left.gif);
+    background-image:url(../img/footer-left.gif);
     background-position: left top;
     background-repeat:no-repeat;
 }
 .footer-right {
     width: 100%; height:54px;
-    background-image:url(https://chaoticbackup.github.io/portal/src/img/footer-right.gif);
+    background-image:url(../img/footer-right.gif);
     background-position: right top;
     background-repeat:no-repeat;
 }

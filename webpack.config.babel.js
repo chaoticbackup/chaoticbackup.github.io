@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import path from 'path';
 
 export default {
   entry: `${__dirname}/src/index.js`,
@@ -16,10 +17,6 @@ export default {
 
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    alias: {
-      css: `${__dirname}/src/css`,
-      img: `${__dirname}/src/img')`,
-    },
   },
 
   plugins: process.argv.indexOf('-p') === -1 ? null : [
