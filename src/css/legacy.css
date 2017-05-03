@@ -41,20 +41,20 @@
   background-position: center 212px;
 }
 .fix-img-bkgrnd_02 {
-  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_02.jpg);
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_02.jpg);
   background-position: center 1px;
 }
 .fix-img-bkgrnd_03 {
-  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_03.jpg);
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_03.jpg);
 }
 .fix-img-bkgrnd_04 {
-  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_04.jpg);
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_04.jpg);
 }
 .fix-img-bkgrnd_05 {
   background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_05.jpg);
 }
 .fix-img-bkgrnd_german_01 {
-  background-image:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/visual-bkgrnd_german_01.jpg);
+  background-image:url(https://chaoticbackup.github.io/portal/src/img/visual-bkgrnd_german_01.jpg);
 }
 .pgBkgrnd-repeat-x {
   width:100%; z-index:0;
@@ -136,7 +136,7 @@
   text-align: right;
 }
 
-/*--- Sprite Nav (english) ---*/
+/*--- Sprite Nav (English) ---*/
 #unity-sprite.ENG { background: url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png); }
 
 #unity-nav1.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) 0px -170px; background-repeat:no-repeat;}
@@ -148,11 +148,12 @@
 #unity-nav7.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -662px -170px; background-repeat:no-repeat;}
 #unity-nav8.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -786px -170px; background-repeat:no-repeat;}
 #unity-nav9.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -910px -170px; background-repeat:no-repeat;}
-#unity-nav10.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -364px -290px; background-repeat:no-repeat;}
 
 #unityETC-sprite.ENG { background: url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -364px -120px no-repeat; }
 
-/*--- Sprite Nav (french) ---*/
+#unity-nav10.ENG a:hover {background: transparent url(https://chaoticbackup.github.io/portal/src/img/unity-sprite-nav.png) -364px -290px; background-repeat:no-repeat;}
+
+/*--- Sprite Nav (French) ---*/
 #unity-sprite.FRA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png); }
 
 #unity-nav1.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) 0px -170px; background-repeat:no-repeat;}
@@ -169,7 +170,7 @@
 
 #unity-nav10.FRA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png) -364px -290px; background-repeat:no-repeat;}
 
-/*--- Sprite Nav (german) ---*/
+/*--- Sprite Nav (German) ---*/
 #unity-sprite.GER { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png); }
 
 #unity-nav1.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) 0px -170px; background-repeat:no-repeat;}
@@ -186,7 +187,7 @@
 
 #unity-nav10.GER a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_German.png) -364px -290px; background-repeat:no-repeat;}
 
-/*--- Sprite Nav (italian) ---*/
+/*--- Sprite Nav (Italian) ---*/
 #unity-sprite.ITL { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png); }
 
 #unity-nav1.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) 0px -170px; background-repeat:no-repeat;}
@@ -203,7 +204,7 @@
 
 #unity-nav10.ITL a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Italian.png) -364px -290px; background-repeat:no-repeat;}
 
-/*--- Sprite Nav (portuguese) ---*/
+/*--- Sprite Nav (Portuguese) ---*/
 #unity-sprite.PRT { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png); }
 
 #unity-nav1.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) 0px -170px; background-repeat:no-repeat;}
@@ -220,7 +221,7 @@
 
 #unity-nav10.PRT a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Portuguese.png) -364px -290px; background-repeat:no-repeat;}
 
-/*--- Sprite Nav (spanish) ---*/
+/*--- Sprite Nav (Spanish) ---*/
 #unity-sprite.SPA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png); }
 
 #unity-nav1.SPA a:hover {background: transparent url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_Spanish.png) 0px -170px; background-repeat:no-repeat;}
@@ -247,19 +248,19 @@
 }
 .footer-repeat-x {
     width: 100%; height:54px;
-    background-image:url(http://web.archive.org/web/20130304153141im_/http://chaoticgame.com/Images/footer-repeat-x.gif);
+    background-image:url(https://chaoticbackup.github.io/portal/src/img/footer-repeat-x.gif);
     background-position: left top;
     background-repeat:repeat-x;
 }
 .footer-left {
     width: 100%; height:54px;
-    background-image:url(http://web.archive.org/web/20130304153141im_/http://chaoticgame.com/Images/footer-left.gif);
+    background-image:url(https://chaoticbackup.github.io/portal/src/img/footer-left.gif);
     background-position: left top;
     background-repeat:no-repeat;
 }
 .footer-right {
     width: 100%; height:54px;
-    background-image:url(http://web.archive.org/web/20130304153141im_/http://chaoticgame.com/Images/footer-right.gif);
+    background-image:url(https://chaoticbackup.github.io/portal/src/img/footer-right.gif);
     background-position: right top;
     background-repeat:no-repeat;
 }
