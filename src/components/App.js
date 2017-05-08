@@ -22,8 +22,8 @@ function App({ children, routes }) {
 
     return (
       routes.filter(route => route.mapMenuTitle)
-        .map((route, index, array) => (
-          <span key={index}>
+      .map((route, index, array) => (
+        <span key={index}>
             <Interactive
               as={Link}
               {...s.link}
@@ -31,37 +31,36 @@ function App({ children, routes }) {
             >{route.mapMenuTitle}</Interactive>
             {(index + 1) < array.length && ' / '}
           </span>
-        ))
+      ))
     );
   }
 
-  function ChangePage(asParams)
-  {
+  function ChangePage(asParams) {
     let location = "#";
-    switch(asParams) {
+    switch (asParams) {
       case 'collect':
         break;
-      // case 'register' :
-      //   location ='/Registration.aspx';
-      //   break;
+        // case 'register' :
+        //   location ='/Registration.aspx';
+        //   break;
       case 'build':
-        location ='http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
+        location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
         break;
       case 'centerOval':
         break;
       case 'enterTheCode':
         break;
       case 'trade':
-        location ='http://www.tradecardsonline.com/?action=selectCard&goal=&game_id=82';
+        location = 'http://www.tradecardsonline.com/?action=selectCard&goal=&game_id=82';
         break;
       case 'portal':
         location = ('https://chaoticbackup.github.io/portal/')
         break;
       case 'forum':
-        location ='http://chaoticbackup.forumotion.com';
+        location = 'http://chaoticbackup.forumotion.com';
         break;
       case 'playNow':
-        location ='http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
+        location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
         break;
       default:
         location = '/UnderConstructionPage.aspx';
@@ -70,7 +69,7 @@ function App({ children, routes }) {
     return location;
   }
 
-  let language="ENG";
+  let language = "ENG";
   let bkgrnd = "05";
 
   return (
@@ -103,21 +102,75 @@ function App({ children, routes }) {
                 </div>
               </div>
             </div>
+            <div className="legacy content">
+              <div className="left-column">
+                <div className="full-width clear-line" style={{marginBottom: "5px"}}>
+                </div>
+              </div>
+              <div className="center-column">
+                <div className="pods-wrap pad5px-btm">
+                  <div className="clear-line full-width">
+                    <div className="adPod-top-wrap">
+                      <div className="videoAdPod-topleft">
+                        <div className="videoAdPod-topLeft-repeat-x"></div>
+                      </div>
+                      <div className="videoAdPod-topright">
+                        <div className="videoAdPod-topRight-repeat-x"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="content-area-repeat-xy">
+                    <div className="content-area-top-repeat-x">
+                      <div className="content-area-left-repeat-y">
+                        <div className="content-area-right-repeat-y">
+                          <div style={{margin: "0 8px 0 10px"}}>
+                            <div id="player" style={{textAlign: "center"}}>
+                              <br />
+                              <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
+                              <nav style={s.mapMenu}>
+                                {generateMapMenu()}
+                              </nav>
+                              {children}
+                              <br />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="content-btm-wrap">
+                    <div className="content-area-btm-left">
+                      <div className="content-left-btm-repeat-x">
+                      </div>
+                    </div>
+                    <div className="content-area-btm-right">
+                      <div className="content-right-btm-repeat-x">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="right-column">
+                <div className="full-width clear-line" style={{marginBottom: "5px"}}>
+                </div>
+              </div>
+            </div>
+            { /*
             <div style={s.root}>
               <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
-              {/*
+
                 <Interactive
                   as="a"
                   href="https://github.com/rafrex/spa-github-pages"
                   style={s.repoLink}
                   {...s.link}
                 >https://github.com/rafrex/spa-github-pages</Interactive>
-              */}
+
               <nav style={s.mapMenu}>
                 {generateMapMenu()}
               </nav>
               {children}
-              {/*
+
                 <div style={s.creditLine}>
                 <Interactive
                   as="a"
@@ -130,9 +183,9 @@ function App({ children, routes }) {
                   Code and concept by <span {...s.childLink}>Rafael Pedicini</span>
                 </Interactive>
               </div>
-              */}
+
             </div>
-            <div style={{height: "150px"}} />
+            */ }
             <div className="legacy legacy-footer">
               <div className="footer-wrap">
                 <div className="footer-repeat-x">
