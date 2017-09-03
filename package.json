@@ -1,9 +1,10 @@
 {
   "name": "chaoticbackup-portal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Chaotic Backup Portal to Perim",
   "scripts": {
-    "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback --progress"
+    "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback --progress",
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,8 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-interactive": "^0.5.1",
-    "react-router": "^3.0.0"
+    "react-router": "^3.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
