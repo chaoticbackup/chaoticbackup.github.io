@@ -1,12 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import PageNotFound from '../PageNotFound';
-import UnderConstruction from '../UnderConstruction';
-
-const propTypes = {
-  location: PropTypes.object.isRequired,
-};
-
+import URLS from '../Spreadsheet';
 
 // This module handles tribe pages and subpages
 // Allows for urls such as
@@ -22,10 +16,26 @@ const propTypes = {
 // gives a brief summary and the option of "mugic" or "tribe"
 // -> /{Tribe}/Mugic || /{Tribe}/Creatures
 
-function Tribes({location}) {
-  return(<UnderConstruction location={location}/>);
+export default class Tribes extends React.Component {
+  children;
+
+  constructor(props) {
+    super (props);
+    console.log(props);
+    this.children = props.children;
+    this.state = {creatures: []}
+  }
+
+  componentDidMount() {
+  }
+
+  render() {
+    return (
+      <div>
+      {this.children||
+        <div>tribes</div>
+      }
+      </div>
+    );
+  }
 }
-
-Tribes.propTypes = propTypes;
-
-export default Tribes;

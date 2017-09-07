@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 // import {browserHistory} from 'react-router';
 import PageNotFound from '../PageNotFound';
 import Tribes from '../Category/Tribes';
+import UnderConstruction from '../UnderConstruction';
 
 const propTypes = {
   location: PropTypes.object.isRequired,
+  children: PropTypes.element,
 };
 
 function SingleCreature() {
@@ -16,16 +18,11 @@ function SingleCreature() {
   // /portal/Creatures/{Tribe}/{Name}
   // /portal/{Tribe}/Creatures/{Name}
   // The first / gets counted
-  if (path.length === 4 && path[2] === "Creatures") {
-    // Special case: render tribe
-    // return(<Tribe location={location}/>);
-  }
-  else if ( path.length !== 5 )
+  if ( path.length !== 5 )
   {
     //PageNotFound
     return(<PageNotFound location={location}/>);
     //return(browserHistory.push('/PageNotFound'));
-    return(<PageNotFound location={location}/>);
   }
 
   let Tribe = "";
@@ -43,7 +40,11 @@ function SingleCreature() {
     case 'Danian':
     case 'Marrillian':
     case 'Generic':
-      return(<div>{path[4]}</div>);
+      return(
+        <div><UnderConstruction location={location}/>
+        {path[4]}
+        </div>
+      );
       break;
     default:
       return(<PageNotFound location={location}/>);

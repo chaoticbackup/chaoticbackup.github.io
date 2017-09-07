@@ -39,7 +39,21 @@ const routes = (
       </Route>
 
       <Route path="Creatures" component={Creatures}>
-        <Route path="*" component={SingleCreature} />
+        <Route path="Overworld" component={Tribes}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Underworld" component={Tribes}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Mipedian" component={Tribes}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Danian" component={Tribes}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Marrillian" component={Tribes}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
       </Route>
 
       <Route path="Locations" component={UnderConstruction}>
@@ -47,7 +61,21 @@ const routes = (
       </Route>
 
       <Route path="Mugic" component={UnderConstruction}>
-        <Route path="*" component={UnderConstruction} />
+        <Route path="Overworld" component={Tribes}>
+          <Route path="*" component={UnderConstruction} />
+        </Route>
+        <Route path="Underworld" component={Tribes}>
+          <Route path="*" component={UnderConstruction} />
+        </Route>
+        <Route path="Mipedian" component={Tribes}>
+          <Route path="*" component={UnderConstruction} />
+        </Route>
+        <Route path="Danian" component={Tribes}>
+          <Route path="*" component={UnderConstruction} />
+        </Route>
+        <Route path="Marrillian" component={Tribes}>
+          <Route path="*" component={UnderConstruction} />
+        </Route>
       </Route>
 
       <Route path="Overworld" component={Tribes}>

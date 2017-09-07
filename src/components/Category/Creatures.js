@@ -1,30 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import URLS from '../URLS';
-import 'whatwg-fetch';
+import URLS from '../Spreadsheet';
 
-const propTypes = {
-  children: PropTypes.element,
-};
+export default class Creatures extends React.Component {
+  children;
 
-function Creatures({children}) {
-  fetch(URLS.Creature_Overworld)
-    .then(function(response) {
-      return response.json();
-    }).then(function(json) {
-      console.log('parsed json', json.feed.entry);
-    }).catch(function(ex) {
-      console.log('parsing failed', ex);
-    })
+  constructor(props) {
+    super (props);
+    console.log(props);
+    this.children = props.children;
+    this.state = {creatures: []}
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
     return (
       <div>
-      {children||
-        <div>test</div>
+      {this.children||
+        <div>creatures</div>
       }
       </div>
     );
+  }
 }
-
-Creatures.propTypes = propTypes;
-
-export default Creatures;
