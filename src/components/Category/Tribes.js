@@ -1,6 +1,5 @@
 import React from 'react';
-import PageNotFound from '../PageNotFound';
-import URLS from '../Spreadsheet';
+import UnderConstruction from '../UnderConstruction';
 
 // This module handles tribe pages and subpages
 // Allows for urls such as
@@ -17,23 +16,17 @@ import URLS from '../Spreadsheet';
 // -> /{Tribe}/Mugic || /{Tribe}/Creatures
 
 export default class Tribes extends React.Component {
-  children;
 
   constructor(props) {
     super (props);
     console.log(props);
-    this.children = props.children;
-    this.state = {creatures: []}
-  }
-
-  componentDidMount() {
   }
 
   render() {
     return (
       <div>
-      {this.children||
-        <div>tribes</div>
+      {this.props.children||
+        <UnderConstruction location={this.props.location}/>
       }
       </div>
     );

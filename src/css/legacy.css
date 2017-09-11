@@ -1,3 +1,14 @@
+/* Creatures */
+#player {
+  width: calc(100% - 20px);
+  margin: 0 10px;
+}
+
+.creature .splash {
+  width: 100%;
+  display: block;
+}
+
 /*-------------- Content Formatting --------------*/
 /*------------------------------------------------------*/
 .shift-txt-tenR {margin-left:10px;}
@@ -77,10 +88,11 @@
 }
 /*-------------- Center Column --------------*/
 .center-column {
-  width:60% !important;
+  width: 80% !important;
+  margin: 0 auto;
+  /*float:left;*/
   /*width:392px !important;*/
-  margin:0 6px 0 6px;
-  float:left;
+  /*margin:0 6px 0 6px;*/
 }
 /*-------------- Right Column --------------*/
 .right-column {

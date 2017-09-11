@@ -6,6 +6,9 @@ class URLS {
   static data_format = "/od6/public/values?alt=json";
   // + "/od6/public/basic?alt=json"; // Alternate data format
 
+  // base url for image
+  get image() { return "https://drive.google.com/uc?id="; }
+
   constructor() {}
 
   // Singleton
@@ -22,20 +25,24 @@ class URLS {
       return URLS.instance;
   }
 
-  static getSpreedsheet(spreadsheet) {
+  getSpreadsheet(spreadsheet, callback) {
     fetch(spreadsheet)
       .then(function(response) {
         return response.json();
       }).then(function(json) {
-        return json.feed.entry;
+        return callback(json.feed.entry);
       }).catch(function(err) {
         console.log('parsing failed', err);
-        return null;
-      })
+        return callback(null);
+      });
   }
 
   static path(spreadsheetID) {
     return URLS.base_url + spreadsheetID + URLS.data_format;
+  }
+
+  get Creature_Card_Data() {
+    return URLS.path("1fUFYhG1NLLkSTzrdbevm6ZMKNP6xLiKUZvM1sY10pVI");
   }
 
   get Creature_Overworld() {

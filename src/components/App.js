@@ -125,8 +125,10 @@ function App({ children, routes }) {
                         <div className="content-area-right-repeat-y">
                           <div style={{margin: "0 8px 0 10px"}}>
                             <div id="player" style={{textAlign: "center"}}>
+                              {/*
                               <br />
                               <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
+                              */}
                               <nav style={s.mapMenu}>
                                 {generateMapMenu()}
                               </nav>
