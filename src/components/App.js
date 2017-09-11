@@ -39,10 +39,11 @@ function App({ children, routes }) {
     let location = "#";
     switch (asParams) {
       case 'collect':
+        location = 'http://www.tradecardsonline.com/im/editCollection/collection_type/1';
         break;
-        // case 'register' :
-        //   location ='/Registration.aspx';
-        //   break;
+      // case 'register' :
+      //   location ='/Registration.aspx';
+      //   break;
       case 'build':
         location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
         break;
@@ -54,7 +55,7 @@ function App({ children, routes }) {
         location = 'http://www.tradecardsonline.com/?action=selectCard&goal=&game_id=82';
         break;
       case 'portal':
-        location = ('https://chaoticbackup.github.io/portal/')
+        location = ('/portal/')
         break;
       case 'forum':
         location = 'http://chaoticbackup.forumotion.com';
@@ -63,7 +64,7 @@ function App({ children, routes }) {
         location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
         break;
       default:
-        location = '/UnderConstructionPage.aspx';
+        location = '/portal/UnderConstruction/';
         break;
     }
     return location;

@@ -79,32 +79,44 @@ const routes = (
       </Route>
 
       <Route path="Overworld" component={Tribes}>
-        <Route path="Creatures" component={SingleCreature} />
+        <Route path="Creatures" component={Creatures}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
         <Route path="Mugic" component={UnderConstruction} />
       </Route>
 
       <Route path="Underworld" component={Tribes}>
-        <Route path="Creatures" component={SingleCreature} />
+        <Route path="Creatures" component={Creatures}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
         <Route path="Mugic" component={UnderConstruction} />
       </Route>
 
       <Route path="Mipedian" component={Tribes}>
-        <Route path="Creatures" component={SingleCreature} />
+        <Route path="Creatures" component={Creatures}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
         <Route path="Mugic" component={UnderConstruction} />
       </Route>
 
       <Route path="Danian" component={Tribes}>
-        <Route path="Creatures" component={SingleCreature} />
+        <Route path="Creatures" component={Creatures}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
         <Route path="Mugic" component={UnderConstruction} />
       </Route>
 
       <Route path="Marrillian" component={Tribes}>
-        <Route path="Creatures" component={SingleCreature} />
+        <Route path="Creatures" component={Creatures}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
         <Route path="Mugic" component={UnderConstruction} />
       </Route>
 
       <Route path="Generic" component={Tribes}>
-        <Route path="Creatures" component={SingleCreature} />
+        <Route path="Creatures" component={Creatures}>
+          <Route path="*" component={SingleCreature} />
+        </Route>
         <Route path="Mugic" component={UnderConstruction} />
       </Route>
 

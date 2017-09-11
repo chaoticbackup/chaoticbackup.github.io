@@ -18,7 +18,7 @@ export default class SingleCreature extends React.Component {
   componentDidMount() {
     var self = this;
     API.getSpreadsheet(this.url, function(data) {
-      console.log(data);
+      // console.log(data);
       self.setState({creatures: data });
     });
   }
@@ -59,7 +59,6 @@ export default class SingleCreature extends React.Component {
         return(<PageNotFound location={this.location}/>);
     }
 
-    // TODO
     var creature = null;
     this.state.creatures.map((item, i) => {
       // console.log(item.title, path[4], item.title.$t == path[4]);
@@ -70,26 +69,57 @@ export default class SingleCreature extends React.Component {
       return(<PageNotFound location={this.location}/>);
     }
 
+    // const creature = this.state.creature.map((item, i) => {
+    //   return (
+    //     <div>{item.title.$t}</div>
+    //   );
+    // });
+
     return(
       <div className={"creature " + tribe.toLowerCase()}>
-        <UnderConstruction location={this.location}/>
-        {creature.gsx$name.$t}
+        <h1>{creature.gsx$name.$t}</h1>
         <img className="splash" src={API.image + creature.gsx$splash.$t}></img>
-        <p>{creature.gsx$appearance.$t}</p>
-        <p>{creature.gsx$background.$t}</p>
-        <p>{creature.gsx$details.$t}</p>
-        <p>{creature.gsx$favoritebattlegear.$t}</p>
-        <p>{creature.gsx$favoritelocation.$t}</p>
-        <p>{creature.gsx$heightfeetinch.$t}</p>
-        <p>{creature.gsx$specialabilities.$t}</p>
-        <p>{creature.gsx$weightpounds.$t}</p>
+        <hr />
+        <div>
+          <strong>Appearance:</strong><br />
+          {creature.gsx$appearance.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Background:</strong><br />
+          {creature.gsx$background.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Details:</strong><br />
+          {creature.gsx$details.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Favorite Battlegear(s):</strong><br />
+          {creature.gsx$battlegear.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Favorite Location(s):</strong><br />
+          {creature.gsx$location.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Height (ft):</strong><br />
+          {creature.gsx$height.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Special Abilities:</strong><br />
+          {creature.gsx$specialabilities.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Weight (lb):</strong><br />
+          {creature.gsx$weight.$t}
+        </div>
       </div>
     );
   }
 }
-
-// const creature = this.state.creature.map((item, i) => {
-//   return (
-//     <div>{item.title.$t}</div>
-//   );
-// });
