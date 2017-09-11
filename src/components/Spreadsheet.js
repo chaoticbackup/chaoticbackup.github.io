@@ -5,9 +5,7 @@ class URLS {
   static base_url = "https://spreadsheets.google.com/feeds/list/";
   static data_format = "/od6/public/values?alt=json";
   // + "/od6/public/basic?alt=json"; // Alternate data format
-
-  // base url for image
-  get image() { return "https://drive.google.com/uc?id="; }
+  get base_image() { return "https://drive.google.com/uc?id="; }
 
   constructor() {}
 
@@ -41,13 +39,37 @@ class URLS {
     return URLS.base_url + spreadsheetID + URLS.data_format;
   }
 
-  get Creature_Card_Data() {
+  /* Creatures */
+  get Creatures_Card_Data() {
     return URLS.path("1fUFYhG1NLLkSTzrdbevm6ZMKNP6xLiKUZvM1sY10pVI");
   }
 
-  get Creature_Overworld() {
+  get Danian_Creatures() {
+    return URLS.path("1-Lz-itwOobEvqr8HSLFFwg3JFkT64NbwyGFEPfj9rxU");
+  }
+
+  get Generic_Creatures() {
+    return URLS.path("1pnDahSxGDNKvDmwRfYF4Cd75q5plmtb9tvGvU7RM05g");
+  }
+
+  get Marrillian_Creatures() {
+    return URLS.path("1rLlzND9hHgxJuEtcTE4nbIVb16IjRme8V-I4vyryIEU");
+  }
+
+  get Mipedian_Creatures() {
+    return URLS.path("1P4FKASfnhR46j2bqm89T9xhI1Yyyy-jiZ1CkRglSy2k");
+  }
+
+  get Overworld_Creatures() {
     return URLS.path("1Z4_MmlV7uE34nLzrcxslqQKRwL4OBXNA15s7G8eteXU");
   }
+
+  get Underworld_Creatures() {
+    return URLS.path("1c_XAxQsDIWVdzUxWl5t-K_mQumNjX-yrg0X-0NsZVts");
+  }
+
+
+
 
 }
 

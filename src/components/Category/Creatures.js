@@ -13,6 +13,12 @@ export default class Creatures extends React.Component {
   }
 
   render() {
+    // const creature = this.state.creatures.map((item, i) => {
+    //   return (
+    //     <div>{item.title.$t}</div>
+    //   );
+    // });
+
     return (
       <div>
       {this.props.children||
