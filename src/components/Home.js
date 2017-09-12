@@ -14,7 +14,12 @@ function Home() {
 
   return (
     <div>
-      <p style={s.p}>
+      <Interactive
+        as="a"
+        {...s.link}
+        href="/portal/Overworld/Creatures"
+      >Overworld Creatures</Interactive>
+      {/*<p style={s.p}>
         This is an example single page app built
         with React and React&nbsp;Router using {' '}
         {s.code('browserHistory')}. Navigate with the links below and
@@ -25,7 +30,9 @@ function Home() {
       <p style={s.p}>
         Please see the {repoReadmeLink('repo readme')} for instructions on how to
         use this boilerplate to deploy your own single page app using GitHub Pages.
-      </p>
+      </p>*/}
+      <br />
+      <br />
       <div style={s.pageLinkContainer}>
         <Interactive
           as={Link}

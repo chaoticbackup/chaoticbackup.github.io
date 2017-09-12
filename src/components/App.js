@@ -25,9 +25,9 @@ function App({ children, routes }) {
       .map((route, index, array) => (
         <span key={index}>
             <Interactive
-              as={Link}
+              as="a"
               {...s.link}
-              to={nextPath(route)}
+              href={nextPath(route)}
             >{route.mapMenuTitle}</Interactive>
             {(index + 1) < array.length && ' / '}
           </span>

@@ -30,94 +30,123 @@ const routes = (
         <Route path="two-deep" mapMenuTitle="Two Deep" component={ExampleTwoDeepComponent} />
       </Route>
 
-      <Route path="Attacks" component={UnderConstruction}>
+      {/* Attacks */}
+      <Route path="Attacks" component={UnderConstruction} mapMenuTitle="Attacks">
         <Route path="*" component={UnderConstruction} />
       </Route>
 
-      <Route path="Battlegear" component={UnderConstruction}>
+      {/* Battlegear */}
+      <Route path="Battlegear" component={UnderConstruction} mapMenuTitle="Battlegear">
         <Route path="*" component={UnderConstruction} />
       </Route>
 
-      <Route path="Creatures" component={Creatures}>
-        <Route path="Overworld" component={Tribes}>
-          <Route path="*" component={SingleCreature} />
-        </Route>
-        <Route path="Underworld" component={Tribes}>
-          <Route path="*" component={SingleCreature} />
-        </Route>
-        <Route path="Mipedian" component={Tribes}>
-          <Route path="*" component={SingleCreature} />
-        </Route>
-        <Route path="Danian" component={Tribes}>
-          <Route path="*" component={SingleCreature} />
-        </Route>
-        <Route path="Marrillian" component={Tribes}>
-          <Route path="*" component={SingleCreature} />
-        </Route>
-      </Route>
-
-      <Route path="Locations" component={UnderConstruction}>
+      {/* Locations */}
+      <Route path="Locations" component={UnderConstruction} mapMenuTitle="Locations">
         <Route path="*" component={UnderConstruction} />
       </Route>
 
-      <Route path="Mugic" component={UnderConstruction}>
-        <Route path="Overworld" component={Tribes}>
+      {/* Creatures */}
+      <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
+        <Route path="Overworld" component={Tribes} mapMenuTitle="Overworld">
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Underworld" component={Tribes} mapMenuTitle="Underworld">
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Mipedian" component={Tribes} mapMenuTitle="Mipedian">
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Danian" component={Tribes} mapMenuTitle="Danian">
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Marrillian" component={Tribes} mapMenuTitle="M'arrillian">
+          <Route path="*" component={SingleCreature} />
+        </Route>
+        <Route path="Generic" component={Tribes} mapMenuTitle="Generic">
+          <Route path="*" component={SingleCreature} />
+        </Route>
+      </Route>
+
+      {/* Mugic */}
+      <Route path="Mugic" component={UnderConstruction} mapMenuTitle="Mugic">
+        <Route path="Overworld" component={Tribes} mapMenuTitle="Overworld">
           <Route path="*" component={UnderConstruction} />
         </Route>
-        <Route path="Underworld" component={Tribes}>
+        <Route path="Underworld" component={Tribes} mapMenuTitle="Underworld">
           <Route path="*" component={UnderConstruction} />
         </Route>
-        <Route path="Mipedian" component={Tribes}>
+        <Route path="Mipedian" component={Tribes} mapMenuTitle="Mipedian">
           <Route path="*" component={UnderConstruction} />
         </Route>
-        <Route path="Danian" component={Tribes}>
+        <Route path="Danian" component={Tribes} mapMenuTitle="Danian">
           <Route path="*" component={UnderConstruction} />
         </Route>
-        <Route path="Marrillian" component={Tribes}>
+        <Route path="Marrillian" component={Tribes} mapMenuTitle="M'arrillian">
+          <Route path="*" component={UnderConstruction} />
+        </Route>
+        <Route path="Generic" component={Tribes} mapMenuTitle="Generic">
           <Route path="*" component={UnderConstruction} />
         </Route>
       </Route>
 
-      <Route path="Overworld" component={Tribes}>
-        <Route path="Creatures" component={Creatures}>
+      {/* Overworld */}
+      <Route path="Overworld" component={Tribes} mapMenuTitle="Overworld">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} />
+        <Route path="Mugic" component={UnderConstruction} mapMenuTitle="Mugic">
+          <Route path="*" component={UnderConstruction} />
+        </Route>
       </Route>
 
-      <Route path="Underworld" component={Tribes}>
-        <Route path="Creatures" component={Creatures}>
+      {/* Underworld */}
+      <Route path="Underworld" component={Tribes} mapMenuTitle="Underworld">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} />
+        <Route path="Mugic" component={UnderConstruction} mapMenuTitle="Mugic">
+          <Route path="*" component={UnderConstruction} />
+        </Route>
       </Route>
 
-      <Route path="Mipedian" component={Tribes}>
-        <Route path="Creatures" component={Creatures}>
+      {/* Mipedian */}
+      <Route path="Mipedian" component={Tribes} mapMenuTitle="Mipedian">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} />
+        <Route path="Mugic" component={UnderConstruction} mapMenuTitle="Mugic">
+          <Route path="*" component={UnderConstruction} />
+        </Route>
       </Route>
 
-      <Route path="Danian" component={Tribes}>
-        <Route path="Creatures" component={Creatures}>
+      {/* Danian */}
+      <Route path="Danian" component={Tribes} mapMenuTitle="Danian">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} />
+        <Route path="Mugic" component={UnderConstruction} mapMenuTitle="Mugic">
+          <Route path="*" component={UnderConstruction} />
+        </Route>
       </Route>
 
-      <Route path="Marrillian" component={Tribes}>
-        <Route path="Creatures" component={Creatures}>
+      {/* M'arrillian */}
+      <Route path="Marrillian" component={Tribes} mapMenuTitle="Marrillian">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} />
+        <Route path="Mugic" component={UnderConstruction} mapMenuTitle="Mugic">
+          <Route path="*" component={UnderConstruction} />
+        </Route>
       </Route>
 
-      <Route path="Generic" component={Tribes}>
-        <Route path="Creatures" component={Creatures}>
+      {/* Generic */}
+      <Route path="Generic" component={Tribes} mapMenuTitle="Generic">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} />
+        <Route path="Mugic" component={UnderConstruction} mapMenuTitle="Mugic">
+          <Route path="*" component={UnderConstruction} />
+        </Route>
       </Route>
 
     </Route>

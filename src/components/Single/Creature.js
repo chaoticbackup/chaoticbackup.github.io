@@ -3,7 +3,6 @@ import Interactive from 'react-interactive';
 import { Link } from 'react-router';
 // import {browserHistory} from 'react-router';
 import PageNotFound from '../PageNotFound';
-import Tribes from '../Category/Tribes';
 import UnderConstruction from '../UnderConstruction';
 import API from '../Spreadsheet';
 import s from '../../styles/app.style';
@@ -12,7 +11,6 @@ export default class SingleCreature extends React.Component {
 
   constructor(props) {
     super (props);
-    this.location = props.location;
     this.url = '';
     this.creature = '';
     this.state = {creature: null, card_data: null};
@@ -33,7 +31,7 @@ export default class SingleCreature extends React.Component {
   }
 
   render() {
-    let path = this.location.pathname.split("/");
+    let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // ** Process the tribe ** //
@@ -42,12 +40,11 @@ export default class SingleCreature extends React.Component {
     // The first / gets counted
     if ( path.length !== 5 )
     {
-      return(<PageNotFound location={this.location}/>);
+      return(<PageNotFound location={this.props.location}/>);
       //return(browserHistory.push('/PageNotFound'));
     }
 
     let tribe = "";
-    // return (<div className={Tribe}>test</div>);
 
     //Handle both url layouts
     if (path[2] === "Creatures") tribe = path[3];
@@ -59,13 +56,22 @@ export default class SingleCreature extends React.Component {
         this.url = API.Overworld_Creatures;
         break;
       case 'Underworld':
+        this.url = API.Underworld_Creatures;
+        break;
       case 'Mipedian':
+        this.url = API.Mipedian_Creatures;
+        break;
       case 'Danian':
+        this.url = API.Danian_Creatures;
+        break;
       case 'Marrillian':
+        this.url = API.Marrillian_Creatures;
+        break;
       case 'Generic':
+        this.url = API.Generic_Creatures;
         break;
       default:
-        return(<PageNotFound location={this.location}/>);
+        return(<PageNotFound location={this.props.location}/>);
     }
 
     // confusing, this.creature is a string for the api call,
@@ -76,7 +82,7 @@ export default class SingleCreature extends React.Component {
 
     // console.log(this.state.creature);
     if (creature == null || card_data == null) {
-      return(<PageNotFound location={this.location}/>);
+      return(<PageNotFound location={this.props.location}/>);
     }
     // console.log(this.state.card_data);
 
