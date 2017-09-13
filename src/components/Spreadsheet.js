@@ -68,8 +68,16 @@ class URLS {
     return URLS.path("1c_XAxQsDIWVdzUxWl5t-K_mQumNjX-yrg0X-0NsZVts");
   }
 
-
-
+  get Creatures() {
+    return {
+      'Overworld': URLS.path("1Z4_MmlV7uE34nLzrcxslqQKRwL4OBXNA15s7G8eteXU"),
+      'Underworld': URLS.path("1c_XAxQsDIWVdzUxWl5t-K_mQumNjX-yrg0X-0NsZVts"),
+      'Mipedian': URLS.path("1P4FKASfnhR46j2bqm89T9xhI1Yyyy-jiZ1CkRglSy2k"),
+      'Danian': URLS.path("1-Lz-itwOobEvqr8HSLFFwg3JFkT64NbwyGFEPfj9rxU"),
+      'Marrillian': URLS.path("1rLlzND9hHgxJuEtcTE4nbIVb16IjRme8V-I4vyryIEU"),
+      'Generic': URLS.path("1pnDahSxGDNKvDmwRfYF4Cd75q5plmtb9tvGvU7RM05g")
+    };
+  }
 
 }
 

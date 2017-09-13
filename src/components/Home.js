@@ -14,11 +14,33 @@ function Home() {
 
   return (
     <div>
-      <Interactive
-        as="a"
-        {...s.link}
+      <Interactive as="a" {...s.link}
+        href="/portal/Creatures"
+      >Creatures</Interactive>
+      <br />
+      <Interactive as="a" {...s.link}
+        href="/portal/Danian/Creatures"
+      >Danian Creatures</Interactive>
+      <br />
+      <Interactive as="a" {...s.link}
         href="/portal/Overworld/Creatures"
       >Overworld Creatures</Interactive>
+      <br />
+      <Interactive as="a" {...s.link}
+        href="/portal/Underworld/Creatures"
+      >Underworld Creatures</Interactive>
+      <br />
+      <Interactive as="a" {...s.link}
+        href="/portal/Mipedian/Creatures"
+      >Mipedian Creatures</Interactive>
+      <br />
+      <Interactive as="a" {...s.link}
+        href="/portal/Marrillian/Creatures"
+      >M'arrillian Creatures</Interactive>
+      <br />
+      <Interactive as="a" {...s.link}
+        href="/portal/Generic/Creatures"
+      >Generic Creatures</Interactive>
       {/*<p style={s.p}>
         This is an example single page app built
         with React and React&nbsp;Router using {' '}

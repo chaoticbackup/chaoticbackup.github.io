@@ -10,18 +10,16 @@ export default class Creatures extends React.Component {
 
   constructor(props) {
     super (props);
-    console.log(props);
-    this.url = '';
-    this.state = {creatures: []};
+    this.tribe = '';
+    this.state = {creatures: {}};
   }
 
   componentDidMount() {
     if (this.props.children) return;
-
     var self = this;
-    API.getSpreadsheet(this.url, function(data) {
+    API.getSpreadsheet(API.Creatures[this.tribe], function(data) {
       // self.setState({creatures: this.state.creatures.concat([data])});
-      self.setState({creatures: data});
+      self.setState({creatures: Object.assign(self.state.creatures, {[self.tribe]: data})});
     });
   }
 
@@ -36,51 +34,38 @@ export default class Creatures extends React.Component {
     // /portal/Creatures/
     // /portal/{Tribe}/Creatures/
     // The first / gets counted
-    let tribe = "";
-    if ( path.length === 4)
-    {
-      tribe = path[2];
+    var self = this;
+    if ( path.length === 4) {
+      this.tribe = path[2];
+
+      if (!(API.Creatures).hasOwnProperty(this.tribe)) {
+        return(
+          <PageNotFound location={this.props.location}/>
+        );
+      }
+      else return (
+        <div>{list_creatures(this.tribe)}</div>
+      );
     }
+    // No tribe specified
     // Display all creatures
     else {
       return (<div><UnderConstruction location={this.props.location}/></div>);
     }
 
-    switch (tribe) {
-      case 'Overworld':
-        this.url = API.Overworld_Creatures;
-        break;
-      case 'Underworld':
-        this.url = API.Underworld_Creatures;
-        break;
-      case 'Mipedian':
-        this.url = API.Mipedian_Creatures;
-        break;
-      case 'Danian':
-        this.url = API.Danian_Creatures;
-        break;
-      case 'Marrillian':
-        this.url = API.Marrillian_Creatures;
-        break;
-      case 'Generic':
-        this.url = API.Generic_Creatures;
-        break;
-      default:
-        return(<PageNotFound location={this.props.location}/>);
+    // Map creatures of the tribe
+    function list_creatures(tribe) {
+      if (!self.state.creatures[self.tribe]) {
+        return (<span>Loading...</span>);
+      }
+      else return self.state.creatures[self.tribe].map((creature, i) => {
+        return (
+          <div key={i}>
+            <Interactive as="a" {...s.link} href={"Creatures/"+creature.gsx$name.$t}><span>{creature.gsx$name.$t}</span></Interactive>
+          </div>
+        );
+      });
     }
 
-    const creatures = this.state.creatures.map((creature, i) => {
-      return (
-        <div key={i}>
-          <Interactive as="a" {...s.link} href={"Creatures/"+creature.gsx$name.$t}><span>{creature.gsx$name.$t}</span></Interactive>
-        </div>
-      );
-    });
-
-    return (
-      <div>
-        {creatures}
-      </div>
-    );
   }
 }
