@@ -12,7 +12,7 @@ export default class SingleCreature extends React.Component {
   constructor(props) {
     super (props);
     this.tribe = '';
-    this.creature = '';
+    this.card = '';
     this.state = {creature: null, card_data: null};
   }
 
@@ -20,7 +20,7 @@ export default class SingleCreature extends React.Component {
     var self = this;
     API.getSpreadsheet(API.Creatures[this.tribe], function(data) {
       data.map((item, i) => {
-        if (item.title.$t == self.creature) self.setState({creature: item });
+        if (item.title.$t == self.card) self.setState({creature: item });
       });
       // If no creature set as false
       if (!self.state.creature) {
@@ -29,7 +29,7 @@ export default class SingleCreature extends React.Component {
     });
     API.getSpreadsheet(API.Creatures_Card_Data, function(data) {
       data.map((item, i) => {
-        if (item.title.$t == self.creature) self.setState({card_data: item });
+        if (item.title.$t == self.card) self.setState({card_data: item });
       });
       // If no card_data set as false
       if (!self.state.card_data) {
@@ -65,8 +65,9 @@ export default class SingleCreature extends React.Component {
       );
     }
 
-    this.creature = path[4];
-    // confusing, this.creature is a string for the api call,
+    // this.card is a string for the api call,
+    this.card = decodeURIComponent(path[4]);
+
     // creature is the object to be used in the jsx
     var creature = this.state.creature;
     var card_data = this.state.card_data;
