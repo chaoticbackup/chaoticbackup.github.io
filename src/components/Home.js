@@ -19,20 +19,20 @@ function Home() {
       >Creatures</Interactive>
       <br />
       <Interactive as="a" {...s.link}
-        href="/portal/Danian/Creatures"
-      >Danian Creatures</Interactive>
+        href="/portal/Danian"
+      >Danian</Interactive>
       <br />
       <Interactive as="a" {...s.link}
-        href="/portal/Overworld/Creatures"
-      >Overworld Creatures</Interactive>
+        href="/portal/Overworld"
+      >Overworld</Interactive>
       <br />
       <Interactive as="a" {...s.link}
-        href="/portal/Underworld/Creatures"
-      >Underworld Creatures</Interactive>
+        href="/portal/Underworld"
+      >Underworld</Interactive>
       <br />
       <Interactive as="a" {...s.link}
-        href="/portal/Mipedian/Creatures"
-      >Mipedian Creatures</Interactive>
+        href="/portal/Mipedian"
+      >Mipedian</Interactive>
       <br />
       {/*<p style={s.p}>
         This is an example single page app built

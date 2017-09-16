@@ -19,16 +19,23 @@ export default class Tribes extends React.Component {
 
   constructor(props) {
     super (props);
-    console.log(props);
   }
 
   render() {
+    if (this.props.children) {
+      return (<div>{this.props.children}</div>);
+    }
+    let path = this.props.location.pathname.split("/");
+    if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
+
     return (
-      <div>
-      {this.props.children||
-        <UnderConstruction location={this.props.location}/>
-      }
-      </div>
+      <UnderConstruction location={this.props.location}/>
     );
+
+    // return (<div>
+    //   <Interactive as="a" {...s.link} href={"Mugic"}><span>{}</span></Interactive>
+    //   <Interactive as="a" {...s.link} href={"Mugic/"+mugic.gsx$name.$t}><span>{mugic.gsx$name.$t}</span></Interactive>
+    //   </div>
+    // );
   }
 }

@@ -58,7 +58,9 @@ export default class Creatures extends React.Component {
       const creatures = Object.keys(this.state.creatures).map(function(tribe, i) {
         return (
           <div key={i}>
-            <span>{tribe}</span>
+            <Interactive as="a" {...s.link}
+              href={"/portal/Mipedian"+tribe}
+            ><span>{tribe}</span></Interactive>
             {list_creatures(tribe)}
             <hr />
           </div>

@@ -13,7 +13,7 @@ import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
 // import Battlegear from './component/Category/Battlegear';
 import Creatures from './components/Category/Creatures';
 // import Locations from './component/Category/Locations';
-// import Mugic from './component/Category/Mugic';
+import Mugic from './components/Category/Mugic';
 import Tribes from './components/Category/Tribes';
 // import SingleAttack from './component/Category/Attacks';
 // import SingleBattlegear from './component/Category/Battlegear';
