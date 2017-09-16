@@ -34,13 +34,6 @@ function Home() {
         href="/portal/Mipedian/Creatures"
       >Mipedian Creatures</Interactive>
       <br />
-      <Interactive as="a" {...s.link}
-        href="/portal/Marrillian/Creatures"
-      >M'arrillian Creatures</Interactive>
-      <br />
-      <Interactive as="a" {...s.link}
-        href="/portal/Generic/Creatures"
-      >Generic Creatures</Interactive>
       {/*<p style={s.p}>
         This is an example single page app built
         with React and React&nbsp;Router using {' '}

@@ -17,10 +17,14 @@ export default class Creatures extends React.Component {
   componentDidMount() {
     if (this.props.children) return;
     var self = this;
-    API.getSpreadsheet(API.Creatures[this.tribe], function(data) {
-      // self.setState({creatures: this.state.creatures.concat([data])});
-      self.setState({creatures: Object.assign(self.state.creatures, {[self.tribe]: data})});
+    let urls = (this.tribe == "All") ? API.Creatures : {[this.tribe]: API.Creatures[this.tribe]};
+    // For each tribe, get its spreadsheet, set the state
+    Object.keys(urls).map((tribe) => {
+      API.getSpreadsheet(urls[tribe], function(data) {
+        self.setState({creatures: Object.assign(self.state.creatures, {[tribe]: data})});
+      });
     });
+    // self.setState({creatures: this.state.creatures.concat([data])});
   }
 
   render() {
@@ -50,15 +54,25 @@ export default class Creatures extends React.Component {
     // No tribe specified
     // Display all creatures
     else {
-      return (<div><UnderConstruction location={this.props.location}/></div>);
+      this.tribe = "All";
+      const creatures = Object.keys(this.state.creatures).map(function(tribe, i) {
+        return (
+          <div key={i}>
+            <span>{tribe}</span>
+            {list_creatures(tribe)}
+            <hr />
+          </div>
+        );
+      });
+      return (<div>{creatures}</div>);
     }
 
     // Map creatures of the tribe
     function list_creatures(tribe) {
-      if (!self.state.creatures[self.tribe]) {
+      if (!self.state.creatures[tribe]) {
         return (<span>Loading...</span>);
       }
-      else return self.state.creatures[self.tribe].map((creature, i) => {
+      else return self.state.creatures[tribe].map((creature, i) => {
         return (
           <div key={i}>
             <Interactive as="a" {...s.link} href={"Creatures/"+creature.gsx$name.$t}><span>{creature.gsx$name.$t}</span></Interactive>
