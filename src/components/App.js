@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
 import s from '../styles/app.style';
+import {ChangePage, language, bkgrnd } from './Helper';
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -25,53 +26,15 @@ function App({ children, routes }) {
       .map((route, index, array) => (
         <span key={index}>
             <Interactive
-              as="a"
+              as={Link}
               {...s.link}
-              href={nextPath(route)}
+              to={nextPath(route)}
             >{route.mapMenuTitle}</Interactive>
             {(index + 1) < array.length && ' / '}
           </span>
       ))
     );
   }
-
-  function ChangePage(asParams) {
-    let location = "#";
-    switch (asParams) {
-      case 'collect':
-        location = 'http://www.tradecardsonline.com/im/editCollection/collection_type/1';
-        break;
-      // case 'register' :
-      //   location ='/Registration.aspx';
-      //   break;
-      case 'build':
-        location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
-        break;
-      case 'centerOval':
-        break;
-      case 'enterTheCode':
-        break;
-      case 'trade':
-        location = 'http://www.tradecardsonline.com/?action=selectCard&goal=&game_id=82';
-        break;
-      case 'portal':
-        location = ('/portal/')
-        break;
-      case 'forum':
-        location = 'http://chaoticbackup.forumotion.com';
-        break;
-      case 'playNow':
-        location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
-        break;
-      default:
-        location = '/portal/UnderConstruction/';
-        break;
-    }
-    return location;
-  }
-
-  let language = "ENG";
-  let bkgrnd = "05";
 
   return (
     <div>
@@ -158,37 +121,6 @@ function App({ children, routes }) {
                 </div>
               </div>
             </div>
-            { /*
-            <div style={s.root}>
-              <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
-
-                <Interactive
-                  as="a"
-                  href="https://github.com/rafrex/spa-github-pages"
-                  style={s.repoLink}
-                  {...s.link}
-                >https://github.com/rafrex/spa-github-pages</Interactive>
-
-              <nav style={s.mapMenu}>
-                {generateMapMenu()}
-              </nav>
-              {children}
-
-                <div style={s.creditLine}>
-                <Interactive
-                  as="a"
-                  href="http://www.rafaelpedicini.com"
-                  interactiveChild
-                  focus={{}}
-                  touchActive={{}}
-                  touchActiveTapOnly
-                >
-                  Code and concept by <span {...s.childLink}>Rafael Pedicini</span>
-                </Interactive>
-              </div>
-
-            </div>
-            */ }
             <div className="legacy legacy-footer">
               <div className="footer-wrap">
                 <div className="footer-repeat-x">

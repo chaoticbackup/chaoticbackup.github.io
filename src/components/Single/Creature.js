@@ -11,25 +11,53 @@ export default class SingleCreature extends React.Component {
 
   constructor(props) {
     super (props);
-    this.tribe = '';
-    this.card = '';
-    this.state = {creature: null, card_data: null};
+    this.state = {tribe: '', creature: null, card_data: null};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getData(nextProps);
   }
 
   componentDidMount() {
+    this.getData(this.props);
+  }
+
+  // ** Process the tribe ** //
+  // /portal/Creatures/{Tribe}/{Name}
+  // /portal/{Tribe}/Creatures/{Name}
+  // The first / gets counted
+  getData(props) {
+    let path = props.location.pathname.split("/");
+    if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
+
+    // Path too long
+    if ( path.length !== 5 ) {
+      return;
+    }
+
+    //Handle both url layouts
+    let tribe = (() => {
+      if (path[2] === "Creatures") return path[3];
+      if (path[3] === "Creatures") return path[2];
+    })();
+    this.setState({tribe: tribe});
+
+    var name = decodeURIComponent(path[4]);
+
     var self = this;
-    API.getSpreadsheet(API.Creatures[this.tribe], function(data) {
+    API.getSpreadsheet(API.Creatures[tribe], (data) => {
       data.map((item, i) => {
-        if (item.title.$t == self.card) self.setState({creature: item });
+        if (item.title.$t == name)
+          self.setState({creature: item });
       });
       // If no creature set as false
       if (!self.state.creature) {
         self.setState({creature: "n/a"});
       }
     });
-    API.getSpreadsheet(API.Creatures_Card_Data, function(data) {
+    API.getSpreadsheet(API.Creatures_Card_Data, (data) => {
       data.map((item, i) => {
-        if (item.title.$t == self.card) self.setState({card_data: item });
+        if (item.title.$t == name) self.setState({card_data: item });
       });
       // If no card_data set as false
       if (!self.state.card_data) {
@@ -39,41 +67,22 @@ export default class SingleCreature extends React.Component {
   }
 
   render() {
-    let path = this.props.location.pathname.split("/");
-    if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
-
-    // ** Process the tribe ** //
-    // /portal/Creatures/{Tribe}/{Name}
-    // /portal/{Tribe}/Creatures/{Name}
-    // The first / gets counted
-    if ( path.length !== 5 )
-    {
-      return(
-        <PageNotFound location={this.props.location}/>
-      );
-      //return(browserHistory.push('/PageNotFound'));
-    }
-
-    //Handle both url layouts
-    if (path[2] === "Creatures") this.tribe = path[3];
-    if (path[3] === "Creatures") this.tribe = path[2];
+    var self = this;
 
     // Get spreadsheet data based on tribe/name
-    if (!(API.Creatures).hasOwnProperty(this.tribe)) {
+    if (!(API.Creatures).hasOwnProperty(this.state.tribe)) {
       return(
         <PageNotFound location={this.props.location}/>
+        //return(browserHistory.push('/PageNotFound'));
       );
     }
-
-    // this.card is a string for the api call,
-    this.card = decodeURIComponent(path[4]);
 
     // creature is the object to be used in the jsx
     var creature = this.state.creature;
     var card_data = this.state.card_data;
 
     // TODO separate loading of card_data
-    if (creature == "n/a") return(
+    if (creature == "n/a" || card_data == "n/a") return(
       <PageNotFound location={this.props.location}/>
     );
 
@@ -94,7 +103,7 @@ export default class SingleCreature extends React.Component {
     });
 
     return(
-      <div className={"creature " + this.tribe.toLowerCase()}>
+      <div className={"creature " + this.state.tribe.toLowerCase()}>
         <h1>{creature.gsx$name.$t}</h1>
         <img className="splash" src={API.base_image + creature.gsx$splash.$t}></img>
         <hr />
@@ -154,8 +163,8 @@ export default class SingleCreature extends React.Component {
         </div>
         <hr />
         <div>
-          <strong>Tribe: </strong>{this.tribe}
-          <img className="icon" src={"/portal/src/img/icons/tribes/"+this.tribe.toLowerCase()+".png"}></img>
+          <strong>Tribe: </strong>{this.state.tribe}
+          <img className="icon" src={"/portal/src/img/icons/tribes/"+this.state.tribe.toLowerCase()+".png"}></img>
         </div>
         <hr />
         <div>
