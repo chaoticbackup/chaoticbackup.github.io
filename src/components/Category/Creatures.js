@@ -21,8 +21,8 @@ export default class Creatures extends React.Component {
   }
 
   // ** Process the tribe ** //
-  // /portal/Creatures/
-  // /portal/{Tribe}/Creatures/
+  // /collection/Creatures/
+  // /collection/{Tribe}/Creatures/
   // The first / gets counted
   getData(props) {
     if (props.children) return this.props = props;
@@ -75,7 +75,7 @@ export default class Creatures extends React.Component {
         return (
           <div key={i}>
             <Interactive as={Link} {...s.link}
-              to={"/portal/"+tribe}
+              to={"/collection/"+tribe}
             ><span style={s.title}>{tribe}</span></Interactive>
             {list_creatures(tribe, "Creatures/"+tribe+"/")}
             <hr />

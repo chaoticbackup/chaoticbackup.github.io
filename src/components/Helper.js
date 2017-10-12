@@ -23,7 +23,7 @@ export function ChangePage(asParams) {
       location = 'http://www.tradecardsonline.com/?action=selectCard&goal=&game_id=82';
       break;
     case 'portal':
-      location = ('/portal/')
+      location = ('/collection/')
       break;
     case 'forum':
       location = 'http://chaoticbackup.forumotion.com';
@@ -32,7 +32,7 @@ export function ChangePage(asParams) {
       location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
       break;
     default:
-      location = '/portal/UnderConstruction/';
+      location = '/collection/UnderConstruction/';
       break;
   }
   return location;
