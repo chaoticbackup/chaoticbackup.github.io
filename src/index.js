@@ -6,8 +6,6 @@ import App from './components/App';
 import Home from './components/Home';
 import PageNotFound from './components/PageNotFound';
 import UnderConstruction from './components/UnderConstruction';
-import ExampleComponent from './components/ExampleComponent';
-import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
 
 // import Attacks from './component/Category/Attacks';
 // import Battlegear from './component/Category/Battlegear';
@@ -23,12 +21,8 @@ import SingleCreature from './components/Single/Creature';
 
 const routes = (
   <Route path="/" component={App}>
-    <Route path="portal/" mapMenuTitle="Home">
+    <Route path="collection/" mapMenuTitle="Home">
       <IndexRoute component={Home} />
-
-      <Route path="example" mapMenuTitle="Example" component={ExampleComponent}>
-        <Route path="two-deep" mapMenuTitle="Two Deep" component={ExampleTwoDeepComponent} />
-      </Route>
 
       {/* Attacks */}
       <Route path="Attacks" component={UnderConstruction} mapMenuTitle="Attacks">

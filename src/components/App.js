@@ -55,7 +55,7 @@ function App({ children, routes }) {
                       <li id="unity-nav4" className={language}><a href={ChangePage('trade')}><span>Trade</span></a></li>
                       <li id="unity-nav5" className={language}><a href={ChangePage('centerOval')}><span>Home</span></a></li>
                       <li id="unity-nav6" className={language}><a href={ChangePage('forum')}><span>Forums</span></a></li>
-                      <li id="unity-nav7" className={language}><a href={ChangePage('portal')}><span>Portal</span></a></li>
+                      <li id="unity-nav7" className={language}><a href={ChangePage('portal')}><span>Collection</span></a></li>
                       <li id="unity-nav8" className={language}><a href={ChangePage('playNow')}><span>Play</span></a></li>
                       <li id="unity-nav9" className={language}></li>
                     </ul>

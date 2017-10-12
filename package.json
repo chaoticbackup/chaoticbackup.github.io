@@ -1,14 +1,14 @@
 {
-  "name": "chaoticbackup-portal",
+  "name": "chaoticbackup-collection",
   "version": "0.0.2",
-  "description": "Chaotic Backup Portal to Perim",
+  "description": "Chaotic Backup Collection",
   "scripts": {
     "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback --progress",
     "build": "webpack -p"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chaoticbackup/portal.git"
+    "url": "git+https://github.com/chaoticbackup/collection.git"
   },
   "author": "Danude Sandstorm",
   "license": "MIT",

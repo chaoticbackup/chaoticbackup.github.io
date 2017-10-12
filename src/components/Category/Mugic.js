@@ -34,8 +34,8 @@ export default class Mugic extends React.Component {
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // ** Process the tribe ** //
-    // /portal/Mugic/
-    // /portal/{Tribe}/Mugic/
+    // /collection/Mugic/
+    // /collection/{Tribe}/Mugic/
     // The first / gets counted
 
     return (
