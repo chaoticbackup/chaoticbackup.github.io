@@ -1,9 +1,9 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-import PageNotFound from '../PageNotFound';
-import API from '../Spreadsheet';
-import s from '../../styles/app.style';
+import PageNotFound from '../../PageNotFound';
+import API from '../../Spreadsheet';
+import s from '../../../styles/app.style';
 
 export default class Creatures extends React.Component {
 
@@ -21,8 +21,8 @@ export default class Creatures extends React.Component {
   }
 
   // ** Process the tribe ** //
-  // /collection/Creatures/
-  // /collection/{Tribe}/Creatures/
+  // /portal/Creatures/
+  // /portal/{Tribe}/Creatures/
   // The first / gets counted
   getData(props) {
     if (props.children) return this.props = props;
@@ -75,7 +75,7 @@ export default class Creatures extends React.Component {
         return (
           <div key={i}>
             <Interactive as={Link} {...s.link}
-              to={"/collection/"+tribe}
+              to={"/portal/"+tribe}
             ><span style={s.title}>{tribe}</span></Interactive>
             {list_creatures(tribe, "Creatures/"+tribe+"/")}
             <hr />

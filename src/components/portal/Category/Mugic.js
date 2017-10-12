@@ -1,10 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-import UnderConstruction from '../UnderConstruction';
-import PageNotFound from '../PageNotFound';
-import API from '../Spreadsheet';
-import s from '../../styles/app.style';
+import UnderConstruction from '../../UnderConstruction';
+import PageNotFound from '../../PageNotFound';
+import API from '../../Spreadsheet';
+import s from '../../../styles/app.style';
 
 export default class Mugic extends React.Component {
 
@@ -34,8 +34,8 @@ export default class Mugic extends React.Component {
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // ** Process the tribe ** //
-    // /collection/Mugic/
-    // /collection/{Tribe}/Mugic/
+    // /portal/Mugic/
+    // /portal/{Tribe}/Mugic/
     // The first / gets counted
 
     return (

@@ -6,25 +6,20 @@ import s from '../styles/home.style';
 function Home() {
   return (
     <div>
-      <Interactive as={Link} {...s.link}
-        to="/collection/Creatures"
-      >Creatures</Interactive>
-      <br />
-      <Interactive as={Link} {...s.link}
-        to="/collection/Danian/Creatures"
-      >Danian</Interactive>
-      <br />
-      <Interactive as={Link} {...s.link}
-        to="/collection/Overworld/Creatures"
-      >Overworld</Interactive>
-      <br />
-      <Interactive as={Link} {...s.link}
-        to="/collection/Underworld/Creatures"
-      >Underworld</Interactive>
-      <br />
-      <Interactive as={Link} {...s.link}
-        to="/collection/Mipedian/Creatures"
-      >Mipedian</Interactive>
+      <div style={s.pageLinkContainer}>
+        <Interactive
+          as={Link}
+          {...s.link}
+          to="/example"
+        >Example page</Interactive>
+      </div>
+      <div style={s.pageLinkContainer}>
+        <Interactive
+          as={Link}
+          {...s.link}
+          to="/example/two-deep?field1=foo&field2=bar#boom!"
+        >Example two deep with query and hash</Interactive>
+      </div>
     </div>
   );
 }

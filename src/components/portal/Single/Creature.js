@@ -2,10 +2,10 @@ import React from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
 // import {browserHistory} from 'react-router';
-import PageNotFound from '../PageNotFound';
-import UnderConstruction from '../UnderConstruction';
-import API from '../Spreadsheet';
-import s from '../../styles/app.style';
+import PageNotFound from '../../PageNotFound';
+import UnderConstruction from '../../UnderConstruction';
+import API from '../../Spreadsheet';
+import s from '../../../styles/app.style';
 
 export default class SingleCreature extends React.Component {
 
@@ -23,8 +23,8 @@ export default class SingleCreature extends React.Component {
   }
 
   // ** Process the tribe ** //
-  // /collection/Creatures/{Tribe}/{Name}
-  // /collection/{Tribe}/Creatures/{Name}
+  // /portal/Creatures/{Tribe}/{Name}
+  // /portal/{Tribe}/Creatures/{Name}
   // The first / gets counted
   getData(props) {
     let path = props.location.pathname.split("/");
@@ -91,15 +91,15 @@ export default class SingleCreature extends React.Component {
     );
 
     const elements = card_data.gsx$elements.$t.split(/[ ,]+/).map((item, i) => {
-      return <img className="icon" src={"/collection/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
+      return <img className="icon" src={"/portal/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
     });
 
     const locations = creature.gsx$location.$t.split(/[,]+\s*/).map((item, i) => {
-      return <p key={i}><Interactive as={Link} {...s.link} to={"/collection/Locations/"+item}><span>{item}</span></Interactive></p>;
+      return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
     });
 
     const battlegear = creature.gsx$battlegear.$t.split(/[,]+\s*/).map((item, i) => {
-      return <p key={i}><Interactive as={Link} {...s.link} to={"/collection/Battlegear/"+item}><span>{item}</span></Interactive></p>;
+      return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
     });
 
     return(
@@ -164,7 +164,7 @@ export default class SingleCreature extends React.Component {
         <hr />
         <div>
           <strong>Tribe: </strong>{this.state.tribe}
-          <img className="icon" src={"/collection/src/img/icons/tribes/"+this.state.tribe.toLowerCase()+".png"}></img>
+          <img className="icon" src={"/portal/src/img/icons/tribes/"+this.state.tribe.toLowerCase()+".png"}></img>
         </div>
         <hr />
         <div>
