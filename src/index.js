@@ -6,23 +6,44 @@ import App from './components/App';
 import Home from './components/Home';
 import PageNotFound from './components/PageNotFound';
 import UnderConstruction from './components/UnderConstruction';
+import ExampleComponent from './components/ExampleComponent';
+import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
 
-// import Attacks from './component/Category/Attacks';
-// import Battlegear from './component/Category/Battlegear';
-import Creatures from './components/Category/Creatures';
-// import Locations from './component/Category/Locations';
-import Mugic from './components/Category/Mugic';
-import Tribes from './components/Category/Tribes';
-// import SingleAttack from './component/Category/Attacks';
-// import SingleBattlegear from './component/Category/Battlegear';
-import SingleCreature from './components/Single/Creature';
-// import SingleLocation from './component/Category/Locations';
-// import SingleMugic from './component/Category/Mugic';
+import CollectionHome from './components/collection/Home';
+
+import PortalHome from './components/portal/Home';
+// import Attacks from './components/portal/Category/Attacks';
+// import Battlegear from './components/portal/Category/Battlegear';
+import Creatures from './components/portal/Category/Creatures';
+// import Locations from './components/portal/Category/Locations';
+import Mugic from './components/portal/Category/Mugic';
+import Tribes from './components/portal/Category/Tribes';
+// import SingleAttack from './components/portal/Category/Attacks';
+// import SingleBattlegear from './components/portal/Category/Battlegear';
+import SingleCreature from './components/portal/Single/Creature';
+// import SingleLocation from './components/portal/Category/Locations';
+// import SingleMugic from './components/portal/Category/Mugic';
 
 const routes = (
-  <Route path="/" component={App}>
-    <Route path="collection/" mapMenuTitle="Home">
-      <IndexRoute component={Home} />
+  <Route path="/" component={App} mapMenuTitle="Home">
+    <IndexRoute component={Home} />
+
+    {/* Test */}
+    <Route path="example" mapMenuTitle="Example" component={ExampleComponent}>
+      <Route path="two-deep" mapMenuTitle="Two Deep" component={ExampleTwoDeepComponent} />
+    </Route>
+
+    {/* Construction */}
+    <Route path="construction/" component={UnderConstruction} />
+
+    {/* Collection */}
+    <Route path="collection/" mapMenuTitle="Collection">
+      <IndexRoute component={CollectionHome} />
+    </Route>
+
+    {/* Portal */}
+    <Route path="portal/" mapMenuTitle="Portal">
+      <IndexRoute component={PortalHome} />
 
       {/* Attacks */}
       <Route path="Attacks" component={UnderConstruction} mapMenuTitle="Attacks">

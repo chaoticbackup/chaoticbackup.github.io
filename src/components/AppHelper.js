@@ -7,15 +7,15 @@ export function ChangePage(asParams) {
   let location = "#";
   switch (asParams) {
     case 'collect':
-      location = 'http://www.tradecardsonline.com/im/editCollection/collection_type/1';
+      location = '/collection/';
       break;
-    // case 'register' :
-    //   location ='/Registration.aspx';
-    //   break;
+    case 'register':
+      break;
     case 'build':
       location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
       break;
     case 'centerOval':
+      location = '/';
       break;
     case 'enterTheCode':
       break;
@@ -23,7 +23,7 @@ export function ChangePage(asParams) {
       location = 'http://www.tradecardsonline.com/?action=selectCard&goal=&game_id=82';
       break;
     case 'portal':
-      location = ('/collection/')
+      location = '/portal/';
       break;
     case 'forum':
       location = 'http://chaoticbackup.forumotion.com';
@@ -32,7 +32,7 @@ export function ChangePage(asParams) {
       location = 'http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82';
       break;
     default:
-      location = '/collection/UnderConstruction/';
+      location = '/construction/';
       break;
   }
   return location;

@@ -1,5 +1,5 @@
 import React from 'react';
-import UnderConstruction from '../UnderConstruction';
+import UnderConstruction from '../../UnderConstruction';
 
 // This module handles tribe pages and subpages
 // Allows for urls such as
