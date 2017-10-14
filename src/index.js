@@ -2,15 +2,19 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import App from './components/App';
-import Home from './components/Home';
+import App from './Base';
 import PageNotFound from './components/PageNotFound';
 import UnderConstruction from './components/UnderConstruction';
 import ExampleComponent from './components/ExampleComponent';
 import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
 
+/* Home Page */
+import Home from './components/Home';
+
+/* Collection */
 import CollectionHome from './components/collection/Home';
 
+/* Portal */
 import PortalHome from './components/portal/Home';
 // import Attacks from './components/portal/Category/Attacks';
 // import Battlegear from './components/portal/Category/Battlegear';

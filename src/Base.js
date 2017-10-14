@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-import s from '../styles/app.style';
-import {ChangePage, language, bkgrnd } from './AppHelper';
+import s from './styles/app.style';
+
+const language = "ENG";
+const bkgrnd = "05";
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -50,17 +52,17 @@ function App({ children, routes }) {
                   <div className="zero-clear-line headerSpriteNav-wrap">
                     <ul id="unity-sprite" className={language}>
                       <li id="unity-nav1" className={language}></li>
-                      <li id="unity-nav2" className={language}><a href={ChangePage('collect')}><span>Collect</span></a></li>
-                      <li id="unity-nav3" className={language}><a href={ChangePage('build')}><span>Build</span></a></li>
-                      <li id="unity-nav4" className={language}><a href={ChangePage('trade')}><span>Trade</span></a></li>
-                      <li id="unity-nav5" className={language}><a href={ChangePage('centerOval')}><span>Home</span></a></li>
-                      <li id="unity-nav6" className={language}><a href={ChangePage('forum')}><span>Forums</span></a></li>
-                      <li id="unity-nav7" className={language}><a href={ChangePage('portal')}><span>Portal</span></a></li>
-                      <li id="unity-nav8" className={language}><a href={ChangePage('playNow')}><span>Play</span></a></li>
+                      <li id="unity-nav2" className={language}><Link to={`/collection/`}><span>Collect</span></Link></li>
+                      <li id="unity-nav3" className={language}><a href="http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82"><span>Build</span></a></li>
+                      <li id="unity-nav4" className={language}><a href="http://www.tradecardsonline.com/?action=selectCard&goal=&game_id=82"><span>Trade</span></a></li>
+                      <li id="unity-nav5" className={language}><Link to={`/`}><span>Home</span></Link></li>
+                      <li id="unity-nav6" className={language}><a href="http://chaoticbackup.forumotion.com"><span>Forums</span></a></li>
+                      <li id="unity-nav7" className={language}><Link to={`/portal/`}><span>Portal</span></Link></li>
+                      <li id="unity-nav8" className={language}><a href="http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82"><span>Play</span></a></li>
                       <li id="unity-nav9" className={language}></li>
                     </ul>
                     <ul id="unityETC-sprite" className={language}>
-                      <li id="unity-nav10" className={language}><a href={ChangePage('enterTheCode')}><span>Enter the Code</span></a></li>
+                      <li id="unity-nav10" className={language}><a href={`#`}><span>Enter the Code</span></a></li>
                     </ul>
                   </div>
                 </div>

@@ -7,9 +7,7 @@ const propTypes = {
 
 function UnderConstruction({ location }) {
   return (
-    <p style={s.p}>
-      This page is currently under construction {s.code(location.pathname)}
-    </p>
+    <p style={s.p}>This page is currently under construction</p>
   );
 }
 

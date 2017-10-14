@@ -112,7 +112,7 @@
 }
 .fix-pgBkgrnd-repeat-x {
   position:fixed; z-index:-2;
-  background-image:url(../img/bkgrnd-repeat-x.jpg);
+  background-image:url(../img/base/bkgrnd-repeat-x.jpg);
   background-position: top left;
   background-repeat:repeat-x;
 }
@@ -122,27 +122,27 @@
   background-repeat: no-repeat;
 }
 .fix-img-bkgrnd_01 {
-  background-image:url(../img/visual-bkgrnd.jpg);
+  background-image:url(../img/base/visual-bkgrnd.jpg);
   background-position: center 212px;
 }
 .fix-img-bkgrnd_02 {
-  background-image:url(../img/visual-bkgrnd_02.jpg);
+  background-image:url(../img/base/visual-bkgrnd_02.jpg);
   background-position: center 1px;
 }
 .fix-img-bkgrnd_03 {
-  background-image:url(../img/visual-bkgrnd_03.jpg);
+  background-image:url(../img/base/visual-bkgrnd_03.jpg);
 }
 .fix-img-bkgrnd_04 {
-  background-image:url(../img/visual-bkgrnd_04.jpg);
+  background-image:url(../img/base/visual-bkgrnd_04.jpg);
 }
 .fix-img-bkgrnd_05 {
-  background-image:url(../img/visual-bkgrnd_05.jpg);
+  background-image:url(../img/base/visual-bkgrnd_05.jpg);
 }
 .fix-img-bkgrnd_06 {
-  background-image:url(../img/visual-bkgrnd_06.jpg);
+  background-image:url(../img/base/visual-bkgrnd_06.jpg);
 }
 .fix-img-bkgrnd_german_01 {
-  background-image:url(../img/visual-bkgrnd_german_01.jpg);
+  background-image:url(../img/base/visual-bkgrnd_german_01.jpg);
 }
 .pgBkgrnd-repeat-x {
   width:100%; z-index:0;
@@ -224,21 +224,21 @@
 }
 
 /*--- Sprite Nav (English) ---*/
-#unity-sprite.ENG { background: url(../img/unity-sprite-nav.png); }
+#unity-sprite.ENG { background: url(../img/base/unity-sprite-nav.png); }
 
-#unity-nav1.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) 0px -170px; background-repeat:no-repeat;}
-#unity-nav2.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -43px -170px; background-repeat:no-repeat;}
-#unity-nav3.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -167px -170px; background-repeat:no-repeat;}
-#unity-nav4.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -291px -170px; background-repeat:no-repeat;}
-#unity-nav5.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -413px -170px; background-repeat:no-repeat;}
-#unity-nav6.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -538px -170px; background-repeat:no-repeat;}
-#unity-nav7.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -662px -170px; background-repeat:no-repeat;}
-#unity-nav8.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -786px -170px; background-repeat:no-repeat;}
-#unity-nav9.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -910px -170px; background-repeat:no-repeat;}
+#unity-nav1.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) 0px -170px; background-repeat:no-repeat;}
+#unity-nav2.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -43px -170px; background-repeat:no-repeat;}
+#unity-nav3.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -167px -170px; background-repeat:no-repeat;}
+#unity-nav4.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -291px -170px; background-repeat:no-repeat;}
+#unity-nav5.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -413px -170px; background-repeat:no-repeat;}
+#unity-nav6.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -538px -170px; background-repeat:no-repeat;}
+#unity-nav7.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -662px -170px; background-repeat:no-repeat;}
+#unity-nav8.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -786px -170px; background-repeat:no-repeat;}
+#unity-nav9.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -910px -170px; background-repeat:no-repeat;}
 
-#unityETC-sprite.ENG { background: url(../img/unity-sprite-nav.png) -364px -120px no-repeat; }
+#unityETC-sprite.ENG { background: url(../img/base/unity-sprite-nav.png) -364px -120px no-repeat; }
 
-#unity-nav10.ENG a:hover {background: transparent url(../img/unity-sprite-nav.png) -364px -290px; background-repeat:no-repeat;}
+#unity-nav10.ENG a:hover {background: transparent url(../img/base/unity-sprite-nav.png) -364px -290px; background-repeat:no-repeat;}
 
 /*--- Sprite Nav (French) ---*/
 #unity-sprite.FRA { background: url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/unity-sprite-nav_French.png); }
@@ -335,19 +335,19 @@
 }
 .footer-repeat-x {
     width: 100%; height:54px;
-    background-image:url(../img/footer-repeat-x.gif);
+    background-image:url(../img/base/footer-repeat-x.gif);
     background-position: left top;
     background-repeat:repeat-x;
 }
 .footer-left {
     width: 100%; height:54px;
-    background-image:url(../img/footer-left.gif);
+    background-image:url(../img/base/footer-left.gif);
     background-position: left top;
     background-repeat:no-repeat;
 }
 .footer-right {
     width: 100%; height:54px;
-    background-image:url(../img/footer-right.gif);
+    background-image:url(../img/base/footer-right.gif);
     background-position: right top;
     background-repeat:no-repeat;
 }
@@ -426,117 +426,117 @@
 }
 .content-heading-base-repeat-x{
   width:100%; height:70px;
-  background-image:url(../img/content-heading-base-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-base-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left; clear:both;
 }
 .content-heading-base-repeat-x2{
   width:50%; height:70px;
-  background-image:url(../img/content-heading-base-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-base-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left;
 }
 .heading-left-repeat-x{
   width:35%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-left-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-left-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left;
 }
 .heading-left{
   width:100%; height:70px;
-  background-image:url(../img/content-heading-left.jpg);
+  background-image:url(../img/base/content-heading-left.jpg);
   background-position:top left;
   background-repeat:no-repeat;
 }
 .heading-left-repeat-x2{
   width:90%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-left-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-left-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:right;
 }
 .heading-left-repeat-x3{
   width:80%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-left-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-left-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:right;
 }
 .heading-left2{
   width:35%; height:70px;
-  background-image:url(../img/content-heading-left.gif);
+  background-image:url(../img/base/content-heading-left.gif);
   background-position:top left;
   background-repeat:no-repeat;
   float:left;
 }
 .heading-center-rises{
   width:50%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-left-rise.jpg);
+  background-image:url(../img/base/content-heading-left-rise.jpg);
   background-position:top left;
   background-repeat:no-repeat;
   float:left;
 }
 .heading-center-rises4{
   width:100%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-left-rise.jpg);
+  background-image:url(../img/base/content-heading-left-rise.jpg);
   background-position:top left;
   background-repeat:no-repeat;
   float:left;
 }
 .heading-center-rises2{
   width:100%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-right-rise.jpg);
+  background-image:url(../img/base/content-heading-right-rise.jpg);
   background-position:top left;
   background-repeat:no-repeat;
   float:left;
 }
 .heading-center-rises3{
   width:100%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-right-rise.jpg);
+  background-image:url(../img/base/content-heading-right-rise.jpg);
   background-position:top right;
   background-repeat:no-repeat;
   float:left;
 }
 .heading-right-repeat-x{
   width:15%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-right-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-right-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:right;
 }
 .heading-right{
   width:100%; height:70px;
-  background-image:url(../img/content-heading-right.jpg);
+  background-image:url(../img/base/content-heading-right.jpg);
   background-position:top right;
   background-repeat:no-repeat;
 }
 .heading-right-repeat-x2{
   width:85%; height:70px; line-height:70px; margin-left:-3px;
-  background-image:url(../img/content-heading-right-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-right-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left;
 }
 .heading-right-repeat-x3{
   width:80%; height:70px; line-height:70px; margin-left:-3px;
-  background-image:url(../img/content-heading-right-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-right-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left;
 }
 .heading-right-repeat-x4{
   width:85%; height:70px; line-height:70px;
-  background-image:url(../img/content-heading-right-repeat-x.jpg);
+  background-image:url(../img/base/content-heading-right-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left;
 }
 .heading-right2{
   width:15%; height:70px;
-  background-image:url(../img/content-heading-right.gif);
+  background-image:url(../img/base/content-heading-right.gif);
   background-position:top right;
   background-repeat:no-repeat;
   float:right;
@@ -552,56 +552,56 @@
 }
 .content-area-left-repeat-y{
   width:100%;
-  background-image:url(../img/content-area-left-repeat-y.jpg);
+  background-image:url(../img/base/content-area-left-repeat-y.jpg);
   background-position:top left;
   background-repeat:repeat-y;
   float:left; clear:both;
 }
 .content-area-right-repeat-y{
   width:100%;
-  background-image:url(../img/content-area-right-repeat-y.jpg);
+  background-image:url(../img/base/content-area-right-repeat-y.jpg);
   background-position:top right;
   background-repeat:repeat-y;
   float:left; clear:both;
 }
 .content-area-top-repeat-x{
   width:100%;
-  background-image:url(../img/content-area-top-repeat-x.jpg);
+  background-image:url(../img/base/content-area-top-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left; clear:both;
 }
 .content-area-top-left{
   width:100%;
-  background-image:url(../img/content-top-left.jpg);
+  background-image:url(../img/base/content-top-left.jpg);
   background-position:top left;
   background-repeat:no-repeat;
   float:left; clear:both;
 }
 .content-area-top-right{
   width:100%;
-  background-image:url(../img/content-top-right.jpg);
+  background-image:url(../img/base/content-top-right.jpg);
   background-position:top right;
   background-repeat:no-repeat;
   float:left; clear:both;
 }
 .content-area-base-repeat-x{
   width:100%; height:22px;
-  background-image:url(../img/content-base-repeat-x.jpg);
+  background-image:url(../img/base/content-base-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left; clear:both;
 }
 .content-area-base-left{
   width:100%; height:22px;
-  background-image:url(../img/content-base-left.jpg);
+  background-image:url(../img/base/content-base-left.jpg);
   background-position:top left;
   background-repeat:no-repeat;
   float:left; clear:both;
 }
 .content-area-base-right{
   width:100%; height:22px;
-  background-image:url(../img/content-base-right.jpg);
+  background-image:url(../img/base/content-base-right.jpg);
   background-position:top right;
   background-repeat:no-repeat;
   float:left; clear:both;
@@ -617,21 +617,21 @@
 }
 .content-left-btm-repeat-x{
   width:95%; height:22px;
-  background-image:url(../img/content-btm-repeat-x.jpg);
+  background-image:url(../img/base/content-btm-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:right; clear:both;
 }
 .content-right-btm-repeat-x{
   width:95%; height:22px;
-  background-image:url(../img/content-btm-repeat-x.jpg);
+  background-image:url(../img/base/content-btm-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left; clear:both;
 }
 .content-left-btm-repeat-x2{
   width:97%; height:22px;
-  background-image:url(../img/content-btm-repeat-x.jpg);
+  background-image:url(../img/base/content-btm-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   margin-right:-1px;
@@ -639,21 +639,21 @@
 }
 .content-right-btm-repeat-x2{
   width:97%; height:22px;
-  background-image:url(../img/content-btm-repeat-x.jpg);
+  background-image:url(../img/base/content-btm-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:left; clear:both;
 }
 .content-area-btm-left{
   width:51%; height:22px;
-  background-image:url(../img/content-btm-left.gif);
+  background-image:url(../img/base/content-btm-left.gif);
   background-position:left top;
   background-repeat:no-repeat;
   float:left;
 }
 .content-area-btm-right{
   width:49%; height:22px;
-  background-image: url(../img/content-btm-right.gif);
+  background-image: url(../img/base/content-btm-right.gif);
   background-position:right top;
   background-repeat:no-repeat;
   float:right;
@@ -667,52 +667,52 @@
 }
 .adPod-topleft{
   width:60%; height:26px;
-  background: url(../img/adsPod-topLeft.gif) top left no-repeat;
+  background: url(../img/base/adsPod-topLeft.gif) top left no-repeat;
   float:left;
 }
 .adPod-topright{
   width:40%; height:26px;
-  background: url(../img/adsPod-topRight.gif) top right no-repeat;
+  background: url(../img/base/adsPod-topRight.gif) top right no-repeat;
   float:right;
 }
 .videoAdPod-topleft{
   width:60%; height:26px;
-  background: url(../img/videoPod-topLeft.gif) top left no-repeat;
+  background: url(../img/base/videoPod-topLeft.gif) top left no-repeat;
   float:left;
 }
 .videoAdPod-topright{
   width:40%; height:26px;
-  background: url(../img/videoPod-topRight.gif) top right no-repeat;
+  background: url(../img/base/videoPod-topRight.gif) top right no-repeat;
   float:right;
 }
 .videoAdPod-topLeft-repeat-x{
   width:80%; height:26px;
-  background: url(../img/videoPod-repeat-x.gif) top right repeat-x;
+  background: url(../img/base/videoPod-repeat-x.gif) top right repeat-x;
   float:right;
 }
 .videoAdPod-topRight-repeat-x{
   width:80%; height:26px;
-  background: url(../img/videoPod-repeat-x.gif) top left repeat-x;
+  background: url(../img/base/videoPod-repeat-x.gif) top left repeat-x;
   float:left; margin-left:-5px;
 }
 .adPod-topLeft-repeat-x{
   width:80%; height:26px;
-  background: url(../img/adsPod-top.gif) top right repeat-x;
+  background: url(../img/base/adsPod-top.gif) top right repeat-x;
   float:right;
 }
 .adPod-topRight-repeat-x2{
   width:95%; height:26px;
-  background: url(../img/adsPod-top.gif) top left repeat-x;
+  background: url(../img/base/adsPod-top.gif) top left repeat-x;
   float:left; margin-left:-5px;
 }
 .adPod-topLeft-repeat-x2{
   width:95%; height:26px;
-  background: url(../img/adsPod-top.gif) top right repeat-x;
+  background: url(../img/base/adsPod-top.gif) top right repeat-x;
   float:right;
 }
 .adPod-topRight-repeat-x{
   width:80%; height:26px;
-  background: url(../img/adsPod-top.gif) top left repeat-x;
+  background: url(../img/base/adsPod-top.gif) top left repeat-x;
   float:left; margin-left:-5px;
 }
 .adsBody-wrap{
@@ -722,12 +722,12 @@
 }
 .adPod-left-repeat-y{
   width:100%;
-  background: url(../img/adsPod-left.gif) top left repeat-y;
+  background: url(../img/base/adsPod-left.gif) top left repeat-y;
   float:left;
 }
 .adPod-right-repeat-y{
   width:100%;
-  background: url(../img/adsPod-right.gif) top right repeat-y;
+  background: url(../img/base/adsPod-right.gif) top right repeat-y;
   float:right;
 }
 .adPod-btm-wrap{
@@ -736,22 +736,22 @@
 }
 .adPod-btmleft{
   width:60%; height:26px;
-  background: url(../img/adsPod-btmLeft.gif) top left no-repeat;
+  background: url(../img/base/adsPod-btmLeft.gif) top left no-repeat;
   float:left;
 }
 .adPod-btmright{
   width:40%; height:26px;
-  background: url(../img/adsPod-btmRight.gif) top right no-repeat;
+  background: url(../img/base/adsPod-btmRight.gif) top right no-repeat;
   float:right;
 }
 .adPod-btmLeft-repeat-x{
   width:80%; height:26px;
-  background: url(../img/adsPod-btm.gif) top right repeat-x;
+  background: url(../img/base/adsPod-btm.gif) top right repeat-x;
   float:right;
 }
 .adPod-btmRight-repeat-x{
   width:80%; height:26px;
-  background: url(../img/adsPod-btm.gif) top left repeat-x;
+  background: url(../img/base/adsPod-btm.gif) top left repeat-x;
   float:left; margin-left:-5px;
 }
 .adsBody-margin{margin:0 16px 0 14px;}
