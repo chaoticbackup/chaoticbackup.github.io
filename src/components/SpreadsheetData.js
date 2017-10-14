@@ -5,21 +5,29 @@ class URLS {
   static base_url = "https://spreadsheets.google.com/feeds/list/";
   static data_format = "/od6/public/values?alt=json";
   // + "/od6/public/basic?alt=json"; // Alternate data format
+  static base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
   get base_image() { return "https://drive.google.com/uc?id="; }
 
-  constructor() {}
-
-  // Singleton
-  static instance = null;
-  static createInstance() {
-      var object = new URLS();
-      return object;
+  static path(spreadsheetID) {
+    return URLS.base_url + spreadsheetID + URLS.data_format;
   }
 
+  constructor() {
+    // This sets up urls
+    this.urls = {};
+    var self = this;
+    this.getSpreadsheet(URLS.path(URLS.base_spreadsheet), function(data) {
+      data.forEach(function(d) {
+        if (!self.urls[d.gsx$type.$t]) self.urls[d.gsx$type.$t] = {};
+        self.urls[d.gsx$type.$t][d.gsx$subtype.$t] = d.gsx$url.$t;
+      });
+    });
+  }
+
+  // Singleton
+  instance = null;
   static getInstance() {
-      if (!URLS.instance) {
-          URLS.instance = URLS.createInstance();
-      }
+      if (!URLS.instance) { URLS.instance = new URLS(); }
       return URLS.instance;
   }
 
@@ -35,11 +43,8 @@ class URLS {
       });
   }
 
-  static path(spreadsheetID) {
-    return URLS.base_url + spreadsheetID + URLS.data_format;
-  }
-
   /* Creatures */
+  /* TODO remove legacy getters when introducing state management*/
   get Creatures_Card_Data() {
     return URLS.path("1fUFYhG1NLLkSTzrdbevm6ZMKNP6xLiKUZvM1sY10pVI");
   }
