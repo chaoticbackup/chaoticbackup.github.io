@@ -91,7 +91,7 @@ export default class SingleCreature extends React.Component {
     );
 
     const elements = card_data.gsx$elements.$t.split(/[ ,]+/).map((item, i) => {
-      return <img className="icon" src={"/portal/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
+      return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
     });
 
     const locations = creature.gsx$location.$t.split(/[,]+\s*/).map((item, i) => {
@@ -164,7 +164,7 @@ export default class SingleCreature extends React.Component {
         <hr />
         <div>
           <strong>Tribe: </strong>{this.state.tribe}
-          <img className="icon" src={"/portal/src/img/icons/tribes/"+this.state.tribe.toLowerCase()+".png"}></img>
+          <img className="icon" src={"/src/img/icons/tribes/"+this.state.tribe.toLowerCase()+".png"}></img>
         </div>
         <hr />
         <div>
@@ -175,6 +175,21 @@ export default class SingleCreature extends React.Component {
         <div>
           <strong>Courage: </strong>
           {card_data.gsx$courage.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Power: </strong>
+          {card_data.gsx$power.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Speed: </strong>
+          {card_data.gsx$speed.$t}
+        </div>
+        <hr />
+        <div>
+          <strong>Wisdom: </strong>
+          {card_data.gsx$wisdom.$t}
         </div>
         <hr />
         <div>
@@ -194,21 +209,6 @@ export default class SingleCreature extends React.Component {
         <div>
           <strong>Mugic Ability: </strong>
           {card_data.gsx$mugicability.$t}
-        </div>
-        <hr />
-        <div>
-          <strong>Power: </strong>
-          {card_data.gsx$power.$t}
-        </div>
-        <hr />
-        <div>
-          <strong>Speed: </strong>
-          {card_data.gsx$speed.$t}
-        </div>
-        <hr />
-        <div>
-          <strong>Wisdom: </strong>
-          {card_data.gsx$wisdom.$t}
         </div>
       </div>
     );
