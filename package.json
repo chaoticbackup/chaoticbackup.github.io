@@ -1,6 +1,6 @@
 {
   "name": "chaoticbackup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Chaotic Backup",
   "scripts": {
     "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback --progress",

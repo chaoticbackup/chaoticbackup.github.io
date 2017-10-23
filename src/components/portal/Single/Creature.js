@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 // import {browserHistory} from 'react-router';
 import PageNotFound from '../../PageNotFound';
 import UnderConstruction from '../../UnderConstruction';
-import API from '../../Spreadsheet';
+import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 
 export default class SingleCreature extends React.Component {
