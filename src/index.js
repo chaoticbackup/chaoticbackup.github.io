@@ -71,22 +71,16 @@ const routes = (
 
       {/* Creatures */}
       <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
-        <Route path="Overworld" component={Tribes} mapMenuTitle="Overworld">
+        <Route path="Overworld" component={Creatures} mapMenuTitle="Overworld">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Underworld" component={Tribes} mapMenuTitle="Underworld">
+        <Route path="Underworld" component={Creatures} mapMenuTitle="Underworld">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mipedian" component={Tribes} mapMenuTitle="Mipedian">
+        <Route path="Mipedian" component={Creatures} mapMenuTitle="Mipedian">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Danian" component={Tribes} mapMenuTitle="Danian">
-          <Route path="*" component={SingleCreature} />
-        </Route>
-        <Route path="Marrillian" component={Tribes} mapMenuTitle="M'arrillian">
-          <Route path="*" component={SingleCreature} />
-        </Route>
-        <Route path="Generic" component={Tribes} mapMenuTitle="Generic">
+        <Route path="Danian" component={Creatures} mapMenuTitle="Danian">
           <Route path="*" component={SingleCreature} />
         </Route>
       </Route>
@@ -103,9 +97,6 @@ const routes = (
           <Route path="*" component={UnderConstruction} />
         </Route>
         <Route path="Danian" component={Tribes} mapMenuTitle="Danian">
-          <Route path="*" component={UnderConstruction} />
-        </Route>
-        <Route path="Marrillian" component={Tribes} mapMenuTitle="M'arrillian">
           <Route path="*" component={UnderConstruction} />
         </Route>
         <Route path="Generic" component={Tribes} mapMenuTitle="Generic">

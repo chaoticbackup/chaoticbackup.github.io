@@ -37,9 +37,9 @@ export default class SingleCreature extends React.Component {
     }
 
     // Todo this isn't needed for now (handled by routes)
-    // if (!store.urls.Creatures.hasOwnProperty(tribe)) {
-    //   return (<span>Invalid Tribe: {tribe}</span>);
-    // }
+    if (!store.urls.Creatures.hasOwnProperty(tribe)) {
+      return (<span>Invalid Tribe: {tribe}</span>);
+    }
 
     if (!store.cards.built.includes("creatures_Cards")) {
       store.cards.setupCreatures("Cards");

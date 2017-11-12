@@ -5,67 +5,76 @@ import PageNotFound from '../../PageNotFound';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import UnderConstruction from '../../UnderConstruction';
+import {observer, inject} from 'mobx-react';
 
+@inject((stores, props, context) => props) @observer
 export default class Creatures extends React.Component {
 
+  // ** Process the tribe ** //
+  // /portal/Creatures/
+  // /portal/{Tribe}/Creatures/
+  // The first / gets counted
   render() {
     if (this.props.children) {
       return (<div>{this.props.children}</div>);
     }
-    return (
-      <UnderConstruction location={this.props.location}/>
-    );
-  }
+    const store = API;
 
-  fakerender() {
-    if (this.props.children) {
-      return (<div>{this.props.children}</div>);
+    let path = this.props.location.pathname.split("/");
+    if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
+
+    let tribe = (() => {
+      if (path.length !== 4) return "None";
+      if (path[2] === "Creatures") return path[3];
+      if (path[3] === "Creatures") return path[2];
+    })();
+
+    if (store.urls === null ||
+      store.portal === null) {
+      return (<span>Loading...</span>);
     }
-    var self = this;
 
-    // If tribe
-    if (this.state.tribe !== "All") {
-      if (!(API.Creatures).hasOwnProperty(this.state.tribe)) {
-        return(
-          <PageNotFound location={this.props.location}/>
-        );
-      }
-      else return (
-        <div>{list_creatures(this.state.tribe)}</div>
+    // If there isn't a supported tribe,
+    // Displays list of tribes
+    if (!store.urls.Creatures.hasOwnProperty(tribe)) {
+      return(
+        <div>
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/Danian"
+          >Danian</Interactive>
+          <br />
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/Overworld"
+          >Overworld</Interactive>
+          <br />
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/Underworld"
+          >Underworld</Interactive>
+          <br />
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/Mipedian"
+          >Mipedian</Interactive>
+        </div>
       );
     }
-    // No tribe specified
-    // Display all creatures
-    else {
-      const creatures = Object.keys(this.state.creatures).map(function(tribe, i) {
-        return (
-          <div key={i}>
-            <Interactive as={Link} {...s.link}
-              to={"/portal/"+tribe}
-            ><span style={s.title}>{tribe}</span></Interactive>
-            {list_creatures(tribe, "Creatures/"+tribe+"/")}
-            <hr />
-          </div>
-        );
-      });
-      return (<div>{creatures}</div>);
+
+    if (!store.portal.built.includes("creatures_"+tribe)) {
+      store.portal.setupCreatures(tribe);
+      return (<span>Loading...</span>);
     }
 
-    // Map creatures of the tribe
-    function list_creatures(tribe, path="Creatures/") {
-      if (!self.state.creatures[tribe]) {
-        return (<span>Loading...</span>);
-      }
-      else return self.state.creatures[tribe].map((creature, i) => {
-        return (
-          <div key={i}>
-            <Interactive as={Link} {...s.link}
-              to={path+creature.gsx$name.$t}
-              onClick={self.hacks}
-            ><span>{creature.gsx$name.$t}</span></Interactive>
-          </div>
-        );
-      });
-    }
+    const creatures = store.portal.creatures.find({'gsx$tribe': tribe});
+    const output = creatures.map((creature, i) => {
+      return (
+        <div key={i}>
+          <Interactive as={Link} {...s.link}
+            to={'/portal/Creatures/'+tribe+'/'+creature.gsx$name}
+          ><span>{creature.gsx$name}</span></Interactive>
+        </div>
+      );
+    });
+
+    return (<div>{output}</div>);
   }
+
 }
