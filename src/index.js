@@ -8,6 +8,9 @@ import UnderConstruction from './components/UnderConstruction';
 import ExampleComponent from './components/ExampleComponent';
 import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
 
+/* SpreadsheetData */
+import API from './components/SpreadsheetData';
+
 /* Home Page */
 import Home from './components/Home';
 
@@ -43,6 +46,8 @@ const routes = (
     {/* Collection */}
     <Route path="collection/" mapMenuTitle="Collection">
       <IndexRoute component={CollectionHome} />
+
+      <Route path="*" component={PageNotFound} />
     </Route>
 
     {/* Portal */}
@@ -167,6 +172,8 @@ const routes = (
           <Route path="*" component={UnderConstruction} />
         </Route>
       </Route>
+
+      <Route path="*" component={PageNotFound} />
 
     </Route>
     <Route path="*" component={PageNotFound} />

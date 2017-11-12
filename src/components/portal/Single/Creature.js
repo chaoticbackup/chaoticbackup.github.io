@@ -1,38 +1,27 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-// import {browserHistory} from 'react-router';
 import PageNotFound from '../../PageNotFound';
-import UnderConstruction from '../../UnderConstruction';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
+import {observer, inject} from 'mobx-react';
 
+@inject((stores, props, context) => props) @observer
 export default class SingleCreature extends React.Component {
-
-  constructor(props) {
-    super (props);
-    this.state = {tribe: '', creature: null, card_data: null};
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.getData(nextProps);
-  }
-
-  componentDidMount() {
-    this.getData(this.props);
-  }
 
   // ** Process the tribe ** //
   // /portal/Creatures/{Tribe}/{Name}
   // /portal/{Tribe}/Creatures/{Name}
   // The first / gets counted
-  getData(props) {
-    let path = props.location.pathname.split("/");
+  render() {
+    const store = API;
+
+    let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // Path too long
     if ( path.length !== 5 ) {
-      return;
+      return(<PageNotFound location={this.props.location}/>);
     }
 
     //Handle both url layouts
@@ -40,86 +29,64 @@ export default class SingleCreature extends React.Component {
       if (path[2] === "Creatures") return path[3];
       if (path[3] === "Creatures") return path[2];
     })();
-    this.setState({tribe: tribe});
 
-    var name = decodeURIComponent(path[4]);
-
-    var self = this;
-    API.getSpreadsheet(API.Creatures[tribe], (data) => {
-      data.map((item, i) => {
-        if (item.title.$t == name)
-          self.setState({creature: item });
-      });
-      // If no creature set as false
-      if (!self.state.creature) {
-        self.setState({creature: "n/a"});
-      }
-    });
-    API.getSpreadsheet(API.Creatures_Card_Data, (data) => {
-      data.map((item, i) => {
-        if (item.title.$t == name) self.setState({card_data: item });
-      });
-      // If no card_data set as false
-      if (!self.state.card_data) {
-        self.setState({card_data: "n/a"});
-      }
-    });
-  }
-
-  render() {
-    var self = this;
-
-    // Get spreadsheet data based on tribe/name
-    if (!(API.Creatures).hasOwnProperty(this.state.tribe)) {
-      return(
-        <PageNotFound location={this.props.location}/>
-        //return(browserHistory.push('/PageNotFound'));
-      );
+    if (store.urls === null ||
+      store.portal === null ||
+      store.cards === null) {
+      return (<span>Loading...</span>);
     }
 
-    // creature is the object to be used in the jsx
-    var creature = this.state.creature;
-    var card_data = this.state.card_data;
+    // Todo this isn't needed for now (handled by routes)
+    // if (!store.urls.Creatures.hasOwnProperty(tribe)) {
+    //   return (<span>Invalid Tribe: {tribe}</span>);
+    // }
 
-    // TODO separate loading of card_data
-    if (creature == "n/a" || card_data == "n/a") return(
-      <PageNotFound location={this.props.location}/>
-    );
+    if (!store.cards.built.includes("creatures_Cards")) {
+      store.cards.setupCreatures("Cards");
+      return (<span>Loading...</span>);
+    }
 
-    if (creature == null || card_data == null) return(
-      <span>Loading...</span>
-    );
+    if (!store.portal.built.includes("creatures_"+tribe)) {
+      store.portal.setupCreatures(tribe);
+      return (<span>Loading...</span>);
+    }
 
-    const elements = card_data.gsx$elements.$t.split(/[ ,]+/).map((item, i) => {
-      return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
-    });
+    const creature = store.portal.creatures.findOne({'gsx$name': path[4]});
+    const card_data = store.cards.creatures.findOne({'gsx$name': path[4]});
+    if (!creature) {
+      return(<PageNotFound location={this.props.location}/>);
+    }
 
-    const locations = creature.gsx$location.$t.split(/[,]+\s*/).map((item, i) => {
+    const locations = creature.gsx$location.split(/[,]+\s*/).map((item, i) => {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
     });
 
-    const battlegear = creature.gsx$battlegear.$t.split(/[,]+\s*/).map((item, i) => {
+    const battlegear = creature.gsx$battlegear.split(/[,]+\s*/).map((item, i) => {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
     });
 
-    return(
-      <div className={"creature " + this.state.tribe.toLowerCase()}>
-        <h1>{creature.gsx$name.$t}</h1>
-        <img className="splash" src={API.base_image + creature.gsx$splash.$t}></img>
+    const elements = card_data.gsx$elements.split(/[ ,]+/).map((item, i) => {
+      return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
+    });
+
+    return (
+      <div className={"creature " + tribe.toLowerCase()}>
+        <h1>{creature.gsx$name}</h1>
+        <img className="splash" src={store.base_image + creature.gsx$splash}></img>
         <hr />
         <div>
           <strong>Appearance:</strong><br />
-          {creature.gsx$appearance.$t}
+          {creature.gsx$appearance}
         </div>
         <hr />
         <div>
           <strong>Background:</strong><br />
-          {creature.gsx$background.$t}
+          {creature.gsx$background}
         </div>
         <hr />
         <div>
           <strong>Details:</strong><br />
-          {creature.gsx$details.$t}
+          {creature.gsx$details}
         </div>
         <hr />
         <div>
@@ -134,62 +101,72 @@ export default class SingleCreature extends React.Component {
         <hr />
         <div>
           <strong>Height (ft):</strong><br />
-          {creature.gsx$height.$t}
+          {creature.gsx$height}
         </div>
         <hr />
         <div>
           <strong>Special Abilities:</strong><br />
-          {creature.gsx$specialabilities.$t}
+          {creature.gsx$specialabilities}
         </div>
         <hr />
         <div>
           <strong>Weight (lb):</strong><br />
-          {creature.gsx$weight.$t}
+          {creature.gsx$weight}
+        </div>
+        <hr />
+        <div>
+          <strong>Special Abilities:</strong><br />
+          {creature.gsx$specialabilities}
+        </div>
+        <hr />
+        <div>
+          <strong>Weight (lb):</strong><br />
+          {creature.gsx$weight}
         </div>
         <hr />
         <div>
           <strong>Card ID: </strong>
-          {card_data.gsx$cardid.$t}
+          {card_data.gsx$cardid}
         </div>
         <hr />
         <div>
           <strong>Set: </strong>
-          {card_data.gsx$set.$t}
+          {card_data.gsx$set}
         </div>
         <hr />
         <div>
           <strong>Rarity: </strong>
-          {card_data.gsx$rarity.$t}
+          {card_data.gsx$rarity}
         </div>
         <hr />
         <div>
-          <strong>Tribe: </strong>{this.state.tribe}
-          <img className="icon" src={"/src/img/icons/tribes/"+this.state.tribe.toLowerCase()+".png"}></img>
+          <strong>Tribe: </strong>{tribe}
+          <img className="icon" src={"/src/img/icons/tribes/"+tribe.toLowerCase()+".png"}></img>
         </div>
         <hr />
         <div>
           <strong>Ability:</strong><br />
-          {card_data.gsx$ability.$t}
+          {card_data.gsx$ability}
         </div>
         <hr />
         <div>
           <strong>Courage: </strong>
-          {card_data.gsx$courage.$t}
+          {card_data.gsx$courage}
         </div>
         <hr />
         <div>
           <strong>Power: </strong>
-          {card_data.gsx$power.$t}
+          {card_data.gsx$power}
         </div>
         <hr />
         <div>
           <strong>Speed: </strong>
-          {card_data.gsx$speed.$t}
+          {card_data.gsx$speed}
         </div>
         <hr />
         <div>
           <strong>Wisdom: </strong>
-          {card_data.gsx$wisdom.$t}
+          {card_data.gsx$wisdom}
         </div>
         <hr />
         <div>
@@ -198,17 +175,17 @@ export default class SingleCreature extends React.Component {
         <hr />
         <div>
           <strong>Energy: </strong>
-          {card_data.gsx$energy.$t}
+          {card_data.gsx$energy}
         </div>
         <hr />
         <div>
           <strong>Flavortext:</strong><br />
-          {card_data.gsx$flavortext.$t}
+          {card_data.gsx$flavortext}
         </div>
         <hr />
         <div>
           <strong>Mugic Ability: </strong>
-          {card_data.gsx$mugicability.$t}
+          {card_data.gsx$mugicability}
         </div>
       </div>
     );
