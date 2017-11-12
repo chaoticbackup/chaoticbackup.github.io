@@ -1,13 +1,12 @@
 import 'whatwg-fetch';
-import CardsDB from './database/cards';
-import PortalDB from './database/portal';
+import CollectionDB from './CollectionDB';
 import {observable} from "mobx";
 
 class API {
   @observable portal = null;
   @observable cards = null;
   @observable urls = null;
-  @observable instance = null;
+  instance = null;
 
   static base_url = "https://spreadsheets.google.com/feeds/list/";
   static data_format = "/od6/public/values?alt=json";
@@ -54,8 +53,8 @@ class API {
 
   setupDB() {
     try {
-      this.portal = new PortalDB(this);
-      this.cards = new CardsDB(this);
+      this.portal = new CollectionDB(this, "portal");
+      this.cards = new CollectionDB(this, "cards");
     }
     catch (err) {
       console.log('setting up database failed', err);

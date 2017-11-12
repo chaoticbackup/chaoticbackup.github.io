@@ -8,25 +8,16 @@ import s from '../../../styles/app.style';
 
 export default class Mugic extends React.Component {
 
-  constructor(props) {
-    super (props);
-    this.tribe = '';
-    this.state = {mugic: {}};
-  }
-
-  componentDidMount() {
-    if (this.props.children) return;
-    var self = this;
-    let urls = (this.tribe == "All") ? API.Mugic : {[this.tribe]: API.Mugic[this.tribe]};
-    // For each tribe, get its spreadsheet, set the state
-    Object.keys(urls).map((tribe) => {
-      API.getSpreadsheet(urls[tribe], function(data) {
-        self.setState({mugic: Object.assign(self.state.mugic, {[tribe]: data})});
-      });
-    });
-  }
-
   render() {
+    if (this.props.children) {
+      return (<div>{this.props.children}</div>);
+    }
+    return (
+      <UnderConstruction location={this.props.location}/>
+    );
+  }
+
+  fakerender() {
     if (this.props.children) {
       return (<div>{this.props.children}</div>);
     }
