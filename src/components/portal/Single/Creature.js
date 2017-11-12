@@ -6,45 +6,25 @@ import PageNotFound from '../../PageNotFound';
 import UnderConstruction from '../../UnderConstruction';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
+import {observer, inject} from 'mobx-react';
 
+@inject((stores, props, context) => props) @observer
 export default class SingleCreature extends React.Component {
-
-  constructor(props) {
-    super (props);
-    this.state = {tribe: '', creature: null, card_data: null};
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.getData(nextProps);
-  }
-
-  componentDidMount() {
-    this.getData(this.props);
-  }
 
   // ** Process the tribe ** //
   // /portal/Creatures/{Tribe}/{Name}
   // /portal/{Tribe}/Creatures/{Name}
   // The first / gets counted
   getData(props) {
-    let path = props.location.pathname.split("/");
-    if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-    // Path too long
-    if ( path.length !== 5 ) {
-      return;
-    }
-
-    //Handle both url layouts
-    let tribe = (() => {
-      if (path[2] === "Creatures") return path[3];
-      if (path[3] === "Creatures") return path[2];
-    })();
-    this.setState({tribe: tribe});
 
     var name = decodeURIComponent(path[4]);
 
     var self = this;
+    var creature = API.portal.creatures.findOne(name);
+    if (creature) self.setState({"creature": creature});
+    else self.setState({creature: "n/a"});
+    console.log(creature);
     API.getSpreadsheet(API.Creatures[tribe], (data) => {
       data.map((item, i) => {
         if (item.title.$t == name)
@@ -67,28 +47,104 @@ export default class SingleCreature extends React.Component {
   }
 
   render() {
-    var self = this;
+    const store = API;
 
-    // Get spreadsheet data based on tribe/name
-    if (!(API.Creatures).hasOwnProperty(this.state.tribe)) {
-      return(
-        <PageNotFound location={this.props.location}/>
-        //return(browserHistory.push('/PageNotFound'));
-      );
+    let path = this.props.location.pathname.split("/");
+    if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
+
+    // Path too long
+    if ( path.length !== 5 ) {
+      return(<PageNotFound location={this.props.location}/>);
     }
 
-    // creature is the object to be used in the jsx
-    var creature = this.state.creature;
-    var card_data = this.state.card_data;
+    //Handle both url layouts
+    let tribe = (() => {
+      if (path[2] === "Creatures") return path[3];
+      if (path[3] === "Creatures") return path[2];
+    })();
 
-    // TODO separate loading of card_data
-    if (creature == "n/a" || card_data == "n/a") return(
-      <PageNotFound location={this.props.location}/>
-    );
+    if (store.urls === null ||
+      store.portal === null ||
+      store.cards === null) {
+      return (<span>Loading...</span>);
+    }
 
-    if (creature == null || card_data == null) return(
-      <span>Loading...</span>
+    // Todo this isn't needed for now (handled by routes)
+    // if (!store.urls.Creatures.hasOwnProperty(tribe)) {
+    //   return (<span>Invalid Tribe: {tribe}</span>);
+    // }
+
+    if (!store.portal.built.includes("creatures_"+tribe)) {
+      store.portal.setupCreatures(tribe);
+      return (<span>Loading...</span>);
+    }
+    // TODO load card data
+
+    const creature = store.portal.creatures.findOne({'gsx$name': path[4]});
+    console.log(creature);
+    if (!creature) {
+      return(<PageNotFound location={this.props.location}/>);
+    }
+
+    const locations = creature.gsx$location.split(/[,]+\s*/).map((item, i) => {
+      return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
+    });
+
+    const battlegear = creature.gsx$battlegear.split(/[,]+\s*/).map((item, i) => {
+      return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
+    });
+
+    return (
+      <div className={"creature " + tribe.toLowerCase()}>
+        <UnderConstruction location={this.props.location}/>
+        <h1>{creature.gsx$name}</h1>
+        <img className="splash" src={store.base_image + creature.gsx$splash}></img>
+        <hr />
+        <div>
+          <strong>Appearance:</strong><br />
+          {creature.gsx$appearance}
+        </div>
+        <hr />
+        <div>
+          <strong>Background:</strong><br />
+          {creature.gsx$background}
+        </div>
+        <hr />
+        <div>
+          <strong>Details:</strong><br />
+          {creature.gsx$details}
+        </div>
+        <hr />
+        <div>
+          <strong>Favorite Battlegear(s):</strong><br />
+          {battlegear}
+        </div>
+        <hr />
+        <div>
+          <strong>Favorite Location(s):</strong><br />
+          {locations}
+        </div>
+        <hr />
+        <div>
+          <strong>Height (ft):</strong><br />
+          {creature.gsx$height}
+        </div>
+        <hr />
+        <div>
+          <strong>Special Abilities:</strong><br />
+          {creature.gsx$specialabilities}
+        </div>
+        <hr />
+        <div>
+          <strong>Weight (lb):</strong><br />
+          {creature.gsx$weight}
+        </div>
+      </div>
     );
+  }
+
+  fakerender() {
+    var self = this;
 
     const elements = card_data.gsx$elements.$t.split(/[ ,]+/).map((item, i) => {
       return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;

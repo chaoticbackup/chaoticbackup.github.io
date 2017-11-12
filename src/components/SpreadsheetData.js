@@ -1,8 +1,14 @@
 import 'whatwg-fetch';
 import CardsDB from './database/cards';
 import PortalDB from './database/portal';
+import {observable} from "mobx";
 
 class API {
+  @observable portal = null;
+  @observable cards = null;
+  @observable urls = null;
+  @observable instance = null;
+
   static base_url = "https://spreadsheets.google.com/feeds/list/";
   static data_format = "/od6/public/values?alt=json";
   // + "/od6/public/basic?alt=json"; // Alternate data format
@@ -10,10 +16,9 @@ class API {
   get base_image() { return "https://drive.google.com/uc?id="; }
 
   // Singleton
-  instance = null;
   static getInstance() {
-      if (!API.instance) { API.instance = new API(); }
-      return API.instance;
+      if (!this.instance) { this.instance = new API(); }
+      return this.instance;
   }
 
   static path(spreadsheetID) {
@@ -21,17 +26,16 @@ class API {
   }
 
   constructor() {
-    var self = this;
-
     // This sets up urls and kicks off db
-    this.urls = {};
-    this.getSpreadsheet(API.path(API.base_spreadsheet), function(data) {
+    let urls = {};
+    this.getSpreadsheet(API.path(API.base_spreadsheet), (data) => {
       if (data == null) return;
-      data.forEach(function(d) {
-        if (!self.urls[d.gsx$type.$t]) self.urls[d.gsx$type.$t] = {};
-        self.urls[d.gsx$type.$t][d.gsx$subtype.$t] = API.path(d.gsx$url.$t);
+      data.forEach((d) => {
+        if (!urls[d.gsx$type.$t]) urls[d.gsx$type.$t] = {};
+        urls[d.gsx$type.$t][d.gsx$subtype.$t] = API.path(d.gsx$url.$t);
       });
-      self.setupDB();
+      this.urls = urls;
+      this.setupDB();
     });
   }
 
@@ -60,3 +64,5 @@ class API {
 }
 
 export default API.getInstance();
+
+// export default new API();
