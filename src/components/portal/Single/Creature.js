@@ -30,13 +30,14 @@ export default class SingleCreature extends React.Component {
       if (path[3] === "Creatures") return path[2];
     })();
 
+    let name = decodeURIComponent(path[4]);
+
     if (store.urls === null ||
       store.portal === null ||
       store.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    // Todo this isn't needed for now (handled by routes)
     if (!store.urls.Creatures.hasOwnProperty(tribe)) {
       return (<span>Invalid Tribe: {tribe}</span>);
     }
@@ -51,8 +52,8 @@ export default class SingleCreature extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    const creature = store.portal.creatures.findOne({'gsx$name': path[4]});
-    const card_data = store.cards.creatures.findOne({'gsx$name': path[4]});
+    const creature = store.portal.creatures.findOne({'gsx$name': name});
+    const card_data = store.cards.creatures.findOne({'gsx$name': name});
     if (!creature) {
       return(<PageNotFound location={this.props.location}/>);
     }

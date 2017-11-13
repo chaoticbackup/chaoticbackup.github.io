@@ -71,6 +71,7 @@ const routes = (
       </Route>
 
       {/* Creatures */}
+      {/* Todo this isn't needed (tribe checking handled by components) */}
       <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,2)}>
         <Route path="OverWorld" component={Creatures} mapMenuTitle={mapMenuTitle(location, 3)}>
           <Route path="*" component={SingleCreature} />
