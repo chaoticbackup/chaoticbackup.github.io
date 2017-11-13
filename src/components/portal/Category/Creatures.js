@@ -30,7 +30,8 @@ export default class Creatures extends React.Component {
     })();
 
     if (store.urls === null ||
-      store.portal === null) {
+      store.portal === null ||
+      store.cards === null) {
       return (<span>Loading...</span>);
     }
 
@@ -58,6 +59,11 @@ export default class Creatures extends React.Component {
       );
     }
 
+    if (!store.cards.built.includes("creatures_Cards")) {
+      store.cards.setupCreatures("Cards");
+      return (<span>Loading...</span>);
+    }
+
     if (!store.portal.built.includes("creatures_"+tribe)) {
       store.portal.setupCreatures(tribe);
       return (<span>Loading...</span>);
@@ -65,11 +71,15 @@ export default class Creatures extends React.Component {
 
     const creatures = store.portal.creatures.find({'gsx$tribe': tribe});
     const output = creatures.map((creature, i) => {
+      const card_data = store.cards.creatures.findOne({'gsx$name': creature.gsx$name});
       return (
         <div key={i}>
           <Interactive as={Link} {...s.link}
             to={'/portal/Creatures/'+tribe+'/'+creature.gsx$name}
-          ><span>{creature.gsx$name}</span></Interactive>
+          >
+            <span>{creature.gsx$name}</span><br />
+            <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img>
+          </Interactive>
         </div>
       );
     });

@@ -65,7 +65,7 @@ export default class SingleCreature extends React.Component {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
     });
 
-    const elements = card_data.gsx$elements.split(/[ ,]+/).map((item, i) => {
+    const elements = card_data.gsx$elements.split(/[ ,]+/).filter(Boolean).map((item, i) => {
       return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
     });
 
@@ -140,8 +140,8 @@ export default class SingleCreature extends React.Component {
         </div>
         <hr />
         <div>
-          <strong>Tribe: </strong>{tribe}
-          <img className="icon" src={"/src/img/icons/tribes/"+tribe.toLowerCase()+".png"}></img>
+          <strong>Tribe: </strong>
+          <img className="icon" src={"/src/img/icons/tribes/"+tribe.toLowerCase()+".png"}></img>{tribe}
         </div>
         <hr />
         <div>
