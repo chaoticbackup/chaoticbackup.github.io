@@ -10,6 +10,9 @@ export default function PortalHome() {
         to="/portal/Creatures"
       >Creatures</Interactive>
       <br />
+      <Interactive as={Link} {...s.link}
+        to="/portal/Mugic"
+      >Mugic</Interactive>
     </div>
   );
 }

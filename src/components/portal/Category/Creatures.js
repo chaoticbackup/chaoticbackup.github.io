@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import PageNotFound from '../../PageNotFound';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
-import UnderConstruction from '../../UnderConstruction';
 import {observer, inject} from 'mobx-react';
 
 @inject((stores, props, context) => props) @observer
@@ -45,12 +44,12 @@ export default class Creatures extends React.Component {
           >Danian</Interactive>
           <br />
           <Interactive as={Link} {...s.link}
-            to="/portal/Creatures/Overworld"
-          >Overworld</Interactive>
+            to="/portal/Creatures/OverWorld"
+          >OverWorld</Interactive>
           <br />
           <Interactive as={Link} {...s.link}
-            to="/portal/Creatures/Underworld"
-          >Underworld</Interactive>
+            to="/portal/Creatures/UnderWorld"
+          >UnderWorld</Interactive>
           <br />
           <Interactive as={Link} {...s.link}
             to="/portal/Creatures/Mipedian"

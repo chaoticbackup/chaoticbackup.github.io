@@ -80,7 +80,11 @@ export default class CollectionDB {
 
   }
 
-  setupMugic(tribe) {
-
+  // Portal or Cards
+  setupMugic(tribe="Generic") {
+    this.setup(this.api.urls.Mugic[tribe], (data) => {
+      this.mugic.insert(data);
+      this.built.push("mugic_"+tribe);
+    });
   }
 }
