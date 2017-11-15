@@ -145,7 +145,6 @@ class CollectionDB {
 
   }
 
-  // Portal or Cards
   setupMugic(tribe="Generic") {
     this.setup(this.api.urls.Mugic[tribe], (data) => {
       this.mugic.insert(data);

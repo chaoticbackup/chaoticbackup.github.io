@@ -27,8 +27,8 @@ export default class Tribes extends React.Component {
     return (
       <div>
         <div><i>Tribe Summary Here</i></div><br />
-        <Interactive as="a" {...s.link} href={"/portal/"+tribe+"/Creatures"}>Creatures</Interactive><br />
-        <Interactive as="a" {...s.link} href={"/portal/"+tribe+"/Mugic"}>Mugic</Interactive>
+        <Interactive as={Link} {...s.link} to={"/portal/"+tribe+"/Creatures"}>Creatures</Interactive><br />
+        <Interactive as={Link} {...s.link} to={"/portal/"+tribe+"/Mugic"}>Mugic</Interactive>
       </div>
     );
   }

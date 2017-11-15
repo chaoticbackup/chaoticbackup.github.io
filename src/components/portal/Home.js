@@ -29,7 +29,7 @@ export default function PortalHome() {
         >Locations</Interactive>
       </div>
       <div style={s.tribes}>
-        <p>Explore Tribes</p><br />
+        <p>Pick a Tribe</p><br />
         <Interactive as={Link} {...s.link}
           to="/portal/Danian"
         >Danian</Interactive>

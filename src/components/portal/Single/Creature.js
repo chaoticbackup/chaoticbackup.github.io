@@ -53,10 +53,11 @@ export default class SingleCreature extends React.Component {
     }
 
     const creature = store.portal.creatures.findOne({'gsx$name': name});
-    const card_data = store.cards.creatures.findOne({'gsx$name': name});
     if (!creature) {
       return(<PageNotFound location={this.props.location}/>);
     }
+    
+    const card_data = store.cards.creatures.findOne({'gsx$name': name});
 
     const locations = creature.gsx$location.split(/[,]+\s*/).map((item, i) => {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
