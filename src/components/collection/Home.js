@@ -6,6 +6,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import Creature from './Creature';
 import UnderConstruction from '../UnderConstruction';
 
 
@@ -47,27 +48,6 @@ export default class SingleCreature extends React.Component {
     let numpages = Math.ceil(this.content.length / this.n);
     let elements = this.content.slice(this.n * (this.p-1), this.n * this.p); 
 
-    const output = () => {
-      if (elements.length == 1 && elements[0].text) {
-        return (
-          <div style={{textAlign: 'left'}}>{elements[0].text || 'No Results Found'}</div>
-        );
-      }
-      return elements.map((creature, i) => {
-        const elements = creature.gsx$elements.split(/[ ,]+/).filter(Boolean).map((item, i) => {
-          return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
-        });
-
-        return(
-          <div key={i} style={{textAlign: 'left'}}>
-              <img className="thumb" src={store.base_image + creature.gsx$thumb}></img>
-              <span style={{verticalAlign: 'text-top'}}>{creature.gsx$name}{elements}</span>
-              <br />
-          </div>
-        );
-      });
-    }
-
     // TODO advanced filters
     let searchName = (e) => {
       e.preventDefault();
@@ -102,6 +82,18 @@ export default class SingleCreature extends React.Component {
         </p>
       </div>
     );
+
+    const output = () => {
+      if (elements.length == 1 && elements[0].text) {
+        return (
+          <div style={{textAlign: 'left'}}>{elements[0].text}</div>
+        );
+      }
+      return elements.map((element, i) => {
+        if (element.gsx$type == "Creature") return (<Creature creature={element} key={i} />);
+        else return (<div>Empty</div>);
+      });
+    }
 
     return (
       <div>

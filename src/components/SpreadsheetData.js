@@ -113,7 +113,7 @@ class CollectionDB {
   //   };
   // }
 
-  setup(spreadsheet, callback) {
+  setup(spreadsheet, type, callback) {
     this.api.getSpreadsheet(spreadsheet, (data) => {
       callback(data.map((item) => {
         let temp = {};
@@ -121,6 +121,7 @@ class CollectionDB {
         for (const key of Object.keys(item)) {
           temp[key] = item[key].$t;
         }
+        temp["gsx$type"] = type;
         return temp;
       }));
     });
@@ -135,7 +136,7 @@ class CollectionDB {
   }
 
   setupCreatures(tribe="Generic") {
-    this.setup(this.api.urls.Creatures[tribe], (data) => {
+    this.setup(this.api.urls.Creatures[tribe], "Creature", (data) => {
       this.creatures.insert(data);
       this.built.push("creatures_"+tribe);
     });
@@ -146,7 +147,7 @@ class CollectionDB {
   }
 
   setupMugic(tribe="Generic") {
-    this.setup(this.api.urls.Mugic[tribe], (data) => {
+    this.setup(this.api.urls.Mugic[tribe], "Mugic", (data) => {
       this.mugic.insert(data);
       this.built.push("mugic_"+tribe);
     });
