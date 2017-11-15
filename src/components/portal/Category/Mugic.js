@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 import PageNotFound from '../../PageNotFound';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
-import UnderConstruction from '../../UnderConstruction';
 import {observer, inject} from 'mobx-react';
 
 @inject((stores, props, context) => props) @observer

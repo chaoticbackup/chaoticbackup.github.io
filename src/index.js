@@ -2,31 +2,34 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
+/* Common Components */
 import App from './Base';
 import PageNotFound from './components/PageNotFound';
 import UnderConstruction from './components/UnderConstruction';
+
+/* Home Component */
+import Home from './components/Home';
+
+/* Test Components */
 import ExampleComponent from './components/ExampleComponent';
 import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
 
 /* SpreadsheetData */
 import API from './components/SpreadsheetData';
 
-/* Home Page */
-import Home from './components/Home';
-
 /* Collection */
 import CollectionHome from './components/collection/Home';
 
 /* Portal */
 import PortalHome from './components/portal/Home';
-// import Attacks from './components/portal/Category/Attacks';
-// import SingleAttack from './components/portal/Category/Attacks';
-// import Battlegear from './components/portal/Category/Battlegear';
-// import SingleBattlegear from './components/portal/Category/Battlegear';
+import Attacks from './components/portal/Category/Attacks';
+import SingleAttack from './components/portal/Category/Attacks';
+import Battlegear from './components/portal/Category/Battlegear';
+import SingleBattlegear from './components/portal/Category/Battlegear';
 import Creatures from './components/portal/Category/Creatures';
 import SingleCreature from './components/portal/Single/Creature';
-// import Locations from './components/portal/Category/Locations';
-// import SingleLocation from './components/portal/Category/Locations';
+import Locations from './components/portal/Category/Locations';
+import SingleLocation from './components/portal/Category/Locations';
 import Mugic from './components/portal/Category/Mugic';
 import SingleMugic from './components/portal/Single/Mugic';
 import Tribes from './components/portal/Category/Tribes';
@@ -42,7 +45,7 @@ const routes = (
     </Route>
 
     {/* Construction */}
-    <Route path="construction/" component={UnderConstruction} />
+    <Route path="Construction" component={UnderConstruction} />
 
     {/* Collection */}
     <Route path="collection/" mapMenuTitle="Collection">
@@ -56,113 +59,113 @@ const routes = (
       <IndexRoute component={PortalHome} />
 
       {/* Attacks */}
-      <Route path="Attacks" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="*" component={UnderConstruction} />
+      <Route path="Attacks" component={Attacks} mapMenuTitle="Attacks">
+        <Route path="*" component={SingleAttack} />
       </Route>
 
       {/* Battlegear */}
-      <Route path="Battlegear" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="*" component={UnderConstruction} />
+      <Route path="Battlegear" component={Battlegear} mapMenuTitle="Battlegear">
+        <Route path="*" component={SingleBattlegear} />
       </Route>
 
       {/* Locations */}
-      <Route path="Locations" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="*" component={UnderConstruction} />
+      <Route path="Locations" component={Locations} mapMenuTitle="Locations">
+        <Route path="*" component={SingleLocation} />
       </Route>
 
       {/* Creatures */}
       {/* Todo this isn't needed (tribe checking handled by components) */}
-      <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="OverWorld" component={Creatures} mapMenuTitle={mapMenuTitle(location, 3)}>
+      <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
+        <Route path="OverWorld" component={Creatures} mapMenuTitle="OverWorld">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="UnderWorld" component={Creatures} mapMenuTitle={mapMenuTitle(location, 3)}>
+        <Route path="UnderWorld" component={Creatures} mapMenuTitle="UnderWorld">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mipedian" component={Creatures} mapMenuTitle={mapMenuTitle(location, 3)}>
+        <Route path="Mipedian" component={Creatures} mapMenuTitle="Mipedian">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Danian" component={Creatures} mapMenuTitle={mapMenuTitle(location, 3)}>
+        <Route path="Danian" component={Creatures} mapMenuTitle="Danian">
           <Route path="*" component={SingleCreature} />
         </Route>
       </Route>
 
       {/* Mugic */}
-      <Route path="Mugic" component={Mugic} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="OverWorld" component={Mugic} mapMenuTitle={mapMenuTitle(location,3)}>
+      <Route path="Mugic" component={Mugic} mapMenuTitle="Mugic">
+        <Route path="OverWorld" component={Mugic} mapMenuTitle="OverWorld">
           <Route path="*" component={SingleMugic} />
         </Route>
-        <Route path="UnderWorld" component={Mugic} mapMenuTitle={mapMenuTitle(location,3)}>
+        <Route path="UnderWorld" component={Mugic} mapMenuTitle="UnderWorld">
           <Route path="*" component={SingleMugic} />
         </Route>
-        <Route path="Mipedian" component={Mugic} mapMenuTitle={mapMenuTitle(location,3)}>
+        <Route path="Mipedian" component={Mugic} mapMenuTitle="Mipedian">
           <Route path="*" component={SingleMugic} />
         </Route>
-        <Route path="Danian" component={Mugic} mapMenuTitle={mapMenuTitle(location,3)}>
+        <Route path="Danian" component={Mugic} mapMenuTitle="Danian">
           <Route path="*" component={SingleMugic} />
         </Route>
-        <Route path="Generic" component={Mugic} mapMenuTitle={mapMenuTitle(location,3)}>
+        <Route path="Generic" component={Mugic} mapMenuTitle="Generic">
           <Route path="*" component={SingleMugic} />
         </Route>
       </Route>
 
       {/* OverWorld */}
-      <Route path="OverWorld" component={Tribes} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,3)}>
+      <Route path="OverWorld" component={Tribes} mapMenuTitle="OverWorld">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,3)}>
-          <Route path="*" component={UnderConstruction} />
+        <Route path="Mugic" component={Mugic} mapMenuTitle="Mugic">
+          <Route path="*" component={SingleMugic} />
         </Route>
       </Route>
 
       {/* UnderWorld */}
-      <Route path="UnderWorld" component={Tribes} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,3)}>
+      <Route path="UnderWorld" component={Tribes} mapMenuTitle="UnderWorld">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,3)}>
-          <Route path="*" component={UnderConstruction} />
+        <Route path="Mugic" component={Mugic} mapMenuTitle="Mugic">
+          <Route path="*" component={SingleMugic} />
         </Route>
       </Route>
 
       {/* Mipedian */}
-      <Route path="Mipedian" component={Tribes} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,3)}>
+      <Route path="Mipedian" component={Tribes} mapMenuTitle="Mipedian">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,3)}>
-          <Route path="*" component={UnderConstruction} />
+        <Route path="Mugic" component={Mugic} mapMenuTitle="Mugic">
+          <Route path="*" component={SingleMugic} />
         </Route>
       </Route>
 
       {/* Danian */}
-      <Route path="Danian" component={Tribes} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,3)}>
+      <Route path="Danian" component={Tribes} mapMenuTitle="Danian">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,3)}>
-          <Route path="*" component={UnderConstruction} />
+        <Route path="Mugic" component={Mugic} mapMenuTitle="Mugic">
+          <Route path="*" component={SingleMugic} />
         </Route>
       </Route>
 
       {/* M'arrillian */}
-      <Route path="Marrillian" component={Tribes} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,3)}>
+      <Route path="Marrillian" component={Tribes} mapMenuTitle="Marrillian">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,3)}>
-          <Route path="*" component={UnderConstruction} />
+        <Route path="Mugic" component={Mugic} mapMenuTitle="Mugic">
+          <Route path="*" component={SingleMugic} />
         </Route>
       </Route>
 
       {/* Generic */}
-      <Route path="Generic" component={Tribes} mapMenuTitle={mapMenuTitle(location,2)}>
-        <Route path="Creatures" component={Creatures} mapMenuTitle={mapMenuTitle(location,3)}>
+      <Route path="Generic" component={Tribes} mapMenuTitle="Generic">
+        <Route path="Creatures" component={Creatures} mapMenuTitle="Creatures">
           <Route path="*" component={SingleCreature} />
         </Route>
-        <Route path="Mugic" component={UnderConstruction} mapMenuTitle={mapMenuTitle(location,3)}>
-          <Route path="*" component={UnderConstruction} />
+        <Route path="Mugic" component={Mugic} mapMenuTitle="Mugic">
+          <Route path="*" component={SingleMugic} />
         </Route>
       </Route>
 
@@ -172,12 +175,6 @@ const routes = (
     <Route path="*" component={PageNotFound} />
   </Route>
 );
-
-function mapMenuTitle(location, depth=1) {
-  let path = location.pathname.split("/");
-  if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
-  return path[depth];
-}
 
 render(
   <Router
