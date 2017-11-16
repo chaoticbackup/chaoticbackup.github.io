@@ -11,7 +11,7 @@ import UnderConstruction from '../UnderConstruction';
 
 
 @inject((stores, props, context) => props) @observer
-export default class SingleCreature extends React.Component {
+export default class CollectionHome extends React.Component {
   @observable n = 10;
   @observable p = 1;
   @observable content = [];
@@ -42,48 +42,12 @@ export default class SingleCreature extends React.Component {
     if (this.content.length == 0) {
       // Only use cards with thumb nails for now
       // TODO add other types
-      this.content = store.cards.creatures.chain().where((obj) => {return (!obj.gsx$thumb == '');}).simplesort('gsx$name').data();  
+      this.content = store.cards.creatures.chain().where((obj) => {return (!obj.gsx$thumb == '');}).simplesort('gsx$name').data();
     }
-
-    let numpages = Math.ceil(this.content.length / this.n);
-    let elements = this.content.slice(this.n * (this.p-1), this.n * this.p); 
-
-    // TODO advanced filters
-    let searchName = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      let name = new RegExp(this.input.value, 'i');
-      let results = store.cards.creatures.chain().find({'gsx$name': {'$regex': name} }).where((obj) => {return (!obj.gsx$thumb == '');}).simplesort('gsx$name').data();   
-      if (results.length > 0) this.content = results;
-      else this.content = [{'text': 'No Results Found'}];
-      this.p = 1;
-    }
-    const searchBar = (
-      <form onSubmit={searchName}>
-        <input type="text" ref={(input) => this.input = input} />
-        <input type="submit" value="Search" />
-      </form>
-    );
-
-    let next = () => {
-      if (this.p < numpages) return(<button onClick={ () => {this.p++;} }>next</button>);
-      else return(<button disabled>next</button>);
-    }
-    let prev = () => {
-      if (this.p > 1) return(<button onClick={ () => {this.p--;} }>prev</button>);
-      else return(<button disabled>prev</button>);
-    }
-    const navigation = (
-      <div style={{textAlign: 'left'}}>
-        <p>Showing page {this.p} of {numpages} {prev()} {next()}</p>
-        <p>
-          Entries per page:&nbsp;
-          <input type="number" style={{width: '40px'}} value={this.n} onChange={(event)=>{this.n=event.target.value;}} />
-        </p>
-      </div>
-    );
 
     const output = () => {
+      let elements = this.content.slice(this.n * (this.p-1), this.n * this.p);
+
       if (elements.length == 1 && elements[0].text) {
         return (
           <div style={{textAlign: 'left'}}>{elements[0].text}</div>
@@ -102,17 +66,84 @@ export default class SingleCreature extends React.Component {
           In the meantime, you can check out&nbsp;
           <a style={{textDecoration: "underline"}} href="http://www.tradecardsonline.com/im/editCollection/collection_type/1">Trade Cards Online</a>
           .
-        </p>
-        <br />
-        {searchBar}
-        <br />
-        {navigation}
-        <br />
+        </p><br />
+        {this.searchForm()}<br />
+        {this.navigation()}<br />
         {output()}
       </div>
     );
-
   }
+
+  searchForm() {
+    let tribes = {};
+
+    // TODO advanced filters
+    let search = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      let baseResultset = API.cards.creatures.chain().where((obj) => {return (!obj.gsx$thumb == '');});
+
+      // Search by name
+      if (this.name.value) {
+        baseResultset = baseResultset.find({'gsx$name': {'$regex': new RegExp(this.name.value, 'i')} });
+      }
+
+      // Search by tribe
+      var tribesList = [];
+      for (const tribe in tribes) {
+        if (tribes[tribe].checked) {
+          tribesList.push({'$regex': new RegExp(tribe, 'i')});
+        }
+      }
+      if (tribesList.length > 0) {
+        baseResultset = baseResultset.find({'gsx$tribe': {'$or': tribesList} });
+      }
+
+      // Sort data descending alphabetically
+      let results = baseResultset.simplesort('gsx$name').data();
+      if (results.length > 0) this.content = results;
+      else this.content = [{'text': 'No Results Found'}];
+      this.p = 1;
+    }
+
+    return (
+      <form onSubmit={search}>
+        <label>Card Name:<input type="text" ref={(input) => this.name = input} /></label><br />
+        <input type="checkbox" ref={(input) => tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => tribes.overworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => tribes.underworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => tribes["m'arrillian"] = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => tribes.generic = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/generic.png"} />
+        <br /><input type="submit" value="Search" />
+      </form>
+    );
+  }
+
+
+  navigation() {
+    let numpages = Math.ceil(this.content.length / this.n);
+
+    let next = () => {
+      if (this.p < numpages) return(<button onClick={ () => {this.p++;} }>next</button>);
+      else return(<button disabled>next</button>);
+    }
+
+    let prev = () => {
+      if (this.p > 1) return(<button onClick={ () => {this.p--;} }>prev</button>);
+      else return(<button disabled>prev</button>);
+    }
+
+    return (
+      <div style={{textAlign: 'left'}}>
+        <p>Showing page {this.p} of {numpages} {prev()} {next()}</p>
+        <p>
+          Entries per page:&nbsp;
+          <input type="number" style={{width: '40px'}} value={this.n} onChange={(event)=>{this.n=event.target.value;}} />
+        </p>
+      </div>
+    );
+  };
 
 }
 
