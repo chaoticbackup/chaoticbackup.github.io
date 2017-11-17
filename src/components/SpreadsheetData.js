@@ -16,8 +16,8 @@ class API {
 
   // Singleton
   static getInstance() {
-      if (!this.instance) { this.instance = new API(); }
-      return this.instance;
+    if (!this.instance) { this.instance = new API(); }
+    return this.instance;
   }
 
   static path(spreadsheetID) {

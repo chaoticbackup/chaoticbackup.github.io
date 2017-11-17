@@ -75,17 +75,22 @@ export default class CollectionHome extends React.Component {
   }
 
   searchForm() {
+    let stones = {};
     let tribes = {};
 
     // TODO advanced filters
     let search = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      let baseResultset = API.cards.creatures.chain().where((obj) => {return (!obj.gsx$thumb == '');});
+      let baseResultset = API.cards.creatures.chain();
+
+      if (!stones.allCards.checked){
+        baseResultset = baseResultset.where((obj) => {return (!obj.gsx$thumb == '');});
+      }
 
       // Search by name
-      if (this.name.value) {
-        baseResultset = baseResultset.find({'gsx$name': {'$regex': new RegExp(this.name.value, 'i')} });
+      if (stones.name.value) {
+        baseResultset = baseResultset.find({'gsx$name': {'$regex': new RegExp(stones.name.value, 'i')} });
       }
 
       // Search by tribe
@@ -108,7 +113,8 @@ export default class CollectionHome extends React.Component {
 
     return (
       <form onSubmit={search}>
-        <label>Card Name:<input type="text" ref={(input) => this.name = input} /></label><br />
+        <label>Show all cards:<input type="checkbox" ref={(input) => stones.allCards = input}/></label><br />
+        <label>Card Name:<input type="text" ref={(input) => stones.name = input} /></label><br />
         <input type="checkbox" ref={(input) => tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
         <input type="checkbox" ref={(input) => tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
         <input type="checkbox" ref={(input) => tribes.overworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
