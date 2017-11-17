@@ -63,12 +63,13 @@ export default class CollectionHome extends React.Component {
     return (
       <div>
         <p>
-          This page is under construction. <br />
-          In the meantime, you can check out&nbsp;
+          This page is under construction. In the meantime, you can check out&nbsp;
           <a style={{textDecoration: "underline"}} href="http://www.tradecardsonline.com/im/editCollection/collection_type/1">Trade Cards Online</a>
           .
-        </p><br />
-        {this.searchForm()}<br />
+        </p>
+        <hr />
+        {this.searchForm()}
+        <hr />
         {this.navigation()}<br />
         {output()}
       </div>
@@ -79,6 +80,7 @@ export default class CollectionHome extends React.Component {
     let stones = {};
     let tribes = {};
     let elements = {};
+    let rarity = {};
 
     // TODO advanced filters
     let search = (e) => {
@@ -93,7 +95,10 @@ export default class CollectionHome extends React.Component {
 
       // Search by name
       if (stones.name.value) {
-        baseResultset = baseResultset.find({'gsx$name': {'$regex': new RegExp(stones.name.value, 'i')} });
+        baseResultset = baseResultset.find({'$or': [
+          {'gsx$name': {'$regex': new RegExp(stones.name.value, 'i')}},
+          {'gsx$tags': {'$regex': new RegExp(stones.name.value, 'i')}}
+        ]});
       }
 
       // Search by tribe
@@ -120,7 +125,6 @@ export default class CollectionHome extends React.Component {
           }
         }
         if (elementsList.length > 0) {
-          console.log(this.swamp);
           if (this.swamp == "or") {
             baseResultset = baseResultset.find({'gsx$elements': {'$or': elementsList} });
           }
@@ -128,6 +132,16 @@ export default class CollectionHome extends React.Component {
            baseResultset = baseResultset.find({'gsx$elements': {'$and': elementsList} });
           }
         }
+      }
+
+      let rarityList = [];
+      for (const key in rarity) {
+        if (rarity[key].checked) {
+          rarityList.push({'$eq': key});
+        }
+      }
+      if (rarityList.length > 0) {
+        baseResultset = baseResultset.find({'gsx$rarity': {'$or': rarityList} });
       }
 
       // Sort data descending alphabetically
@@ -140,7 +154,6 @@ export default class CollectionHome extends React.Component {
     return (
       <div>
         <form onSubmit={search}>
-          <label>Show all cards:<input type="checkbox" ref={(input) => stones.allCards = input}/></label><br />
           <label>Card Name:<input type="text" ref={(input) => stones.name = input} /></label>
           <br /><br />
           <div>
@@ -161,7 +174,22 @@ export default class CollectionHome extends React.Component {
             <input type="checkbox" ref={(input) => stones.noElements = input}/><span>No Elements</span>
           </div>
           <br />
-          <input type="submit" value="Search" />
+          <div>
+            <label><input type="checkbox" ref={(input) => rarity["Common"] = input}/>Common</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => rarity["Uncommon"] = input}/>Uncommon</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => rarity["Rare"] = input}/>Rare</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => rarity["Super Rare"] = input}/>Super Rare</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => rarity["Ultra Rare"] = input}/>Ultra Rare</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => rarity["Promo"] = input}/>Promo</label>
+          </div>
+          <br />
+          <p>
+            Since not all data has been entered not all cards are listed,<br />
+            to see incomplete cards, click&nbsp;
+            <label>"Show all cards":<input type="checkbox" ref={(input) => stones.allCards = input}/></label>
+          </p>
+          <br />
+          <input type="submit" value="Search" />&nbsp;&nbsp;<input type="button" disabled value="Reset" />
         </form>
       </div>
     );
