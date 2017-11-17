@@ -15,6 +15,7 @@ export default class CollectionHome extends React.Component {
   @observable n = 10;
   @observable p = 1;
   @observable content = [];
+  swamp = "or";
 
   render() {
     if (this.props.children) {
@@ -119,7 +120,13 @@ export default class CollectionHome extends React.Component {
           }
         }
         if (elementsList.length > 0) {
-          baseResultset = baseResultset.find({'gsx$elements': {'$or': elementsList} });
+          console.log(this.swamp);
+          if (this.swamp == "or") {
+            baseResultset = baseResultset.find({'gsx$elements': {'$or': elementsList} });
+          }
+          if (this.swamp == "and") {
+           baseResultset = baseResultset.find({'gsx$elements': {'$and': elementsList} });
+          }
         }
       }
 
@@ -146,6 +153,7 @@ export default class CollectionHome extends React.Component {
           </div>
           <br />
           <div>
+            <input type="button" value={this.swamp} onClick={(e)=>{this.swamp = (this.swamp == "or" ? "and" : "or"); e.target.value = this.swamp;}}/>
             <input type="checkbox" ref={(input) => elements.fire = input}/><img height="16" className="icon" src={"/src/img/icons/elements/fire.png"} />&nbsp;
             <input type="checkbox" ref={(input) => elements.air = input}/><img height="16" className="icon" src={"/src/img/icons/elements/air.png"} />&nbsp;
             <input type="checkbox" ref={(input) => elements.earth = input}/><img height="16" className="icon" src={"/src/img/icons/elements/earth.png"} />&nbsp;
