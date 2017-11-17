@@ -77,6 +77,7 @@ export default class CollectionHome extends React.Component {
   searchForm() {
     let stones = {};
     let tribes = {};
+    let elements = {};
 
     // TODO advanced filters
     let search = (e) => {
@@ -84,6 +85,7 @@ export default class CollectionHome extends React.Component {
       e.stopPropagation();
       let baseResultset = API.cards.creatures.chain();
 
+      // ignores cards without thumbnails
       if (!stones.allCards.checked){
         baseResultset = baseResultset.where((obj) => {return (!obj.gsx$thumb == '');});
       }
@@ -94,7 +96,7 @@ export default class CollectionHome extends React.Component {
       }
 
       // Search by tribe
-      var tribesList = [];
+      let tribesList = [];
       for (const tribe in tribes) {
         if (tribes[tribe].checked) {
           tribesList.push({'$regex': new RegExp(tribe, 'i')});
@@ -102,6 +104,23 @@ export default class CollectionHome extends React.Component {
       }
       if (tribesList.length > 0) {
         baseResultset = baseResultset.find({'gsx$tribe': {'$or': tribesList} });
+      }
+
+      // no elements
+      if (stones.noElements.checked) {
+        baseResultset = baseResultset.where((obj) => {return (obj.gsx$elements == '');});
+      }
+      // Search by elements
+      else {
+        let elementsList = [];
+        for (const element in elements) {
+          if (elements[element].checked) {
+            elementsList.push({'$regex': new RegExp(element, 'i')});
+          }
+        }
+        if (elementsList.length > 0) {
+          baseResultset = baseResultset.find({'gsx$elements': {'$or': elementsList} });
+        }
       }
 
       // Sort data descending alphabetically
@@ -112,17 +131,31 @@ export default class CollectionHome extends React.Component {
     }
 
     return (
-      <form onSubmit={search}>
-        <label>Show all cards:<input type="checkbox" ref={(input) => stones.allCards = input}/></label><br />
-        <label>Card Name:<input type="text" ref={(input) => stones.name = input} /></label><br />
-        <input type="checkbox" ref={(input) => tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => tribes.overworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => tribes.underworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => tribes["m'arrillian"] = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => tribes.generic = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/generic.png"} />
-        <br /><input type="submit" value="Search" />
-      </form>
+      <div>
+        <form onSubmit={search}>
+          <label>Show all cards:<input type="checkbox" ref={(input) => stones.allCards = input}/></label><br />
+          <label>Card Name:<input type="text" ref={(input) => stones.name = input} /></label>
+          <br /><br />
+          <div>
+            <input type="checkbox" ref={(input) => tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => tribes.overworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => tribes.underworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => tribes["m'arrillian"] = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => tribes.generic = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/generic.png"} />
+          </div>
+          <br />
+          <div>
+            <input type="checkbox" ref={(input) => elements.fire = input}/><img height="16" className="icon" src={"/src/img/icons/elements/fire.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => elements.air = input}/><img height="16" className="icon" src={"/src/img/icons/elements/air.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => elements.earth = input}/><img height="16" className="icon" src={"/src/img/icons/elements/earth.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => elements.water = input}/><img height="16" className="icon" src={"/src/img/icons/elements/water.png"} />&nbsp;
+            <input type="checkbox" ref={(input) => stones.noElements = input}/><span>No Elements</span>
+          </div>
+          <br />
+          <input type="submit" value="Search" />
+        </form>
+      </div>
     );
   }
 
