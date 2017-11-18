@@ -59,7 +59,11 @@ export default class SingleMugic extends React.Component {
       return(<PageNotFound location={this.props.location}/>);
     }
 
-    // TODO mugic card details
+    let cost = [];
+    for (let i = 0; i < card_data.gsx$cost; i++) {
+      cost.push(<img key={i} className="icon" src={"/src/img/icons/mugic/"+tribe.toLowerCase()+".png"} alt="mugic counter"/>);
+    }
+
     // TODO mugic splash art
     return (
       <div className={tribe.toLowerCase()}>
@@ -77,8 +81,38 @@ export default class SingleMugic extends React.Component {
         </div>
         <hr />
         <div>
+          <strong>Card ID: </strong>
+          {card_data.gsx$cardid}
+        </div>
+        <hr />
+        <div>
+          <strong>Set: </strong>
+          {card_data.gsx$set}
+        </div>
+        <hr />
+        <div>
+          <strong>Rarity: </strong>
+          {card_data.gsx$rarity}
+        </div>
+        <hr />
+        <div>
           <strong>Tribe: </strong>
           <img className="icon" style={{width: "20px"}} src={"/src/img/icons/tribes/"+tribe.toLowerCase()+".png"}></img>{tribe}
+        </div>
+        <hr />
+        <div>
+          <strong>Cost: </strong>
+          {cost}
+        </div>
+        <hr />
+        <div>
+          <strong>Ability:</strong><br />
+          {card_data.gsx$ability}
+        </div>
+        <hr />
+        <div>
+          <strong>Flavortext:</strong><br />
+          {card_data.gsx$flavortext}
         </div>
       </div>
     );
