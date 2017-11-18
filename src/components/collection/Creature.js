@@ -23,7 +23,7 @@ export default class Creature extends React.Component {
   	      <div style={{verticalAlign: 'text-top', float: 'left', width: "50%"}}>
   	        <img height="20" className="icon" src={"/src/img/icons/tribes/"+creature.gsx$tribe.toLowerCase()+".png"}></img>
   	        <span>{creature.gsx$name}</span><br />
-            <span>{creature.gsx$rarity}</span><br />
+            <span>{API.sets[creature.gsx$set]} | {creature.gsx$rarity}</span><br />
             <span>Creature - {creature.gsx$tribe} {creature.gsx$types}</span><br />
   	        <span>{elements}</span><br />
   	        <span>Energy: {creature.gsx$energy}</span><br />

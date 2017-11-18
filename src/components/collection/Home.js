@@ -81,6 +81,7 @@ export default class CollectionHome extends React.Component {
     let tribes = {};
     let elements = {};
     let rarity = {};
+    let sets = {};
 
     // TODO advanced filters
     let search = (e) => {
@@ -144,11 +145,26 @@ export default class CollectionHome extends React.Component {
         baseResultset = baseResultset.find({'gsx$rarity': {'$or': rarityList} });
       }
 
+      let setsList = [];
+      for (const key in sets) {
+        if (sets[key].checked) {
+          setsList.push({'$eq': key});
+        }
+      }
+      if (setsList.length > 0) {
+        baseResultset = baseResultset.find({'gsx$set': {'$or': setsList} });
+      }
+
       // Sort data descending alphabetically
       let results = baseResultset.simplesort('gsx$name').data();
       if (results.length > 0) this.content = results;
       else this.content = [{'text': 'No Results Found'}];
       this.p = 1;
+    }
+
+    let setsInput = [];
+    for (const key in API.sets) {
+      setsInput.push(<label key={key}><input type="checkbox" ref={(input) => sets[key] = input} />{API.sets[key]}</label>);
     }
 
     return (
@@ -182,6 +198,8 @@ export default class CollectionHome extends React.Component {
             <label><input type="checkbox" ref={(input) => rarity["Ultra Rare"] = input}/>Ultra Rare</label>&nbsp;
             <label><input type="checkbox" ref={(input) => rarity["Promo"] = input}/>Promo</label>
           </div>
+          <br />
+          <div>{setsInput}</div>
           <br />
           <p>
             Since not all data has been entered not all cards are listed,<br />

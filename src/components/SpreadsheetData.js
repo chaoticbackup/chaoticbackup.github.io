@@ -60,6 +60,26 @@ class API {
       console.log('setting up database failed', err);
     }
   }
+
+  // For the conversion of shorthand in database
+  get sets() {
+    return {
+      "DOP": "Dawn of Perim",
+      "ZOTH": "Zenith of the Hive",
+      "SS": "Silent Sands",
+      "MI": "M'arrillian Invasion",
+      "ROTO": "Rise of the Oligarch",
+      "TOTT": "Turn of the Tide",
+      "FUN": "Forged Unity",
+      "AU": "Alliance Unraveled",
+      "FAS": "Fire and Stone",
+      "SAS": "Storm and Sea",
+      "BR": "Beyond Rare",
+      "LR": "League Rewards",
+      "OP1": "Organized Play 1"
+    };
+  }
+
 }
 
 export default API.getInstance();
