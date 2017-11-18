@@ -63,7 +63,7 @@ function App({ children, routes }) {
                       <li id="unity-nav9" className={language}></li>
                     </ul>
                     <ul id="unityETC-sprite" className={language}>
-                      <li id="unity-nav10" className={language}><a href={`#`}><span>Enter the Code</span></a></li>
+                      <li id="unity-nav10" className={language}><a href={`/EnterTheCode`}><span>Enter the Code</span></a></li>
                     </ul>
                   </div>
                 </div>

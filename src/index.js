@@ -9,6 +9,7 @@ import UnderConstruction from './components/UnderConstruction';
 
 /* Home Component */
 import Home from './components/Home';
+import EnterTheCode from './components/account/EnterTheCode';
 
 /* Test Components */
 import ExampleComponent from './components/ExampleComponent';
@@ -46,6 +47,9 @@ const routes = (
 
     {/* Construction */}
     <Route path="Construction" component={UnderConstruction} />
+
+    {/* EnterTheCode */}
+    <Route path="EnterTheCode" component={EnterTheCode} />
 
     {/* Collection */}
     <Route path="collection/" mapMenuTitle="Collection">
