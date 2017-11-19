@@ -166,6 +166,14 @@ export default class CollectionHome extends React.Component {
         baseResultset = baseResultset.find({'gsx$gender': {'$or': genderList} });
       }
 
+      let subtypesList = stones.subtypes.value.split(/[ ,]+/).filter(Boolean).map((item) => {
+        return ({'$regex': new RegExp(item, 'i')});
+      });
+      console.log(subtypesList);
+      if (subtypesList.length > 0) {
+        baseResultset = baseResultset.find({'gsx$types': {'$or': subtypesList} });
+      }
+
       // Sort data descending alphabetically
       let results = baseResultset.simplesort('gsx$name').data();
       if (results.length > 0) this.content = results;
@@ -182,6 +190,8 @@ export default class CollectionHome extends React.Component {
       <div>
         <form onSubmit={search}>
           <label>Card Name:<input type="text" ref={(input) => stones.name = input} /></label>
+          <br /><br />
+          <label>Subtypes:<input type="text" ref={(input) => stones.subtypes = input} /></label>
           <br /><br />
           <div>
             <input type="checkbox" ref={(input) => tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
