@@ -36,9 +36,8 @@ export default class EnterTheCode extends React.Component {
     let validate = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log(this.message);
+      // this.code;
       this.message = "Sorry, this feature doesn't exist :(";
-      console.log(this.message);
     }
 
     return(

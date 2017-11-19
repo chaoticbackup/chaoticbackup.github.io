@@ -82,6 +82,7 @@ export default class CollectionHome extends React.Component {
     let elements = {};
     let rarity = {};
     let sets = {};
+    let gender = {};
 
     // TODO advanced filters
     let search = (e) => {
@@ -155,6 +156,16 @@ export default class CollectionHome extends React.Component {
         baseResultset = baseResultset.find({'gsx$set': {'$or': setsList} });
       }
 
+      let genderList = [];
+      for (const key in gender) {
+        if (gender[key].checked) {
+          genderList.push({'$regex': new RegExp(key, 'i')})
+        }
+      }
+      if (genderList.length > 0) {
+        baseResultset = baseResultset.find({'gsx$gender': {'$or': genderList} });
+      }
+
       // Sort data descending alphabetically
       let results = baseResultset.simplesort('gsx$name').data();
       if (results.length > 0) this.content = results;
@@ -200,6 +211,12 @@ export default class CollectionHome extends React.Component {
           </div>
           <br />
           <div>{setsInput}</div>
+          <br />
+          <div>
+            <label><input type="checkbox" ref={(input) => gender.Ambiguous = input}/>Ambiguous</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => gender.Female = input}/>Female</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => gender.Male = input}/>Male</label>
+          </div>
           <br />
           <p>
             Since not all data has been entered not all cards are listed,<br />
