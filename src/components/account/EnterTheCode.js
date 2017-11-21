@@ -1,8 +1,7 @@
 import React from 'react';
-import Interactive from 'react-interactive';
-import { Link } from 'react-router';
 import style from '../../styles/style';
 import DigitInput from 'react-digit-input';
+import API from '../SpreadsheetData';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 
@@ -36,8 +35,19 @@ export default class EnterTheCode extends React.Component {
     let validate = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      // this.code;
-      this.message = "Sorry, this feature doesn't exist :(";
+      if (this.code == "" || this.code.indexOf(" ") === 1) {
+        this.message = (
+          <p style={{'color': 'red'}}>Please enter a 12 digit code</p>
+        );
+      }
+      else {
+        this.message = (
+          <div>
+            <p> Congrats on your scan! </p><br />
+            <img className="card" src={API.base_image + "1mlqp46AcMVmrP_rspK7vlr7K0_-1k4QI"} />
+          </div>
+        );
+      }
     }
 
     return(
@@ -70,7 +80,7 @@ export default class EnterTheCode extends React.Component {
         <br />
         <button onClick={validate}>Validate Code</button>
         <br /><br />
-        <span style={{'color': 'red'}}>{this.message}</span>
+        {this.message}
       </div>
     );
   }
