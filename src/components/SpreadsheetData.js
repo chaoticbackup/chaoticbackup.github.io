@@ -13,6 +13,8 @@ class API {
   // + "/od6/public/basic?alt=json"; // Alternate data format
   static base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
   get base_image() { return "https://drive.google.com/uc?id="; }
+  get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp"; }
+  get card_back() { return "1_MgWDPsPGf-gPBArn2v6ideJcqOPsSYC"; }
 
   // Singleton
   static getInstance() {
@@ -147,11 +149,14 @@ class CollectionDB {
     });
   }
 
-  setupAttacks() {
-
+  setupAttacks(tribe="Generic") {
+    this.setup(this.api.urls.Attacks[tribe], "Attack", (data) => {
+      this.attacks.insert(data);
+      this.built.push("attacks_"+tribe);
+    });
   }
 
-  setupBattleGear() {
+  setupBattlegear() {
 
   }
 

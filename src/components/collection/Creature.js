@@ -5,9 +5,6 @@ import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 
-let thumb = "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp";
-let card_back = "1_MgWDPsPGf-gPBArn2v6ideJcqOPsSYC";
-
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
 
@@ -19,7 +16,7 @@ export default class Creature extends React.Component {
 
   	return(
   	  <div style={{textAlign: 'left', display: 'flex'}}>
-  	      <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (creature.gsx$thumb||thumb)}></img>
+  	      <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (creature.gsx$thumb||API.thumb_missing)}></img>
   	      <div style={{verticalAlign: 'text-top', float: 'left', width: "50%"}}>
   	        <img height="20" className="icon" src={"/src/img/icons/tribes/"+creature.gsx$tribe.toLowerCase()+".png"}></img>
   	        <span>{creature.gsx$name}</span><br />

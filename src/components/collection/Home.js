@@ -7,15 +7,21 @@ import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import Creature from './Creature';
-import UnderConstruction from '../UnderConstruction';
-
+import Attack from './Attack';
+import loki from 'lokijs';
 
 @inject((stores, props, context) => props) @observer
 export default class CollectionHome extends React.Component {
   @observable n = 10;
   @observable p = 1;
   @observable content = [];
+  type = "";
   swamp = "or";
+
+  constructor() {
+    super();
+    this.filter = new loki("filter.db");
+  }
 
   render() {
     if (this.props.children) {
@@ -30,6 +36,11 @@ export default class CollectionHome extends React.Component {
     }
 
     // Load all the data
+    if (!store.cards.built.includes("attacks_Cards")) {
+      store.cards.setupAttacks("Cards");
+      return (<span>Loading...</span>);
+    }
+
     if (!store.cards.built.includes("creatures_Cards")) {
       store.cards.setupCreatures("Cards");
       return (<span>Loading...</span>);
@@ -42,7 +53,6 @@ export default class CollectionHome extends React.Component {
 
     if (this.content.length == 0) {
       // Only use cards with thumb nails for now
-      // TODO add other types
       this.content = store.cards.creatures.chain().where((obj) => {return (!obj.gsx$thumb == '');}).simplesort('gsx$name').data();
     }
 
@@ -56,6 +66,7 @@ export default class CollectionHome extends React.Component {
       }
       return elements.map((element, i) => {
         if (element.gsx$type == "Creature") return (<Creature creature={element} key={i} />);
+        if (element.gsx$type == "Attack") return (<Attack attack={element} key={i} />);
         else return (<div>Empty</div>);
       });
     }
@@ -88,16 +99,30 @@ export default class CollectionHome extends React.Component {
     let search = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      let baseResultset = API.cards.creatures.chain();
+      // Sort data descending alphabetically
+      let filter = this.filter.addCollection('filter');
+      var pview = filter.addDynamicView('filter');
+      pview.applySimpleSort('gsx$name');
+
+      // begin data filtering
+      // TODO add other types
+      let creatureResults = API.cards.creatures.chain();
+      let attackResults = API.cards.attacks.chain();
 
       // ignores cards without thumbnails
+      // TODO eventually remove
       if (!stones.allCards.checked){
-        baseResultset = baseResultset.where((obj) => {return (!obj.gsx$thumb == '');});
+        creatureResults = creatureResults.where((obj) => {return (!obj.gsx$thumb == '');});
+        attackResults = attackResults.where((obj) => {return (!obj.gsx$thumb == '');});
       }
 
       // Search by name
       if (stones.name.value) {
-        baseResultset = baseResultset.find({'$or': [
+        creatureResults = creatureResults.find({'$or': [
+          {'gsx$name': {'$regex': new RegExp(stones.name.value, 'i')}},
+          {'gsx$tags': {'$regex': new RegExp(stones.name.value, 'i')}}
+        ]});
+        attackResults = attackResults.find({'$or': [
           {'gsx$name': {'$regex': new RegExp(stones.name.value, 'i')}},
           {'gsx$tags': {'$regex': new RegExp(stones.name.value, 'i')}}
         ]});
@@ -111,12 +136,12 @@ export default class CollectionHome extends React.Component {
         }
       }
       if (tribesList.length > 0) {
-        baseResultset = baseResultset.find({'gsx$tribe': {'$or': tribesList} });
+        creatureResults = creatureResults.find({'gsx$tribe': {'$or': tribesList} });
       }
 
       // no elements
       if (stones.noElements.checked) {
-        baseResultset = baseResultset.where((obj) => {return (obj.gsx$elements == '');});
+        creatureResults = creatureResults.where((obj) => {return (obj.gsx$elements == '');});
       }
       // Search by elements
       else {
@@ -128,10 +153,10 @@ export default class CollectionHome extends React.Component {
         }
         if (elementsList.length > 0) {
           if (this.swamp == "or") {
-            baseResultset = baseResultset.find({'gsx$elements': {'$or': elementsList} });
+            creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList} });
           }
           if (this.swamp == "and") {
-           baseResultset = baseResultset.find({'gsx$elements': {'$and': elementsList} });
+           creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList} });
           }
         }
       }
@@ -143,7 +168,8 @@ export default class CollectionHome extends React.Component {
         }
       }
       if (rarityList.length > 0) {
-        baseResultset = baseResultset.find({'gsx$rarity': {'$or': rarityList} });
+        creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
+        attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList} });
       }
 
       let setsList = [];
@@ -153,7 +179,8 @@ export default class CollectionHome extends React.Component {
         }
       }
       if (setsList.length > 0) {
-        baseResultset = baseResultset.find({'gsx$set': {'$or': setsList} });
+        creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
+        attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
       }
 
       let genderList = [];
@@ -163,19 +190,30 @@ export default class CollectionHome extends React.Component {
         }
       }
       if (genderList.length > 0) {
-        baseResultset = baseResultset.find({'gsx$gender': {'$or': genderList} });
+        creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
       }
 
       let subtypesList = stones.subtypes.value.split(/[ ,]+/).filter(Boolean).map((item) => {
         return ({'$regex': new RegExp(item, 'i')});
       });
-      console.log(subtypesList);
       if (subtypesList.length > 0) {
-        baseResultset = baseResultset.find({'gsx$types': {'$or': subtypesList} });
+        creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList} });
       }
 
-      // Sort data descending alphabetically
-      let results = baseResultset.simplesort('gsx$name').data();
+      // Merge data
+      if (!this.type || this.type=="Creature") {
+        let temp = creatureResults.data()
+        temp.forEach(function(v){ delete v.$loki });
+        filter.insert(temp);
+      }
+      if (!this.type || this.type=="Attack") {
+        let temp = attackResults.data();
+        temp.forEach(function(v){ delete v.$loki });
+        filter.insert(temp);
+      }
+
+      let results = pview.data();
+      this.filter.removeCollection('filter');
       if (results.length > 0) this.content = results;
       else this.content = [{'text': 'No Results Found'}];
       this.p = 1;
@@ -189,7 +227,16 @@ export default class CollectionHome extends React.Component {
     return (
       <div>
         <form onSubmit={search}>
-          <label>Card Name:<input type="text" ref={(input) => stones.name = input} /></label>
+          <label>Name:<input type="text" ref={(input) => stones.name = input} /></label>
+          <br /><br />
+          <label>
+            Type:
+            <select onChange={(e) => {this.type = e.target.value}} >
+              <option value=""></option>
+              <option value="Attack">Attack</option>
+              <option value="Creature">Creature</option>
+            </select>
+          </label>
           <br /><br />
           <label>Subtypes:<input type="text" ref={(input) => stones.subtypes = input} /></label>
           <br /><br />
