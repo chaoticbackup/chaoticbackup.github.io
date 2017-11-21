@@ -142,6 +142,15 @@ export default class CollectionHome extends React.Component {
       // no elements
       if (stones.noElements.checked) {
         creatureResults = creatureResults.where((obj) => {return (obj.gsx$elements == '');});
+        attackResults = attackResults.where(
+          (obj) => {return (obj.gsx$fire == (0||'') );}
+        ).where(
+          (obj) => {return (obj.gsx$air == (0||'') );}
+        ).where(
+          (obj) => {return (obj.gsx$earth == (0||'') );}
+        ).where(
+          (obj) => {return (obj.gsx$water == (0||'') );}
+        );
       }
       // Search by elements
       else {
@@ -151,12 +160,15 @@ export default class CollectionHome extends React.Component {
             elementsList.push({'$regex': new RegExp(element, 'i')});
           }
         }
+        let elementsList2 = [{'gsx$fire': {'$gt': 0}}, {'gsx$air': {'$gt': 0}}, {'gsx$earth': {'$gt': 0}}, {'gsx$water': {'$gt': 0}}]
         if (elementsList.length > 0) {
           if (this.swamp == "or") {
             creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList} });
+            attackResults = attackResults.find({'$or': elementsList2});
           }
           if (this.swamp == "and") {
            creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList} });
+           attackResults = attackResults.find({'$and': elementsList2});
           }
         }
       }
