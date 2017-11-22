@@ -124,7 +124,21 @@ export default class CollectionHome extends React.Component {
         ]});
         attackResults = attackResults.find({'$or': [
           {'gsx$name': {'$regex': new RegExp(stones.name.value, 'i')}},
-          {'gsx$tags': {'$regex': new RegExp(stones.name.value, 'i')}}
+          {'gsx$tags': {'$regex': new RegExp(stones.name.value, 'i')}},
+        ]});
+      }
+
+      if (stones.text.value) {
+        creatureResults = creatureResults.find({'$or': [
+          {'gsx$tags': {'$regex': new RegExp(stones.text.value, 'i')}},
+          {'gsx$ability': {'$regex': new RegExp(stones.text.value, 'i')}},
+          {'gsx$flavortext': {'$regex': new RegExp(stones.text.value, 'i')}},
+          {'gsx$brainwashedability': {'$regex': new RegExp(stones.text.value, 'i')}}
+        ]});
+        attackResults = attackResults.find({'$or': [
+          {'gsx$tags': {'$regex': new RegExp(stones.text.value, 'i')}},
+          {'gsx$ability': {'$regex': new RegExp(stones.text.value, 'i')}},
+          {'gsx$flavortext': {'$regex': new RegExp(stones.text.value, 'i')}}
         ]});
       }
 
@@ -239,10 +253,12 @@ export default class CollectionHome extends React.Component {
     return (
       <div>
         <form onSubmit={search}>
-          <label>Name:<input type="text" ref={(input) => stones.name = input} /></label>
+          <label>Name: <input type="text" ref={(input) => stones.name = input} /></label>
+          <br /><br />
+          <label>Text: <input type="text" ref={(input) => stones.text = input} /></label>
           <br /><br />
           <label>
-            Type:
+            Type:&nbsp;
             <select onChange={(e) => {this.type = e.target.value}} >
               <option value=""></option>
               <option value="Attack">Attack</option>
@@ -250,7 +266,7 @@ export default class CollectionHome extends React.Component {
             </select>
           </label>
           <br /><br />
-          <label>Subtypes:<input type="text" ref={(input) => stones.subtypes = input} /></label>
+          <label>Subtypes: <input type="text" ref={(input) => stones.subtypes = input} /></label>
           <br /><br />
           <div>
             <input type="checkbox" ref={(input) => tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
