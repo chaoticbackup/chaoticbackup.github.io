@@ -37,7 +37,7 @@ import Tribes from './components/portal/Category/Tribes';
 
 
 const routes = (
-  <Route path="/" component={App} mapMenuTitle="Home">
+  <Route path="/" component={App}>
     <IndexRoute component={Home} />
 
     {/* Test */}
@@ -52,7 +52,7 @@ const routes = (
     <Route path="EnterTheCode" component={EnterTheCode} />
 
     {/* Collection */}
-    <Route path="collection/" mapMenuTitle="Collection">
+    <Route path="collection/">
       <IndexRoute component={CollectionHome} />
 
       <Route path="*" component={PageNotFound} />

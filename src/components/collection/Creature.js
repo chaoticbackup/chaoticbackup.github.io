@@ -14,6 +14,11 @@ export default class Creature extends React.Component {
   	  return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
   	});
 
+    let mugic = [];
+    for (let i = 0; i < creature.gsx$mugicability; i++) {
+      mugic.push(<img className="icon" src={"/src/img/icons/mugic/"+(creature.gsx$tribe.toLowerCase()||"generic")+".png"} alt={creature.gsx$tribe.toLowerCase() + " Mugic counter"} key={i} />);
+    }
+
   	return(
   	  <div style={{textAlign: 'left', display: 'flex'}}>
   	      <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (creature.gsx$thumb||API.thumb_missing)}></img>
@@ -23,7 +28,7 @@ export default class Creature extends React.Component {
             <span>{API.sets[creature.gsx$set]} | {creature.gsx$rarity}</span><br />
             <span>Creature - {creature.gsx$tribe} {creature.gsx$types}</span><br />
   	        <span>{elements}</span><br />
-  	        <span>Energy: {creature.gsx$energy}</span><br />
+            <span>{mugic}</span><br />
   	      </div>
   	      <div style={{verticalAlign: 'text-top', float: 'left'}}>
   	     	 <span>{creature.gsx$courage}&nbsp;<img height="16" className="icon" src={"/src/img/icons/disciplines/courage.png"}></img></span><br />

@@ -94,6 +94,7 @@ export default class CollectionHome extends React.Component {
     let rarity = {};
     let sets = {};
     let gender = {};
+    let mc = {};
 
     // TODO advanced filters
     let search = (e) => {
@@ -226,6 +227,14 @@ export default class CollectionHome extends React.Component {
         creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList} });
       }
 
+      console.log(mc);
+      if (mc.min.value > 0) {
+        creatureResults = creatureResults.find({'gsx$mugicability': {'$gte': mc.min.value}});
+      }
+      if (mc.max.value > 0 && mc.max.value >= mc.min.value) {
+        creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': mc.max.value}});
+      }
+
       // Merge data
       if (!this.type || this.type=="Creature") {
         let temp = creatureResults.data()
@@ -253,8 +262,7 @@ export default class CollectionHome extends React.Component {
     return (
       <div>
         <form onSubmit={search}>
-          <label>Name: <input type="text" ref={(input) => stones.name = input} /></label>
-          <br /><br />
+          <label>Name: <input type="text" ref={(input) => stones.name = input} /></label>&nbsp;&nbsp;
           <label>Text: <input type="text" ref={(input) => stones.text = input} /></label>
           <br /><br />
           <label>
@@ -264,8 +272,7 @@ export default class CollectionHome extends React.Component {
               <option value="Attack">Attack</option>
               <option value="Creature">Creature</option>
             </select>
-          </label>
-          <br /><br />
+          </label>&nbsp;&nbsp;
           <label>Subtypes: <input type="text" ref={(input) => stones.subtypes = input} /></label>
           <br /><br />
           <div>
@@ -296,6 +303,11 @@ export default class CollectionHome extends React.Component {
           </div>
           <br />
           <div>{setsInput}</div>
+          <br />
+          <div>
+            <label>Min Mugic Counters: <input type="text" style={{width: '20px'}} ref={(input) => mc.min = input} /></label>&nbsp;
+            <label>Max Mugic Counters: <input type="text" style={{width: '20px'}} ref={(input) => mc.max = input} /></label>
+          </div>
           <br />
           <div>
             <label><input type="checkbox" ref={(input) => gender.Ambiguous = input}/>Ambiguous</label>&nbsp;
@@ -329,12 +341,19 @@ export default class CollectionHome extends React.Component {
       else return(<button disabled>prev</button>);
     }
 
+    let entries = (event) => {
+      let x = event.target.value;
+      if (!isNaN(x)) {
+        this.n=x;
+      }
+    }
+
     return (
       <div style={{textAlign: 'left'}}>
         <p>Showing page {this.p} of {numpages} {prev()} {next()}</p>
         <p>
           Entries per page:&nbsp;
-          <input type="number" style={{width: '40px'}} value={this.n} onChange={(event)=>{this.n=event.target.value;}} />
+          <input type="text" style={{width: '40px'}} value={this.n} onChange={entries} />
         </p>
       </div>
     );
