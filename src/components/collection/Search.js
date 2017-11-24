@@ -95,6 +95,13 @@ export default class SearchForm extends React.Component {
           </div>
           <br />
           <div>
+            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/courage.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.courage = input} /></label>&nbsp;
+            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/power.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.power = input} /></label>&nbsp;
+            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/wisdom.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.wisdom = input} /></label>&nbsp;
+            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/speed.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.speed = input} /></label>
+          </div>
+          <br />
+          <div>
             <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>loyal</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Male</label>
@@ -262,6 +269,19 @@ export default class SearchForm extends React.Component {
     }
     if (this.energy.max.value > 0 && this.energy.max.value >= this.energy.min.value) {
       creatureResults = creatureResults.find({'gsx$energy': {'$lte': this.energy.max.value}});
+    }
+
+    if (this.stones.courage.value > 0) {
+      creatureResults = creatureResults.find({'gsx$courage': {'$gte': this.stones.courage.value}});
+    }
+    if (this.stones.power.value > 0) {
+      creatureResults = creatureResults.find({'gsx$power': {'$gte': this.stones.power.value}});
+    }
+    if (this.stones.wisdom.value > 0) {
+      creatureResults = creatureResults.find({'gsx$wisdom': {'$gte': this.stones.wisdom.value}});
+    }
+    if (this.stones.speed.value > 0) {
+      creatureResults = creatureResults.find({'gsx$speed': {'$gte': this.stones.speed.value}});
     }
 
     if (this.stones.unique.checked) {
