@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 /* Common Components */
-import App from './Base';
+import App from './components/Base';
 import PageNotFound from './components/PageNotFound';
 import UnderConstruction from './components/UnderConstruction';
 
@@ -12,16 +12,15 @@ import Home from './components/Home';
 import EnterTheCode from './components/account/EnterTheCode';
 
 /* Test Components */
-import ExampleComponent from './components/ExampleComponent';
-import ExampleTwoDeepComponent from './components/ExampleTwoDeepComponent';
-
-/* SpreadsheetData */
-import API from './components/SpreadsheetData';
+import ExampleHome from './components/example/Home';
+import ExampleComponent from './components/example/ExampleComponent';
+import ExampleTwoDeepComponent from './components/example/ExampleTwoDeepComponent';
 
 /* Collection */
 import CollectionHome from './components/collection/Home';
 
 /* Portal */
+import PortalBase from './components/portal/Base';
 import PortalHome from './components/portal/Home';
 import Attacks from './components/portal/Category/Attacks';
 import SingleAttack from './components/portal/Category/Attacks';
@@ -37,7 +36,7 @@ import Tribes from './components/portal/Category/Tribes';
 
 
 const routes = (
-  <Route path="/" component={App}>
+  <Route path="/" component={App} >
     <IndexRoute component={Home} />
 
     {/* Test */}
@@ -59,7 +58,7 @@ const routes = (
     </Route>
 
     {/* Portal */}
-    <Route path="portal/" mapMenuTitle="Portal">
+    <Route path="portal/" component={PortalBase} mapMenuTitle="Portal">
       <IndexRoute component={PortalHome} />
 
       {/* Attacks */}

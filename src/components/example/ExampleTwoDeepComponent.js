@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-import s from '../styles/exampleTwoDeepComponent.style';
+import s from '../../styles/exampleTwoDeepComponent.style';
 
 const propTypes = {
   location: PropTypes.object.isRequired,

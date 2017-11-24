@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-import s from './styles/app.style';
+import s from '../styles/app.style';
 
 const language = "ENG";
 const bkgrnd = "05";
@@ -13,32 +13,6 @@ const propTypes = {
 };
 
 function App({ children, routes }) {
-  function generateMapMenu() {
-    let path = '';
-
-    function nextPath(route) {
-      path += (
-        (path.slice(-1) === '/' ? '' : '/') +
-        (route.path === '/' ? '' : route.path)
-      );
-      return path;
-    }
-
-    return (
-      routes.filter(route => route.mapMenuTitle)
-      .map((route, index, array) => (
-        <span key={index}>
-            <Interactive
-              as={Link}
-              {...s.link}
-              to={nextPath(route)}
-            >{route.mapMenuTitle}</Interactive>
-            {(index + 1) < array.length && ' / '}
-          </span>
-      ))
-    );
-  }
-
   return (
     <div>
       <div className="fix-pgBkgrnd-repeat-x">
@@ -63,7 +37,7 @@ function App({ children, routes }) {
                       <li id="unity-nav9" className={language}></li>
                     </ul>
                     <ul id="unityETC-sprite" className={language}>
-                      <li id="unity-nav10" className={language}><a href={`/EnterTheCode`}><span>Enter the Code</span></a></li>
+                      <li id="unity-nav10" className={language}><Link to={`/EnterTheCode`}><span>Enter the Code</span></Link></li>
                     </ul>
                   </div>
                 </div>
@@ -92,13 +66,6 @@ function App({ children, routes }) {
                         <div className="content-area-right-repeat-y">
                           <div style={{margin: "0 8px 0 10px"}}>
                             <div id="player" style={{textAlign: "center"}}>
-                              {/*
-                              <br />
-                              <h1 style={s.title}>Single Page Apps for GitHub Pages</h1>
-                              */}
-                              <nav style={s.mapMenu}>
-                                {generateMapMenu()}
-                              </nav>
                               {children}
                               <br />
                             </div>

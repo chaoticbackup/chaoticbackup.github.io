@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-import s from '../styles/exampleComponent.style';
+import s from '../../styles/exampleComponent.style';
 
 const propTypes = {
   children: PropTypes.element,
