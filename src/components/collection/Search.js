@@ -29,6 +29,7 @@ export default class SearchForm extends React.Component {
     this.sets = {};
     this.gender = {};
     this.mc = {};
+    this.energy = {};
   };
 
   render() {
@@ -86,6 +87,11 @@ export default class SearchForm extends React.Component {
           <div>
             <label>Min Mugic Counters: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
             <label>Max Mugic Counters: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.max = input} /></label>
+          </div>
+          <br />
+          <div>
+            <label>Min Energy: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.min = input} /></label>&nbsp;
+            <label>Max Energy: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.max = input} /></label>
           </div>
           <br />
           <div>
@@ -249,6 +255,13 @@ export default class SearchForm extends React.Component {
     }
     if (this.mc.max.value > 0 && this.mc.max.value >= this.mc.min.value) {
       creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.mc.max.value}});
+    }
+
+    if (this.energy.min.value > 0) {
+      creatureResults = creatureResults.find({'gsx$energy': {'$gte': this.energy.min.value}});
+    }
+    if (this.energy.max.value > 0 && this.energy.max.value >= this.energy.min.value) {
+      creatureResults = creatureResults.find({'gsx$energy': {'$lte': this.energy.max.value}});
     }
 
     if (this.stones.unique.checked) {
