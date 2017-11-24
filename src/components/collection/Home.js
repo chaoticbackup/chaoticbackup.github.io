@@ -83,6 +83,7 @@ export default class CollectionHome extends React.Component {
         <hr />
         {this.navigation()}<br />
         {output()}
+        {this.navigation()}<br />
       </div>
     );
   }
@@ -341,19 +342,17 @@ export default class CollectionHome extends React.Component {
       else return(<button disabled>prev</button>);
     }
 
-    let entries = (event) => {
-      let x = event.target.value;
-      if (!isNaN(x)) {
-        this.n=x;
-      }
-    }
-
     return (
       <div style={{textAlign: 'left'}}>
         <p>Showing page {this.p} of {numpages} {prev()} {next()}</p>
         <p>
-          Entries per page:&nbsp;
-          <input type="text" style={{width: '40px'}} value={this.n} onChange={entries} />
+          Entries per page:&nbsp;{this.n}&nbsp;
+          {/*<input type="text" style={{width: '40px'}} value={this.n}
+            onChange={(event) => {let x = event.target.value; if (!isNaN(x)) this.n=x;}
+          />*/}
+          <input type="button" value="10" onClick={(e) => this.n=e.target.value} />&nbsp;
+          <input type="button" value="20" onClick={(e) => this.n=e.target.value} />&nbsp;
+          <input type="button" value="50" onClick={(e) => this.n=e.target.value} />
         </p>
       </div>
     );
