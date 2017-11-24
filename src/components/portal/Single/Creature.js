@@ -56,7 +56,7 @@ export default class SingleCreature extends React.Component {
     if (!creature) {
       return(<PageNotFound location={this.props.location}/>);
     }
-    
+
     const card_data = store.cards.creatures.findOne({'gsx$name': name});
 
     const locations = creature.gsx$location.split(/[,]+\s*/).map((item, i) => {
@@ -128,7 +128,7 @@ export default class SingleCreature extends React.Component {
         <hr />
         <div>
           <strong>Card ID: </strong>
-          {card_data.gsx$cardid}
+          {card_data.gsx$id}
         </div>
         <hr />
         <div>

@@ -82,7 +82,7 @@ export default class SingleMugic extends React.Component {
         <hr />
         <div>
           <strong>Card ID: </strong>
-          {card_data.gsx$cardid}
+          {card_data.gsx$id}
         </div>
         <hr />
         <div>
