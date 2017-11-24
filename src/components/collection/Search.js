@@ -12,20 +12,24 @@ import loki from 'lokijs';
 
 @inject((stores, props, context) => props) @observer
 export default class SearchForm extends React.Component {
-  type = "";
-  swamp = "or";
-  stones = {};
-  tribes = {};
-  elements = {};
-  rarity = {};
-  sets = {};
-  gender = {};
-  mc = {};
 
   constructor() {
     super();
+    this.reset();
     this.filter = new loki("filter.db");
   }
+
+  reset = () => {
+    this.type = "";
+    this.swamp = "or";
+    this.stones = {};
+    this.tribes = {};
+    this.elements = {};
+    this.rarity = {};
+    this.sets = {};
+    this.gender = {};
+    this.mc = {};
+  };
 
   render() {
 
@@ -85,6 +89,12 @@ export default class SearchForm extends React.Component {
           </div>
           <br />
           <div>
+            <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>loyal</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Male</label>
+          </div>
+          <br />
+          <div>
             <label><input type="checkbox" ref={(input) => this.gender.Ambiguous = input}/>Ambiguous</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.gender.Female = input}/>Female</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.gender.Male = input}/>Male</label>
@@ -96,7 +106,8 @@ export default class SearchForm extends React.Component {
             <label>"Show all cards":<input type="checkbox" ref={(input) => this.stones.allCards = input}/></label>
           </p>
           <br />
-          <input type="submit" value="Search" />&nbsp;&nbsp;<input type="button" disabled value="Reset" />
+          <input type="submit" value="Search" />&nbsp;&nbsp;
+          <input type="button" value="Reset" disabled onClick={this.reset} />
         </form>
       </div>
     );
@@ -238,6 +249,21 @@ export default class SearchForm extends React.Component {
     }
     if (this.mc.max.value > 0 && this.mc.max.value >= this.mc.min.value) {
       creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.mc.max.value}});
+    }
+
+    if (this.stones.unique.checked) {
+      creatureResults = creatureResults.find({'gsx$unique': {'$gt': 0}});
+      attackResults = attackResults.find({'gsx$unique': {'$gt': 0}});
+    }
+
+    if (this.stones.loyal.checked) {
+      creatureResults = creatureResults.find({'gsx$loyal': {'$gt': 0}});
+      attackResults = attackResults.find({'gsx$loyal': {'$gt': 0}});
+    }
+
+    if (this.stones.legendary.checked) {
+      creatureResults = creatureResults.find({'gsx$legendary': {'$gt': 0}});
+      attackResults = attackResults.find({'gsx$legendary': {'$gt': 0}});
     }
 
     // Merge data
