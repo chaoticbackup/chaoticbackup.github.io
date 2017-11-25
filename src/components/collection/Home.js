@@ -3,8 +3,9 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import Creature from './Creature';
 import Attack from './Attack';
+import Creature from './Creature';
+import Mugic from './Mugic';
 import SearchForm from './Search';
 
 @inject((stores, props, context) => props) @observer
@@ -36,8 +37,18 @@ export default class CollectionHome extends React.Component {
       return (<span>Loading...</span>);
     }
 
+    if (!store.cards.built.includes("battlegear_Cards")) {
+      store.cards.setupBattlegear("Cards");
+      return (<span>Loading...</span>);
+    }
+
     if (!store.cards.built.includes("creatures_Cards")) {
       store.cards.setupCreatures("Cards");
+      return (<span>Loading...</span>);
+    }
+
+    if (!store.cards.built.includes("locations_Cards")) {
+      store.cards.setupLocations("Cards");
       return (<span>Loading...</span>);
     }
 
@@ -51,21 +62,6 @@ export default class CollectionHome extends React.Component {
       this.content = store.cards.creatures.chain().where((obj) => {return (!obj.gsx$thumb == '');}).simplesort('gsx$name').data();
     }
 
-    const output = () => {
-      let elements = this.content.slice(this.n * (this.p-1), this.n * this.p);
-
-      if (elements.length == 1 && elements[0].text) {
-        return (
-          <div style={{textAlign: 'left'}}>{elements[0].text}</div>
-        );
-      }
-      return elements.map((element, i) => {
-        if (element.gsx$type == "Creature") return (<Creature creature={element} key={i} />);
-        if (element.gsx$type == "Attack") return (<Attack attack={element} key={i} />);
-        else return (<div>Empty</div>);
-      });
-    }
-
     return (
       <div>
         <p>
@@ -77,10 +73,26 @@ export default class CollectionHome extends React.Component {
         <SearchForm handleContent={this.handleContent.bind(this)} />
         <hr />
         {this.navigation()}<br />
-        {output()}
+        {this.output()}
         {this.navigation()}<br />
       </div>
     );
+  }
+
+  output = () => {
+    let elements = this.content.slice(this.n * (this.p-1), this.n * this.p);
+
+    if (elements.length == 1 && elements[0].text) {
+      return (
+        <div style={{textAlign: 'left'}}>{elements[0].text}</div>
+      );
+    }
+    return elements.map((element, i) => {
+      if (element.gsx$type == "Attack") return (<Attack attack={element} key={i} />);
+      if (element.gsx$type == "Creature") return (<Creature creature={element} key={i} />);
+      if (element.gsx$type == "Mugic") return (<Mugic mugic={element} key={i} />);
+      else return (<div key={i}>Empty</div>);
+    });
   }
 
   navigation() {

@@ -50,11 +50,25 @@ export default class SearchForm extends React.Component {
             <select onChange={(e) => {this.type = e.target.value}} >
               <option value=""></option>
               <option value="Attack">Attack</option>
+              <option value="Battlegear">Battlegear</option>
               <option value="Creature">Creature</option>
+              <option value="Locations">Locations</option>
+              <option value="Mugic">Mugic</option>
             </select>
           </label>&nbsp;&nbsp;
           <label>Subtypes: <input type="text" ref={(input) => this.stones.subtypes = input} /></label>
           <br /><br />
+          <div>{setsInput}</div>
+          <br />
+          <div>
+            <label><input type="checkbox" ref={(input) => this.rarity["Common"] = input}/>Common</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.rarity["Uncommon"] = input}/>Uncommon</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.rarity["Rare"] = input}/>Rare</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.rarity["Super Rare"] = input}/>Super Rare</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.rarity["Ultra Rare"] = input}/>Ultra Rare</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.rarity["Promo"] = input}/>Promo</label>
+          </div>
+          <br />
           <div>
             <input type="checkbox" ref={(input) => this.tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
             <input type="checkbox" ref={(input) => this.tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
@@ -72,17 +86,6 @@ export default class SearchForm extends React.Component {
             <input type="checkbox" ref={(input) => this.elements.water = input}/><img height="16" className="icon" src={"/src/img/icons/elements/water.png"} />&nbsp;
             <input type="checkbox" ref={(input) => this.stones.noElements = input}/><span>No Elements</span>
           </div>
-          <br />
-          <div>
-            <label><input type="checkbox" ref={(input) => this.rarity["Common"] = input}/>Common</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Uncommon"] = input}/>Uncommon</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Rare"] = input}/>Rare</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Super Rare"] = input}/>Super Rare</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Ultra Rare"] = input}/>Ultra Rare</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Promo"] = input}/>Promo</label>
-          </div>
-          <br />
-          <div>{setsInput}</div>
           <br />
           <div>
             <label>Min Mugic Counters: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
@@ -136,15 +139,18 @@ export default class SearchForm extends React.Component {
     pview.applySimpleSort('gsx$name');
 
     // begin data filtering
-    // TODO add other types
-    let creatureResults = API.cards.creatures.chain();
     let attackResults = API.cards.attacks.chain();
+    let battlegearResults = API.cards.battlegear.chain();
+    let creatureResults = API.cards.creatures.chain();
+    let locationResults = API.cards.locations.chain();
+    let mugicResults = API.cards.mugic.chain();
 
     // ignores cards without thumbnails
     // TODO eventually remove
     if (!this.stones.allCards.checked){
       creatureResults = creatureResults.where((obj) => {return (!obj.gsx$thumb == '');});
       attackResults = attackResults.where((obj) => {return (!obj.gsx$thumb == '');});
+      mugicResults = mugicResults.where((obj) => {return (!obj.gsx$thumb == '');});
     }
 
     // Search by name
@@ -154,6 +160,10 @@ export default class SearchForm extends React.Component {
         {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}}
       ]});
       attackResults = attackResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+      ]});
+      mugicResults = mugicResults.find({'$or': [
         {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
         {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
       ]});
@@ -171,6 +181,11 @@ export default class SearchForm extends React.Component {
         {'gsx$ability': {'$regex': new RegExp(this.stones.text.value, 'i')}},
         {'gsx$flavortext': {'$regex': new RegExp(this.stones.text.value, 'i')}}
       ]});
+      mugicResults = mugicResults.find({'$or': [
+        {'gsx$tags': {'$regex': new RegExp(this.stones.text.value, 'i')}},
+        {'gsx$ability': {'$regex': new RegExp(this.stones.text.value, 'i')}},
+        {'gsx$flavortext': {'$regex': new RegExp(this.stones.text.value, 'i')}}
+      ]});
     }
 
     // Search by tribe
@@ -182,6 +197,7 @@ export default class SearchForm extends React.Component {
     }
     if (tribesList.length > 0) {
       creatureResults = creatureResults.find({'gsx$tribe': {'$or': tribesList} });
+      mugicResults = mugicResults.find({'gsx$tribe': {'$or': tribesList} });
     }
 
     // no elements
@@ -227,6 +243,7 @@ export default class SearchForm extends React.Component {
     if (rarityList.length > 0) {
       creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
       attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList} });
+      mugicResults = mugicResults.find({'gsx$rarity': {'$or': rarityList} });
     }
 
     let setsList = [];
@@ -238,6 +255,7 @@ export default class SearchForm extends React.Component {
     if (setsList.length > 0) {
       creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
       attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
+      mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
     }
 
     let genderList = [];
@@ -259,9 +277,11 @@ export default class SearchForm extends React.Component {
 
     if (this.mc.min.value > 0) {
       creatureResults = creatureResults.find({'gsx$mugicability': {'$gte': this.mc.min.value}});
+      mugicResults = mugicResults.find({'gsx$cost': {'$gte': this.mc.min.value}});
     }
     if (this.mc.max.value > 0 && this.mc.max.value >= this.mc.min.value) {
       creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.mc.max.value}});
+      mugicResults = mugicResults.find({'gsx$cost': {'$gte': this.mc.min.value}});
     }
 
     if (this.energy.min.value > 0) {
@@ -287,32 +307,40 @@ export default class SearchForm extends React.Component {
     if (this.stones.unique.checked) {
       creatureResults = creatureResults.find({'gsx$unique': {'$gt': 0}});
       attackResults = attackResults.find({'gsx$unique': {'$gt': 0}});
+      mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
     }
 
     if (this.stones.loyal.checked) {
       creatureResults = creatureResults.find({'gsx$loyal': {'$gt': 0}});
       attackResults = attackResults.find({'gsx$loyal': {'$gt': 0}});
+      mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
     }
 
     if (this.stones.legendary.checked) {
       creatureResults = creatureResults.find({'gsx$legendary': {'$gt': 0}});
       attackResults = attackResults.find({'gsx$legendary': {'$gt': 0}});
+      mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
     }
 
     // Merge data
-    if (!this.type || this.type=="Creature") {
-      let temp = creatureResults.data()
-      temp.forEach(function(v){ delete v.$loki });
-      filter.insert(temp);
-    }
     if (!this.type || this.type=="Attack") {
       let temp = attackResults.data();
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-
+    if (!this.type || this.type=="Creature") {
+      let temp = creatureResults.data()
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
+    if (!this.type || this.type=="Mugic") {
+      let temp = mugicResults.data()
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
     let results = pview.data();
     this.filter.removeCollection('filter');
+
     if (results.length > 0) this.props.handleContent(results);
     else this.props.handleContent([{'text': 'No Results Found'}]);
   }

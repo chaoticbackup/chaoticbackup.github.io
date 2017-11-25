@@ -156,8 +156,11 @@ class CollectionDB {
     });
   }
 
-  setupBattlegear() {
-
+  setupBattlegear(tribe="Generic") {
+    this.setup(this.api.urls.Battlegear[tribe], "Battlegear", (data) => {
+      this.battlegear.insert(data);
+      this.built.push("battlegear_"+tribe);
+    });
   }
 
   setupCreatures(tribe="Generic") {
@@ -167,8 +170,11 @@ class CollectionDB {
     });
   }
 
-  setupLocations() {
-
+  setupLocations(tribe="Generic") {
+    this.setup(this.api.urls.Locations[tribe], "Locations", (data) => {
+      this.locations.insert(data);
+      this.built.push("locations_"+tribe);
+    });
   }
 
   setupMugic(tribe="Generic") {
