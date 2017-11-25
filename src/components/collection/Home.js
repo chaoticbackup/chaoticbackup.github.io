@@ -6,6 +6,7 @@ import {observer, inject} from 'mobx-react';
 import Attack from './Attack';
 import Battlegear from './Battlegear';
 import Creature from './Creature';
+import Location from './Location';
 import Mugic from './Mugic';
 import SearchForm from './Search';
 
@@ -88,12 +89,21 @@ export default class CollectionHome extends React.Component {
         <div style={{textAlign: 'left'}}>{elements[0].text}</div>
       );
     }
-    return elements.map((element, i) => {
-      if (element.gsx$type == "Attack") return (<Attack attack={element} key={i} />);
-      if (element.gsx$type == "Battlegear") return (<Battlegear battlegear={element} key={i} />);
-      if (element.gsx$type == "Creature") return (<Creature creature={element} key={i} />);
-      if (element.gsx$type == "Mugic") return (<Mugic mugic={element} key={i} />);
-      else return (<div key={i}>Empty</div>);
+    return elements.map((card, i) => {
+      switch (card.gsx$type) {
+        case "Attack":
+          return (<Attack attack={card} key={i} />);
+        case "Battlegear":
+          return (<Battlegear battlegear={card} key={i} />);
+        case "Creature":
+          return (<Creature creature={card} key={i} />);
+        case "Location":
+          return (<Location location={card} key={i} />);
+        case "Mugic":
+          return (<Mugic mugic={card} key={i} />);
+        default:
+          return (<div key={i}>Invalid Type</div>);
+      }
     });
   }
 

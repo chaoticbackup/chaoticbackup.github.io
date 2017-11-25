@@ -171,7 +171,7 @@ class CollectionDB {
   }
 
   setupLocations(tribe="Generic") {
-    this.setup(this.api.urls.Locations[tribe], "Locations", (data) => {
+    this.setup(this.api.urls.Locations[tribe], "Location", (data) => {
       this.locations.insert(data);
       this.built.push("locations_"+tribe);
     });
