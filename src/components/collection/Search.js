@@ -30,6 +30,8 @@ export default class SearchForm extends React.Component {
     this.gender = {};
     this.mc = {};
     this.energy = {};
+    this.bp = {};
+    this.base = {};
   };
 
   render() {
@@ -95,6 +97,16 @@ export default class SearchForm extends React.Component {
           <div>
             <label>Min Energy: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.min = input} /></label>&nbsp;
             <label>Max Energy: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.max = input} /></label>
+          </div>
+          <br />
+          <div>
+            <label>Min Build Points: <input type="text" style={{width: '20px'}} ref={(input) => this.bp.min = input} /></label>&nbsp;
+            <label>Max Build Points: <input type="text" style={{width: '20px'}} ref={(input) => this.bp.max = input} /></label>
+          </div>
+          <br />
+          <div>
+            <label>Min Base Damage: <input type="text" style={{width: '20px'}} ref={(input) => this.base.min = input} /></label>&nbsp;
+            <label>Max Base Damage: <input type="text" style={{width: '20px'}} ref={(input) => this.base.max = input} /></label>
           </div>
           <br />
           <div>
@@ -289,6 +301,20 @@ export default class SearchForm extends React.Component {
     }
     if (this.energy.max.value > 0 && this.energy.max.value >= this.energy.min.value) {
       creatureResults = creatureResults.find({'gsx$energy': {'$lte': this.energy.max.value}});
+    }
+
+    if (this.bp.min.value >= 0) {
+      attackResults = attackResults.find({'gsx$bp': {'$gte': this.bp.min.value}});
+    }
+    if (this.bp.max.value >= 0 && this.bp.max.value >= this.bp.min.value) {
+      attackResults = attackResults.find({'gsx$bp': {'$lte': this.bp.max.value}});
+    }
+
+    if (this.base.min.value >= 0) {
+      attackResults = attackResults.find({'gsx$base': {'$gte': this.base.min.value}});
+    }
+    if (this.base.max.value >= 0 && this.base.max.value >= this.base.min.value) {
+      attackResults = attackResults.find({'gsx$base': {'$lte': this.base.max.value}});
     }
 
     if (this.stones.courage.value > 0) {
