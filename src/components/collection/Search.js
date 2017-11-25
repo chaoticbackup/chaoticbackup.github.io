@@ -161,19 +161,24 @@ export default class SearchForm extends React.Component {
     // TODO eventually remove
     if (!this.stones.allCards.checked){
       creatureResults = creatureResults.where((obj) => {return (!obj.gsx$thumb == '');});
+      battlegearResults = battlegearResults.where((obj) => {return (!obj.gsx$thumb == '');});
       attackResults = attackResults.where((obj) => {return (!obj.gsx$thumb == '');});
       mugicResults = mugicResults.where((obj) => {return (!obj.gsx$thumb == '');});
     }
 
     // Search by name
     if (this.stones.name.value) {
-      creatureResults = creatureResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}}
-      ]});
       attackResults = attackResults.find({'$or': [
         {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
         {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+      ]});
+      battlegearResults = battlegearResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+      ]});
+      creatureResults = creatureResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}}
       ]});
       mugicResults = mugicResults.find({'$or': [
         {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
@@ -182,16 +187,21 @@ export default class SearchForm extends React.Component {
     }
 
     if (this.stones.text.value) {
+      attackResults = attackResults.find({'$or': [
+        {'gsx$tags': {'$regex': new RegExp(this.stones.text.value, 'i')}},
+        {'gsx$ability': {'$regex': new RegExp(this.stones.text.value, 'i')}},
+        {'gsx$flavortext': {'$regex': new RegExp(this.stones.text.value, 'i')}}
+      ]});
+      battlegearResults = battlegearResults.find({'$or': [
+        {'gsx$tags': {'$regex': new RegExp(this.stones.text.value, 'i')}},
+        {'gsx$ability': {'$regex': new RegExp(this.stones.text.value, 'i')}},
+        {'gsx$flavortext': {'$regex': new RegExp(this.stones.text.value, 'i')}}
+      ]});
       creatureResults = creatureResults.find({'$or': [
         {'gsx$tags': {'$regex': new RegExp(this.stones.text.value, 'i')}},
         {'gsx$ability': {'$regex': new RegExp(this.stones.text.value, 'i')}},
         {'gsx$flavortext': {'$regex': new RegExp(this.stones.text.value, 'i')}},
         {'gsx$brainwashedability': {'$regex': new RegExp(this.stones.text.value, 'i')}}
-      ]});
-      attackResults = attackResults.find({'$or': [
-        {'gsx$tags': {'$regex': new RegExp(this.stones.text.value, 'i')}},
-        {'gsx$ability': {'$regex': new RegExp(this.stones.text.value, 'i')}},
-        {'gsx$flavortext': {'$regex': new RegExp(this.stones.text.value, 'i')}}
       ]});
       mugicResults = mugicResults.find({'$or': [
         {'gsx$tags': {'$regex': new RegExp(this.stones.text.value, 'i')}},
@@ -253,8 +263,9 @@ export default class SearchForm extends React.Component {
       }
     }
     if (rarityList.length > 0) {
-      creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
       attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList} });
+      battlegearResults = battlegearResults.find({'gsx$rarity': {'$or': rarityList} });
+      creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
       mugicResults = mugicResults.find({'gsx$rarity': {'$or': rarityList} });
     }
 
@@ -265,8 +276,9 @@ export default class SearchForm extends React.Component {
       }
     }
     if (setsList.length > 0) {
-      creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
       attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
+      battlegearResults = battlegearResults.find({'gsx$set': {'$or': setsList} });
+      creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
       mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
     }
 
@@ -331,26 +343,34 @@ export default class SearchForm extends React.Component {
     }
 
     if (this.stones.unique.checked) {
-      creatureResults = creatureResults.find({'gsx$unique': {'$gt': 0}});
       attackResults = attackResults.find({'gsx$unique': {'$gt': 0}});
+      battlegearResults = battlegearResults.find({'gsx$unique': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$unique': {'$gt': 0}});
       mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
     }
 
     if (this.stones.loyal.checked) {
-      creatureResults = creatureResults.find({'gsx$loyal': {'$gt': 0}});
       attackResults = attackResults.find({'gsx$loyal': {'$gt': 0}});
+      battlegearResults = battlegearResults.find({'gsx$loyal': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$loyal': {'$gt': 0}});
       mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
     }
 
     if (this.stones.legendary.checked) {
-      creatureResults = creatureResults.find({'gsx$legendary': {'$gt': 0}});
       attackResults = attackResults.find({'gsx$legendary': {'$gt': 0}});
+      battlegearResults = battlegearResults.find({'gsx$legendary': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$legendary': {'$gt': 0}});
       mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
     }
 
     // Merge data
     if (!this.type || this.type=="Attack") {
       let temp = attackResults.data();
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
+    if (!this.type || this.type=="Battlegear") {
+      let temp = battlegearResults.data();
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }

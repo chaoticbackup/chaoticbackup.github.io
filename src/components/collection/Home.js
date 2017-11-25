@@ -4,6 +4,7 @@ import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import Attack from './Attack';
+import Battlegear from './Battlegear';
 import Creature from './Creature';
 import Mugic from './Mugic';
 import SearchForm from './Search';
@@ -89,6 +90,7 @@ export default class CollectionHome extends React.Component {
     }
     return elements.map((element, i) => {
       if (element.gsx$type == "Attack") return (<Attack attack={element} key={i} />);
+      if (element.gsx$type == "Battlegear") return (<Battlegear battlegear={element} key={i} />);
       if (element.gsx$type == "Creature") return (<Creature creature={element} key={i} />);
       if (element.gsx$type == "Mugic") return (<Mugic mugic={element} key={i} />);
       else return (<div key={i}>Empty</div>);
