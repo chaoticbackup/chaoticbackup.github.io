@@ -12,6 +12,7 @@ import loki from 'lokijs';
 
 @inject((stores, props, context) => props) @observer
 export default class SearchForm extends React.Component {
+  @observable swamp = "or";
 
   constructor() {
     super();
@@ -21,7 +22,6 @@ export default class SearchForm extends React.Component {
 
   reset = () => {
     this.type = "";
-    this.swamp = "or";
     this.stones = {};
     this.tribes = {};
     this.elements = {};
@@ -81,7 +81,8 @@ export default class SearchForm extends React.Component {
           </div>
           <br />
           <div>
-            <input type="button" value={this.swamp} onClick={(e)=>{this.swamp = (this.swamp == "or" ? "and" : "or"); e.target.value = this.swamp;}}/>
+            <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
+            <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
             <input type="checkbox" ref={(input) => this.elements.fire = input}/><img height="16" className="icon" src={"/src/img/icons/elements/fire.png"} />&nbsp;
             <input type="checkbox" ref={(input) => this.elements.air = input}/><img height="16" className="icon" src={"/src/img/icons/elements/air.png"} />&nbsp;
             <input type="checkbox" ref={(input) => this.elements.earth = input}/><img height="16" className="icon" src={"/src/img/icons/elements/earth.png"} />&nbsp;
