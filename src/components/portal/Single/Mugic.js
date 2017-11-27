@@ -68,7 +68,7 @@ export default class SingleMugic extends React.Component {
     return (
       <div className={tribe.toLowerCase()}>
         <h1>{mugic.gsx$name}</h1>
-        <img className="splash" src={store.base_image + mugic.gsx$splash}></img>
+        <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
         <hr />
         <div>
           <strong>Background:</strong><br />

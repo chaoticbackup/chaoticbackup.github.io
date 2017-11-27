@@ -74,7 +74,7 @@ export default class SingleCreature extends React.Component {
     return (
       <div className={"creature " + tribe.toLowerCase()}>
         <h1>{creature.gsx$name}</h1>
-        <img className="splash" src={store.base_image + creature.gsx$splash}></img>
+        <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
         <hr />
         <div>
           <strong>Appearance:</strong><br />
