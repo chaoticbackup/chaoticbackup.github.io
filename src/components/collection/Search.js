@@ -283,12 +283,13 @@ export default class SearchForm extends React.Component {
     // Search by elements
     else {
       let elementsList = [];
+      let elementsList2 = [];
       for (const element in this.elements) {
         if (this.elements[element].checked) {
           elementsList.push({'$regex': new RegExp(element, 'i')});
+          elementsList2.push({['gsx$'+element]: {'$gte': 0}})
         }
       }
-      let elementsList2 = [{'gsx$fire': {'$gte': 0}}, {'gsx$air': {'$gte': 0}}, {'gsx$earth': {'$gte': 0}}, {'gsx$water': {'$gte': 0}}]
       if (elementsList.length > 0) {
         if (this.swamp == "or") {
           creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList} });
