@@ -20,9 +20,9 @@ export default class Creature extends React.Component {
     }
 
   	return(
-  	  <div style={{textAlign: 'left', display: 'flex'}}>
+  	  <div style={{textAlign: 'left', display: 'flex'}} onClick={() => this.props.setImage(creature.gsx$image)}>
   	      <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (creature.gsx$thumb||API.thumb_missing)}></img>
-  	      <div style={{verticalAlign: 'text-top', float: 'left', width: "50%"}}>
+  	      <div style={{verticalAlign: 'text-top', float: 'left', width: 'calc(100% - 50px)'}}>
   	        <img height="20" className="icon" src={"/src/img/icons/tribes/"+creature.gsx$tribe.toLowerCase()+".png"}></img>
   	        <span>{creature.gsx$name}</span><br />
             <span>{API.sets[creature.gsx$set]} | {creature.gsx$rarity}</span><br />
@@ -30,7 +30,7 @@ export default class Creature extends React.Component {
   	        <span>{elements}</span><br />
             <span>{mugic}</span><br />
   	      </div>
-  	      <div style={{verticalAlign: 'text-top', float: 'left'}}>
+  	      <div style={{verticalAlign: 'text-top', float: 'left', width: '50px', textAlign: 'right'}}>
   	     	 <span>{creature.gsx$courage}&nbsp;<img height="16" className="icon" src={"/src/img/icons/disciplines/courage.png"}></img></span><br />
   	     	 <span>{creature.gsx$power}&nbsp;<img height="16" className="icon" src={"/src/img/icons/disciplines/power.png"}></img></span><br />
   	     	 <span>{creature.gsx$wisdom}&nbsp;<img height="16" className="icon" src={"/src/img/icons/disciplines/wisdom.png"}></img></span><br />

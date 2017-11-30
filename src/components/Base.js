@@ -48,7 +48,7 @@ function App({ children, routes }) {
                 <div className="full-width clear-line" style={{marginBottom: "5px"}}>
                 </div>
               </div>
-              <div className="center-column">
+              <div className="full-column">
                 <div className="pods-wrap pad5px-btm">
                   <div className="clear-line full-width">
                     <div className="adPod-top-wrap">

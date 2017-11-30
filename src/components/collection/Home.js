@@ -3,11 +3,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import Attack from './Attack';
-import Battlegear from './Battlegear';
-import Creature from './Creature';
-import Location from './Location';
-import Mugic from './Mugic';
+import CardList from './List';
 import SearchForm from './Search';
 
 @inject((stores, props, context) => props) @observer
@@ -15,16 +11,23 @@ export default class CollectionHome extends React.Component {
   @observable n = 10;
   @observable p = 1;
   @observable content = [];
+  @observable card_img = API.card_back;
 
   handleContent(content) {
     this.content = content;
     this.p = 1;
   }
 
+  setImage(img) {
+    this.card_img = (img || API.card_back);
+  }
+
   render() {
     if (this.props.children) {
       return (<div>{this.props.children}</div>);
     }
+
+    let loading = false;
 
     const store = API;
     if (store.urls === null ||
@@ -59,52 +62,32 @@ export default class CollectionHome extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    if (this.content.length == 0) {
-      // Only use cards with thumb nails for now
-      this.content = store.cards.creatures.chain().where((obj) => {return (!obj.gsx$thumb == '');}).simplesort('gsx$name').data();
+    if (loading === true) {
+      return (<span>Loading...</span>);
     }
 
     return (
-      <div>
+      <div className="collection">
+        <link rel="stylesheet" href="/src/css/collection.css" />
         <p>
           This page is under construction. In the meantime, you can check out&nbsp;
           <a style={{textDecoration: "underline"}} href="http://www.tradecardsonline.com/im/editCollection/collection_type/1">Trade Cards Online</a>
           .
         </p>
         <hr />
-        <SearchForm handleContent={this.handleContent.bind(this)} />
-        <hr />
-        {this.navigation()}<br />
-        {this.output()}
-        {this.navigation()}<br />
+        <div className="collection_left">
+          <div className="card_img">
+            <img src={API.base_image + this.card_img} />
+          </div>
+          <SearchForm handleContent={this.handleContent.bind(this)} />
+        </div>
+        <div className="collection_right">
+          {this.navigation()}<br />
+          <CardList cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
+          {this.navigation()}
+        </div>
       </div>
     );
-  }
-
-  output = () => {
-    let elements = this.content.slice(this.n * (this.p-1), this.n * this.p);
-
-    if (elements.length == 1 && elements[0].text) {
-      return (
-        <div style={{textAlign: 'left'}}>{elements[0].text}</div>
-      );
-    }
-    return elements.map((card, i) => {
-      switch (card.gsx$type) {
-        case "Attack":
-          return (<Attack attack={card} key={i} />);
-        case "Battlegear":
-          return (<Battlegear battlegear={card} key={i} />);
-        case "Creature":
-          return (<Creature creature={card} key={i} />);
-        case "Location":
-          return (<Location location={card} key={i} />);
-        case "Mugic":
-          return (<Mugic mugic={card} key={i} />);
-        default:
-          return (<div key={i}>Invalid Type</div>);
-      }
-    });
   }
 
   navigation() {
@@ -124,13 +107,14 @@ export default class CollectionHome extends React.Component {
       <div style={{textAlign: 'left'}}>
         <p>Showing page {this.p} of {numpages} {prev()} {next()}</p>
         <p>
-          Entries per page:&nbsp;{this.n}&nbsp;
+          Entries per page:&nbsp;
           {/*<input type="text" style={{width: '40px'}} value={this.n}
             onChange={(event) => {let x = event.target.value; if (!isNaN(x)) this.n=x;}
           />*/}
-          <input type="button" value="10" onClick={(e) => this.n=e.target.value} />&nbsp;
-          <input type="button" value="20" onClick={(e) => this.n=e.target.value} />&nbsp;
-          <input type="button" value="50" onClick={(e) => this.n=e.target.value} />
+          <input type="button" value="5" disabled={this.n=="5"} onClick={(e) => this.n=e.target.value} />&nbsp;
+          <input type="button" value="10" disabled={this.n=="10"} onClick={(e) => this.n=e.target.value} />&nbsp;
+          <input type="button" value="20" disabled={this.n=="20"} onClick={(e) => this.n=e.target.value} />&nbsp;
+          <input type="button" value="50" disabled={this.n=="50"} onClick={(e) => this.n=e.target.value} />
         </p>
       </div>
     );

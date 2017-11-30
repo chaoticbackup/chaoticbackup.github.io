@@ -1,0 +1,18 @@
+.collection_left {
+    width: 30%;
+    float: left;
+}
+
+.collection_right {
+    width: 70%;
+    float: right;
+}
+
+.card_img {
+    width: 250px;
+    height: 350px;
+}
+
+.SearchForm {
+    text-align: left;
+}

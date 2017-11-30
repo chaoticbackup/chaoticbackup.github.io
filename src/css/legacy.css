@@ -88,7 +88,7 @@
 }
 /*-------------- Center Column --------------*/
 .center-column {
-  width: 80% !important;
+  width: 60% !important;
   margin: 0 auto;
   /*float:left;*/
   /*width:392px !important;*/
@@ -100,7 +100,14 @@
   /*width:269px;*/
   float:left;
 }
-
+/*-------------- Full Column --------------*/
+.full-column {
+  width: 98% !important;
+  margin: 0 auto;
+  /*float:left;*/
+  /*width:392px !important;*/
+  /*margin:0 6px 0 6px;*/
+}
 /*-------------- Background --------------*/
 /*------------------------------------------------------*/
 .fix-pgBkgrnd-repeat-x, .fix-img-bkgrnd {
@@ -620,14 +627,14 @@
   clear:both;
 }
 .content-left-btm-repeat-x{
-  width:95%; height:22px;
+  width:98%; height:22px;
   background-image:url(../img/base/content-btm-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;
   float:right; clear:both;
 }
 .content-right-btm-repeat-x{
-  width:95%; height:22px;
+  width:98%; height:22px;
   background-image:url(../img/base/content-btm-repeat-x.jpg);
   background-position:top left;
   background-repeat:repeat-x;

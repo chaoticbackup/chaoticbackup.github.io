@@ -20,6 +20,10 @@ export default class SearchForm extends React.Component {
     this.filter = new loki("filter.db");
   }
 
+  componentDidMount() {
+    this.search();
+  }
+
   reset = () => {
     this.type = "";
     this.stones = {};
@@ -38,58 +42,87 @@ export default class SearchForm extends React.Component {
 
     let setsInput = [];
     for (const key in API.sets) {
-      setsInput.push(<label key={key}><input type="checkbox" ref={(input) => this.sets[key] = input} />{API.sets[key]}</label>);
+      setsInput.push(<label style={{display: 'block'}} key={key}><input type="checkbox" ref={(input) => this.sets[key] = input} />{API.sets[key]}</label>);
     }
 
-    return (
+    const card_type = (
+      <label>
+        Type:&nbsp;
+        <select onChange={(e) => {this.type = e.target.value}} >
+          <option value=""></option>
+          <option value="Attack">Attack</option>
+          <option value="Battlegear">Battlegear</option>
+          <option value="Creature">Creature</option>
+          <option value="Location">Location</option>
+          <option value="Mugic">Mugic</option>
+        </select>
+      </label>
+    );
+
+    const card_rarity = (
       <div>
+        <label><input type="checkbox" ref={(input) => this.rarity["Common"] = input}/>Common</label><br />
+        <label><input type="checkbox" ref={(input) => this.rarity["Uncommon"] = input}/>Uncommon</label><br />
+        <label><input type="checkbox" ref={(input) => this.rarity["Rare"] = input}/>Rare</label><br />
+        <label><input type="checkbox" ref={(input) => this.rarity["Super Rare"] = input}/>Super Rare</label><br />
+        <label><input type="checkbox" ref={(input) => this.rarity["Ultra Rare"] = input}/>Ultra Rare</label><br />
+        <label><input type="checkbox" ref={(input) => this.rarity["Promo"] = input}/>Promo</label>
+      </div>
+    );
+
+    const card_tribes = (
+      <div>
+        <input type="checkbox" ref={(input) => this.tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.overworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.underworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes["m'arrillian"] = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.generic = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/generic.png"} />
+      </div>
+    );
+
+    const card_elements = (
+      <div>
+        <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
+        <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
+        <input type="checkbox" ref={(input) => this.elements.fire = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/fire.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.elements.air = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/air.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.elements.earth = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/earth.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.elements.water = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/water.png"} />
+        <br />
+        <input type="checkbox" ref={(input) => this.stones.noElements = input}/><span>No Elements</span>
+      </div>
+    );
+
+    const card_disciplines = (
+      <div>
+        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.courage = input} /><img className="icon" src={"/src/img/icons/disciplines/courage.png"} />&nbsp;
+        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.power = input} /><img className="icon" src={"/src/img/icons/disciplines/power.png"} />&nbsp;
+        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.wisdom = input} /><img className="icon" src={"/src/img/icons/disciplines/wisdom.png"} />&nbsp;
+        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.speed = input} /><img className="icon" src={"/src/img/icons/disciplines/speed.png"} />
+      </div>
+    );
+
+    return (
+      <div className="SearchForm">
         <form onSubmit={this.search}>
-          <label>Name: <input type="text" ref={(input) => this.stones.name = input} /></label>&nbsp;&nbsp;
+          <p>
+            Since not all data has been entered not all cards are listed, to see incomplete cards, click&nbsp;
+            <label>"Show all cards":<input type="checkbox" ref={(input) => this.stones.allCards = input}/></label>
+          </p>
+          <br />
+          <label>Name: <input type="text" ref={(input) => this.stones.name = input} /></label>
+          <br />
           <label>Text: <input type="text" ref={(input) => this.stones.text = input} /></label>
-          <br /><br />
-          <label>
-            Type:&nbsp;
-            <select onChange={(e) => {this.type = e.target.value}} >
-              <option value=""></option>
-              <option value="Attack">Attack</option>
-              <option value="Battlegear">Battlegear</option>
-              <option value="Creature">Creature</option>
-              <option value="Location">Location</option>
-              <option value="Mugic">Mugic</option>
-            </select>
-          </label>&nbsp;&nbsp;
+          <br />
+          {card_type}
+          <br />
           <label>Subtypes: <input type="text" ref={(input) => this.stones.subtypes = input} /></label>
-          <br /><br />
-          <div>{setsInput}</div>
           <br />
-          <div>
-            <label><input type="checkbox" ref={(input) => this.rarity["Common"] = input}/>Common</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Uncommon"] = input}/>Uncommon</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Rare"] = input}/>Rare</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Super Rare"] = input}/>Super Rare</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Ultra Rare"] = input}/>Ultra Rare</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.rarity["Promo"] = input}/>Promo</label>
-          </div>
-          <br />
-          <div>
-            <input type="checkbox" ref={(input) => this.tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.tribes.overworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.tribes.underworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.tribes["m'arrillian"] = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.tribes.generic = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/generic.png"} />
-          </div>
-          <br />
-          <div>
-            <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
-            <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
-            <input type="checkbox" ref={(input) => this.elements.fire = input}/><img height="16" className="icon" src={"/src/img/icons/elements/fire.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.elements.air = input}/><img height="16" className="icon" src={"/src/img/icons/elements/air.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.elements.earth = input}/><img height="16" className="icon" src={"/src/img/icons/elements/earth.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.elements.water = input}/><img height="16" className="icon" src={"/src/img/icons/elements/water.png"} />&nbsp;
-            <input type="checkbox" ref={(input) => this.stones.noElements = input}/><span>No Elements</span>
-          </div>
-          <br />
+          <div>{setsInput}</div><br />
+          {card_rarity}<br />
+          {card_tribes}<br />
+          {card_elements}<br />
           <div>
             <span>Mugic Counters/Cost</span>&nbsp;
             <label>Min: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
@@ -114,21 +147,14 @@ export default class SearchForm extends React.Component {
             <label>Max: <input type="text" style={{width: '20px'}} ref={(input) => this.base.max = input} /></label>
           </div>
           <br />
-          <div>
-            <span>Disciplines</span>&nbsp;
-            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/courage.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.courage = input} /></label>&nbsp;
-            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/power.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.power = input} /></label>&nbsp;
-            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/wisdom.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.wisdom = input} /></label>&nbsp;
-            <label>Min <img height="16" className="icon" src={"/src/img/icons/disciplines/speed.png"} />: <input type="text" style={{width: '30px'}} ref={(input) => this.stones.speed = input} /></label>
-          </div>
+          {card_disciplines}
           <br />
-          <div>
-            <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>Loyal</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Legendary</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
-          </div>
+          <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
+          <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>Loyal</label>&nbsp;
+          <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Legendary</label>
+          <br />
+          <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
+          <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
           <br />
           <label>Initiative: <input type="text" ref={(input) => this.stones.initiative = input} /></label>
           <br />
@@ -137,12 +163,6 @@ export default class SearchForm extends React.Component {
             <label><input type="checkbox" ref={(input) => this.gender.Female = input}/>Female</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.gender.Male = input}/>Male</label>
           </div>
-          <br />
-          <p>
-            Since not all data has been entered not all cards are listed,<br />
-            to see incomplete cards, click&nbsp;
-            <label>"Show all cards":<input type="checkbox" ref={(input) => this.stones.allCards = input}/></label>
-          </p>
           <br />
           <input type="submit" value="Search" />&nbsp;&nbsp;
           <input type="button" value="Reset" disabled onClick={this.reset} />
@@ -153,8 +173,10 @@ export default class SearchForm extends React.Component {
 
   // TODO advanced filters
   search = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     // Sort data descending alphabetically
     let filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');
@@ -184,6 +206,10 @@ export default class SearchForm extends React.Component {
         {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
       ]});
       battlegearResults = battlegearResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+      ]});
+      creatureResults = creatureResults.find({'$or': [
         {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
         {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
       ]});
