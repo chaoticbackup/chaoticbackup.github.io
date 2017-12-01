@@ -18,12 +18,17 @@ export default class Attack extends React.Component {
 
     return(
       <div style={{textAlign: 'left', display: 'flex'}}>
-        <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (mugic.gsx$thumb||API.thumb_missing)}></img>
-        <div style={{verticalAlign: 'text-top', float: 'left', width: "50%"}}>
+        <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (mugic.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(mugic.gsx$image)} />
+        <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
           <img height="20" className="icon" src={"/src/img/icons/tribes/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"}></img>
           <span>{mugic.gsx$name}</span><br />
           <span>{API.sets[mugic.gsx$set]} | {mugic.gsx$rarity}</span><br />
           <span>Cost: {mugicCounters}</span><br />
+        </div>
+        <br />
+        <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
+          <span>{mugic.gsx$ability}</span><br />
+          <span><i>{mugic.gsx$flavortext}</i></span>
         </div>
       </div>
     );

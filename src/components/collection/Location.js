@@ -13,11 +13,16 @@ export default class Location extends React.Component {
 
     return(
       <div style={{textAlign: 'left', display: 'flex'}}>
-        <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (location.gsx$thumb||API.thumb_missing)}></img>
-        <div style={{verticalAlign: 'text-top', float: 'left', width: "50%"}}>
+        <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (location.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(location.gsx$image)} />
+        <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
           <span>{location.gsx$name}</span><br />
           <span>{API.sets[location.gsx$set]} | {location.gsx$rarity}</span><br />
           <span>{location.gsx$initiative}</span>
+        </div>
+        <br />
+        <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
+          <span>{location.gsx$ability}</span><br />
+          <span><i>{location.gsx$flavortext}</i></span>
         </div>
       </div>
     );

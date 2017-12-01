@@ -107,7 +107,8 @@ export default class SearchForm extends React.Component {
       <div className="SearchForm">
         <form onSubmit={this.search}>
           <p>
-            Since not all data has been entered not all cards are listed, to see incomplete cards, click&nbsp;
+            Since not all data has been entered not all <br />cards are listed, to see incomplete cards, click
+            <br />
             <label>"Show all cards":<input type="checkbox" ref={(input) => this.stones.allCards = input}/></label>
           </p>
           <br />
