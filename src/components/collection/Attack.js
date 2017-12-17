@@ -16,7 +16,7 @@ export default class Attack extends React.Component {
 
   	return(
   	  <div style={{textAlign: 'left', display: 'flex'}}>
-	      <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (attack.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(creature.gsx$image)} />
+	      <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (attack.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(attack.gsx$image)} />
 	      <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
 	        <span>{attack.gsx$name}</span><br />
           <span>{API.sets[attack.gsx$set]} | {attack.gsx$rarity}</span><br />

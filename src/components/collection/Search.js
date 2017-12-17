@@ -354,7 +354,7 @@ export default class SearchForm extends React.Component {
     }
     if (this.mc.max.value > 0 && this.mc.max.value >= this.mc.min.value) {
       creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.mc.max.value}});
-      mugicResults = mugicResults.find({'gsx$cost': {'$gte': this.mc.min.value}});
+      mugicResults = mugicResults.find({'gsx$cost': {'$lte': this.mc.max.value}});
     }
 
     if (this.energy.min.value > 0) {
