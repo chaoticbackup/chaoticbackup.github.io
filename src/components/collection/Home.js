@@ -37,32 +37,28 @@ export default class CollectionHome extends React.Component {
     }
 
     // Load all the data
-    if (!store.cards.built.includes("attacks_Cards")) {
-      store.cards.setupAttacks("Cards");
+    if (!store.cards.built.includes("attacks_cards")) {
+      store.cards.setupAttacks("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("battlegear_Cards")) {
-      store.cards.setupBattlegear("Cards");
+    if (!store.cards.built.includes("battlegear_cards")) {
+      store.cards.setupBattlegear("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("creatures_Cards")) {
-      store.cards.setupCreatures("Cards");
+    if (!store.cards.built.includes("creatures_cards")) {
+      store.cards.setupCreatures("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("locations_Cards")) {
-      store.cards.setupLocations("Cards");
+    if (!store.cards.built.includes("locations_cards")) {
+      store.cards.setupLocations("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("mugic_Cards")) {
-      store.cards.setupMugic("Cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (loading === true) {
+    if (!store.cards.built.includes("mugic_cards")) {
+      store.cards.setupMugic("cards");
       return (<span>Loading...</span>);
     }
 

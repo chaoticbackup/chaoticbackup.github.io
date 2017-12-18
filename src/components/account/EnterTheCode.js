@@ -29,9 +29,24 @@ s.hyphen = {
 @inject((stores, props, context) => props) @observer
 export default class EnterTheCode extends React.Component {
   @observable code = "";
-  @observable message = "";
+  @observable message = null;
+  @observable fan = null;
 
   render() {
+    if (!this.fan) {
+      API.getSpreadsheet(API.path("1hzSojB76Me-P1qppxYR0oiHSU56jyK59x3DKm660ntc"), (data) => {
+        this.fan = data;
+      });
+      return (<span>Loading...</span>);
+    }
+
+    let getRandomInt = (min, max) => {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      //The maximum is exclusive and the minimum is inclusive
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+
     let validate = (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -41,10 +56,12 @@ export default class EnterTheCode extends React.Component {
         );
       }
       else {
+        let card = this.fan[getRandomInt(0, this.fan.length)];
         this.message = (
-          <div>
+          <div key="1">
             <p> Congrats on your scan! </p><br />
-            <img className="card" src={API.base_image + "1mlqp46AcMVmrP_rspK7vlr7K0_-1k4QI"} />
+            <p> {card.gsx$name.$t} </p><br />
+            <img className="card" src={API.base_image + card.gsx$image.$t} />
           </div>
         );
       }

@@ -26,6 +26,11 @@ class API {
     return API.base_url + spreadsheetID + API.data_format;
   }
 
+  // Wrapper
+  path(spreadsheetID) {
+    return API.path(spreadsheetID);
+  }
+
   constructor() {
     // This sets up urls and kicks off db
     let urls = {};
@@ -42,12 +47,12 @@ class API {
 
   getSpreadsheet(spreadsheet, callback) {
     fetch(spreadsheet)
-      .then(function(response) {
+      .then((response) => {
         // console.log(response);
         return response.json();
-      }).then(function(json) {
+      }).then((json) => {
         return callback(json.feed.entry);
-      }).catch(function(err) {
+      }).catch((err) => {
         console.log('parsing failed', err);
         return callback(null);
       });
@@ -187,4 +192,5 @@ class CollectionDB {
       this.built.push("mugic_"+type);
     });
   }
+
 }
