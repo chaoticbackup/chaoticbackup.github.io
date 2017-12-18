@@ -36,7 +36,7 @@ export default class Mugic extends React.Component {
 
     // If there isn't a supported tribe,
     // Displays list of tribes
-    if (!store.urls.Mugic.hasOwnProperty(tribe)) {
+    if (!store.tribes.includes(tribe)) {
       return(
         <div>
           <Interactive as={Link} {...s.link}
@@ -62,13 +62,13 @@ export default class Mugic extends React.Component {
       );
     }
 
-    if (!store.cards.built.includes("mugic_Cards")) {
-      store.cards.setupMugic("Cards");
+    if (!store.cards.built.includes("mugic_cards")) {
+      store.cards.setupMugic("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("mugic_"+tribe)) {
-      store.portal.setupMugic(tribe);
+    if (!store.portal.built.includes("mugic_portal")) {
+      store.portal.setupMugic("portal");
       return (<span>Loading...</span>);
     }
 
@@ -78,7 +78,7 @@ export default class Mugic extends React.Component {
       return (
         <div key={i}>
           <Interactive as={Link} {...s.link}
-            to={'/portal/Mugic/'+tribe+'/'+single_mugic.gsx$name}
+            to={'/portal/'+tribe+'/Mugic/'+single_mugic.gsx$name}
           >
             <span>{single_mugic.gsx$name}</span><br />
             {/* TODO <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img> */}

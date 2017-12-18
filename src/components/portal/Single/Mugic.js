@@ -39,17 +39,17 @@ export default class SingleMugic extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    if (!store.urls.Mugic.hasOwnProperty(tribe)) {
+    if (!store.tribes.includes(tribe)) {
       return (<span>Invalid Tribe: {tribe}</span>);
     }
 
-    if (!store.cards.built.includes("mugic_Cards")) {
-      store.cards.setupMugic("Cards");
+    if (!store.cards.built.includes("mugic_cards")) {
+      store.cards.setupMugic("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("mugic_"+tribe)) {
-      store.portal.setupMugic(tribe);
+    if (!store.portal.built.includes("mugic_portal")) {
+      store.portal.setupMugic("portal");
       return (<span>Loading...</span>);
     }
 

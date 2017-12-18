@@ -63,6 +63,10 @@ class API {
     }
   }
 
+  get tribes() {
+    return ["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld"];
+  }
+
   // For the conversion of shorthand in database
   get sets() {
     return {
@@ -149,38 +153,38 @@ class CollectionDB {
     });
   }
 
-  setupAttacks(tribe="Generic") {
-    this.setup(this.api.urls.Attacks[tribe], "Attack", (data) => {
+  setupAttacks(type="portal") {
+    this.setup(this.api.urls.Attacks[type], "Attack", (data) => {
       this.attacks.insert(data);
-      this.built.push("attacks_"+tribe);
+      this.built.push("attacks_"+type);
     });
   }
 
-  setupBattlegear(tribe="Generic") {
-    this.setup(this.api.urls.Battlegear[tribe], "Battlegear", (data) => {
+  setupBattlegear(type="portal") {
+    this.setup(this.api.urls.Battlegear[type], "Battlegear", (data) => {
       this.battlegear.insert(data);
-      this.built.push("battlegear_"+tribe);
+      this.built.push("battlegear_"+type);
     });
   }
 
-  setupCreatures(tribe="Generic") {
-    this.setup(this.api.urls.Creatures[tribe], "Creature", (data) => {
+  setupCreatures(type="portal") {
+    this.setup(this.api.urls.Creatures[type], "Creature", (data) => {
       this.creatures.insert(data);
-      this.built.push("creatures_"+tribe);
+      this.built.push("creatures_"+type);
     });
   }
 
-  setupLocations(tribe="Generic") {
-    this.setup(this.api.urls.Locations[tribe], "Location", (data) => {
+  setupLocations(type="portal") {
+    this.setup(this.api.urls.Locations[type], "Location", (data) => {
       this.locations.insert(data);
-      this.built.push("locations_"+tribe);
+      this.built.push("locations_"+type);
     });
   }
 
-  setupMugic(tribe="Generic") {
-    this.setup(this.api.urls.Mugic[tribe], "Mugic", (data) => {
+  setupMugic(type="portal") {
+    this.setup(this.api.urls.Mugic[type], "Mugic", (data) => {
       this.mugic.insert(data);
-      this.built.push("mugic_"+tribe);
+      this.built.push("mugic_"+type);
     });
   }
 }

@@ -36,7 +36,7 @@ export default class Creatures extends React.Component {
 
     // If there isn't a supported tribe,
     // Displays list of tribes
-    if (!store.urls.Creatures.hasOwnProperty(tribe)) {
+    if (!store.tribes.includes(tribe)) {
       return(
         <div>
           <Interactive as={Link} {...s.link}
@@ -58,13 +58,13 @@ export default class Creatures extends React.Component {
       );
     }
 
-    if (!store.cards.built.includes("creatures_Cards")) {
-      store.cards.setupCreatures("Cards");
+    if (!store.cards.built.includes("creatures_cards")) {
+      store.cards.setupCreatures("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("creatures_"+tribe)) {
-      store.portal.setupCreatures(tribe);
+    if (!store.portal.built.includes("creatures_portal")) {
+      store.portal.setupCreatures("portal");
       return (<span>Loading...</span>);
     }
 
@@ -74,7 +74,7 @@ export default class Creatures extends React.Component {
       return (
         <div key={i}>
           <Interactive as={Link} {...s.link}
-            to={'/portal/Creatures/'+tribe+'/'+creature.gsx$name}
+            to={'/portal/'+tribe+'/Creatures/'+creature.gsx$name}
           >
             <span>{creature.gsx$name}</span><br />
             <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img>

@@ -38,17 +38,17 @@ export default class SingleCreature extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    if (!store.urls.Creatures.hasOwnProperty(tribe)) {
+    if (!store.tribes.includes(tribe)) {
       return (<span>Invalid Tribe: {tribe}</span>);
     }
 
-    if (!store.cards.built.includes("creatures_Cards")) {
-      store.cards.setupCreatures("Cards");
+    if (!store.cards.built.includes("creatures_cards")) {
+      store.cards.setupCreatures("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("creatures_"+tribe)) {
-      store.portal.setupCreatures(tribe);
+    if (!store.portal.built.includes("creatures_portal")) {
+      store.portal.setupCreatures("portal");
       return (<span>Loading...</span>);
     }
 
