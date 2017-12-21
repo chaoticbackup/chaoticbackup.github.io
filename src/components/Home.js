@@ -8,10 +8,14 @@ function Home() {
     <div>
       <link rel="stylesheet" href="/src/css/with_love.css" />
       <br />
-      Welcome to the Chaotic Backup Project.<br />
-      Built by fans for fans.<br /><br />
       <div className="with-love">
-        Made with <span className="heart">♥</span> by <a href="https://github.com/chaoticbackup" className="name" target="_blank">Danude Sandstorm</a>
+        Welcome to the <a href="https://github.com/chaoticbackup" className="name" target="_blank">Chaotic Backup Project</a>.
+        <br />
+        Built by fans for fans.
+        <br /><br />
+        Made with <span className="heart">♥</span> by
+        <br />Danude Sandstorm
+        <br />Chiodosin1
       </div>
     </div>
   );
