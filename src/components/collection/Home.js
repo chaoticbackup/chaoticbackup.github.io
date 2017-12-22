@@ -73,7 +73,7 @@ export default class CollectionHome extends React.Component {
         <hr />
         <div className="collection_left">
           <div className="card_img">
-            <img src={API.base_image + this.card_img} />
+            <img style={{maxWidth: '250px', maxHeight: '350px'}} src={API.base_image + this.card_img} />
           </div>
           <SearchForm handleContent={this.handleContent.bind(this)} />
         </div>
