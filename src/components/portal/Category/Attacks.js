@@ -11,6 +11,9 @@ import UnderConstruction from '../../UnderConstruction';
 export default class Attacks extends React.Component {
 
 	render() {
+        if (this.props.children) {
+          return (<div>{this.props.children}</div>);
+        }
 		return (<UnderConstruction location={this.props.location}/>);
 	}
 }
