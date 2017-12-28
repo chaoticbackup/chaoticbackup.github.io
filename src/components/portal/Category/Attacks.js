@@ -40,7 +40,6 @@ export default class Attacks extends React.Component {
 
     const output = attacks.map((attack, i) => {
       const card_data = store.cards.attacks.findOne({'gsx$name': attack.gsx$name});
-      console.log(attack, card_data);
       return (
         <div key={i}>
           <Interactive as={Link} {...s.link}
