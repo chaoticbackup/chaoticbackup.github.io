@@ -19,9 +19,22 @@ export default class Creature extends React.Component {
       mugic.push(<img className="icon" src={"/src/img/icons/mugic/"+(creature.gsx$tribe.toLowerCase()||"generic")+".png"} alt="MC" key={i} />);
     }
 
-    // const ability = creature.gsx$ability.replace(/{{mc}}/i,
-    //   <img className="icon" src={"/src/img/icons/mugic/"+(creature.gsx$tribe.toLowerCase()||"generic")+".png"} alt="MC" />
-    // );
+    // function test() {
+    //   console.log( {__html:
+    //     '<span>' + creature.gsx$ability.replace(/{{mc}}/i,
+    //      <img className="icon" src={"/src/img/icons/mugic/"+(creature.gsx$tribe.toLowerCase()||"generic")+".png"} alt="MC" />
+    //     ) + '</span>'
+    //   });
+    // }
+
+    let brainwashed = () => {
+      if (creature.gsx$brainwashed) {
+        return (<span>
+          <div className="brainwashed">{creature.gsx$brainwashed}</div>
+          <br /></span>
+        );
+      }
+    }
 
   	return(
   	  <div className="creature" style={{textAlign: 'left', display: 'flex'}}>
@@ -37,7 +50,7 @@ export default class Creature extends React.Component {
         <br />
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px + 50px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
           <span>{creature.gsx$ability}</span><br />
-          <span>{creature.gsx$brainwashed}</span><br />
+          {brainwashed()}
           <span><i>{creature.gsx$flavortext}</i></span>
         </div>
         <br />

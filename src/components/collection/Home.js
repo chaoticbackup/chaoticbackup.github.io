@@ -65,12 +65,6 @@ export default class CollectionHome extends React.Component {
     return (
       <div className="collection">
         <link rel="stylesheet" href="/src/css/collection.css" />
-        <p>
-          This page is under construction. In the meantime, you can check out&nbsp;
-          <a style={{textDecoration: "underline"}} href="http://www.tradecardsonline.com/im/editCollection/collection_type/1">Trade Cards Online</a>
-          .
-        </p>
-        <hr />
         <div className="collection_left">
           <div className="card_img">
             <img style={{maxWidth: '250px', maxHeight: '350px'}} src={API.base_image + this.card_img} />

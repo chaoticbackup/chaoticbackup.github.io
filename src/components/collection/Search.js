@@ -106,11 +106,6 @@ export default class SearchForm extends React.Component {
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
-          <p>
-            Since not all data has been entered not all <br />cards are listed, to see incomplete cards, click
-            <br />
-            <label>"Show all cards":<input type="checkbox" ref={(input) => this.stones.allCards = input}/></label>
-          </p>
           <br />
           <label>Name: <input type="text" ref={(input) => this.stones.name = input} /></label>
           <br />
@@ -189,16 +184,6 @@ export default class SearchForm extends React.Component {
     let creatureResults = API.cards.creatures.chain();
     let locationResults = API.cards.locations.chain();
     let mugicResults = API.cards.mugic.chain();
-
-    // ignores cards without thumbnails
-    // TODO eventually remove
-    if (!this.stones.allCards.checked){
-      creatureResults = creatureResults.where((obj) => {return (!obj.gsx$thumb == '');});
-      battlegearResults = battlegearResults.where((obj) => {return (!obj.gsx$thumb == '');});
-      attackResults = attackResults.where((obj) => {return (!obj.gsx$thumb == '');});
-      locationResults = locationResults.where((obj) => {return (!obj.gsx$thumb == '');});
-      mugicResults = mugicResults.where((obj) => {return (!obj.gsx$thumb == '');});
-    }
 
     // Search by name
     if (this.stones.name.value) {

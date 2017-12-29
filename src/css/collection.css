@@ -16,3 +16,8 @@
 .SearchForm {
     text-align: left;
 }
+
+.brainwashed {
+    background-color: #dcdddf;
+    color: black !important;
+}
