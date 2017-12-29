@@ -4,6 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import processString from 'react-process-string';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -19,20 +20,17 @@ export default class Creature extends React.Component {
       mugic.push(<img className="icon" src={"/src/img/icons/mugic/"+(creature.gsx$tribe.toLowerCase()||"generic")+".png"} alt="MC" key={i} />);
     }
 
-    // function test() {
-    //   console.log( {__html:
-    //     '<span>' + creature.gsx$ability.replace(/{{mc}}/i,
-    //      <img className="icon" src={"/src/img/icons/mugic/"+(creature.gsx$tribe.toLowerCase()||"generic")+".png"} alt="MC" />
-    //     ) + '</span>'
-    //   });
-    // }
+    let mugic_counters = {
+      regex: /{{mc}}/i,
+      fn: (key, result) => {
+        return <img key={key} className="icon" style={{'height': '16px'}} src={"/src/img/icons/mugic/"+(creature.gsx$tribe.toLowerCase()||"generic")+".png"} alt="MC" />
+      }
+    }
 
     let brainwashed = () => {
       if (creature.gsx$brainwashed) {
-        return (<span>
-          <div className="brainwashed">{creature.gsx$brainwashed}</div>
-          <br /></span>
-        );
+        return (<span className="brainwashed" style={{'whiteSpace': 'pre-line'}}>{processString([mugic_counters])(creature.gsx$brainwashed)}<br />
+        </span>);
       }
     }
 
@@ -49,7 +47,7 @@ export default class Creature extends React.Component {
 	      </div>
         <br />
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px + 50px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
-          <span>{creature.gsx$ability}</span><br />
+          <span style={{'whiteSpace': 'pre-line'}}>{processString([mugic_counters])(creature.gsx$ability)}</span><br />
           {brainwashed()}
           <span><i>{creature.gsx$flavortext}</i></span>
         </div>
