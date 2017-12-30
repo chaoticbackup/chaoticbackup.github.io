@@ -1,16 +1,28 @@
-.collection_left {
-    width: 30%;
-    float: left;
+.icon16 {
+    height: 16px;
 }
 
-.collection_right {
-    width: 70%;
-    float: right;
+.icon20 {
+    height: 20px;
+}
+
+.icon24 {
+    height: 24px;
 }
 
 .card_img {
     width: 250px;
     height: 350px;
+}
+
+.card_img img {
+   max-width: 250px;
+   max-height: 350px;
+}
+
+.thumb {
+    width: 100px;
+    height: 98px;
 }
 
 .SearchForm {
@@ -20,4 +32,13 @@
 .brainwashed {
     background-color: #dcdddf;
     color: black !important;
+}
+
+.flavortext {
+    font-style: italic;
+}
+
+.disciplines input {
+    width: 30px;
+    height: 14px;
 }

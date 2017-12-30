@@ -72,12 +72,12 @@ export default class SearchForm extends React.Component {
 
     const card_tribes = (
       <div>
-        <input type="checkbox" ref={(input) => this.tribes.danian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.mipedian = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.overworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.underworld = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes["m'arrillian"] = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.generic = input}/><img height="16" className="icon" src={"/src/img/icons/tribes/generic.png"} />
+        <input type="checkbox" ref={(input) => this.tribes.danian = input}/><img className="icon16" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.mipedian = input}/><img className="icon16" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.overworld = input}/><img className="icon16" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.underworld = input}/><img className="icon16" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes["m'arrillian"] = input}/><img className="icon16" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.tribes.generic = input}/><img className="icon16" src={"/src/img/icons/tribes/generic.png"} />
       </div>
     );
 
@@ -85,21 +85,21 @@ export default class SearchForm extends React.Component {
       <div>
         <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
         <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
-        <input type="checkbox" ref={(input) => this.elements.fire = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/fire.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.elements.air = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/air.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.elements.earth = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/earth.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.elements.water = input}/><img height="16px"className="icon" src={"/src/img/icons/elements/water.png"} />
+        <input type="checkbox" ref={(input) => this.elements.fire = input}/><img className="icon16" src={"/src/img/icons/elements/fire.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.elements.air = input}/><img className="icon16" src={"/src/img/icons/elements/air.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.elements.earth = input}/><img className="icon16" src={"/src/img/icons/elements/earth.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.elements.water = input}/><img className="icon16" src={"/src/img/icons/elements/water.png"} />
         <br />
         <input type="checkbox" ref={(input) => this.stones.noElements = input}/><span>No Elements</span>
       </div>
     );
 
     const card_disciplines = (
-      <div>
-        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.courage = input} /><img className="icon" src={"/src/img/icons/disciplines/courage.png"} />&nbsp;
-        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.power = input} /><img className="icon" src={"/src/img/icons/disciplines/power.png"} />&nbsp;
-        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.wisdom = input} /><img className="icon" src={"/src/img/icons/disciplines/wisdom.png"} />&nbsp;
-        <input type="text" style={{width: '30px'}} ref={(input) => this.stones.speed = input} /><img className="icon" src={"/src/img/icons/disciplines/speed.png"} />
+      <div className="disciplines">
+        <input type="text" ref={(input) => this.stones.courage = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/courage.png"} />&nbsp;
+        <input type="text" ref={(input) => this.stones.power = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/power.png"} />&nbsp;
+        <input type="text" ref={(input) => this.stones.wisdom = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/wisdom.png"} />&nbsp;
+        <input type="text" ref={(input) => this.stones.speed = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/speed.png"} />
       </div>
     );
 

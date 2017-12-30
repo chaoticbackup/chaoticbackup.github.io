@@ -22,7 +22,7 @@ export default class Location extends React.Component {
         <br />
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
           <span>{location.gsx$ability}</span><br />
-          <span><i>{location.gsx$flavortext}</i></span>
+          <span className="flavortext">{location.gsx$flavortext}</span>
         </div>
       </div>
     );

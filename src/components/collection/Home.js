@@ -65,13 +65,13 @@ export default class CollectionHome extends React.Component {
     return (
       <div className="collection">
         <link rel="stylesheet" href="/src/css/collection.css" />
-        <div className="collection_left">
+        <div style={{float: 'left', width: '30%'}}>
           <div className="card_img">
-            <img style={{maxWidth: '250px', maxHeight: '350px'}} src={API.base_image + this.card_img} />
+            <img src={API.base_image + this.card_img} />
           </div>
           <SearchForm handleContent={this.handleContent.bind(this)} />
         </div>
-        <div className="collection_right">
+        <div style={{float: 'right', width: '70%'}}>
           {this.navigation()}<br />
           <CardList cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
           {this.navigation()}

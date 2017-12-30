@@ -13,14 +13,14 @@ export default class Battlegear extends React.Component {
 
     return(
       <div style={{textAlign: 'left', display: 'flex'}}>
-        <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (battlegear.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(battlegear.gsx$image)} />
+        <img className="thumb" style={{float: 'left'}} src={API.base_image + (battlegear.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(battlegear.gsx$image)} />
         <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
           <span>{battlegear.gsx$name}</span><br />
           <span>{API.sets[battlegear.gsx$set]} | {battlegear.gsx$rarity}</span><br />
         </div>
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
           <span>{battlegear.gsx$ability}</span><br />
-          <span><i>{battlegear.gsx$flavortext}</i></span>
+          <span className="flavortext">{battlegear.gsx$flavortext}</span>
         </div>
       </div>
     );
