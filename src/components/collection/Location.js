@@ -4,6 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import {Rarity} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Location extends React.Component {
@@ -15,8 +16,8 @@ export default class Location extends React.Component {
       <div style={{textAlign: 'left', display: 'flex'}}>
         <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (location.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(location.gsx$image)} />
         <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
-          <span>{location.gsx$name}</span><br />
-          <span>{API.sets[location.gsx$set]} | {location.gsx$rarity}</span><br />
+          <span className="name">{location.gsx$name}</span><br />
+          <Rarity set={location.gsx$set} rarity={location.gsx$rarity} /><br />
           <span>{location.gsx$initiative}</span>
         </div>
         <br />

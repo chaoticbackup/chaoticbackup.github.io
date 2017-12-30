@@ -4,6 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import {Rarity} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -12,17 +13,25 @@ export default class Attack extends React.Component {
     let mugic = this.props.mugic;
 
     let mugicCounters = [];
-    for (let i = 0; i < mugic.gsx$cost; i++) {
-      mugicCounters.push(<img className="icon16" src={"/src/img/icons/mugic/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"} alt={mugic.gsx$tribe.toLowerCase() + " Mugic counter"} key={i} />);
+    if (mugic.gsx$cost == 0) {
+      mugicCounters.push(<span>0</span>);
+    }
+    else if (mugic.gsx$cost.toLowerCase() == 'x') {
+      mugicCounters.push(<span>X</span>);
+    }
+    else {
+      for (let i = 0; i < mugic.gsx$cost; i++) {
+        mugicCounters.push(<img className="icon16" src={"/src/img/icons/mugic/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"} alt={mugic.gsx$tribe.toLowerCase() + " Mugic counter"} key={i} />);
+      }
     }
 
     return(
       <div style={{textAlign: 'left', display: 'flex'}}>
         <img className="thumb" style={{float: 'left'}} src={API.base_image + (mugic.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(mugic.gsx$image)} />
         <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
-          <img height="20" className="icon16" src={"/src/img/icons/tribes/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"}></img>
-          <span>{mugic.gsx$name}</span><br />
-          <span>{API.sets[mugic.gsx$set]} | {mugic.gsx$rarity}</span><br />
+          <span className="name">{mugic.gsx$name}</span><br />
+          <Rarity set={mugic.gsx$set} rarity={mugic.gsx$rarity} /> <br />
+          <img height="20" className="icon16" src={"/src/img/icons/tribes/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"} /> {mugic.gsx$tribe}<br />
           <span>Cost: {mugicCounters}</span><br />
         </div>
         <br />
@@ -33,5 +42,9 @@ export default class Attack extends React.Component {
       </div>
     );
   }
+
+}
+
+function MugicCost(props) {
 
 }

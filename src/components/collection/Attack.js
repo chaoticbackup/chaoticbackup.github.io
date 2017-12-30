@@ -4,6 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import {Rarity} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -15,8 +16,8 @@ export default class Attack extends React.Component {
   	  <div style={{textAlign: 'left', display: 'flex'}}>
 	      <img className="thumb" style={{float: 'left'}} src={API.base_image + (attack.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(attack.gsx$image)} />
 	      <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
-	        <span>{attack.gsx$name}</span><br />
-          <span>{API.sets[attack.gsx$set]} | {attack.gsx$rarity}</span><br />
+	        <span className="name">{attack.gsx$name}</span><br />
+          <Rarity set={attack.gsx$set} rarity={attack.gsx$rarity} /><br />
           <span>Build Points: {attack.gsx$bp}</span><br />
           <div>
             {attack.gsx$base} |&nbsp;

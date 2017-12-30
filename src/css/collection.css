@@ -20,6 +20,14 @@
    max-height: 350px;
 }
 
+.name {
+    font-size: 14px;
+    /* margin-bottom: 2px; */
+    padding-bottom: 4px;
+    display: inline-block;
+}
+
+
 .thumb {
     width: 100px;
     height: 98px;

@@ -5,6 +5,7 @@ import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import processString from 'react-process-string';
+import {Rarity} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -44,10 +45,9 @@ export default class Creature extends React.Component {
   	  <div className="creature" style={{textAlign: 'left', display: 'flex'}}>
   	    <img className="thumb" style={{float: 'left'}} src={API.base_image + (creature.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(creature.gsx$image)} />
   	    <div style={{verticalAlign: 'text-top', float: 'left', width: '220px'}}>
-  	      <img className="icon20" src={"/src/img/icons/tribes/"+creature.gsx$tribe.toLowerCase()+".png"}></img>
-          <span>{creature.gsx$name}</span><br />
-          <span>{API.sets[creature.gsx$set]} | {creature.gsx$rarity}</span><br />
-          <span>{creature.gsx$tribe} {creature.gsx$types}</span><br />
+          <span className="name">{creature.gsx$name}</span><br />
+          <Rarity set={creature.gsx$set} rarity={creature.gsx$rarity} /><br />
+          <span><img className="icon16" style={{verticalAlign: 'middle'}} src={"/src/img/icons/tribes/"+creature.gsx$tribe.toLowerCase()+".png"} /> {creature.gsx$tribe} {creature.gsx$types}</span><br />
 	        <span>{elements}</span><br />
           <span>{mugic}</span>
 	      </div>
