@@ -18,9 +18,8 @@ export default class Location extends React.Component {
         <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
           <span className="name">{location.gsx$name}</span><br />
           <Rarity set={location.gsx$set} rarity={location.gsx$rarity} /><br />
-          <span>{location.gsx$initiative}</span>
+          <Initiative initiative={location.gsx$initiative} /><br />
         </div>
-        <br />
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
           <span>{location.gsx$ability}</span><br />
           <span className="flavortext">{location.gsx$flavortext}</span>
@@ -28,5 +27,22 @@ export default class Location extends React.Component {
       </div>
     );
   }
+}
 
+function Initiative(props) {
+  let initiative = props.initiative;
+  let image = null;
+  if (["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld", "M'arrillian"].indexOf(initiative) > -1) {
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/tribes/"+initiative+".png").toLowerCase()} />
+  }
+  else if (["courage", "power", "speed", "wisdom"].indexOf(initiative.toLowerCase()) > -1){
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/disciplines/"+initiative+".png").toLowerCase()} />
+  }
+  else if (["fire", "air", "earth", "water"].indexOf(initiative.toLowerCase()) > -1){
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/elements/"+initiative+".png").toLowerCase()} />
+  }
+  else if (initiative.toLowerCase() == "mugic counter") {
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/mugic/generic.png").toLowerCase()} />
+  }
+  return (<span>Initiative: {image} {initiative}</span>);
 }
