@@ -5,7 +5,7 @@ import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import processString from 'react-process-string';
-import {Rarity} from './_Snippets';
+import {Rarity, Unique} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -55,6 +55,7 @@ export default class Creature extends React.Component {
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px + 50px))', borderLeft: '1px solid white', paddingLeft: '10px', 'whiteSpace': 'pre-line'}} >
           <span className="ability">{processString([mugic_counters])(creature.gsx$ability)}</span><br />
           {brainwashed}
+          <Unique data={{unique: creature.gsx$unique, loyal: creature.gsx$loyal, legendary: creature.gsx$legendary, tribe: creature.gsx$tribe}} /><br />
           <span className="flavortext">{creature.gsx$flavortext}</span>
         </div>
         <br />

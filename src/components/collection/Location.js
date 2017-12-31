@@ -4,7 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Rarity} from './_Snippets';
+import {Rarity, Unique} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Location extends React.Component {

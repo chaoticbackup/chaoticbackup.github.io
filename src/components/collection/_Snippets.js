@@ -11,3 +11,27 @@ export function Rarity(props) {
     </span>
   );
 }
+
+export function Unique(props) {
+  let string = "";
+  if (props.data.unique) {
+    string+="Unique, ";
+  }
+  if (props.data.loyal) {
+    string+="Loyal";
+    if (props.data.tribe == 'M\'arrillian') {
+      string +=" - M'arrillian or Minions";
+    }
+    // Battlegear loyality
+    if (props.data.loyal != "1") {
+      string +=" - "+props.data.loyal;
+    }
+  }
+  if (props.data.legendary) {
+    string+="Legendary";
+  }
+  string = string.replace(/,\s+$/, "");
+  return (
+    <span style={{fontWeight: "Bold"}}>{string}</span>
+  );
+}

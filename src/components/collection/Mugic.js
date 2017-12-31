@@ -4,7 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Rarity} from './_Snippets';
+import {Rarity, Unique} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -37,6 +37,7 @@ export default class Attack extends React.Component {
         <br />
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
           <span>{mugic.gsx$ability}</span><br />
+          <Unique data={{unique: mugic.gsx$unique, loyal: mugic.gsx$loyal, legendary: mugic.gsx$legendary}} /><br />
           <span className="flavortext">{mugic.gsx$flavortext}</span>
         </div>
       </div>
