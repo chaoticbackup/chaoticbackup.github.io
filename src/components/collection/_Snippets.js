@@ -1,12 +1,13 @@
 import React from 'react';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import processString from 'react-process-string';
 import API from '../SpreadsheetData';
 
 export function Rarity(props) {
   return (
     <span>
-      <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/set/"+props.set+"/"+props.rarity+".png").toLowerCase()} />
+      <img className={props.size||"icon16"} style={{verticalAlign: 'middle'}} src={("/src/img/icons/set/"+props.set+"/"+props.rarity+".png").toLowerCase()} />
       {API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}
     </span>
   );
@@ -34,4 +35,62 @@ export function Unique(props) {
   return (
     <span style={{fontWeight: "Bold"}}>{string}</span>
   );
+}
+
+export function Name(props) {
+  let name = props.name.split(",");
+  if (name.length > 1) {
+    return (<span>
+      <span className="bigger">{name[0]}</span><br />
+      &nbsp;&nbsp;<span style={{fontSize: "13px",paddingBottom: "4px", display: "inline-block"}}>{name[1]}</span>
+    </span>);
+  } else {
+    return (<span>
+      <span className="bigger">{name[0]}</span>
+    </span>);
+  }
+}
+
+export function Element(props) {
+  if (props.value) {
+    return <img className={props.size||"icon20"} src={"/src/img/icons/elements/"+props.element.toLowerCase()+".png"} />
+  }
+  else {
+    return <img className={props.size||"icon20"} src={"/src/img/icons/elements/"+props.element.toLowerCase()+"-inactive.png"} />
+  }
+}
+
+export function Mugic(props) {
+  return <img className={props.size||"icon20"} src={"/src/img/icons/mugic/"+(props.tribe.toLowerCase()||"generic")+".png"} alt={"MC"} />
+}
+
+export function Discipline(props) {
+  return <img className={props.size||"icon16"} src={"/src/img/icons/disciplines/"+props.discipline.toLowerCase()+".png"} />
+}
+
+export function Ability(props) {
+  const mugic_counters = {
+    regex: /{{mc}}/i,
+    fn: (key, result) => {
+      return (<Mugic key={key} tribe={props.tribe} size="icon16"/>);
+    }
+  }
+
+  const elements = {
+    regex: /(fire)|(air)|(earth)|(water)/i,
+    fn: (key, result) => {
+      return (<span key={key}><Element element={result[0]} value="true" size="icon16"/>{result[0]}</span>);
+    }
+  }
+
+  const disciplines = {
+    regex: /(courage)|(power)|(wisdom)|(speed)/i,
+    fn: (key, result) => {
+      return (<span key={key}><Discipline discipline={result[0]} />{result[0]}</span>);
+    }
+  }
+
+  const filters = [mugic_counters, elements, disciplines];
+
+  return <span className={props.type||"ability"}>{processString(filters)(props.ability)}</span>
 }

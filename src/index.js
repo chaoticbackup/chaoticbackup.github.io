@@ -51,11 +51,7 @@ const routes = (
     <Route path="EnterTheCode" component={EnterTheCode} />
 
     {/* Collection */}
-    <Route path="collection/">
-      <IndexRoute component={CollectionHome} />
-
-      <Route path="*" component={PageNotFound} />
-    </Route>
+    <Route path="collection/*" component={CollectionHome} />
 
     {/* Portal */}
     <Route path="portal/" component={PortalBase} mapMenuTitle="Portal">

@@ -4,7 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique} from './_Snippets';
+import {Rarity, Unique, Name, Mugic, Ability} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -21,7 +21,7 @@ export default class Attack extends React.Component {
     }
     else {
       for (let i = 0; i < mugic.gsx$cost; i++) {
-        mugicCounters.push(<img className="icon16" src={"/src/img/icons/mugic/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"} alt={mugic.gsx$tribe.toLowerCase() + " Mugic counter"} key={i} />);
+        mugicCounters.push(<Mugic tribe={mugic.gsx$tribe} key={i} />);
       }
     }
 
@@ -29,23 +29,19 @@ export default class Attack extends React.Component {
       <div style={{textAlign: 'left', display: 'flex'}}>
         <img className="thumb" style={{float: 'left'}} src={API.base_image + (mugic.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(mugic.gsx$image)} />
         <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
-          <span className="name">{mugic.gsx$name}</span><br />
+          <Name name={mugic.gsx$name} /><br />
           <Rarity set={mugic.gsx$set} rarity={mugic.gsx$rarity} /> <br />
           <img height="20" className="icon16" src={"/src/img/icons/tribes/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"} /> {mugic.gsx$tribe}<br />
-          <span>Cost: {mugicCounters}</span><br />
+          <span>{mugicCounters}</span><br />
         </div>
         <br />
         <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
-          <span>{mugic.gsx$ability}</span><br />
+          <Ability ability={mugic.gsx$ability} tribe={mugic.gsx$tribe} /><br />
           <Unique data={{unique: mugic.gsx$unique, loyal: mugic.gsx$loyal, legendary: mugic.gsx$legendary}} /><br />
           <span className="flavortext">{mugic.gsx$flavortext}</span>
         </div>
       </div>
     );
   }
-
-}
-
-function MugicCost(props) {
 
 }
