@@ -14,10 +14,10 @@ export default class Attack extends React.Component {
 
     let mugicCounters = [];
     if (mugic.gsx$cost == 0) {
-      mugicCounters.push(<span>0</span>);
+      mugicCounters.push(<span key={0}>0</span>);
     }
     else if (mugic.gsx$cost.toLowerCase() == 'x') {
-      mugicCounters.push(<span>X</span>);
+      mugicCounters.push(<span key={0}>X</span>);
     }
     else {
       for (let i = 0; i < mugic.gsx$cost; i++) {

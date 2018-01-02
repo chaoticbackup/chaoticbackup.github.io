@@ -85,7 +85,7 @@ export default class SearchForm extends React.Component {
       <div>
         <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
         <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
-        <input type="checkbox" ref={(input) => this.elements.fire = input}/><img className="icon16" src={"/src/img/icons/elements/fire.png"} />&nbsp;
+        <input type="checkbox" ref={(input) => this.elements.fire = input} /><img className="icon16" src={"/src/img/icons/elements/fire.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.elements.air = input}/><img className="icon16" src={"/src/img/icons/elements/air.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.elements.earth = input}/><img className="icon16" src={"/src/img/icons/elements/earth.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.elements.water = input}/><img className="icon16" src={"/src/img/icons/elements/water.png"} />
@@ -113,12 +113,14 @@ export default class SearchForm extends React.Component {
           <br />
           {card_type}
           <br />
-          <label>Subtypes: <input type="text" ref={(input) => this.stones.subtypes = input} /></label>
-          <br />
+          <label>Subtypes | Initiative:<br />
+            <input type="text" ref={(input) => this.stones.subtypes = input} />
+          </label><br />
           <div>{setsInput}</div><br />
           {card_rarity}<br />
           {card_tribes}<br />
           {card_elements}<br />
+          {card_disciplines}<br />
           <div>
             <span>Mugic Counters/Cost</span>&nbsp;
             <label>Min: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
@@ -143,16 +145,12 @@ export default class SearchForm extends React.Component {
             <label>Max: <input type="text" style={{width: '20px'}} ref={(input) => this.base.max = input} /></label>
           </div>
           <br />
-          {card_disciplines}
-          <br />
           <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
           <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>Loyal</label>&nbsp;
           <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Legendary</label>
           <br />
           <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
           <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
-          <br />
-          <label>Initiative: <input type="text" ref={(input) => this.stones.initiative = input} /></label>
           <br />
           <div>
             <label><input type="checkbox" ref={(input) => this.gender.Ambiguous = input}/>Ambiguous</label>&nbsp;
@@ -251,6 +249,9 @@ export default class SearchForm extends React.Component {
     if (tribesList.length > 0) {
       creatureResults = creatureResults.find({'gsx$tribe': {'$or': tribesList} });
       mugicResults = mugicResults.find({'gsx$tribe': {'$or': tribesList} });
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
     }
 
     // no elements
@@ -265,6 +266,9 @@ export default class SearchForm extends React.Component {
       ).where(
         (obj) => {return (obj.gsx$water == ('') );}
       );
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
+      mugicResults = mugicResults.limit(0);
     }
     // Search by elements
     else {
@@ -285,6 +289,9 @@ export default class SearchForm extends React.Component {
          creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList} });
          attackResults = attackResults.find({'$and': elementsList2});
         }
+        battlegearResults = battlegearResults.limit(0);
+        locationResults = locationResults.limit(0);
+        mugicResults = mugicResults.limit(0);
       }
     }
 
@@ -316,30 +323,31 @@ export default class SearchForm extends React.Component {
       mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
     }
 
-    let genderList = [];
-    for (const key in this.gender) {
-      if (this.gender[key].checked) {
-        genderList.push({'$regex': new RegExp(key, 'i')})
-      }
-    }
-    if (genderList.length > 0) {
-      creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
-    }
+    if (this.stones.subtypes.value) {
+      let subtypesList = this.stones.subtypes.value.split(",").filter(Boolean).map((item) => {
+        return ({'$regex': new RegExp(item.trim(), 'i')});
+      });
 
-    let subtypesList = this.stones.subtypes.value.split(",").filter(Boolean).map((item) => {
-      return ({'$regex': new RegExp(item.trim(), 'i')});
-    });
-    if (subtypesList.length > 0) {
       creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList} });
+      locationResults = locationResults.find({'gsx$initiative': {'$or': subtypesList}});
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      mugicResults = mugicResults.limit(0);
     }
 
-    if (this.mc.min.value > 0) {
+    if (this.mc.min.value !== "" && this.mc.min.value >= 0) {
       creatureResults = creatureResults.find({'gsx$mugicability': {'$gte': this.mc.min.value}});
       mugicResults = mugicResults.find({'gsx$cost': {'$gte': this.mc.min.value}});
     }
-    if (this.mc.max.value > 0 && this.mc.max.value >= this.mc.min.value) {
+    if (this.mc.max.value !== "" && this.mc.max.value >= 0 && this.mc.max.value >= this.mc.min.value) {
       creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.mc.max.value}});
       mugicResults = mugicResults.find({'gsx$cost': {'$lte': this.mc.max.value}});
+    }
+
+    if (this.mc.max.value !== "" || this.mc.min.value !== "") {
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
     }
 
     if (this.energy.min.value > 0) {
@@ -347,20 +355,6 @@ export default class SearchForm extends React.Component {
     }
     if (this.energy.max.value > 0 && this.energy.max.value >= this.energy.min.value) {
       creatureResults = creatureResults.find({'gsx$energy': {'$lte': this.energy.max.value}});
-    }
-
-    if (this.bp.min.value >= 0) {
-      attackResults = attackResults.find({'gsx$bp': {'$gte': this.bp.min.value}});
-    }
-    if (this.bp.max.value && this.bp.max.value >= 0 && this.bp.max.value >= this.bp.min.value) {
-      attackResults = attackResults.find({'gsx$bp': {'$lte': this.bp.max.value}});
-    }
-
-    if (this.base.min.value >= 0) {
-      attackResults = attackResults.find({'gsx$base': {'$gte': this.base.min.value}});
-    }
-    if (this.base.max.value && this.base.max.value >= 0 && this.base.max.value >= this.base.min.value) {
-      attackResults = attackResults.find({'gsx$base': {'$lte': this.base.max.value}});
     }
 
     if (this.stones.courage.value > 0) {
@@ -374,6 +368,34 @@ export default class SearchForm extends React.Component {
     }
     if (this.stones.speed.value > 0) {
       creatureResults = creatureResults.find({'gsx$speed': {'$gte': this.stones.speed.value}});
+    }
+
+    if (this.energy.min.value > 0 || this.energy.max.value > 0 || this.stones.courage.value !== "" || this.stones.power.value !== "" || this.stones.wisdom.value !== "" || this.stones.speed.value !== "") {
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
+      mugicResults = mugicResults.limit(0);
+    }
+
+    if (this.bp.min.value !== "" && this.bp.min.value >= 0) {
+      attackResults = attackResults.find({'gsx$bp': {'$gte': this.bp.min.value}});
+    }
+    if (this.bp.max.value !== "" && this.bp.max.value >= 0 && this.bp.max.value >= this.bp.min.value) {
+      attackResults = attackResults.find({'gsx$bp': {'$lte': this.bp.max.value}});
+    }
+
+    if (this.base.min.value !== "" && this.base.min.value >= 0) {
+      attackResults = attackResults.find({'gsx$base': {'$gte': this.base.min.value}});
+    }
+    if (this.base.max.value !== "" && this.base.max.value >= 0 && this.base.max.value >= this.base.min.value) {
+      attackResults = attackResults.find({'gsx$base': {'$lte': this.base.max.value}});
+    }
+
+    if (this.bp.min.value !== "" || this.bp.max.value !== "" || this.base.min.value !== "" || this.base.max.value !== "") {
+      battlegearResults = battlegearResults.limit(0);
+      creatureResults = creatureResults.limit(0);
+      locationResults = locationResults.limit(0);
+      mugicResults = mugicResults.limit(0);
     }
 
     if (this.stones.unique.checked) {
@@ -408,13 +430,24 @@ export default class SearchForm extends React.Component {
 
     if (this.stones.mirage.checked) {
       locationResults = locationResults.find({'gsx$mirage': {'$gt': 0}});
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      creatureResults = creatureResults.limit(0);
+      mugicResults = mugicResults.limit(0);
     }
 
-    if (this.stones.initiative.value) {
-      let textList = this.stones.initiative.value.split(",").filter(Boolean).map((item) => {
-        return ({'$regex': new RegExp(item.trim(), 'i')});
-      });
-      locationResults = locationResults.find({'gsx$initiative': {'$or': textList}});
+    let genderList = [];
+    for (const key in this.gender) {
+      if (this.gender[key].checked) {
+        genderList.push({'$regex': new RegExp(key, 'i')})
+      }
+    }
+    if (genderList.length > 0) {
+      creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
+      mugicResults = mugicResults.limit(0);
     }
 
     // Merge data

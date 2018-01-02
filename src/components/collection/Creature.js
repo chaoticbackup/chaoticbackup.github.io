@@ -45,7 +45,7 @@ export default class Creature extends React.Component {
 	     	  <span>{creature.gsx$power}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/power.png"}></img></span><br />
 	     	  <span>{creature.gsx$wisdom}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/wisdom.png"}></img></span><br />
 	     	  <span>{creature.gsx$speed}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/speed.png"}></img></span><br />
-          <span>{creature.gsx$energy}</span>
+          <span style={{fontWeight: 'bold'}}>{creature.gsx$energy}</span>
         </div>
   	  </div>
   	);
