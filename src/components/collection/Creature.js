@@ -4,7 +4,7 @@ import API from '../SpreadsheetData';
 import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability} from './_Snippets';
+import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from './_Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -18,12 +18,12 @@ export default class Creature extends React.Component {
     }
 
   	return(
-  	  <div className="creature" style={{textAlign: 'left', display: 'flex'}}>
+  	  <div className="card">
   	    <img className="thumb" style={{float: 'left'}} src={API.base_image + (creature.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(creature.gsx$image)} />
-  	    <div style={{verticalAlign: 'text-top', float: 'left', width: '220px'}}>
+  	    <div className="left">
           <Name name={creature.gsx$name} /><br />
           <Rarity set={creature.gsx$set} rarity={creature.gsx$rarity} /><br />
-          <span><img className="icon16" style={{verticalAlign: 'middle'}} src={"/src/img/icons/tribes/"+creature.gsx$tribe.toLowerCase()+".png"} /> {creature.gsx$tribe} {creature.gsx$types}</span><br />
+          <span><Tribe tribe={creature.gsx$tribe} /> {creature.gsx$tribe} {creature.gsx$types}</span><br />
 	        <div>
             <Element element="fire" value={creature.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
             <Element element="air" value={creature.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
@@ -33,10 +33,10 @@ export default class Creature extends React.Component {
           <span>{mugic}</span>
 	      </div>
         <br />
-        <div style={{float: 'left', width: 'calc(100% - (100px + 230px + 50px))', borderLeft: '1px solid white', paddingLeft: '10px', 'whiteSpace': 'pre-line'}} >
+        <div className="right" style={{width: 'calc(100% - (100px + 230px + 50px))', 'whiteSpace': 'pre-line'}} >
           <Ability ability={creature.gsx$ability} tribe={creature.gsx$tribe} /><br />
-          <Ability type="brainwashed" tribe={creature.gsx$tribe} ability={creature.gsx$brainwashed+"\n"} />
-          <Unique data={{unique: creature.gsx$unique, loyal: creature.gsx$loyal, legendary: creature.gsx$legendary, tribe: creature.gsx$tribe}} /><br />
+          <Ability type="brainwashed" tribe={creature.gsx$tribe} ability={creature.gsx$brainwashed} /> {creature.gsx$brainwashed && <br />}
+          <Unique data={{unique: creature.gsx$unique, loyal: creature.gsx$loyal, legendary: creature.gsx$legendary, tribe: creature.gsx$tribe}} />
           <span className="flavortext">{creature.gsx$flavortext}</span>
         </div>
         <br />

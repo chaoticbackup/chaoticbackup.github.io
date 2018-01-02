@@ -33,7 +33,7 @@ export function Unique(props) {
   }
   string = string.replace(/,\s+$/, "");
   return (
-    <span style={{fontWeight: "Bold"}}>{string}</span>
+    <span style={{fontWeight: "Bold"}}>{string}{string && <br />}</span>
   );
 }
 
@@ -68,25 +68,29 @@ export function Discipline(props) {
   return <img className={props.size||"icon16"} src={"/src/img/icons/disciplines/"+props.discipline.toLowerCase()+".png"} />
 }
 
+export function Tribe(props) {
+  return <img className={props.size||"icon16"} src={"/src/img/icons/tribes/"+props.tribe.toLowerCase()+".png"} />
+}
+
 export function Ability(props) {
   const mugic_counters = {
     regex: /{{mc}}/i,
     fn: (key, result) => {
-      return (<Mugic key={key} tribe={props.tribe} size="icon16"/>);
+      return (<Mugic key={key} tribe={props.tribe} size="icon14"/>);
     }
   }
 
   const elements = {
     regex: /(fire)|(air)|(earth)|(water)/i,
     fn: (key, result) => {
-      return (<span key={key}><Element element={result[0]} value="true" size="icon16"/>{result[0]}</span>);
+      return (<span key={key}><Element element={result[0]} value="true" size="icon14"/>{result[0]}</span>);
     }
   }
 
   const disciplines = {
     regex: /(courage)|(power)|(wisdom)|(speed)/i,
     fn: (key, result) => {
-      return (<span key={key}><Discipline discipline={result[0]} />{result[0]}</span>);
+      return (<span key={key}><Discipline discipline={result[0]} size="icon14" />{result[0]}</span>);
     }
   }
 

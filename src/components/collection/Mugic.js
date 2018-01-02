@@ -26,16 +26,16 @@ export default class Attack extends React.Component {
     }
 
     return(
-      <div style={{textAlign: 'left', display: 'flex'}}>
+      <div className="card">
         <img className="thumb" style={{float: 'left'}} src={API.base_image + (mugic.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(mugic.gsx$image)} />
-        <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
+        <div className="left">
           <Name name={mugic.gsx$name} /><br />
           <Rarity set={mugic.gsx$set} rarity={mugic.gsx$rarity} /> <br />
           <img height="20" className="icon16" src={"/src/img/icons/tribes/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"} /> {mugic.gsx$tribe}<br />
           <span>{mugicCounters}</span><br />
         </div>
         <br />
-        <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
+        <div className="right" >
           <Ability ability={mugic.gsx$ability} tribe={mugic.gsx$tribe} /><br />
           <Unique data={{unique: mugic.gsx$unique, loyal: mugic.gsx$loyal, legendary: mugic.gsx$legendary}} /><br />
           <span className="flavortext">{mugic.gsx$flavortext}</span>

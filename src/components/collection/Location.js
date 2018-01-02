@@ -13,14 +13,14 @@ export default class Location extends React.Component {
     let location = this.props.location;
 
     return(
-      <div style={{textAlign: 'left', display: 'flex'}}>
+      <div className="card">
         <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (location.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(location.gsx$image)} />
-        <div style={{verticalAlign: 'text-top', float: 'left', width: "220px"}}>
+        <div className="left">
           <Name name={location.gsx$name} /><br />
           <Rarity set={location.gsx$set} rarity={location.gsx$rarity} /><br />
           <Initiative initiative={location.gsx$initiative} /><br />
         </div>
-        <div style={{float: 'left', width: 'calc(100% - (100px + 230px))', borderLeft: '1px solid white', paddingLeft: '10px'}} >
+        <div className="right">
           <Ability ability={location.gsx$ability} /><br />
           <span className="flavortext">{location.gsx$flavortext}</span>
         </div>

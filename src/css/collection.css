@@ -1,3 +1,31 @@
+.card {
+    text-align: left;
+    display: flex;
+}
+
+.card .left {
+    vertical-align: text-top;
+    float: left;
+    width: 220px;
+}
+
+.card .right {
+    float: left;
+    width: calc(100% - (100px + 230px));
+    border-left: 1px solid white;
+    padding-left: 10px;
+}
+
+.card .icon14, .card .icon16,
+.card .icon20, .card .icon24 {
+    vertical-align: middle;
+}
+
+.icon14 {
+    height: 14px;
+    padding-bottom: 2px;
+}
+
 .icon16 {
     height: 16px;
 }
