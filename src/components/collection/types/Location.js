@@ -1,10 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import API from '../SpreadsheetData';
-import s from '../../styles/app.style';
+import API from '../../SpreadsheetData';
+import s from '../../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Ability} from './_Snippets';
+import {Rarity, Unique, Name, Ability} from '../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Location extends React.Component {
@@ -21,7 +21,7 @@ export default class Location extends React.Component {
           <Initiative initiative={location.gsx$initiative} /><br />
         </div>
         <div className="right">
-          <Ability ability={location.gsx$ability} /><br />
+          <Ability ability={location.gsx$ability} />
           <span className="flavortext">{location.gsx$flavortext}</span>
         </div>
       </div>

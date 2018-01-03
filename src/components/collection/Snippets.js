@@ -96,5 +96,5 @@ export function Ability(props) {
 
   const filters = [mugic_counters, elements, disciplines];
 
-  return <span className={props.type||"ability"}>{processString(filters)(props.ability)}</span>
+  return <div className={props.type||"ability"}>{processString(filters)(props.ability)}</div>
 }

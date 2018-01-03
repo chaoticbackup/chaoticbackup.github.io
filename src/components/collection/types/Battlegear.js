@@ -1,10 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import API from '../SpreadsheetData';
-import s from '../../styles/app.style';
+import API from '../../SpreadsheetData';
+import s from '../../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Ability} from './_Snippets';
+import {Rarity, Unique, Name, Ability} from '../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Battlegear extends React.Component {
@@ -20,7 +20,7 @@ export default class Battlegear extends React.Component {
           <Rarity set={battlegear.gsx$set} rarity={battlegear.gsx$rarity} /><br />
         </div>
         <div className="right" >
-          <Ability ability={battlegear.gsx$ability} /><br />
+          <Ability ability={battlegear.gsx$ability} />
           <Unique data={{unique: battlegear.gsx$unique, loyal: battlegear.gsx$loyal, legendary: battlegear.gsx$legendary}} /><br />
           <span className="flavortext">{battlegear.gsx$flavortext}</span>
         </div>

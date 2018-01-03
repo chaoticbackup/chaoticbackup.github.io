@@ -1,10 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import API from '../SpreadsheetData';
-import s from '../../styles/app.style';
+import API from '../../SpreadsheetData';
+import s from '../../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Element, Ability} from './_Snippets';
+import {Rarity, Unique, Name, Element, Ability} from '../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -29,7 +29,7 @@ export default class Attack extends React.Component {
 	      </div>
         <br />
         <div className="right" >
-          <Ability ability={attack.gsx$ability} /><br />
+          <Ability ability={attack.gsx$ability} />
           <Unique data={{unique: attack.gsx$unique, loyal: attack.gsx$loyal, legendary: attack.gsx$legendary}} /><br />
           <span className="flavortext">{attack.gsx$flavortext}</span>
         </div>

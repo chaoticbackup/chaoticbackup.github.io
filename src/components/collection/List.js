@@ -1,11 +1,11 @@
 import React from 'react';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import Attack from './Attack';
-import Battlegear from './Battlegear';
-import Creature from './Creature';
-import Location from './Location';
-import Mugic from './Mugic';
+import Attack from './types/Attack';
+import Battlegear from './types/Battlegear';
+import Creature from './types/Creature';
+import Location from './types/Location';
+import Mugic from './types/Mugic';
 
 @inject((stores, props, context) => props) @observer
 export default class CardList extends React.Component {
