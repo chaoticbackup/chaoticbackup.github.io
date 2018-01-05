@@ -107,24 +107,40 @@ export default class SearchForm extends React.Component {
           <br />
           {card_type}
           <br />
-          <label>Subtypes | Initiative:<br />
-            <input type="text" ref={(input) => this.stones.subtypes = input} />
-          </label><br />
-          <div>{setsInput}</div><br />
-          {card_rarity}<br />
-          {card_tribes}<br />
-          {card_elements}<br />
-          {card_disciplines}<br />
           <div>
-            <span>Mugic Counters/Cost</span>&nbsp;
-            <label>Min: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
-            <label>Max: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.max = input} /></label>
+            <label>Subtypes | Initiative:<br />
+              <input type="text" ref={(input) => this.stones.subtypes = input} />
+            </label><br />
+            <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
           </div>
+          <br />
+          <div>{setsInput}</div>
+          <br />
+          {card_rarity}
+          <br />
+          <div>
+            <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>Loyal</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Legendary</label>
+          </div>
+          <br />
+          {card_tribes}
+          <br />
+          {card_elements}
+          <br />
+          {card_disciplines}
           <br />
           <div>
           <span>Energy</span>&nbsp;
             <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.min = input} /></label>&nbsp;
             <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.max = input} /></label>
+          </div>
+          <br />
+          <div>
+            <span>Mugic Counters/Cost</span>&nbsp;
+            <label>Min: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
+            <label>Max: <input type="text" style={{width: '20px'}} ref={(input) => this.mc.max = input} /></label>
           </div>
           <br />
           <div>
@@ -134,19 +150,7 @@ export default class SearchForm extends React.Component {
           </div>
           <br />
           <div>
-            <span>Base Damage</span>&nbsp;
-            <label>Min: <input type="text" style={{width: '20px'}} ref={(input) => this.base.min = input} /></label>&nbsp;
-            <label>Max: <input type="text" style={{width: '20px'}} ref={(input) => this.base.max = input} /></label>
-          </div>
-          <br />
-          <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
-          <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>Loyal</label>&nbsp;
-          <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Legendary</label>
-          <br />
-          <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
-          <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
-          <br />
-          <div>
+            <span>Gender (fan content):</span><br />
             <label><input type="checkbox" ref={(input) => this.gender.Ambiguous = input}/>Ambiguous</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.gender.Female = input}/>Female</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.gender.Male = input}/>Male</label>
@@ -378,14 +382,8 @@ export default class SearchForm extends React.Component {
       attackResults = attackResults.find({'gsx$bp': {'$lte': this.bp.max.value}});
     }
 
-    if (this.base.min.value !== "" && this.base.min.value >= 0) {
-      attackResults = attackResults.find({'gsx$base': {'$gte': this.base.min.value}});
-    }
-    if (this.base.max.value !== "" && this.base.max.value >= 0 && this.base.max.value >= this.base.min.value) {
-      attackResults = attackResults.find({'gsx$base': {'$lte': this.base.max.value}});
-    }
 
-    if (this.bp.min.value !== "" || this.bp.max.value !== "" || this.base.min.value !== "" || this.base.max.value !== "") {
+    if (this.bp.min.value !== "" || this.bp.max.value !== "") {
       battlegearResults = battlegearResults.limit(0);
       creatureResults = creatureResults.limit(0);
       locationResults = locationResults.limit(0);
@@ -411,6 +409,7 @@ export default class SearchForm extends React.Component {
       attackResults = attackResults.find({'gsx$legendary': {'$gt': 0}});
       battlegearResults = battlegearResults.find({'gsx$legendary': {'$gt': 0}});
       creatureResults = creatureResults.find({'gsx$legendary': {'$gt': 0}});
+      locationResults = locationResults.find({'gsx$legendary': {'$gt': 0}});
       mugicResults = mugicResults.find({'gsx$legendary': {'$gt': 0}});
     }
 
