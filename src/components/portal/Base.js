@@ -38,7 +38,8 @@ function PortalBase({ children, routes }) {
   }
 
   return (
-    <div>
+    <div className="portal">
+      <link rel="stylesheet" href="/src/css/portal.css" />
       <nav style={s.mapMenu}>
         {generateMapMenu()}
       </nav>
