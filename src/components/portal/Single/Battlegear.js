@@ -62,11 +62,6 @@ export default class SingleBattlegear extends React.Component {
         </div>
         <hr />
         <div>
-          <strong>Card Flavor:</strong><br />
-          {card_data.gsx$flavortext}
-        </div>
-        <hr />
-        <div>
           <strong>Details:</strong><br />
           {battlegear.gsx$details}
         </div>

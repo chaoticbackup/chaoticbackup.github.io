@@ -62,11 +62,6 @@ export default class SingleAttack extends React.Component {
         </div>
         <hr />
         <div>
-          <strong>Card Flavor:</strong><br />
-          {card_data.gsx$flavortext}
-        </div>
-        <hr />
-        <div>
           <strong>Details:</strong><br />
           {attack.gsx$details}
         </div>

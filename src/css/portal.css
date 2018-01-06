@@ -13,3 +13,16 @@
 .icon24 {
     height: 24px;
 }
+
+.bigger {
+    font-size: 14px;
+}
+
+.splash {
+    max-width: 100%;
+    display: block;
+}
+
+h1 {
+    font-size: 16px;
+}
