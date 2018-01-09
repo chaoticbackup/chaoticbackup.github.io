@@ -5,6 +5,7 @@ import Interactive from 'react-interactive';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import { Link } from 'react-router';
+import Search from './Search';
 
 @inject((stores, props, context) => props) @observer
 export default class PortalBase extends React.Component {
@@ -22,6 +23,22 @@ export default class PortalBase extends React.Component {
 }
 
 function Header(props) {
+
+  const types = (() => {
+    return (
+      <li className="dropdown">
+        <Link to="javascript:void(0)" className="dropbtn">Types</Link>
+        <div className="dropdown-content">
+          <Link to="/portal/Attacks">Attacks</Link>
+          <Link to="/portal/Battlegear">Battlegear</Link>
+          <Link to="/portal/Creatures">Creatures</Link>
+          <Link to="/portal/Mugic">Mugic</Link>
+          <Link to="/portal/Locations">Locations</Link>
+        </div>
+      </li>
+    );
+  })();
+
   const tribes = ["Danian", "Mipedian", "OverWorld", "UnderWorld"].map((tribe, i) => {
     return (
       <li key={i} className="dropdown">
@@ -38,16 +55,8 @@ function Header(props) {
     <div className="navbar">
       <ul>
         <li><Link to="/portal/">Home</Link></li>
-        <li className="dropdown">
-          <Link to="javascript:void(0)" className="dropbtn">Types</Link>
-          <div className="dropdown-content">
-            <Link to="/portal/Attacks">Attacks</Link>
-            <Link to="/portal/Battlegear">Battlegear</Link>
-            <Link to="/portal/Creatures">Creatures</Link>
-            <Link to="/portal/Mugic">Mugic</Link>
-            <Link to="/portal/Locations">Locations</Link>
-          </div>
-        </li>
+        <li><Search /></li>
+        {types}
         {tribes}
       </ul>
     </div>

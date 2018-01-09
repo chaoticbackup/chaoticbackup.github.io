@@ -1,8 +1,24 @@
 import React from 'react';
+import API from './SpreadsheetData';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import processString from 'react-process-string';
-import API from '../SpreadsheetData';
+import s from '../styles/pageNotFound.style';
+
+export function UnderConstruction(props) {
+  return (
+    <p style={s.p}>This page is currently under construction</p>
+  );
+}
+
+export function PageNotFound(props) {
+  return (
+    <p style={s.p}>
+      Page not found - the path, {s.code(props.location.pathname)},
+      did not match any React Router routes.
+    </p>
+  );
+}
 
 export function Rarity(props) {
   return (
@@ -97,4 +113,11 @@ export function Ability(props) {
   const filters = [mugic_counters, elements, disciplines];
 
   return <div className={props.type||"ability"}>{processString(filters)(props.ability)}</div>
+}
+
+export function Splash(props) {
+  let image = props.image;
+  return (
+    <div style={{position: 'absolute', top: '0', left: '0', right: '0', bottom: '0', backgroundImage: 'url(\''+image+'\') no-repeat center', backgroundSize: 'cover'}} />
+  );
 }

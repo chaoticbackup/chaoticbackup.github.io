@@ -1,7 +1,6 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router';
-import PageNotFound from '../../PageNotFound';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';

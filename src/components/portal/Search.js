@@ -8,6 +8,6 @@ import loki from 'lokijs';
 export default class SearchPortal extends React.Component {
 
   render() {
-
+    return (<div>Search</div>)
   }
 }

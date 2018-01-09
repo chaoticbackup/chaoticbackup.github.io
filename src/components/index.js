@@ -4,8 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 /* Common Components */
 import App from './Base';
-import PageNotFound from './PageNotFound';
-import UnderConstruction from './UnderConstruction';
+import {PageNotFound, UnderConstruction} from './Snippets';
 
 /* Home Component */
 import Home from './Home';

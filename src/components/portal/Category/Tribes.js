@@ -4,8 +4,6 @@ import { Link } from 'react-router';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
-import PageNotFound from '../../PageNotFound';
-import UnderConstruction from '../../UnderConstruction';
 
 @inject((stores, props, context) => props) @observer
 export default class Tribes extends React.Component {
