@@ -1,53 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Interactive from 'react-interactive';
-import { Link } from 'react-router';
 import s from '../../styles/app.style';
+import Interactive from 'react-interactive';
+import {observable} from "mobx";
+import {observer, inject} from 'mobx-react';
+import { Link } from 'react-router';
 
-const propTypes = {
-  children: PropTypes.element.isRequired,
-  routes: PropTypes.array.isRequired,
-};
+@inject((stores, props, context) => props) @observer
+export default class PortalBase extends React.Component {
 
-function PortalBase({ children, routes }) {
-
-  function generateMapMenu() {
-    let path = '';
-
-    function nextPath(route) {
-      path += (
-        (path.slice(-1) === '/' ? '' : '/') +
-        (route.path === '/' ? '' : route.path)
-      );
-      return path;
-    }
-
+  render() {
     return (
-      routes.filter(route => route.mapMenuTitle)
-      .map((route, index, array) => (
-        <span key={index}>
-            <Interactive
-              as={Link}
-              {...s.link}
-              to={nextPath(route)}
-            >{route.mapMenuTitle}</Interactive>
-            {(index + 1) < array.length && ' / '}
-          </span>
-      ))
+      <div className="portal">
+        <link rel="stylesheet" href="/src/css/portal.css" />
+        <Header />
+        <br />
+        {this.props.children}
+      </div>
     );
   }
+}
+
+function Header(props) {
+  const tribes = ["Danian", "Mipedian", "OverWorld", "UnderWorld"].map((tribe, i) => {
+    return (
+      <li key={i} className="dropdown">
+        <Link to={"/portal/"+tribe} className="dropbtn">{tribe}</Link>
+        <div className="dropdown-content">
+          <Link to={"/portal/"+tribe+"/Creatures"}> Creatures</Link>
+          <Link to={"/portal/"+tribe+"/Mugic"}> Mugic</Link>
+        </div>
+      </li>
+    );
+  });
 
   return (
-    <div className="portal">
-      <link rel="stylesheet" href="/src/css/portal.css" />
-      <nav style={s.mapMenu}>
-        {generateMapMenu()}
-      </nav>
-      {children}
+    <div className="navbar">
+      <ul>
+        <li><Link to="/portal/">Home</Link></li>
+        <li className="dropdown">
+          <Link to="javascript:void(0)" className="dropbtn">Types</Link>
+          <div className="dropdown-content">
+            <Link to="/portal/Attacks">Attacks</Link>
+            <Link to="/portal/Battlegear">Battlegear</Link>
+            <Link to="/portal/Creatures">Creatures</Link>
+            <Link to="/portal/Mugic">Mugic</Link>
+            <Link to="/portal/Locations">Locations</Link>
+          </div>
+        </li>
+        {tribes}
+      </ul>
     </div>
   );
 }
-
-PortalBase.propTypes = propTypes;
-
-export default PortalBase;

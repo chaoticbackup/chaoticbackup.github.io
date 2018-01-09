@@ -3,36 +3,37 @@ import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 /* Common Components */
-import App from './components/Base';
-import PageNotFound from './components/PageNotFound';
-import UnderConstruction from './components/UnderConstruction';
+import App from './Base';
+import PageNotFound from './PageNotFound';
+import UnderConstruction from './UnderConstruction';
 
 /* Home Component */
-import Home from './components/Home';
-import EnterTheCode from './components/account/EnterTheCode';
+import Home from './Home';
+import EnterTheCode from './account/EnterTheCode';
 
 /* Test Components */
-import ExampleHome from './components/example/Home';
-import ExampleComponent from './components/example/ExampleComponent';
-import ExampleTwoDeepComponent from './components/example/ExampleTwoDeepComponent';
+import ExampleHome from './example/Home';
+import ExampleBase from './example/Base';
+import ExampleComponent from './example/ExampleComponent';
+import ExampleTwoDeepComponent from './example/ExampleTwoDeepComponent';
 
 /* Collection */
-import CollectionHome from './components/collection/Home';
+import CollectionHome from './collection/Home';
 
 /* Portal */
-import PortalBase from './components/portal/Base';
-import PortalHome from './components/portal/Home';
-import Attacks from './components/portal/Category/Attacks';
-import SingleAttack from './components/portal/Single/Attack';
-import Battlegear from './components/portal/Category/Battlegear';
-import SingleBattlegear from './components/portal/Single/Battlegear';
-import Creatures from './components/portal/Category/Creatures';
-import SingleCreature from './components/portal/Single/Creature';
-import Locations from './components/portal/Category/Locations';
-import SingleLocation from './components/portal/Single/Location';
-import Mugic from './components/portal/Category/Mugic';
-import SingleMugic from './components/portal/Single/Mugic';
-import Tribes from './components/portal/Category/Tribes';
+import PortalBase from './portal/Base';
+import PortalHome from './portal/Home';
+import Attacks from './portal/Category/Attacks';
+import SingleAttack from './portal/Single/Attack';
+import Battlegear from './portal/Category/Battlegear';
+import SingleBattlegear from './portal/Single/Battlegear';
+import Creatures from './portal/Category/Creatures';
+import SingleCreature from './portal/Single/Creature';
+import Locations from './portal/Category/Locations';
+import SingleLocation from './portal/Single/Location';
+import Mugic from './portal/Category/Mugic';
+import SingleMugic from './portal/Single/Mugic';
+import Tribes from './portal/Category/Tribes';
 
 
 const routes = (
@@ -40,7 +41,8 @@ const routes = (
     <IndexRoute component={Home} />
 
     {/* Test */}
-    <Route path="example" mapMenuTitle="Example" component={ExampleComponent}>
+    <Route path="example" mapMenuTitle="Example" component={ExampleBase}>
+      <IndexRoute component={ExampleComponent} />
       <Route path="two-deep" mapMenuTitle="Two Deep" component={ExampleTwoDeepComponent} />
     </Route>
 
@@ -59,7 +61,6 @@ const routes = (
     {/* Portal */}
     <Route path="portal" component={PortalBase} mapMenuTitle="Portal">
       <IndexRoute component={PortalHome} />
-      <Route path="/" component={PortalHome} />
 
       {/* Attacks */}
       <Route path="Attacks" component={Attacks} mapMenuTitle="Attacks">

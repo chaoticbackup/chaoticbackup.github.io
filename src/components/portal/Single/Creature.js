@@ -117,16 +117,6 @@ export default class SingleCreature extends React.Component {
         </div>
         <hr />
         <div>
-          <strong>Special Abilities:</strong><br />
-          {creature.gsx$specialabilities}
-        </div>
-        <hr />
-        <div>
-          <strong>Weight (lb):</strong><br />
-          {creature.gsx$weight}
-        </div>
-        <hr />
-        <div>
           <strong>Card ID: </strong>
           {card_data.gsx$id}
         </div>

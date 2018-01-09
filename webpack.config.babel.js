@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 
 export default {
-  entry: `${__dirname}/src/index.js`,
+  entry: `${__dirname}/src/components/index.js`,
   output: {
     path: `${__dirname}/build`,
     publicPath: '/build/',
