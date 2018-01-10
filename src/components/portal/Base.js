@@ -55,7 +55,7 @@ function Header(props) {
     <div className="navbar">
       <ul>
         <li><Link to="/portal/">Home</Link></li>
-        <li><Search /></li>
+        <li><Link to="javascript:void(0)"><Search /></Link></li>
         {types}
         {tribes}
       </ul>

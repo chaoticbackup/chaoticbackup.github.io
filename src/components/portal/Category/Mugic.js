@@ -80,7 +80,7 @@ export default class Mugic extends React.Component {
             to={'/portal/'+tribe+'/Mugic/'+single_mugic.gsx$name}
           >
             <span>{single_mugic.gsx$name}</span><br />
-            {/* TODO <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img> */}
+            <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img>
           </Interactive>
         </div>
       );

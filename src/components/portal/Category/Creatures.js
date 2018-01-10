@@ -13,18 +13,15 @@ export default class Creatures extends React.Component {
   // /portal/{Tribe}/Creatures/
   // The first / gets counted
   render() {
-    if (this.props.children) {
-      return (<div>{this.props.children}</div>);
-    }
     const store = API;
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     let tribe = (() => {
-      if (path.length !== 4) return "None";
       if (path[2] === "Creatures") return path[3];
-      if (path[3] === "Creatures") return path[2];
+      else if (path[3] === "Creatures") return path[2];
+      else return "None";
     })();
 
     if (store.urls === null ||
@@ -82,7 +79,15 @@ export default class Creatures extends React.Component {
       );
     });
 
-    return (<div>{output}</div>);
+    return (<div className="entry creatures">
+      <div className="left">
+        <div className="title">{tribe}<hr /></div>
+        {output}
+      </div>
+      <div className="right">
+        {this.props.children}
+      </div>
+    </div>);
   }
 
 }
