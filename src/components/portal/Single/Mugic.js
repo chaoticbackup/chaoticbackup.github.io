@@ -63,11 +63,11 @@ export default class SingleMugic extends React.Component {
       cost.push(<img key={i} className="icon" src={"/src/img/icons/mugic/"+tribe.toLowerCase()+".png"} alt="mugic counter"/>);
     }
 
-    // TODO mugic splash art
     return (
-      <div className={tribe.toLowerCase()}>
-        <h1>{mugic.gsx$name}</h1>
+      <div>
         <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
+        <br />
+        <div className="title">{mugic.gsx$name}</div>
         <hr />
         <div>
           <strong>Background:</strong><br />

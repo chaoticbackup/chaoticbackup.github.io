@@ -58,6 +58,12 @@ function Header(props) {
         <li><Link to="javascript:void(0)"><Search /></Link></li>
         {types}
         {tribes}
+        <li className="dropdown">
+          <Link to={"/portal/Generic"} className="dropbtn">Generic</Link>
+          <div className="dropdown-content">
+            <Link to={"/portal/Generic/Mugic"}>Mugic</Link>
+          </div>
+        </li>
       </ul>
     </div>
   );
