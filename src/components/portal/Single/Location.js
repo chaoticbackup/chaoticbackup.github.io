@@ -5,6 +5,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
 import {PageNotFound} from '../../Snippets';
+import {Rarity, Unique, Name, Ability, Initiative} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleLocation extends React.Component {
@@ -88,7 +89,12 @@ export default class SingleLocation extends React.Component {
         <hr />
         <div>
           <strong>Location Initiative: </strong>
-          {card_data.gsx$initiative}
+          <Initiative initiative={card_data.gsx$initiative} />
+        </div>
+        <hr />
+        <div>
+          <strong>Ability:</strong><br />
+          <Ability ability={card_data.gsx$ability} />
         </div>
       </div>
     );

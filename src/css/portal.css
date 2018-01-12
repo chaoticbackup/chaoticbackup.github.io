@@ -119,3 +119,8 @@
     text-align: left;
     padding-bottom: 10px;
 }
+
+.entry .icon14, .entry .icon16,
+.entry .icon20, .entry .icon24 {
+    vertical-align: middle;
+}

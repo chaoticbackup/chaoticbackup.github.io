@@ -5,6 +5,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
 import {PageNotFound} from '../../Snippets';
+import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleBattlegear extends React.Component {
@@ -79,6 +80,11 @@ export default class SingleBattlegear extends React.Component {
         <div>
           <strong>Rarity: </strong>
           {card_data.gsx$rarity}
+        </div>
+        <hr />
+        <div>
+          <strong>Ability:</strong><br />
+          <Ability ability={card_data.gsx$ability} />
         </div>
       </div>
     );

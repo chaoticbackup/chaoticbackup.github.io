@@ -5,6 +5,7 @@ import {PageNotFound} from '../../Snippets';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
+import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleCreature extends React.Component {
@@ -67,9 +68,10 @@ export default class SingleCreature extends React.Component {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
     });
 
-    const elements = card_data.gsx$elements.split(/[ ,]+/).filter(Boolean).map((item, i) => {
-      return <img className="icon" src={"/src/img/icons/elements/"+item.toLowerCase()+".png"} alt={item} key={i}></img>;
-    });
+    let mugic = [];
+    for (let i = 0; i < card_data.gsx$mugicability; i++) {
+      mugic.push(<Mugic key={i} tribe={tribe} />);
+    }
 
     return (
       <div>
@@ -134,41 +136,51 @@ export default class SingleCreature extends React.Component {
         <hr />
         <div>
           <strong>Tribe: </strong>
-          <img className="icon" src={"/src/img/icons/tribes/"+tribe.toLowerCase()+".png"}></img>{tribe}
+          <Tribe tribe={tribe} />
         </div>
         <hr />
         <div>
           <strong>Ability:</strong><br />
-          {card_data.gsx$ability}
+          <Ability ability={card_data.gsx$ability} tribe={card_data.gsx$tribe} />
         </div>
         <hr />
         <div>
           <strong>Courage: </strong>
           {card_data.gsx$courage}
+          <Discipline discipline="courage" />
         </div>
         <hr />
         <div>
           <strong>Power: </strong>
           {card_data.gsx$power}
+          <Discipline discipline="power" />
         </div>
         <hr />
         <div>
           <strong>Speed: </strong>
           {card_data.gsx$speed}
+          <Discipline discipline="speed" />
         </div>
         <hr />
         <div>
           <strong>Wisdom: </strong>
           {card_data.gsx$wisdom}
-        </div>
-        <hr />
-        <div>
-          <strong>Elements: </strong>{elements}
+          <Discipline discipline="wisdom" />
         </div>
         <hr />
         <div>
           <strong>Energy: </strong>
           {card_data.gsx$energy}
+        </div>
+        <hr />
+        <div>
+          <strong>Elements: </strong>
+          <div>
+            <Element element="fire" value={card_data.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
+            <Element element="air" value={card_data.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
+            <Element element="earth" value={card_data.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
+            <Element element="water" value={card_data.gsx$elements.toLowerCase().indexOf("water") >=0} />
+          </div>
         </div>
         <hr />
         <div>
@@ -178,7 +190,7 @@ export default class SingleCreature extends React.Component {
         <hr />
         <div>
           <strong>Mugic Ability: </strong>
-          {card_data.gsx$mugicability}
+          {mugic}
         </div>
       </div>
     );

@@ -110,9 +110,34 @@ export function Ability(props) {
     }
   }
 
-  const filters = [mugic_counters, elements, disciplines];
+  const tribes = {
+    regex: /(danian)|(generic)|(mipedian)|(overworld)|(underworld)/i,
+    fn: (key, result) => {
+      return (<span key={key}><Tribe tribe={result[0]} size="icon14" />{result[0]}</span>);
+    }
+  }
+
+  const filters = [mugic_counters, elements, disciplines, tribes];
 
   return <div className={props.type||"ability"}>{processString(filters)(props.ability)}</div>
+}
+
+export function Initiative(props) {
+  let initiative = props.initiative;
+  let image = null;
+  if (["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld", "M'arrillian"].indexOf(initiative) > -1) {
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/tribes/"+initiative+".png").toLowerCase()} />
+  }
+  else if (["courage", "power", "speed", "wisdom"].indexOf(initiative.toLowerCase()) > -1){
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/disciplines/"+initiative+".png").toLowerCase()} />
+  }
+  else if (["fire", "air", "earth", "water"].indexOf(initiative.toLowerCase()) > -1){
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/elements/"+initiative+".png").toLowerCase()} />
+  }
+  else if (initiative.toLowerCase() == "mugic counter") {
+    image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/mugic/generic.png").toLowerCase()} />
+  }
+  return (<span>Initiative: {image} {initiative}</span>);
 }
 
 export function Splash(props) {

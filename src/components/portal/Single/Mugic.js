@@ -5,6 +5,7 @@ import {PageNotFound} from '../../Snippets';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
+import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleMugic extends React.Component {
@@ -59,8 +60,16 @@ export default class SingleMugic extends React.Component {
     }
 
     let cost = [];
-    for (let i = 0; i < card_data.gsx$cost; i++) {
-      cost.push(<img key={i} className="icon" src={"/src/img/icons/mugic/"+tribe.toLowerCase()+".png"} alt="mugic counter"/>);
+    if (card_data.gsx$cost == 0) {
+      cost.push(<span key={0}>0</span>);
+    }
+    else if (card_data.gsx$cost.toLowerCase() == 'x') {
+      cost.push(<span key={0}>X</span>);
+    }
+    else {
+      for (let i = 0; i < card_data.gsx$cost; i++) {
+        cost.push(<Mugic tribe={card_data.gsx$tribe} key={i} />);
+      }
     }
 
     return (
@@ -96,7 +105,7 @@ export default class SingleMugic extends React.Component {
         <hr />
         <div>
           <strong>Tribe: </strong>
-          <img className="icon" style={{width: "20px"}} src={"/src/img/icons/tribes/"+tribe.toLowerCase()+".png"}></img>{tribe}
+          <Tribe tribe={tribe} />
         </div>
         <hr />
         <div>
@@ -106,7 +115,7 @@ export default class SingleMugic extends React.Component {
         <hr />
         <div>
           <strong>Ability:</strong><br />
-          {card_data.gsx$ability}
+          <Ability ability={card_data.gsx$ability} tribe={card_data.gsx$tribe} />
         </div>
         <hr />
         <div>
