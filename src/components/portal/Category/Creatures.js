@@ -18,40 +18,40 @@ export default class Creatures extends React.Component {
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-    let tribe = (() => {
-      if (path[2] === "Creatures") return path[3];
-      else if (path[3] === "Creatures") return path[2];
-      else return "None";
-    })();
-
     if (store.urls === null ||
       store.portal === null ||
       store.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    // If there isn't a supported tribe,
-    // Displays list of tribes
-    if (!store.tribes.includes(tribe)) {
-      return(
-        <div>
-          <Interactive as={Link} {...s.link}
-            to="/portal/Creatures/Danian"
-          >Danian</Interactive>
-          <br />
-          <Interactive as={Link} {...s.link}
-            to="/portal/Creatures/OverWorld"
-          >OverWorld</Interactive>
-          <br />
-          <Interactive as={Link} {...s.link}
-            to="/portal/Creatures/UnderWorld"
-          >UnderWorld</Interactive>
-          <br />
-          <Interactive as={Link} {...s.link}
-            to="/portal/Creatures/Mipedian"
-          >Mipedian</Interactive>
-        </div>
-      );
+    let tribe = null;
+    if (path.length >= 4) {
+      if (path[2] === "Creatures") tribe = path[3];
+      else if (path[3] === "Creatures") tribe = path[2];
+
+      // If there isn't a supported tribe,
+      // Displays list of tribes
+      if (!store.tribes.includes(tribe)) {
+        return(
+          <div>
+            <Interactive as={Link} {...s.link}
+              to="/portal/Creatures/Danian"
+            >Danian</Interactive>
+            <br />
+            <Interactive as={Link} {...s.link}
+              to="/portal/Creatures/OverWorld"
+            >OverWorld</Interactive>
+            <br />
+            <Interactive as={Link} {...s.link}
+              to="/portal/Creatures/UnderWorld"
+            >UnderWorld</Interactive>
+            <br />
+            <Interactive as={Link} {...s.link}
+              to="/portal/Creatures/Mipedian"
+            >Mipedian</Interactive>
+          </div>
+        );
+      }
     }
 
     if (!store.cards.built.includes("creatures_cards")) {
@@ -64,13 +64,28 @@ export default class Creatures extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    const creatures = store.portal.creatures.find({'gsx$tribe': tribe});
+    const creatures = (() => {
+      if (path.length >= 4 && path[3] === "Creatures") {
+        return store.portal.creatures.find({'gsx$tribe': tribe});
+      }
+      else {
+        return store.portal.creatures.chain().simplesort('gsx$name').data();
+      }
+    })();
+
     const output = creatures.map((creature, i) => {
       const card_data = store.cards.creatures.findOne({'gsx$name': creature.gsx$name});
+
+      let url = (() => {
+        if (path[2] === "Creatures")
+          return "/portal/Creatures/"+creature.gsx$tribe+"/"+creature.gsx$name;
+        else if (path[3] === "Creatures")
+          return "/portal/"+creature.gsx$tribe+"/Creatures/"+creature.gsx$name;
+      })();
       return (
         <div key={i}>
           <Interactive as={Link} {...s.link}
-            to={'/portal/'+tribe+'/Creatures/'+creature.gsx$name}
+            to={url}
           >
             <span>{creature.gsx$name}</span><br />
             <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img>
@@ -81,7 +96,7 @@ export default class Creatures extends React.Component {
 
     return (<div className="entry creatures">
       <div className="left">
-        <div className="title">{tribe}<hr /></div>
+        <div className="title">{path[2]}<hr /></div>
         {output}
       </div>
       <div className="right">
