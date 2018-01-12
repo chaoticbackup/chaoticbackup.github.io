@@ -46,9 +46,10 @@ export default class SingleBattlegear extends React.Component {
     const card_data = store.cards.battlegear.findOne({'gsx$name': name});
 
     return (
-      <div className={"battlegear"}>
-        <h1>{battlegear.gsx$name}</h1>
+      <div>
         <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
+        <br />
+        <div className="title">{battlegear.gsx$name}</div>
         <hr />
         <div>
           <strong>Attributes:</strong><br />

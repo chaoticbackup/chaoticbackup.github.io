@@ -46,13 +46,14 @@ export default class SingleLocation extends React.Component {
     const card_data = store.cards.locations.findOne({'gsx$name': name});
 
     return (
-      <div className={"location"}>
-        <h1>{location.gsx$name}</h1>
+      <div>
         <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
+        <br />
+        <div className="title">{location.gsx$name}</div>
         <hr />
         <div>
           <strong>Local Features:</strong><br />
-          {location.gsx$appearance}
+          {location.gsx$localfeatures}
         </div>
         <hr />
         <div>

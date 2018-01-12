@@ -21,12 +21,12 @@ export default function PortalHome() {
         >Creatures</Interactive>
         <br /><br />
         <Interactive as={Link} {...s.link}
-          to="/portal/Mugic"
-        >Mugic</Interactive>
-        <br /><br />
-        <Interactive as={Link} {...s.link}
           to="/portal/Locations"
         >Locations</Interactive>
+        <br /><br />
+        <Interactive as={Link} {...s.link}
+          to="/portal/Mugic"
+        >Mugic</Interactive>
       </div>
       <div style={s.tribes}>
         <p>Pick a Tribe</p><br />

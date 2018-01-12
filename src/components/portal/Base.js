@@ -32,8 +32,8 @@ function Header(props) {
           <Link to="/portal/Attacks">Attacks</Link>
           <Link to="/portal/Battlegear">Battlegear</Link>
           <Link to="/portal/Creatures">Creatures</Link>
-          <Link to="/portal/Mugic">Mugic</Link>
           <Link to="/portal/Locations">Locations</Link>
+          <Link to="/portal/Mugic">Mugic</Link>
         </div>
       </li>
     );

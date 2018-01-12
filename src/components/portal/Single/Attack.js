@@ -46,9 +46,10 @@ export default class SingleAttack extends React.Component {
     const card_data = store.cards.attacks.findOne({'gsx$name': name});
 
     return (
-      <div className={"attack"}>
-        <h1>{attack.gsx$name}</h1>
+      <div>
         <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
+        <br />
+        <div className="title">{attack.gsx$name}</div>
         <hr />
         <div>
           <strong>Attributes:</strong><br />

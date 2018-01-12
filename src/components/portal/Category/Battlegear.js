@@ -9,10 +9,6 @@ import {observer, inject} from 'mobx-react';
 export default class Battlegear extends React.Component {
 
     render() {
-      if (this.props.children) {
-        return (<div>{this.props.children}</div>);
-      }
-
       const store = API;
 
       let path = this.props.location.pathname.split("/");
@@ -50,6 +46,14 @@ export default class Battlegear extends React.Component {
         );
       });
 
-      return (<div>{output}</div>);
+      return (<div className="entry battlegear">
+        <div className="left">
+          <div className="title">Battlegear<hr /></div>
+          {output}
+        </div>
+        <div className="right">
+          {this.props.children}
+        </div>
+      </div>);
     }
 }
