@@ -82,9 +82,9 @@ export default class Mugic extends React.Component {
 
       let url = (() => {
         if (path[2] === "Mugic")
-          return "/portal/Mugic/"+single_mugic.gsx$tribe+"/"+single_mugic.gsx$name;
+          return "/portal/Mugic/"+single_mugic.gsx$tribe+"/"+encodeURIComponent(single_mugic.gsx$name);
         else if (path[3] === "Mugic")
-          return "/portal/"+single_mugic.gsx$tribe+"/Mugic/"+single_mugic.gsx$name;
+          return "/portal/"+single_mugic.gsx$tribe+"/Mugic/"+encodeURIComponent(single_mugic.gsx$name);
       })();
 
       return (
