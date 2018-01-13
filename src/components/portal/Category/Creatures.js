@@ -82,6 +82,7 @@ export default class Creatures extends React.Component {
         else if (path[3] === "Creatures")
           return "/portal/"+creature.gsx$tribe+"/Creatures/"+creature.gsx$name;
       })();
+
       return (
         <div key={i}>
           <Interactive as={Link} {...s.link}
@@ -104,5 +105,4 @@ export default class Creatures extends React.Component {
       </div>
     </div>);
   }
-
 }
