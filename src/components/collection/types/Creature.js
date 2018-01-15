@@ -18,7 +18,7 @@ export default class Creature extends React.Component {
     }
 
   	return(
-  	  <div className="card">
+  	  <div className="card creature">
   	    <img className="thumb" style={{float: 'left'}} src={API.base_image + (creature.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(creature.gsx$image)} />
   	    <div className="left">
           <Name name={creature.gsx$name} /><br />
@@ -33,14 +33,14 @@ export default class Creature extends React.Component {
           <span>{mugic}</span>
 	      </div>
         <br />
-        <div className="right" style={{width: 'calc(100% - (100px + 230px + 50px))', 'whiteSpace': 'pre-line'}} >
+        <div className="right" >
           <Ability ability={creature.gsx$ability} tribe={creature.gsx$tribe} />
           <Ability type="brainwashed" tribe={creature.gsx$tribe} ability={creature.gsx$brainwashed} />
           <Unique data={{unique: creature.gsx$unique, loyal: creature.gsx$loyal, legendary: creature.gsx$legendary, tribe: creature.gsx$tribe}} />
           <span className="flavortext">{creature.gsx$flavortext}</span>
         </div>
         <br />
-	      <div style={{verticalAlign: 'text-top', float: 'left', width: '50px', textAlign: 'right'}}>
+	      <div className="stats">
 	     	  <span>{creature.gsx$courage}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/courage.png"}></img></span><br />
 	     	  <span>{creature.gsx$power}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/power.png"}></img></span><br />
 	     	  <span>{creature.gsx$wisdom}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/wisdom.png"}></img></span><br />

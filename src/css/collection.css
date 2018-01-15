@@ -1,19 +1,42 @@
 .card {
     text-align: left;
     display: flex;
+    border: 1px solid #AEAEAE;
+}
+
+.card .left,
+.card .right,
+.card .stats {
+    padding-top: 2px;
 }
 
 .card .left {
     vertical-align: text-top;
     float: left;
-    width: 220px;
+    width: 210px;
+    padding-left: 4px;
 }
 
 .card .right {
     float: left;
-    width: calc(100% - (100px + 230px));
-    border-left: 1px solid white;
-    padding-left: 10px;
+    width: calc(100% - (100px + 4px + 4px + 4px + 210px));
+    border-left: 2px solid #AEAEAE;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-bottom: 6px;
+    white-space: pre-line;
+}
+
+.creature .right {
+    width: calc(100% - (100px + 4px + 4px + 4px + 210px + 40px + 4px));
+}
+
+.creature .stats {
+    vertical-align: text-top;
+    float: left;
+    text-align: right;
+    width: 40px;
+    padding-right: 4px;
 }
 
 .card .icon14, .card .icon16,
