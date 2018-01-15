@@ -19,7 +19,7 @@ export default class SearchForm extends React.Component {
   }
 
   reset = () => {
-    this.type = "";
+    this.type = {};
     this.stones = {};
     this.tribes = {};
     this.elements = {};
@@ -39,18 +39,14 @@ export default class SearchForm extends React.Component {
       setsInput.push(<label style={{display: 'block'}} key={key}><input type="checkbox" ref={(input) => this.sets[key] = input} />{API.sets[key]}</label>);
     }
 
-    const card_type = (
-      <label>
-        Type:&nbsp;
-        <select onChange={(e) => {this.type = e.target.value}} >
-          <option value=""></option>
-          <option value="Attack">Attack</option>
-          <option value="Battlegear">Battlegear</option>
-          <option value="Creature">Creature</option>
-          <option value="Location">Location</option>
-          <option value="Mugic">Mugic</option>
-        </select>
-      </label>
+    const card_types = (
+      <div>
+      <label><input type="checkbox" ref={(input) => this.type.Attack = input} />Attack</label><br />
+      <label><input type="checkbox" ref={(input) => this.type.Battlegear = input} />Battlegear</label><br />
+      <label><input type="checkbox" ref={(input) => this.type.Creature = input} />Creature</label><br />
+      <label><input type="checkbox" ref={(input) => this.type.Location = input} />Location</label><br />
+      <label><input type="checkbox" ref={(input) => this.type.Mugic = input} />Mugic</label>
+      </div>
     );
 
     const card_rarity = (
@@ -77,12 +73,12 @@ export default class SearchForm extends React.Component {
 
     const card_elements = (
       <div>
-        <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
-        <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
         <input type="checkbox" ref={(input) => this.elements.fire = input} /><img className="icon16" src={"/src/img/icons/elements/fire.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.elements.air = input}/><img className="icon16" src={"/src/img/icons/elements/air.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.elements.earth = input}/><img className="icon16" src={"/src/img/icons/elements/earth.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.elements.water = input}/><img className="icon16" src={"/src/img/icons/elements/water.png"} />
+        <input type="checkbox" ref={(input) => this.elements.water = input}/><img className="icon16" src={"/src/img/icons/elements/water.png"} />&nbsp;&nbsp;
+        <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
+        <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
         <br />
         <input type="checkbox" ref={(input) => this.stones.noElements = input}/><span>No Elements</span>
       </div>
@@ -105,8 +101,7 @@ export default class SearchForm extends React.Component {
           <br />
           <label>Text: <input type="text" ref={(input) => this.stones.text = input} /></label>
           <br />
-          {card_type}
-          <br />
+          {card_types}
           <div>
             <label>Subtypes | Initiative:<br />
               <input type="text" ref={(input) => this.stones.subtypes = input} />
@@ -157,7 +152,7 @@ export default class SearchForm extends React.Component {
           </div>
           <br />
           <input type="submit" value="Search" />&nbsp;&nbsp;
-          <input type="button" value="Reset" disabled onClick={this.reset} />
+          <input type="button" value="Reset" disabled onClick={this.reset()} />
         </form>
       </div>
     );
@@ -444,27 +439,29 @@ export default class SearchForm extends React.Component {
     }
 
     // Merge data
-    if (!this.type || this.type=="Attack") {
+    let types = !(this.type.Attack.checked | this.type.Battlegear.checked | this.type.Creature.checked | this.type.Location.checked | this.type.Mugic.checked);
+
+    if (types || this.type.Attack.checked) {
       let temp = attackResults.data();
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (!this.type || this.type=="Battlegear") {
+    if (types || this.type.Battlegear.checked) {
       let temp = battlegearResults.data();
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (!this.type || this.type=="Creature") {
+    if (types || this.type.Creature.checked) {
       let temp = creatureResults.data()
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (!this.type || this.type=="Location") {
+    if (types || this.type.Location.checked) {
       let temp = locationResults.data()
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (!this.type || this.type=="Mugic") {
+    if (types || this.type.Mugic.checked) {
       let temp = mugicResults.data()
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
