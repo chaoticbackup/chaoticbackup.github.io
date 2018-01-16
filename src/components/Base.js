@@ -67,7 +67,6 @@ function App({ children, routes }) {
                           <div style={{margin: "0 8px 0 10px"}}>
                             <div id="player" style={{textAlign: "center"}}>
                               {children}
-                              <br />
                             </div>
                           </div>
                         </div>

@@ -17,6 +17,7 @@ function Home() {
         <br />Danude Sandstorm
         <br />Chiodosin1
       </div>
+      <br />
     </div>
   );
 }
