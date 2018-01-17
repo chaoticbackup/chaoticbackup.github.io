@@ -18,21 +18,37 @@ export default class PortalHome extends React.Component {
 
     const ctx = canvas.getContext('2d');
 
-    let Chaor = new Image();
-    Chaor.src = API.base_image + "0B6oyUfwoM3u1LWtvNUZ2NVdjTGc";
+    let Logo = new Image();
+    Logo.src = "/src/img/portal.png";
 
-    let Iflar = new Image();
-    Iflar.src = API.base_image + "0B6oyUfwoM3u1bFVIclZscHlHTVE";
+    let Creatures = (() => {
+      let Chaor = new Image();
+      Chaor.src = API.base_image + "0B6oyUfwoM3u1LWtvNUZ2NVdjTGc";
+      Chaor.onload = (() => { ctx.drawImage(Chaor, 50, 350); });
 
-    let Illexia = new Image();
-    Illexia.src = API.base_image + "0B6oyUfwoM3u1YzNhLUdSMHlmdFE";
+      let Iflar = new Image();
+      Iflar.src = API.base_image + "0B6oyUfwoM3u1bFVIclZscHlHTVE";
+      Iflar.onload = (() => { ctx.drawImage(Iflar, canvas.width - 300, 350); });
 
-    let Maxxor = new Image();
-    Maxxor.src =  API.base_image + "0B6oyUfwoM3u1MVVqQlpqYldsVDQ";
+      let Illexia = new Image();
+      Illexia.src = API.base_image + "0B6oyUfwoM3u1YzNhLUdSMHlmdFE";
+      Illexia.onload = (() => { ctx.drawImage(Illexia, canvas.width-350, Logo.height + 10); });
+
+      let Maxxor = new Image();
+      Maxxor.src =  API.base_image + "0B6oyUfwoM3u1MVVqQlpqYldsVDQ";
+      Maxxor.onload = (() => { ctx.drawImage(Maxxor, 50, Logo.height + 10); });
+    });
 
     let background = new Image();
     // background.src = API.base_image + "0B6oyUfwoM3u1VXZOdV9QUXlCclU"; // lighter
     background.src = API.base_image + "1iu0GFaJQ0UsSN8yYWi77VY1cXsQpM4o7"; //darker
+    background.onload = (() => {
+      ctx.drawImage(background, 0, 0);
+      // ctx.drawImage(background, 0, 100, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+      Creatures();
+      ctx.drawImage(Logo, canvas.width/2-Logo.width/2, 0);
+    });
+
 
     var coin, coinImage;
 
@@ -76,31 +92,27 @@ export default class PortalHome extends React.Component {
       };
 
       that.render = function () {
+        let s_width = that.width / numberOfFrames;
+        let s_height = that.height;
+        let c_width = canvas.width/2 - 33;
+        let c_height = canvas.height/2 - 33;
 
         // Clear the canvas
-        that.context.clearRect(0, 0, that.width, that.height);
-        that.context.drawImage(background, 0, 0);
-        // that.context.drawImage(background, 0, 100, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-        that.context.drawImage(Chaor, 50, 350);
-        that.context.drawImage(Iflar, canvas.width - 300, 350);
-        that.context.drawImage(Illexia, canvas.width-350, 10);
-        that.context.drawImage(Maxxor, 50, 10);
-        that.context.font = "40px Comic Sans MS";
-        that.context.fillStyle = "red";
-        that.context.textAlign = "center";
-        that.context.fillText("Portal      Perim", canvas.width/2, canvas.height/2+12);
+        that.context.clearRect(c_width, c_height, s_width, s_height);
+        // ctx.drawImage(background, 0, 100, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+        that.context.drawImage(background, c_width, c_height, s_width, s_height, c_width, c_height, s_width, s_height);
 
         // Draw the animation
         that.context.drawImage(
           that.image,
-          frameIndex * that.width / numberOfFrames,
+          frameIndex * s_width,
           0,
-          that.width / numberOfFrames,
-          that.height,
-          canvas.width/2 - 33,
-          canvas.height/2 - 33,
-          that.width / numberOfFrames,
-          that.height);
+          s_width,
+          s_height,
+          c_width,
+          c_height,
+          s_width,
+          s_height);
       };
 
       return that;
