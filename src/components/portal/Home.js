@@ -4,7 +4,12 @@ import API from '../SpreadsheetData';
 export default class PortalHome extends React.Component {
 
   componentDidMount() {
+    this.coin = null;
     this.updateCanvas();
+  }
+
+  componentWillUnmount() {
+    this.coin = null;
   }
 
   updateCanvas() {
@@ -50,28 +55,31 @@ export default class PortalHome extends React.Component {
     });
 
 
-    var coin, coinImage;
-
-    function gameLoop () {
-
-      window.requestAnimationFrame(gameLoop);
-
-      coin.update();
-      coin.render();
+    let gameLoop = () => {
+      if (this.coin) {
+        window.requestAnimationFrame(gameLoop);
+        this.coin.update();
+        this.coin.render();
+      }
     }
 
     function sprite (options) {
 
       var that = {},
-        frameIndex = 0,
+        w_frameIndex = 0,
+        h_frameIndex = 0,
         tickCount = 0,
-        ticksPerFrame = options.ticksPerFrame || 0,
-        numberOfFrames = options.numberOfFrames || 1;
+        ticksPerFrame = (options.ticksPerFrame || 0),
+        frames = (options.frames || 1),
+        w_frames = (options.w_frames || 1),
+        h_frames = (options.h_frames || 1);
 
       that.context = options.context;
       that.width = options.width;
       that.height = options.height;
       that.image = options.image;
+
+      var frameCount = 0;
 
       that.update = function () {
 
@@ -80,33 +88,43 @@ export default class PortalHome extends React.Component {
         if (tickCount > ticksPerFrame) {
 
           tickCount = 0;
+          frameCount++;
 
-          // If the current frame index is in range
-          if (frameIndex < numberOfFrames - 1) {
-              // Go to the next frame
-              frameIndex += 1;
-          } else {
-              frameIndex = 0;
+          // If the current horizontal frame index is in range
+          if (w_frameIndex + 1 < w_frames) {
+            // Go to the next frame
+            w_frameIndex += 1;
+          }
+          else {
+            // Go to next row
+            w_frameIndex = 0;
+            h_frameIndex += 1;
+          }
+
+          // If out of frames, reset
+          if (frameCount + 1 > frames) {
+            w_frameIndex = 0;
+            h_frameIndex = 0;
+            frameCount = 0;
           }
         }
       };
 
       that.render = function () {
-        let s_width = that.width / numberOfFrames;
-        let s_height = that.height;
-        let c_width = canvas.width/2 - 33;
-        let c_height = canvas.height/2 - 33;
+        let s_width = that.width / w_frames;
+        let s_height = that.height / h_frames;
+        let c_width = canvas.width/2 - s_width/2;
+        let c_height = canvas.height/2 - s_height/2;
 
         // Clear the canvas
         that.context.clearRect(c_width, c_height, s_width, s_height);
-        // ctx.drawImage(background, 0, 100, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
         that.context.drawImage(background, c_width, c_height, s_width, s_height, c_width, c_height, s_width, s_height);
 
         // Draw the animation
         that.context.drawImage(
           that.image,
-          frameIndex * s_width,
-          0,
+          s_width * w_frameIndex,
+          s_height * h_frameIndex,
           s_width,
           s_height,
           c_width,
@@ -119,15 +137,17 @@ export default class PortalHome extends React.Component {
     }
 
     // Create sprite sheet
-    coinImage = new Image();
+    let coinImage = new Image();
 
     // Create sprite
-    coin = sprite({
+    this.coin = sprite({
       context: canvas.getContext("2d"),
-      width: 450,
-      height: 66,
+      width: 448,
+      height: 448,
       image: coinImage,
-      numberOfFrames: 7,
+      w_frames: 7,
+      h_frames: 7,
+      frames: 47,
       ticksPerFrame: 4
     });
 
