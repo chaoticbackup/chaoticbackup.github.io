@@ -1,7 +1,20 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import API from '../SpreadsheetData';
 
-export default class PortalHome extends React.Component {
+export function Routing(props) {
+  console.log(props);
+  const match = props.match;
+
+  return (
+    <div>
+      <Route exact path={match.url} component={Home} />
+      {/* <Route path={`${match.url}collection`} component={CollectionHome} /> */}
+    </div>
+  );
+}
+
+class Home extends React.Component {
 
   componentDidMount() {
     this.coin = null;

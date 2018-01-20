@@ -1,9 +1,26 @@
 import React from 'react';
-import Interactive from 'react-interactive';
-import { Link } from 'react-router-dom';
-import s from '../styles/home.style';
+import { Route, Link } from 'react-router-dom';
 
-export default function Home() {
+/* Components */
+import {PageNotFound, UnderConstruction} from './Snippets';
+import EnterTheCode from './account/EnterTheCode';
+import Collection from './collection/index';
+import Portal from './portal/index';
+
+export function Routing(props) {
+  return (
+    <div>
+      <Route exact path={props.match.url} component={Home} />
+      <Route path="/PageNotFound" component={PageNotFound} />
+      <Route path="/UnderConstruction" component={UnderConstruction} />
+      <Route path="/EnterTheCode" component={EnterTheCode} />
+      <Route path="/collection" component={Collection} />
+      <Route path="/portal" component={Portal} />
+    </div>
+  );
+}
+
+function Home() {
   return (
     <div>
       <link rel="stylesheet" href="/src/css/with_love.css" />

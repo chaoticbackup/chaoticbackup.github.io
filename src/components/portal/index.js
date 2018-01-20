@@ -1,14 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import s from '../../styles/app.style';
-import Interactive from 'react-interactive';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import { Link } from 'react-router';
+import {Link} from 'react-router-dom';
+import {Routing} from './Home';
 import Search from './Search';
 
 @inject((stores, props, context) => props) @observer
-export default class PortalBase extends React.Component {
+export default class Base extends React.Component {
 
   render() {
     return (
@@ -16,13 +14,13 @@ export default class PortalBase extends React.Component {
         <link rel="stylesheet" href="/src/css/portal.css" />
         <Header />
         <br />
-        {this.props.children}
+        <Routing {...this.props} />
       </div>
     );
   }
 }
 
-function Header(props) {
+function Header() {
 
   const types = (() => {
     return (
