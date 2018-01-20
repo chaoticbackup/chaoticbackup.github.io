@@ -1,18 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Interactive from 'react-interactive';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import s from '../styles/app.style';
+import {Children} from './index';
 
 const language = "ENG";
 const bkgrnd = "05";
 
-const propTypes = {
-  children: PropTypes.element.isRequired,
-  routes: PropTypes.array.isRequired,
-};
+export default function Base(props) {
 
-function App({ children, routes }) {
+  const children = <Children {...props} />;
+
   return (
     <div>
       <div className="fix-pgBkgrnd-repeat-x">
@@ -122,7 +120,3 @@ function App({ children, routes }) {
     </div>
   );
 }
-
-App.propTypes = propTypes;
-
-export default App;

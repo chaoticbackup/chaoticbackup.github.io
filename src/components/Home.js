@@ -1,6 +1,6 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import s from '../styles/home.style';
 
 function Home() {

@@ -17,10 +17,40 @@ export default class Tribes extends React.Component {
       return (<div>{this.props.children}</div>);
     }
 
+    const store = API;
+
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     let tribe = path[2];
+
+    if (store.urls === null ||
+      store.portal === null ||
+      store.cards === null) {
+      return (<span>Loading...</span>);
+    }
+
+    if (!store.tribes.includes(tribe)) {
+      return(
+        <div>
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/Danian"
+          >Danian</Interactive>
+          <br />
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/OverWorld"
+          >OverWorld</Interactive>
+          <br />
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/UnderWorld"
+          >UnderWorld</Interactive>
+          <br />
+          <Interactive as={Link} {...s.link}
+            to="/portal/Creatures/Mipedian"
+          >Mipedian</Interactive>
+        </div>
+      );
+    }
 
     return (
       <div>

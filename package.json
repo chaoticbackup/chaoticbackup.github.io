@@ -1,6 +1,6 @@
 {
   "name": "chaoticbackup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Chaotic Backup",
   "scripts": {
     "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback --progress",
@@ -22,7 +22,7 @@
     "react-dom": "^16.0.0",
     "react-interactive": "^0.8.1",
     "react-process-string": "^1.2.0",
-    "react-router": "^3.2.0",
+    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-transition-group": "^1.2.1",
     "whatwg-fetch": "^2.0.3"
