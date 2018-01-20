@@ -3,7 +3,7 @@ import Interactive from 'react-interactive';
 import { Link } from 'react-router-dom';
 import s from '../styles/home.style';
 
-function Home() {
+export default function Home() {
   return (
     <div>
       <link rel="stylesheet" href="/src/css/with_love.css" />
@@ -21,5 +21,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;
