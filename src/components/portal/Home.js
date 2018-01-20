@@ -2,14 +2,29 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import API from '../SpreadsheetData';
 
+import Attacks from './Category/Attacks';
+import Battlegear from './Category/Battlegear';
+import Creatures from './Category/Creatures';
+import Locations from './Category/Locations';
+import Mugic from './Category/Mugic';
+import Tribes from './Category/Tribes';
+
 export function Routing(props) {
   console.log(props);
   const match = props.match;
 
+  const tribes = API.tribes.map((tribe, i) => (
+    <Route key={i} path={`${match.url}/${tribe}`} component={Tribes} />
+  ));
   return (
     <div>
       <Route exact path={match.url} component={Home} />
-      {/* <Route path={`${match.url}collection`} component={CollectionHome} /> */}
+      <Route path={`${match.url}/Attacks`} component={Attacks} />
+      <Route path={`${match.url}/Battlegear`} component={Battlegear} />
+      <Route path={`${match.url}/Creatures`} component={Creatures} />
+      <Route path={`${match.url}/Locations`} component={Locations} />
+      <Route path={`${match.url}/Mugic`} component={Mugic} />
+      {tribes}
     </div>
   );
 }

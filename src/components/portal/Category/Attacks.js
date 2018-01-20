@@ -1,9 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import { Link } from 'react-router';
-import API from '../../SpreadsheetData';
-import s from '../../../styles/app.style';
+import { Link, Route } from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
+import s from '../../../styles/app.style';
+import API from '../../SpreadsheetData';
+import Attack from '../Single/Attack';
 
 @inject((stores, props, context) => props) @observer
 export default class Attacks extends React.Component {
@@ -52,7 +53,7 @@ export default class Attacks extends React.Component {
         {output}
       </div>
       <div className="right">
-        {this.props.children}
+        <Route path={`${this.props.match.url}/:card`} component={Attack} />
       </div>
     </div>);
   }
