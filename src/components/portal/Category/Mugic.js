@@ -1,9 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import { Link } from 'react-router-dom';
-import API from '../../SpreadsheetData';
-import s from '../../../styles/app.style';
+import { Link, Route } from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
+import s from '../../../styles/app.style';
+import API from '../../SpreadsheetData';
+import SingleMugic from '../Single/Mugic';
 
 @inject((stores, props, context) => props) @observer
 export default class Mugic extends React.Component {
@@ -105,7 +106,7 @@ export default class Mugic extends React.Component {
         {output}
       </div>
       <div className="right">
-        {this.props.children}
+        <Route path={`${this.props.match.url}/:card`} component={SingleMugic} />
       </div>
     </div>);
   }
