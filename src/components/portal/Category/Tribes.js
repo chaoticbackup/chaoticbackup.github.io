@@ -1,9 +1,11 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import { Link } from 'react-router-dom';
-import API from '../../SpreadsheetData';
-import s from '../../../styles/app.style';
+import { Link, Route } from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
+import s from '../../../styles/app.style';
+import API from '../../SpreadsheetData';
+import Creature from '../Single/Creature';
+import Mugic from '../Single/Mugic';
 
 @inject((stores, props, context) => props) @observer
 export default class Tribes extends React.Component {
@@ -13,9 +15,6 @@ export default class Tribes extends React.Component {
   // to display the respective subcategories
   // -> /{Tribe}/Mugic || /{Tribe}/Creatures
   render() {
-    if (this.props.children) {
-      return (<div>{this.props.children}</div>);
-    }
 
     const store = API;
 
@@ -52,13 +51,19 @@ export default class Tribes extends React.Component {
       );
     }
 
-    return (
-      <div>
-        <h1>{tribe}</h1>
-        <br />
-        <Interactive as={Link} {...s.link} to={"/portal/"+tribe+"/Creatures"}>Creatures</Interactive><br />
-        <Interactive as={Link} {...s.link} to={"/portal/"+tribe+"/Mugic"}>Mugic</Interactive>
+    const output = (() => (
+      <div>Test</div>
+    ))();
+
+    return (<div className="entry creatures">
+      <div className="left">
+        <div className="title">{path[2]}<hr /></div>
+        {output}
       </div>
-    );
+      <div className="right">
+        <Route path={`${this.props.match.url}/Creatures/:card`} component={Creature} />
+        <Route path={`${this.props.match.url}/Mugic/:card`} component={Mugic} />
+      </div>
+    </div>);
   }
 }

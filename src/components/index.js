@@ -3,10 +3,13 @@ import { render } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import s from '../styles/app.style';
-import {Routing} from './Home';
 
-const language = "ENG";
-const bkgrnd = "05";
+/* Components */
+import {PageNotFound, UnderConstruction} from './Snippets';
+import EnterTheCode from './account/EnterTheCode';
+import Collection from './collection/index';
+import Portal from './portal/index';
+import Home from './Home';
 
 render(
   <Router>
@@ -16,6 +19,22 @@ render(
   </Router>
   , document.getElementById('root'),
 );
+
+function Routing(props) {
+  return (
+    <div>
+      <Route exact path="/" component={Home} />
+      <Route path="/PageNotFound" component={PageNotFound} />
+      <Route path="/UnderConstruction" component={UnderConstruction} />
+      <Route path="/EnterTheCode" component={EnterTheCode} />
+      <Route path="/collection" component={Collection} />
+      <Route path="/portal" component={Portal} />
+    </div>
+  );
+}
+
+const language = "ENG";
+const bkgrnd = "05";
 
 function Base(props) {
 

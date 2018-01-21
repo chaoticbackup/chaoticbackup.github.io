@@ -1,9 +1,17 @@
 import React from 'react';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
-import {Link} from 'react-router-dom';
-import {Routing} from './Home';
+import {Link, Route} from 'react-router-dom';
+
+import API from '../SpreadsheetData';
+import Home from './Home';
 import Search from './Search';
+import Attacks from './Category/Attacks';
+import Battlegear from './Category/Battlegear';
+import Creatures from './Category/Creatures';
+import Locations from './Category/Locations';
+import Mugic from './Category/Mugic';
+import Tribes from './Category/Tribes';
 
 @inject((stores, props, context) => props) @observer
 export default class Base extends React.Component {
@@ -20,12 +28,32 @@ export default class Base extends React.Component {
   }
 }
 
+function Routing(props) {
+  console.log(props);
+  const match = props.match;
+
+  const tribes = API.tribes.map((tribe, i) => (
+    <Route key={i} path={`${match.url}/${tribe}`} component={Tribes} />
+  ));
+  return (
+    <div>
+      <Route exact path={match.url} component={Home} />
+      <Route path={`${match.url}/Attacks`} component={Attacks} />
+      <Route path={`${match.url}/Battlegear`} component={Battlegear} />
+      <Route path={`${match.url}/Creatures`} component={Creatures} />
+      <Route path={`${match.url}/Locations`} component={Locations} />
+      <Route path={`${match.url}/Mugic`} component={Mugic} />
+      {tribes}
+    </div>
+  );
+}
+
 function Header() {
 
   const types = (() => {
     return (
       <li className="dropdown">
-        <Link to="javascript:void(0)" className="dropbtn">Types</Link>
+        <Link to=" " className="dropbtn">Types</Link>
         <div className="dropdown-content">
           <Link to="/portal/Attacks">Attacks</Link>
           <Link to="/portal/Battlegear">Battlegear</Link>
