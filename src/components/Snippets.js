@@ -3,7 +3,7 @@ import API from './SpreadsheetData';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import processString from 'react-process-string';
-import s from '../styles/pageNotFound.style';
+import s from '../styles/app.style';
 
 export function UnderConstruction(props) {
   return (

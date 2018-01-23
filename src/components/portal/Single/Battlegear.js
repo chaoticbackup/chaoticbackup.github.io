@@ -1,6 +1,6 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
@@ -11,7 +11,6 @@ import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '
 export default class SingleBattlegear extends React.Component {
 
   render() {
-    const store = API;
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
@@ -23,33 +22,32 @@ export default class SingleBattlegear extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("battlegear_cards")) {
-      store.cards.setupBattlegear("cards");
+    if (!API.cards.built.includes("battlegear_cards")) {
+      API.cards.setupBattlegear("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("battlegear_portal")) {
-      store.portal.setupBattlegear("portal");
+    if (!API.portal.built.includes("battlegear_portal")) {
+      API.portal.setupBattlegear("portal");
       return (<span>Loading...</span>);
     }
 
-    const battlegear = store.portal.battlegear.findOne({'gsx$name': name});
+    const battlegear = API.portal.battlegear.findOne({'gsx$name': name});
     if (!battlegear) {
       return(<PageNotFound location={this.props.location}/>);
     }
 
-    const card_data = store.cards.battlegear.findOne({'gsx$name': name});
+    const card_data = API.cards.battlegear.findOne({'gsx$name': name});
 
     return (
       <div>
-        <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
-        <br />
+        <img className="splash" src={API.base_image + card_data.gsx$splash} />
         <div className="title">{battlegear.gsx$name}</div>
         <hr />
         <div>

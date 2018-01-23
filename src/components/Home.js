@@ -1,9 +1,7 @@
 import React from 'react';
-import Interactive from 'react-interactive';
-import { Link } from 'react-router';
-import s from '../styles/home.style';
+import { Route, Link } from 'react-router-dom';
 
-function Home() {
+export default function Home() {
   return (
     <div>
       <link rel="stylesheet" href="/src/css/with_love.css" />
@@ -21,5 +19,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;

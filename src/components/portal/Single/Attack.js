@@ -1,6 +1,6 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
@@ -10,7 +10,6 @@ import {PageNotFound} from '../../Snippets';
 export default class SingleAttack extends React.Component {
 
   render() {
-    const store = API;
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
@@ -22,33 +21,32 @@ export default class SingleAttack extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("attacks_cards")) {
-      store.cards.setupAttacks("cards");
+    if (!API.cards.built.includes("attacks_cards")) {
+      API.cards.setupAttacks("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("attacks_portal")) {
-      store.portal.setupAttacks("portal");
+    if (!API.portal.built.includes("attacks_portal")) {
+      API.portal.setupAttacks("portal");
       return (<span>Loading...</span>);
     }
 
-    const attack = store.portal.attacks.findOne({'gsx$name': name});
+    const attack = API.portal.attacks.findOne({'gsx$name': name});
     if (!attack) {
       return(<PageNotFound location={this.props.location}/>);
     }
 
-    const card_data = store.cards.attacks.findOne({'gsx$name': name});
+    const card_data = API.cards.attacks.findOne({'gsx$name': name});
 
     return (
       <div>
-        <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
-        <br />
+        <img className="splash" src={API.base_image + card_data.gsx$splash} />
         <div className="title">{attack.gsx$name}</div>
         <hr />
         <div>

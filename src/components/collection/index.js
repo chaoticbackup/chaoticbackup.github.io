@@ -7,7 +7,7 @@ import CardList from './List';
 import SearchForm from './Search';
 
 @inject((stores, props, context) => props) @observer
-export default class CollectionHome extends React.Component {
+export default class Home extends React.Component {
   @observable n = 10;
   @observable p = 1;
   @observable content = [];

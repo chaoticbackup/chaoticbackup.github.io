@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../SpreadsheetData';
 
-export default class PortalHome extends React.Component {
+export default class Home extends React.Component {
 
   componentDidMount() {
     this.coin = null;
