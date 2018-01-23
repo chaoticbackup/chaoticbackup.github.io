@@ -29,7 +29,6 @@ export default class Base extends React.Component {
 }
 
 function Routing(props) {
-  console.log(props);
   const match = props.match;
 
   const tribes = API.tribes.map((tribe, i) => (
