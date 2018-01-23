@@ -20,7 +20,7 @@
 
 .splash {
     max-width: 100%;
-    display: block;
+    padding-bottom: 10px;
 }
 
 .navbar h1 {

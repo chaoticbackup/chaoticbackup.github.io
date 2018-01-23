@@ -11,77 +11,51 @@ export default class Creatures extends React.Component {
 
   // ** Process the tribe ** //
   // /portal/Creatures/
-  // /portal/{Tribe}/Creatures/
+  // /portal/Creatures/{Tribe}
   // The first / gets counted
   render() {
-    const store = API;
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    let tribe = null;
-    if (path.length >= 4) {
-      if (path[2] === "Creatures") tribe = path[3];
-      else if (path[3] === "Creatures") tribe = path[2];
-
-      // If there isn't a supported tribe,
-      // Displays list of tribes
-      if (!store.tribes.includes(tribe)) {
-        return(
-          <div>
-            <Interactive as={Link} {...s.link}
-              to="/portal/Creatures/Danian"
-            >Danian</Interactive>
-            <br />
-            <Interactive as={Link} {...s.link}
-              to="/portal/Creatures/OverWorld"
-            >OverWorld</Interactive>
-            <br />
-            <Interactive as={Link} {...s.link}
-              to="/portal/Creatures/UnderWorld"
-            >UnderWorld</Interactive>
-            <br />
-            <Interactive as={Link} {...s.link}
-              to="/portal/Creatures/Mipedian"
-            >Mipedian</Interactive>
-          </div>
-        );
-      }
-    }
-
-    if (!store.cards.built.includes("creatures_cards")) {
-      store.cards.setupCreatures("cards");
+    if (!API.cards.built.includes("creatures_cards")) {
+      API.cards.setupCreatures("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("creatures_portal")) {
-      store.portal.setupCreatures("portal");
+    if (!API.portal.built.includes("creatures_portal")) {
+      API.portal.setupCreatures("portal");
       return (<span>Loading...</span>);
     }
+
+    const tribe = (() => {
+      if (path.length >= 4 && API.ribes.includes(path[3])) return path[3];
+      else return null;
+    })();
 
     const creatures = (() => {
-      if (path.length >= 4 && path[3] === "Creatures") {
-        return store.portal.creatures.find({'gsx$tribe': tribe});
+      if (tribe) {
+        return API.portal.creatures.find({'gsx$tribe': tribe});
       }
       else {
-        return store.portal.creatures.chain().simplesort('gsx$name').data();
+        return API.portal.creatures.chain().simplesort('gsx$name').data();
       }
     })();
 
     const output = creatures.map((creature, i) => {
-      const card_data = store.cards.creatures.findOne({'gsx$name': creature.gsx$name});
+      const card_data = API.cards.creatures.findOne({'gsx$name': creature.gsx$name});
 
       let url = (() => {
-        if (path[2] === "Creatures")
+        if (tribe)
           return "/portal/Creatures/"+creature.gsx$tribe+"/"+creature.gsx$name;
-        else if (path[3] === "Creatures")
-          return "/portal/"+creature.gsx$tribe+"/Creatures/"+creature.gsx$name;
+        else
+          return "/portal/Creatures/"+creature.gsx$name;
       })();
 
       return (
@@ -90,15 +64,19 @@ export default class Creatures extends React.Component {
             to={url}
           >
             <span>{creature.gsx$name}</span><br />
-            <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img>
+            <img className="thumb" src={API.base_image + card_data.gsx$thumb}></img>
           </Interactive>
         </div>
       );
     });
 
-    const tribes = ["Danian", "Mipedian", "OverWorld", "UnderWorld"].map((tribe, i) => (
+    let tribes = ["Danian", "Mipedian", "OverWorld", "UnderWorld"].map((tribe, i) => (
       <Route key={i} path={`${this.props.match.url}/${tribe}/:card`} component={Creature} />
     ));
+
+    if (!tribe) {
+      tribes.push(<Route key={5} path={`${this.props.match.url}/:card`} component={Creature} />)
+    }
 
     return (<div className="entry creatures">
       <div className="left">

@@ -11,7 +11,6 @@ import {Rarity, Unique, Name, Ability, Initiative} from '../../Snippets';
 export default class SingleLocation extends React.Component {
 
   render() {
-    const store = API;
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
@@ -23,33 +22,32 @@ export default class SingleLocation extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("locations_cards")) {
-      store.cards.setupLocations("cards");
+    if (!API.cards.built.includes("locations_cards")) {
+      API.cards.setupLocations("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("locations_portal")) {
-      store.portal.setupLocations("portal");
+    if (!API.portal.built.includes("locations_portal")) {
+      API.portal.setupLocations("portal");
       return (<span>Loading...</span>);
     }
 
-    const location = store.portal.locations.findOne({'gsx$name': name});
+    const location = API.portal.locations.findOne({'gsx$name': name});
     if (!location) {
       return(<PageNotFound location={this.props.location}/>);
     }
 
-    const card_data = store.cards.locations.findOne({'gsx$name': name});
+    const card_data = API.cards.locations.findOne({'gsx$name': name});
 
     return (
       <div>
-        <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
-        <br />
+        <img className="splash" src={API.base_image + card_data.gsx$splash} />
         <div className="title">{location.gsx$name}</div>
         <hr />
         <div>

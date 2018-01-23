@@ -10,38 +10,38 @@ import SingleBattlegear from '../Single/Battlegear';
 export default class Battlegear extends React.Component {
 
     render() {
-      const store = API;
+
 
       let path = this.props.location.pathname.split("/");
       if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-      if (store.urls === null ||
-        store.portal === null ||
-        store.cards === null) {
+      if (API.urls === null ||
+        API.portal === null ||
+        API.cards === null) {
         return (<span>Loading...</span>);
       }
 
-      if (!store.cards.built.includes("battlegear_cards")) {
-        store.cards.setupBattlegear("cards");
+      if (!API.cards.built.includes("battlegear_cards")) {
+        API.cards.setupBattlegear("cards");
         return (<span>Loading...</span>);
       }
 
-      if (!store.portal.built.includes("battlegear_portal")) {
-        store.portal.setupBattlegear("portal");
+      if (!API.portal.built.includes("battlegear_portal")) {
+        API.portal.setupBattlegear("portal");
         return (<span>Loading...</span>);
       }
 
-      const battlegear = store.portal.battlegear.data;
+      const battlegear = API.portal.battlegear.data;
 
       const output = battlegear.map((single_battlegear, i) => {
-        const card_data = store.cards.battlegear.findOne({'gsx$name': single_battlegear.gsx$name});
+        const card_data = API.cards.battlegear.findOne({'gsx$name': single_battlegear.gsx$name});
         return (
           <div key={i}>
             <Interactive as={Link} {...s.link}
               to={'/portal/Battlegear/'+single_battlegear.gsx$name}
             >
               <span>{single_battlegear.gsx$name}</span><br />
-              <img className="thumb" src={store.base_image + card_data.gsx$thumb}></img>
+              <img className="thumb" src={API.base_image + card_data.gsx$thumb}></img>
             </Interactive>
           </div>
         );

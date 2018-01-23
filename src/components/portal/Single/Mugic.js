@@ -1,11 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router-dom';
-import {PageNotFound} from '../../Snippets';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
+import {PageNotFound, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleMugic extends React.Component {
@@ -15,49 +14,40 @@ export default class SingleMugic extends React.Component {
   // /portal/{Tribe}/Mugic/{Name}
   // The first / gets counted
   render() {
-    const store = API;
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-    // Path too long
-    if ( path.length !== 5 ) {
-      return(<PageNotFound location={this.props.location}/>);
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
+      return (<span>Loading...</span>);
     }
 
-    //Handle both url layouts
-    let tribe = (() => {
-      if (path[2] === "Mugic") return path[3];
-      if (path[3] === "Mugic") return path[2];
+    if (!API.cards.built.includes("mugic_cards")) {
+      API.cards.setupMugic("cards");
+      return (<span>Loading...</span>);
+    }
+
+    if (!API.portal.built.includes("mugic_portal")) {
+      API.portal.setupMugic("portal");
+      return (<span>Loading...</span>);
+    }
+
+    const name = (() => {
+      if (path.length >= 5) return decodeURIComponent(path[4]);
+      if (path.length == 4) return decodeURIComponent(path[3]);
     })();
 
-    let name = decodeURIComponent(path[4]);
+    const mugic = API.portal.mugic.findOne({'gsx$name': name});
 
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.tribes.includes(tribe)) {
-      return (<span>Invalid Tribe: {tribe}</span>);
-    }
-
-    if (!store.cards.built.includes("mugic_cards")) {
-      store.cards.setupMugic("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.portal.built.includes("mugic_portal")) {
-      store.portal.setupMugic("portal");
-      return (<span>Loading...</span>);
-    }
-
-    const mugic = store.portal.mugic.findOne({'gsx$name': name});
-    const card_data = store.cards.mugic.findOne({'gsx$name': name});
     if (!mugic) {
       return(<PageNotFound location={this.props.location}/>);
     }
+
+    const tribe = mugic.gsx$tribe;
+
+    const card_data = API.cards.mugic.findOne({'gsx$name': name});
 
     let cost = [];
     if (card_data.gsx$cost == 0) {
@@ -74,8 +64,7 @@ export default class SingleMugic extends React.Component {
 
     return (
       <div>
-        <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
-        <br />
+        <img className="splash" src={API.base_image + card_data.gsx$splash} />
         <div className="title">{mugic.gsx$name}</div>
         <hr />
         <div>

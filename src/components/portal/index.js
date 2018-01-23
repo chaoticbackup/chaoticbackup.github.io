@@ -69,8 +69,8 @@ function Header() {
       <li key={i} className="dropdown">
         <Link to={"/portal/"+tribe} className="dropbtn">{tribe}</Link>
         <div className="dropdown-content">
-          <Link to={"/portal/"+tribe+"/Creatures"}> Creatures</Link>
-          <Link to={"/portal/"+tribe+"/Mugic"}> Mugic</Link>
+          <Link to={"/portal/Creatures/"+tribe}> Creatures</Link>
+          <Link to={"/portal/Mugic/"+tribe}> Mugic</Link>
         </div>
       </li>
     );

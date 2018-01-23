@@ -1,11 +1,10 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router-dom';
-import {PageNotFound} from '../../Snippets';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
+import {PageNotFound, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleCreature extends React.Component {
@@ -15,50 +14,40 @@ export default class SingleCreature extends React.Component {
   // /portal/{Tribe}/Creatures/{Name}
   // The first / gets counted
   render() {
-    const store = API;
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-    // Path too long
-    if ( path.length !== 5 ) {
-      return(<PageNotFound location={this.props.location}/>);
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
+      return (<span>Loading...</span>);
     }
 
-    //Handle both url layouts
-    let tribe = (() => {
-      if (path[2] === "Creatures") return path[3];
-      if (path[3] === "Creatures") return path[2];
+    if (!API.cards.built.includes("creatures_cards")) {
+      API.cards.setupCreatures("cards");
+      return (<span>Loading...</span>);
+    }
+
+    if (!API.portal.built.includes("creatures_portal")) {
+      API.portal.setupCreatures("portal");
+      return (<span>Loading...</span>);
+    }
+
+    const name = (() => {
+      if (path.length >= 5) return decodeURIComponent(path[4]);
+      if (path.length == 4) return decodeURIComponent(path[3]);
     })();
 
-    let name = decodeURIComponent(path[4]);
+    const creature = API.portal.creatures.findOne({'gsx$name': name});
 
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.tribes.includes(tribe)) {
-      return (<span>Invalid Tribe: {tribe}</span>);
-    }
-
-    if (!store.cards.built.includes("creatures_cards")) {
-      store.cards.setupCreatures("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.portal.built.includes("creatures_portal")) {
-      store.portal.setupCreatures("portal");
-      return (<span>Loading...</span>);
-    }
-
-    const creature = store.portal.creatures.findOne({'gsx$name': name});
     if (!creature) {
       return(<PageNotFound location={this.props.location}/>);
     }
 
-    const card_data = store.cards.creatures.findOne({'gsx$name': name});
+    const tribe = creature.gsx$tribe;
+
+    const card_data = API.cards.creatures.findOne({'gsx$name': name});
 
     const locations = creature.gsx$location.split(/[,]+\s*/).map((item, i) => {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
@@ -75,8 +64,7 @@ export default class SingleCreature extends React.Component {
 
     return (
       <div>
-        <img className="splash" src={store.base_image + card_data.gsx$splash}></img>
-        <br />
+        <img className="splash" src={API.base_image + card_data.gsx$splash} />
         <div className="title">{creature.gsx$name}</div>
         <hr />
         <div>

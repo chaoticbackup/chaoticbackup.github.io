@@ -22,20 +22,18 @@ export default class Tribes extends React.Component {
   // -> /{Tribe}/Mugic || /{Tribe}/Creatures
   render() {
 
-    const store = API;
-
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     let tribe = path[2];
 
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    if (!store.tribes.includes(tribe)) {
+    if (!API.tribes.includes(tribe)) {
       return(
         <div>
           <Interactive as={Link} {...s.link}
@@ -57,23 +55,23 @@ export default class Tribes extends React.Component {
       );
     }
 
-    if (!store.cards.built.includes("mugic_cards")) {
-      store.cards.setupMugic("cards");
+    if (!API.cards.built.includes("mugic_cards")) {
+      API.cards.setupMugic("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("mugic_portal")) {
-      store.portal.setupMugic("portal");
+    if (!API.portal.built.includes("mugic_portal")) {
+      API.portal.setupMugic("portal");
       return (<span>Loading...</span>);
     }
 
-    if (!store.cards.built.includes("creatures_cards")) {
-      store.cards.setupCreatures("cards");
+    if (!API.cards.built.includes("creatures_cards")) {
+      API.cards.setupCreatures("cards");
       return (<span>Loading...</span>);
     }
 
-    if (!store.portal.built.includes("creatures_portal")) {
-      store.portal.setupCreatures("portal");
+    if (!API.portal.built.includes("creatures_portal")) {
+      API.portal.setupCreatures("portal");
       return (<span>Loading...</span>);
     }
 
@@ -83,11 +81,11 @@ export default class Tribes extends React.Component {
 
     let temp;
 
-    temp = store.portal.creatures.find({'gsx$tribe': tribe});
+    temp = API.portal.creatures.find({'gsx$tribe': tribe});
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
 
-    temp = store.portal.mugic.find({'gsx$tribe': tribe});
+    temp = API.portal.mugic.find({'gsx$tribe': tribe});
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
 
@@ -98,19 +96,19 @@ export default class Tribes extends React.Component {
       let card_data, url;
 
       if (card.gsx$type == "Mugic") {
-        card_data = store.cards.mugic.findOne({'gsx$name': card.gsx$name});
+        card_data = API.cards.mugic.findOne({'gsx$name': card.gsx$name});
         url = "/portal/" + tribe + "/Mugic/" + encodeURIComponent(card.gsx$name);
       }
 
       if (card.gsx$type == "Creature") {
-        card_data = store.cards.creatures.findOne({'gsx$name': card.gsx$name});
+        card_data = API.cards.creatures.findOne({'gsx$name': card.gsx$name});
         url = "/portal/" + tribe + "/Creatures/" + encodeURIComponent(card.gsx$name);
       }
 
       return (<div key={i}>
         <Interactive as={Link} {...s.link} to={url}>
           <span>{card.gsx$name}</span><br />
-          <img className="thumb" src={store.base_image + card_data.gsx$thumb} />
+          <img className="thumb" src={API.base_image + card_data.gsx$thumb} />
         </Interactive>
       </div>);
     });
