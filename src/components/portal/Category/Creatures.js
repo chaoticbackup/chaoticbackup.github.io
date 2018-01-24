@@ -35,7 +35,7 @@ export default class Creatures extends React.Component {
     }
 
     const tribe = (() => {
-      if (path.length >= 4 && API.ribes.includes(path[3])) return path[3];
+      if (path.length >= 4 && API.tribes.includes(path[3])) return path[3];
       else return null;
     })();
 

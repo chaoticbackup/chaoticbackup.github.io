@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import {observer, inject} from 'mobx-react';
 import s from '../styles/app.style';
 
 /* Components */
@@ -14,7 +14,7 @@ import Home from './Home';
 render(
   <Router>
     <div>
-      <Route path="/" component={Base}/>
+      <Route path="*" component={Base}/>
     </div>
   </Router>
   , document.getElementById('root'),
@@ -42,6 +42,7 @@ function Base(props) {
 
   return (
     <div>
+      <link rel="stylesheet" type="text/css" href="/src/css/legacy.css" />
       <div className="fix-pgBkgrnd-repeat-x">
         <div className={"fix-img-bkgrnd fix-img-bkgrnd_"+bkgrnd}></div>
       </div>
