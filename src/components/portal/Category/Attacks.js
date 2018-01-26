@@ -1,6 +1,7 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link, Route } from 'react-router-dom';
+import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
@@ -8,6 +9,7 @@ import Attack from '../Single/Attack';
 
 @inject((stores, props, context) => props) @observer
 export default class Attacks extends React.Component {
+  @observable loaded = false;
 
   render() {
 
@@ -30,9 +32,15 @@ export default class Attacks extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    const attacks = API.portal.attacks.data;
+    if (this.loaded == false) {
+      API.buildCollection([{'cards': 'attacks'}, {'portal': 'attacks'}])
+      .then(() => {
+        this.loaded = true;
+      });
+      return (<span>Loading...</span>);
+    }
 
-    const output = attacks.map((attack, i) => {
+    const output = API.portal.attacks.data.map((attack, i) => {
       const card_data = API.cards.attacks.findOne({'gsx$name': attack.gsx$name});
       return (
         <div key={i}>

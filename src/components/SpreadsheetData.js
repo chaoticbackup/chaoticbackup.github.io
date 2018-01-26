@@ -60,8 +60,8 @@ class API {
 
   setupDB() {
     try {
-      this.portal = new CollectionDB(this);
-      this.cards = new CollectionDB(this);
+      this.portal = new CollectionDB(this, 'portal');
+      this.cards = new CollectionDB(this, 'cards');
     }
     catch (err) {
       console.log('setting up database failed', err);
@@ -91,20 +91,41 @@ class API {
     };
   }
 
+  // Input format
+  // [{cards: 'attacks'}, {portal: 'attacks'}]
+  async buildCollection(input) {
+    return await Promise.all(input.map((item) => {
+      return new Promise((resolve, reject) => {
+        if ('cards' in item) {
+          // console.log(this.cards[item.cards].data);
+          return this.cards.setupType(item.cards, resolve);
+        }
+        if ('portal' in item) {
+          // console.log(this.portal[item.portal].data);
+          return this.portal.setupType(item.portal, resolve);
+        }
+        console.log('cards or portal');
+        return reject();
+      });
+    }));
+  }
+
 }
 
 export default API.getInstance();
 
-// export default new API();
-
 class CollectionDB {
-  @observable built = []; // Keeps track of what collections have been populated
+  // Keeps track of what collections have been populated
+  @observable built = [];
+  building = [];
 
-  constructor(API) {
+  constructor(API, format) {
     this.api = API;
-    // ignoring persistence for now
-    // this.setupDB();
-    //autorun(() => console.log(this.creatures));
+    this.format = format;
+    this.setupDB();
+  }
+
+  setupDB() {
     let db = new loki("chaotic_portal.db");
     this.attacks = db.addCollection('attacks');
     this.battlegear = db.addCollection('battlegear');
@@ -112,9 +133,10 @@ class CollectionDB {
     this.locations = db.addCollection('locations');
     this.mugic = db.addCollection('mugic');
     this.db = db;
-  }
 
-  // setupDB() {
+    // ignoring persistence for now
+    //autorun(() => console.log(this.creatures));
+
   //   var self = this;
   //   let db = new loki("chaotic_portal.db", { autosave: true, autoload: true, autoloadCallback: databaseInitialize, autosaveInterval: 4000, persistenceMethod: 'localStorage' });
   //   this.db = db;
@@ -142,7 +164,7 @@ class CollectionDB {
   //       entries = db.addCollection("mugic");
   //     self.mugic = entries;
   //   };
-  // }
+  }
 
   setup(spreadsheet, type, callback) {
     this.api.getSpreadsheet(spreadsheet, (data) => {
@@ -156,6 +178,20 @@ class CollectionDB {
         return temp;
       }));
     });
+  }
+
+  // example format
+  // this.setup(this.api.urls.Attacks["portal"], "Attack", (data) => {});
+  async setupType(type, resolve) {
+    let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
+
+    console.log(type, uc_type, this.format);
+
+    // this.setup(this.api.urls[uc_type][this.format], uc_type, (data) => {
+    //   this[type].insert(data);
+    //   this.built.push(type);
+    // }
+    resolve();
   }
 
   setupAttacks(type="portal") {
