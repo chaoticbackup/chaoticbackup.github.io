@@ -96,14 +96,10 @@ class API {
   async buildCollection(input) {
     return await Promise.all(input.map((item) => {
       return new Promise((resolve, reject) => {
-        if ('cards' in item) {
-          // console.log(this.cards[item.cards].data);
+        if ('cards' in item)
           return this.cards.setupType(item.cards, resolve);
-        }
-        if ('portal' in item) {
-          // console.log(this.portal[item.portal].data);
+        if ('portal' in item)
           return this.portal.setupType(item.portal, resolve);
-        }
         console.log('cards or portal');
         return reject();
       });
@@ -117,7 +113,7 @@ export default API.getInstance();
 class CollectionDB {
   // Keeps track of what collections have been populated
   @observable built = [];
-  building = [];
+  @observable building = {};
 
   constructor(API, format) {
     this.api = API;
@@ -183,15 +179,29 @@ class CollectionDB {
   // example format
   // this.setup(this.api.urls.Attacks["portal"], "Attack", (data) => {});
   async setupType(type, resolve) {
-    let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
+    console.log(type, this.format, this.building[type]);
 
-    console.log(type, uc_type, this.format);
-
-    // this.setup(this.api.urls[uc_type][this.format], uc_type, (data) => {
-    //   this[type].insert(data);
-    //   this.built.push(type);
-    // }
-    resolve();
+    if (this.building[type]) {
+      if (this.building[type] == "built") {
+        return resolve();
+      }
+      if (this.building[type] == "building") {
+        const disposer = observe(building[type], (change) => {
+          disposer();
+          resolve();
+        });
+        return disposer;
+      }
+    }
+    else {
+      this.building[type] = "building";
+      let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
+      return this.setup(this.api.urls[uc_type][this.format], uc_type, (data) => {
+        this[type].insert(data);
+        this.building[type] = "built";
+        resolve();
+      });
+    }
   }
 
   setupAttacks(type="portal") {

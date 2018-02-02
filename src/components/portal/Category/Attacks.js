@@ -22,16 +22,6 @@ export default class Attacks extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    if (!API.cards.built.includes("attacks_cards")) {
-      API.cards.setupAttacks("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("attacks_portal")) {
-      API.portal.setupAttacks("portal");
-      return (<span>Loading...</span>);
-    }
-
     if (this.loaded == false) {
       API.buildCollection([{'cards': 'attacks'}, {'portal': 'attacks'}])
       .then(() => {
