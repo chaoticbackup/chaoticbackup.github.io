@@ -179,8 +179,6 @@ class CollectionDB {
   // example format
   // this.setup(this.api.urls.Attacks["portal"], "Attack", (data) => {});
   async setupType(type, resolve) {
-    console.log(type, this.format, this.building[type]);
-
     if (this.building[type]) {
       if (this.building[type] == "built") {
         return resolve();
@@ -196,9 +194,11 @@ class CollectionDB {
     else {
       this.building[type] = "building";
       let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
+      console.log(type, this.format, this.building[type]);
       return this.setup(this.api.urls[uc_type][this.format], uc_type, (data) => {
         this[type].insert(data);
         this.building[type] = "built";
+        console.log(type, this.format, this.building[type]);
         resolve();
       });
     }
