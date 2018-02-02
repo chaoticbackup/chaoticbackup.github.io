@@ -22,22 +22,6 @@ export default class SingleLocation extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.cards.built.includes("locations_cards")) {
-      API.cards.setupLocations("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("locations_portal")) {
-      API.portal.setupLocations("portal");
-      return (<span>Loading...</span>);
-    }
-
     const location = API.portal.locations.findOne({'gsx$name': name});
     if (!location) {
       return(<PageNotFound location={this.props.location}/>);

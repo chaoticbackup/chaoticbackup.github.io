@@ -11,11 +11,12 @@ import Collection from './collection/index';
 import Portal from './portal/index';
 import Home from './Home';
 
-const BlockAvoider = withRouter(Base)
+// const BlockAvoider = withRouter(Base)
 
 render(
   <Router>
-    <BlockAvoider />
+    {/* <BlockAvoider /> */}
+    <Base path="/*" href="/" />
   </Router>
   , document.getElementById('root'),
 );
@@ -33,10 +34,11 @@ function Routing(props) {
   );
 }
 
-const language = "ENG";
-const bkgrnd = "05";
-
 function Base(props) {
+  // Configuration for the language and background
+  // Images managed in css file
+  const language = "ENG";
+  const bkgrnd = "05";
 
   const children = <Routing {...props} />;
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link, Route } from 'react-router-dom';
+import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import loki from 'lokijs';
 import s from '../../../styles/app.style';
@@ -10,6 +11,7 @@ import Mugic from '../Single/Mugic';
 
 @inject((stores, props, context) => props) @observer
 export default class Tribes extends React.Component {
+  @observable loaded = false;
 
   constructor() {
     super();
@@ -55,23 +57,11 @@ export default class Tribes extends React.Component {
       );
     }
 
-    if (!API.cards.built.includes("mugic_cards")) {
-      API.cards.setupMugic("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("mugic_portal")) {
-      API.portal.setupMugic("portal");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.cards.built.includes("creatures_cards")) {
-      API.cards.setupCreatures("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("creatures_portal")) {
-      API.portal.setupCreatures("portal");
+    if (this.loaded == false) {
+      API.buildCollection([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
+      .then(() => {
+        this.loaded = true;
+      });
       return (<span>Loading...</span>);
     }
 
@@ -100,7 +90,7 @@ export default class Tribes extends React.Component {
         url = "/portal/" + tribe + "/Mugic/" + encodeURIComponent(card.gsx$name);
       }
 
-      if (card.gsx$type == "Creature") {
+      if (card.gsx$type == "Creatures") {
         card_data = API.cards.creatures.findOne({'gsx$name': card.gsx$name});
         url = "/portal/" + tribe + "/Creatures/" + encodeURIComponent(card.gsx$name);
       }

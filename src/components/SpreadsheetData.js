@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import loki from 'lokijs';
-import {observable, autorun} from "mobx";
+import {observable, observe} from "mobx";
 
 class API {
   @observable portal = null;
@@ -112,7 +112,6 @@ export default API.getInstance();
 
 class CollectionDB {
   // Keeps track of what collections have been populated
-  @observable built = [];
   @observable building = {};
 
   constructor(API, format) {
@@ -121,48 +120,7 @@ class CollectionDB {
     this.setupDB();
   }
 
-  setupDB() {
-    let db = new loki("chaotic_portal.db");
-    this.attacks = db.addCollection('attacks');
-    this.battlegear = db.addCollection('battlegear');
-    this.creatures = db.addCollection('creatures');
-    this.locations = db.addCollection('locations');
-    this.mugic = db.addCollection('mugic');
-    this.db = db;
-
-    // ignoring persistence for now
-    //autorun(() => console.log(this.creatures));
-
-  //   var self = this;
-  //   let db = new loki("chaotic_portal.db", { autosave: true, autoload: true, autoloadCallback: databaseInitialize, autosaveInterval: 4000, persistenceMethod: 'localStorage' });
-  //   this.db = db;
-
-  //   let databaseInitialize = () => {
-  //     var entries;
-  //     if ((entries = db.getCollection("attacks")) === null)
-  //       entries = db.addCollection("attacks");
-  //     self.attacks = entries;
-
-  //     if ((entries = db.getCollection("battlegear")) === null)
-  //       entries = db.addCollection("battlegear");
-  //     self.battlegear = entries;
-
-  //     console.log(db.getCollection("creatures"));
-  //     if ((entries = db.getCollection("creatures")) === null)
-  //       entries = db.addCollection("creatures");
-  //     self.creatures = db.addCollection('creatures');
-
-  //     if ((entries = db.getCollection("locations")) === null)
-  //       entries = db.addCollection("locations");
-  //     self.locations = entries
-
-  //     if ((entries = db.getCollection("mugic")) === null)
-  //       entries = db.addCollection("mugic");
-  //     self.mugic = entries;
-  //   };
-  }
-
-  setup(spreadsheet, type, callback) {
+  getSpreadsheetData(spreadsheet, type, callback) {
     this.api.getSpreadsheet(spreadsheet, (data) => {
       callback(data.map((item) => {
         let temp = {};
@@ -194,49 +152,49 @@ class CollectionDB {
     else {
       this.building[type] = "building";
       let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
-      console.log(type, this.format, this.building[type]);
-      return this.setup(this.api.urls[uc_type][this.format], uc_type, (data) => {
+      return this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, (data) => {
         this[type].insert(data);
         this.building[type] = "built";
-        console.log(type, this.format, this.building[type]);
         resolve();
       });
     }
   }
 
-  setupAttacks(type="portal") {
-    this.setup(this.api.urls.Attacks[type], "Attack", (data) => {
-      this.attacks.insert(data);
-      this.built.push("attacks_"+type);
-    });
-  }
+  setupDB() {
+    // ignoring persistence for now
+    let db = new loki("chaotic_portal.db");
+    this.attacks = db.addCollection('attacks');
+    this.battlegear = db.addCollection('battlegear');
+    this.creatures = db.addCollection('creatures');
+    this.locations = db.addCollection('locations');
+    this.mugic = db.addCollection('mugic');
+    this.db = db;
 
-  setupBattlegear(type="portal") {
-    this.setup(this.api.urls.Battlegear[type], "Battlegear", (data) => {
-      this.battlegear.insert(data);
-      this.built.push("battlegear_"+type);
-    });
-  }
+  //   let db = new loki("chaotic_portal.db", { autosave: true, autoload: true, autoloadCallback: databaseInitialize, autosaveInterval: 4000, persistenceMethod: 'localStorage' });
+  //   this.db = db;
 
-  setupCreatures(type="portal") {
-    this.setup(this.api.urls.Creatures[type], "Creature", (data) => {
-      this.creatures.insert(data);
-      this.built.push("creatures_"+type);
-    });
-  }
+  //   let databaseInitialize = () => {
+  //     var entries;
+  //     if ((entries = db.getCollection("attacks")) === null)
+  //       entries = db.addCollection("attacks");
+  //     this.attacks = entries;
 
-  setupLocations(type="portal") {
-    this.setup(this.api.urls.Locations[type], "Location", (data) => {
-      this.locations.insert(data);
-      this.built.push("locations_"+type);
-    });
-  }
+  //     if ((entries = db.getCollection("battlegear")) === null)
+  //       entries = db.addCollection("battlegear");
+  //     this.battlegear = entries;
 
-  setupMugic(type="portal") {
-    this.setup(this.api.urls.Mugic[type], "Mugic", (data) => {
-      this.mugic.insert(data);
-      this.built.push("mugic_"+type);
-    });
-  }
+  //     console.log(db.getCollection("creatures"));
+  //     if ((entries = db.getCollection("creatures")) === null)
+  //       entries = db.addCollection("creatures");
+  //     this.creatures = db.addCollection('creatures');
 
+  //     if ((entries = db.getCollection("locations")) === null)
+  //       entries = db.addCollection("locations");
+  //     this.locations = entries
+
+  //     if ((entries = db.getCollection("mugic")) === null)
+  //       entries = db.addCollection("mugic");
+  //     this.mugic = entries;
+  //   };
+  }
 }

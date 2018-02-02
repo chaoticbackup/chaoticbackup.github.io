@@ -1,6 +1,7 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link, Route } from 'react-router-dom';
+import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
@@ -8,6 +9,7 @@ import Location from '../Single/Location';
 
 @inject((stores, props, context) => props) @observer
 export default class Locations extends React.Component {
+  @observable loaded = false;
 
   render() {
 
@@ -20,13 +22,11 @@ export default class Locations extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    if (!API.cards.built.includes("locations_cards")) {
-      API.cards.setupLocations("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("locations_portal")) {
-      API.portal.setupLocations("portal");
+    if (this.loaded == false) {
+      API.buildCollection([{'cards': 'locations'}, {'portal': 'locations'}])
+      .then(() => {
+        this.loaded = true;
+      });
       return (<span>Loading...</span>);
     }
 

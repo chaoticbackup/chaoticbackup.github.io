@@ -1,6 +1,7 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link, Route } from 'react-router-dom';
+import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
@@ -8,10 +9,9 @@ import SingleBattlegear from '../Single/Battlegear';
 
 @inject((stores, props, context) => props) @observer
 export default class Battlegear extends React.Component {
+  @observable loaded = false;
 
     render() {
-
-
       let path = this.props.location.pathname.split("/");
       if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
@@ -21,13 +21,11 @@ export default class Battlegear extends React.Component {
         return (<span>Loading...</span>);
       }
 
-      if (!API.cards.built.includes("battlegear_cards")) {
-        API.cards.setupBattlegear("cards");
-        return (<span>Loading...</span>);
-      }
-
-      if (!API.portal.built.includes("battlegear_portal")) {
-        API.portal.setupBattlegear("portal");
+      if (this.loaded == false) {
+        API.buildCollection([{'cards': 'battlegear'}, {'portal': 'battlegear'}])
+        .then(() => {
+          this.loaded = true;
+        });
         return (<span>Loading...</span>);
       }
 
