@@ -22,22 +22,6 @@ export default class SingleBattlegear extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.cards.built.includes("battlegear_cards")) {
-      API.cards.setupBattlegear("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("battlegear_portal")) {
-      API.portal.setupBattlegear("portal");
-      return (<span>Loading...</span>);
-    }
-
     const battlegear = API.portal.battlegear.findOne({'gsx$name': name});
     if (!battlegear) {
       return(<PageNotFound location={this.props.location}/>);

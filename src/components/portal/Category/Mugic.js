@@ -1,6 +1,7 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link, Route } from 'react-router-dom';
+import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
@@ -8,6 +9,7 @@ import SingleMugic from '../Single/Mugic';
 
 @inject((stores, props, context) => props) @observer
 export default class Mugic extends React.Component {
+  @observable loaded = false;
 
   // ** Process the tribe ** //
   // /portal/Mugic/
@@ -25,13 +27,11 @@ export default class Mugic extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    if (!API.cards.built.includes("mugic_cards")) {
-      API.cards.setupMugic("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("mugic_portal")) {
-      API.portal.setupMugic("portal");
+    if (this.loaded == false) {
+      API.buildCollection([{'cards': 'mugic'}, {'portal': 'mugic'}])
+      .then(() => {
+        this.loaded = true;
+      });
       return (<span>Loading...</span>);
     }
 

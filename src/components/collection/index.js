@@ -8,6 +8,7 @@ import SearchForm from './Search';
 
 @inject((stores, props, context) => props) @observer
 export default class Home extends React.Component {
+  @observable loaded = false;
   @observable n = 10;
   @observable p = 1;
   @observable content = [];
@@ -23,42 +24,18 @@ export default class Home extends React.Component {
   }
 
   render() {
-    if (this.props.children) {
-      return (<div>{this.props.children}</div>);
-    }
 
-    let loading = false;
-
-    const store = API;
-    if (store.urls === null ||
-      store.portal === null ||
-      store.cards === null) {
+    if (API.urls === null ||
+      API.portal === null ||
+      API.cards === null) {
       return (<span>Loading...</span>);
     }
 
-    // Load all the data
-    if (!store.cards.built.includes("attacks_cards")) {
-      store.cards.setupAttacks("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.cards.built.includes("battlegear_cards")) {
-      store.cards.setupBattlegear("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.cards.built.includes("creatures_cards")) {
-      store.cards.setupCreatures("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.cards.built.includes("locations_cards")) {
-      store.cards.setupLocations("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!store.cards.built.includes("mugic_cards")) {
-      store.cards.setupMugic("cards");
+    if (this.loaded == false) {
+      API.buildCollection([{'cards': 'attacks'}, , {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
+      .then(() => {
+        this.loaded = true;
+      });
       return (<span>Loading...</span>);
     }
 

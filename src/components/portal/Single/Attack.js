@@ -21,22 +21,6 @@ export default class SingleAttack extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.cards.built.includes("attacks_cards")) {
-      API.cards.setupAttacks("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("attacks_portal")) {
-      API.portal.setupAttacks("portal");
-      return (<span>Loading...</span>);
-    }
-
     const attack = API.portal.attacks.findOne({'gsx$name': name});
     if (!attack) {
       return(<PageNotFound location={this.props.location}/>);

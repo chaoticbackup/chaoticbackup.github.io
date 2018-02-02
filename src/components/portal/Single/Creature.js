@@ -18,22 +18,6 @@ export default class SingleCreature extends React.Component {
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.cards.built.includes("creatures_cards")) {
-      API.cards.setupCreatures("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("creatures_portal")) {
-      API.portal.setupCreatures("portal");
-      return (<span>Loading...</span>);
-    }
-
     const name = (() => {
       if (path.length >= 5) return decodeURIComponent(path[4]);
       if (path.length == 4) return decodeURIComponent(path[3]);

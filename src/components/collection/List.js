@@ -20,13 +20,13 @@ export default class CardList extends React.Component {
     }
     return cards.map((card, i) => {
       switch (card.gsx$type) {
-      case "Attack":
+      case "Attacks":
         return (<Attack attack={card} key={i} setImage={this.props.setImage.bind(this)}/>);
       case "Battlegear":
         return (<Battlegear battlegear={card} key={i} setImage={this.props.setImage.bind(this)}/>);
-      case "Creature":
+      case "Creatures":
         return (<Creature creature={card} key={i} setImage={this.props.setImage.bind(this)}/>);
-      case "Location":
+      case "Locations":
         return (<Location location={card} key={i} setImage={this.props.setImage.bind(this)}/>);
       case "Mugic":
         return (<Mugic mugic={card} key={i} setImage={this.props.setImage.bind(this)}/>);

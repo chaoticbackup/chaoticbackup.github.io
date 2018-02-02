@@ -1,6 +1,7 @@
 import React from 'react';
 import Interactive from 'react-interactive';
 import { Link, Route } from 'react-router-dom';
+import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
@@ -8,13 +9,13 @@ import Creature from '../Single/Creature';
 
 @inject((stores, props, context) => props) @observer
 export default class Creatures extends React.Component {
+  @observable loaded = false;
 
   // ** Process the tribe ** //
   // /portal/Creatures/
   // /portal/Creatures/{Tribe}
   // The first / gets counted
   render() {
-
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
@@ -24,13 +25,11 @@ export default class Creatures extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    if (!API.cards.built.includes("creatures_cards")) {
-      API.cards.setupCreatures("cards");
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.portal.built.includes("creatures_portal")) {
-      API.portal.setupCreatures("portal");
+    if (this.loaded == false) {
+      API.buildCollection([{'cards': 'creatures'}, {'portal': 'creatures'}])
+      .then(() => {
+        this.loaded = true;
+      });
       return (<span>Loading...</span>);
     }
 
