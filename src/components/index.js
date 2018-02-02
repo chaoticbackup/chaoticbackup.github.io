@@ -6,7 +6,7 @@ import s from '../styles/app.style';
 
 /* Components */
 import {PageNotFound, UnderConstruction} from './Snippets';
-import EnterTheCode from './account/EnterTheCode';
+import EnterTheCode from './entercode/index';
 import Collection from './collection/index';
 import Portal from './portal/index';
 import Home from './Home';
