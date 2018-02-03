@@ -5,7 +5,7 @@ import {observer, inject} from 'mobx-react';
 import s from '../styles/app.style';
 
 /* Components */
-import {PageNotFound, UnderConstruction} from './Snippets';
+import {PageNotFound, UnderConstruction, Donate} from './Snippets';
 import EnterTheCode from './entercode/index';
 import Collection from './collection/index';
 import Portal from './portal/index';
@@ -125,7 +125,10 @@ function Base(props) {
                   <div className="footer-left">
                     <div className="footer-right">
                       <div className="footer-text">
-                        <div className="footer-search"></div>
+                        <div className="footer-search">
+                          <br /><br />
+                          <Donate />
+                        </div>
                         <div className="footer-nav">
                           <div className="copyright">
                             ©2008 Chaotic USA Entertainment Group, Inc.
@@ -135,7 +138,7 @@ function Base(props) {
                         </div>
                         <div className="footer-language">
                           <a href="javascript:showLanguageSelection();" className="page-options" title="Change Language">
-                            <img src="http://web.archive.org/web/20130304153151im_/http://chaoticgame.com/Images/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
+                            <img src="/src/img/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
                             <br />English (Change Language)
                           </a>
                         </div>

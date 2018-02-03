@@ -15,6 +15,16 @@
     /*display: inline-block;*/
 }
 
+.with-love span,
+.with-love div {
+    font-size: 14px !important;
+    line-height: 18px;
+}
+
+.with-love div {
+    padding-bottom: 4px;
+}
+
 .with-love .heart {
     font-size: 1.4em;
     color: #ff79c6;
