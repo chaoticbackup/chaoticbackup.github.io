@@ -2,21 +2,19 @@ import React from 'react';
 import {observer, inject} from 'mobx-react';
 import {Route} from 'react-router-dom';
 import EnterTheCode from './EnterTheCode';
+import PackSimulator from './PackSimulator';
 
 @inject((stores, props, context) => props) @observer
-export default class Home extends React.Component {
+export default class Base extends React.Component {
 
   render() {
-    <div>
-      <Routing {...this.props} />
-    </div>
+    return (<Routing {...this.props} />);
   }
 
 }
 
 function Routing(props) {
   const match = props.match;
-
   return (
     <div>
       <Route exact path={match.url} component={EnterTheCode} />

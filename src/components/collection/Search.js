@@ -312,7 +312,7 @@ export default class SearchForm extends React.Component {
       attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
       battlegearResults = battlegearResults.find({'gsx$set': {'$or': setsList} });
       creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
-      locationResults  = locationResults .find({'gsx$set': {'$or': setsList} });
+      locationResults  = locationResults.find({'gsx$set': {'$or': setsList} });
       mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
     }
 

@@ -1,9 +1,11 @@
 import React from 'react';
-import style from '../../styles/style';
-import DigitInput from 'react-digit-input';
-import API from '../SpreadsheetData';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import {Link} from 'react-router-dom';
+import Interactive from 'react-interactive';
+import DigitInput from 'react-digit-input';
+import API from '../SpreadsheetData';
+import style from '../../styles/style';
 
 const s = Object.create(style);
 s.input = {
@@ -69,6 +71,9 @@ export default class EnterTheCode extends React.Component {
 
     return(
       <div>
+        <Interactive as={Link} {...s.link}
+         to={`/EnterTheCode/PackSimulator/`}>Pack Simulator</Interactive>
+        <br /><br />
         <DigitInput
           acceptedCharacters={/^[0-9a-z]$/i}
           length={12}
