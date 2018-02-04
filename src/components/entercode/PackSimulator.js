@@ -97,6 +97,17 @@ export default class PackSimulator extends React.Component {
       else return "Rare";
     };
 
+    const gendisp = (avg) => {
+      let min = parseInt(avg) - 10;
+      if (min < 0) min = 0;
+      return (Math.floor(Math.random() * 5)) * 5 + min;
+    }
+    const geneng = (avg) => {
+      let min = parseInt(avg) - 5;
+      if (min < 0) min = 0;
+      return (Math.floor(Math.random() * 3)) * 5 + min;
+    }
+
     const gencard = (results) => {
       let id = Math.floor(Math.random() * results.length);
       let card = results[id];
@@ -111,7 +122,26 @@ export default class PackSimulator extends React.Component {
       }
       card_names.push(card.gsx$name);
 
-      cards.push(<div key={key++} className="card" style={{backgroundImage: `url("${API.base_image + (card.gsx$image||API.card_back)}")`}}></div>);
+      if (card.gsx$type != "Creatures") {
+        cards.push(<div key={key++} className="card" style={{backgroundImage: `url("${API.base_image + (card.gsx$image||API.card_back)}")`}}></div>);
+      }
+      else {
+        const courage = gendisp(card.gsx$courage);
+        const power = gendisp(card.gsx$power);
+        const wisdom = gendisp(card.gsx$wisdom);
+        const speed = gendisp(card.gsx$speed);
+        const energy = geneng(card.gsx$energy);
+        cards.push(<div key={key++} className="card" style={{backgroundImage: `url("${API.base_image + (card.gsx$image||API.card_back)}")`}}>
+          <div className="stats">
+            <span key="courage">{courage}</span>
+            <span key="power">{power}</span>
+            <span key="wisdom">{wisdom}</span>
+            <span key="speed">{speed}</span>
+            <span key="energy">{energy}</span>
+          </div>
+        </div>);
+      }
+
     }
 
     const genrarity = (rarity, num) => {
