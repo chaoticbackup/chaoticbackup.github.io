@@ -1,6 +1,11 @@
+@media only screen and (min-width: 975px) {
+.pack {
+    max-width: 70%;
+}
+} /* Desktop */
+
 .pack {
     height: 100%;
-    max-width: 70%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

@@ -1,3 +1,15 @@
+@media only screen and (min-width: 975px) {
+
+.collection > .left {
+    float: left;
+    width: 30%;
+}
+
+.collection > .right {
+    float: right;
+    width: 70%;
+}
+
 .card {
     text-align: left;
     display: flex;
@@ -39,6 +51,26 @@
     padding-right: 4px;
 }
 
+.SearchForm {
+    text-align: left;
+}
+
+.brainwashed {
+    background-color: #dcdddf;
+    color: black !important;
+}
+
+.flavortext {
+    font-style: italic;
+}
+
+.disciplines input {
+    width: 30px;
+    height: 14px;
+}
+
+} /* desktop */
+
 .card .icon14, .card .icon16,
 .card .icon20, .card .icon24 {
     vertical-align: middle;
@@ -78,22 +110,4 @@
 .thumb {
     width: 100px;
     height: 98px;
-}
-
-.SearchForm {
-    text-align: left;
-}
-
-.brainwashed {
-    background-color: #dcdddf;
-    color: black !important;
-}
-
-.flavortext {
-    font-style: italic;
-}
-
-.disciplines input {
-    width: 30px;
-    height: 14px;
 }

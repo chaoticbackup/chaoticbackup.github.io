@@ -42,13 +42,13 @@ export default class Home extends React.Component {
     return (
       <div className="collection">
         <link rel="stylesheet" href="/src/css/collection.css" />
-        <div style={{float: 'left', width: '30%'}}>
+        <div className="left">
           <div className="card_img">
             <img src={API.base_image + this.card_img} />
           </div>
           <SearchForm handleContent={this.handleContent.bind(this)} />
         </div>
-        <div style={{float: 'right', width: '70%'}}>
+        <div className="right">
           {this.navigation()}<br />
           <CardList cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
           {this.navigation()}
