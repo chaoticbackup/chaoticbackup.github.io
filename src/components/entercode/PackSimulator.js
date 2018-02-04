@@ -12,6 +12,7 @@ export default class PackSimulator extends React.Component {
   @observable loaded = false
   @observable cards = []
   @observable set = ""
+  @observable packs = 1
 
   constructor(props) {
     super(props);
@@ -40,8 +41,10 @@ export default class PackSimulator extends React.Component {
     }
 
     let setsInput = [];
-    for (const key in API.sets) {
-      setsInput.push(<option key={key} value={key}>{API.sets[key]}</option>);
+    let i = 1;
+    for (const set in API.sets) {
+      setsInput.push(<option key={i++} value={set}>{API.sets[set]}</option>);
+      if (i>9) break;
     }
 
     return (<div>
@@ -50,12 +53,12 @@ export default class PackSimulator extends React.Component {
        to={`/EnterTheCode/`}>Enter The Code</Interactive>
       <br /><br />
       <form onSubmit={this.handleSubmit}>
-        <select value={this.set} onChange={this.handleChange}>
+        <select name="set" value={this.set} onChange={this.handleChange}>
           <option defaultValue="selected" hidden style={{fontStyle: 'italic'}}>Select a Set</option>
           {setsInput}
         </select>
         <br /><br />
-        <input disabled={!this.set} type="submit" value="Open Pack" />
+        <input disabled={!this.set} type="submit" value="Open Packs" />
       </form>
       <br /><br />
       <div className="pack">{this.cards}</div>
@@ -63,63 +66,74 @@ export default class PackSimulator extends React.Component {
   }
 
   handleChange(event) {
-    this.set = event.target.value;
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this[name] = value;
   }
 
   handleSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
-    let cards = [];
 
-    const rarity = (() => {
-      var randomNumber = Math.floor(Math.random() * 24) + 1;
-      if (randomNumber == 24) return "Ultra Rare";
-      else if (randomNumber % 3 == 0) return "Super Rare";
-      else return "Rare";
-    })();
-
-    let key = 0;
-    const card = (results) => {
-      var id = Math.floor(Math.random() * results.length);
-      let card = results[id];
-
-      return (<div key={key++} className="card" style={{backgroundImage: `url("${API.base_image+(card.gsx$image||API.card_back)}")`}}></div>)
-    }
+    let cards = []; // Returned list of card divs
+    let card_names = []; // Prevent duplicates in pack
+    let key = 0; // React key iterator uniqueness
 
     let pview = this.filter.addDynamicView('set');
 
-    let i, results;
+    const randomRare = () => {
+      let randomNumber = Math.floor(Math.random() * 24) + 1;
+      if (randomNumber == 24) return "Ultra Rare";
+      else if (randomNumber % 3 == 0) return "Super Rare";
+      else return "Rare";
+    };
 
-    // 4 Common
-    pview.applyFind({'gsx$set': this.set})
-      .applyFind({'gsx$rarity': 'Common'});
-    results = pview.data();
-    for (i=0;i<4;i++) {
-      cards.push(card(results));
+    const gencard = (results) => {
+      let id = Math.floor(Math.random() * results.length);
+      let card = results[id];
+
+      if (!card) {
+        cards.push(<div key={i} className="card" style={{backgroundImage: `url("${API.base_image+API.card_back}")`}}></div>);
+        return;
+      }
+
+      if (card_names.indexOf(card.gsx$name) > -1) {
+        return gencard(results);
+      }
+      card_names.push(card.gsx$name);
+
+      cards.push(<div key={key++} className="card" style={{backgroundImage: `url("${API.base_image + (card.gsx$image||API.card_back)}")`}}></div>);
     }
-    pview.removeFilters();
 
-    // 3 Uncommon
-    pview.applyFind({'gsx$set': this.set})
-      .applyFind({'gsx$rarity': 'Uncommon'});
-    results = pview.data();
-    for (i=0;i<3;i++) {
-      cards.push(card(results));
+    const genrarity = (rarity, num) => {
+      pview.applyFind({'gsx$set': this.set})
+        .applyFind({'gsx$rarity': rarity});
+      let results = pview.data();
+      for (let i=0; i<num; i++) gencard(results);
+      pview.removeFilters();
     }
-    pview.removeFilters();
 
-    // 1 Rare
-    pview.applyFind({'gsx$set': this.set})
-      .applyFind({'gsx$rarity': 'Rare'});
-    results = pview.data();
-    cards.push(card(results));
-    pview.removeFilters();
+    // AU sets have 6 common and 3 rare+
+    // DOP to FUN had 4 common, 3 uncommon, 2 rare+
+    let newSets = ["AU", "FAS"];
 
-    // 1 Rare, Super, Ultra
-    pview.applyFind({'gsx$set': this.set})
-      .applyFind({'gsx$rarity': rarity});
-    results = pview.data();
-    cards.push(card(results));
+    // Before AU sets
+    if (newSets.indexOf(this.set) == -1) {
+      genrarity('Common', 4);
+      genrarity('Uncommon', 3);
+      genrarity('Rare', 1);
+      genrarity(randomRare(), 1);
+    }
+    // AU sets and after
+    else {
+      genrarity('Common', 6);
+      genrarity('Rare', 2);
+      genrarity(randomRare(), 1);
+    }
+
+    card_names = [];
 
     this.filter.removeDynamicView('set');
 

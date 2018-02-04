@@ -85,6 +85,7 @@ class API {
       "AU": "Alliance Unraveled",
       "FAS": "Fire and Stone",
       "SAS": "Storm and Sea",
+      "EE": "Elemental Emperors",
       "BR": "Beyond Rare",
       "LR": "League Rewards",
       "OP1": "Organized Play 1"
