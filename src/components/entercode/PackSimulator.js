@@ -53,6 +53,13 @@ export default class PackSimulator extends React.Component {
        to={`/EnterTheCode/`}>Enter The Code</Interactive>
       <br /><br />
       <form onSubmit={this.handleSubmit}>
+        <label>Packs:
+          <input name="packs" type="number"
+            value={this.packs}
+            min="1" max="24"
+            style={{width: "32px", padding: '0px'}}
+            onChange={(e) => {if(e.target.value>24) e.target.value=24; this.handleChange(e)}} />
+        </label>
         <select name="set" value={this.set} onChange={this.handleChange}>
           <option defaultValue="selected" hidden style={{fontStyle: 'italic'}}>Select a Set</option>
           {setsInput}
@@ -119,21 +126,23 @@ export default class PackSimulator extends React.Component {
     // DOP to FUN had 4 common, 3 uncommon, 2 rare+
     let newSets = ["AU", "FAS"];
 
-    // Before AU sets
-    if (newSets.indexOf(this.set) == -1) {
-      genrarity('Common', 4);
-      genrarity('Uncommon', 3);
-      genrarity('Rare', 1);
-      genrarity(randomRare(), 1);
-    }
-    // AU sets and after
-    else {
-      genrarity('Common', 6);
-      genrarity('Rare', 2);
-      genrarity(randomRare(), 1);
-    }
+    for (let i = 0; i < this.packs; i++) {
+      // Before AU sets
+      if (newSets.indexOf(this.set) == -1) {
+        genrarity('Common', 4);
+        genrarity('Uncommon', 3);
+        genrarity('Rare', 1);
+        genrarity(randomRare(), 1);
+      }
+      // AU sets and after
+      else {
+        genrarity('Common', 6);
+        genrarity('Rare', 2);
+        genrarity(randomRare(), 1);
+      }
 
-    card_names = [];
+      card_names = [];
+    }
 
     this.filter.removeDynamicView('set');
 
