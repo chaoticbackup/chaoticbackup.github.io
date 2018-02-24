@@ -115,12 +115,13 @@
 
 .Collapsible {
     margin-bottom: 10px;
+    width: 250px;
 }
 
 .Collapsible__trigger {
     background-color: #333;
-    width: 250px;
-    display: inline-block;
+    display: block;
+    position: relative;
     padding-top: 5px;
     padding-bottom: 5px;
     text-indent: 5px;
@@ -128,4 +129,25 @@
 
 .Collapsible__trigger:hover {
     background-color: red;
+}
+
+.Collapsible__trigger:after {
+    content: '^';
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: block;
+    transition: transform 400ms;
+}
+
+.Collapsible__trigger.is-open:after {
+    transform: rotateZ(180deg);
+    right: 5px;
+    top: 5px;
+}
+
+
+.Collapsible__trigger.is-disabled {
+    opacity: 0.5;
+    background-color: grey;
 }

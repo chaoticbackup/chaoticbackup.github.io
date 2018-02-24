@@ -100,7 +100,7 @@ export default class SearchForm extends React.Component {
           <br />
           <label>Name: <input type="text" ref={(input) => this.stones.name = input} /></label>
           <br />
-          <label>Text: <input type="text" ref={(input) => this.stones.text = input} /></label>
+          <label>Text: &nbsp;&nbsp;&nbsp;<input type="text" ref={(input) => this.stones.text = input} /></label>
           <br />
           <div>
             <label>Subtypes | Initiative:<br />
