@@ -41,7 +41,7 @@ export default {
         comments: false,
       },
     }),
-    new ExtractTextPlugin('public/style.css', {
+    new ExtractTextPlugin('build/style.css', {
         allChunks: true
     }),
   ],

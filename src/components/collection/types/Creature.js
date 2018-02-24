@@ -37,6 +37,10 @@ export default class Creature extends React.Component {
           <Ability ability={creature.gsx$ability} tribe={creature.gsx$tribe} />
           <Ability type="brainwashed" tribe={creature.gsx$tribe} ability={creature.gsx$brainwashed} />
           <Unique data={{unique: creature.gsx$unique, loyal: creature.gsx$loyal, legendary: creature.gsx$legendary, tribe: creature.gsx$tribe}} />
+          {/*chieftain*/
+            creature.gsx$types.includes("Chieftain") &&
+            <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
+          }
           <span className="flavortext">{creature.gsx$flavortext}</span>
         </div>
         <br />
@@ -51,3 +55,5 @@ export default class Creature extends React.Component {
   	);
   }
 }
+
+

@@ -60,7 +60,8 @@
     color: black !important;
 }
 
-.flavortext {
+.flavortext,
+.chieftain {
     font-style: italic;
 }
 

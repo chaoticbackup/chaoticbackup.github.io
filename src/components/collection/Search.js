@@ -110,6 +110,7 @@ export default class SearchForm extends React.Component {
             <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
           </div>
           <br />
+          <label>Types:</label>
           {card_types}
           <br />
           {card_tribes}

@@ -22,6 +22,7 @@ export default class Location extends React.Component {
         </div>
         <div className="right">
           <Ability ability={location.gsx$ability} />
+          <Unique data={{unique: location.gsx$unique, loyal: location.gsx$loyal, legendary: location.gsx$legendary}} /><br />
           <span className="flavortext">{location.gsx$flavortext}</span>
         </div>
       </div>
