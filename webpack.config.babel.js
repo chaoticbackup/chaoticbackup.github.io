@@ -1,6 +1,8 @@
 import webpack from 'webpack';
 import path from 'path';
 
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 export default {
   entry: ['babel-polyfill', `${__dirname}/src/components/index.js`],
   output: {
@@ -11,7 +13,14 @@ export default {
 
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel' },
+      {
+        test: /\.jsx?$/, exclude: /node_modules/,
+        loader: 'babel'
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css!sass')
+      },
     ],
   },
 
@@ -20,7 +29,7 @@ export default {
   },
 
   node: {
-    fs: 'empty'
+    fs: 'empty',
   },
 
   plugins: process.argv.indexOf('-p') === -1 ? null : [
@@ -31,6 +40,9 @@ export default {
       output: {
         comments: false,
       },
+    }),
+    new ExtractTextPlugin('public/style.css', {
+        allChunks: true
     }),
   ],
 };
