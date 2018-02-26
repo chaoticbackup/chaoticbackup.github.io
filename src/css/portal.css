@@ -81,10 +81,6 @@
     display: block;
 }
 
-.search {
-
-}
-
 .magnifying-glass {
     cursor: pointer;
     transition: color .2s;
@@ -123,4 +119,13 @@
 .entry .icon14, .entry .icon16,
 .entry .icon20, .entry .icon24 {
     vertical-align: middle;
+}
+
+.search .results div {
+    padding-top: 10px;
+}
+
+.search .results a {
+    font-size: 16px;
+    line-height: 20px;
 }

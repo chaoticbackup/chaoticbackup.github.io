@@ -12,6 +12,7 @@ import Creatures from './Category/Creatures';
 import Locations from './Category/Locations';
 import Mugic from './Category/Mugic';
 import Tribes from './Category/Tribes';
+import {SearchButton} from '../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Base extends React.Component {
@@ -43,8 +44,14 @@ function Routing(props) {
       <Route path={`${match.url}/Locations`} component={Locations} />
       <Route path={`${match.url}/Mugic`} component={Mugic} />
       {tribes}
+      <Route path={`${match.url}/Search`} component={Search} />
     </div>
   );
+}
+
+function voidClick(e) {
+  e.preventDefault();
+  e.stopPropagation();
 }
 
 function Header() {
@@ -52,7 +59,7 @@ function Header() {
   const types = (() => {
     return (
       <li className="dropdown">
-        <Link to=" " className="dropbtn">Types</Link>
+        <Link to=" " onClick={voidClick} className="dropbtn">Types</Link>
         <div className="dropdown-content">
           <Link to="/portal/Attacks">Attacks</Link>
           <Link to="/portal/Battlegear">Battlegear</Link>
@@ -67,8 +74,9 @@ function Header() {
   const tribes = ["Danian", "Mipedian", "OverWorld", "UnderWorld"].map((tribe, i) => {
     return (
       <li key={i} className="dropdown">
-        <Link to={"/portal/"+tribe} className="dropbtn">{tribe}</Link>
+        <Link to=" " className="dropbtn" onClick={voidClick}>{tribe}</Link>
         <div className="dropdown-content">
+          <Link to={"/portal/"+tribe}>All</Link>
           <Link to={"/portal/Creatures/"+tribe}> Creatures</Link>
           <Link to={"/portal/Mugic/"+tribe}> Mugic</Link>
         </div>
@@ -80,10 +88,10 @@ function Header() {
     <div className="navbar">
       <ul>
         <li><Link to="/portal/">Home</Link></li>
-        <li><Link to="javascript:void(0)"><Search /></Link></li>
+        <li><Link to="/portal/Search"><SearchButton />Search</Link></li>
         {types}
         <li className="dropdown">
-          <Link to={"/portal/Generic"} className="dropbtn">Generic</Link>
+          <Link to=" " onClick={voidClick} className="dropbtn">Generic</Link>
           <div className="dropdown-content">
             <Link to={"/portal/Generic/Mugic"}>Mugic</Link>
           </div>
@@ -93,3 +101,4 @@ function Header() {
     </div>
   );
 }
+
