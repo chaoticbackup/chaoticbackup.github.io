@@ -66,7 +66,7 @@ class DBSearch extends React.Component {
 
     // No search
     if (string == "") {
-      return (<div></div>);
+      return (<div style={{minHeight: '50px'}}></div>);
     }
 
     let filter = this.filter.addCollection('filter');
@@ -81,7 +81,6 @@ class DBSearch extends React.Component {
 
     // Attributes   Background  Details
     attackResults = attackResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(string, 'i')}},
       {'gsx$attributes': {'$regex': new RegExp(string, 'i')}},
       {'gsx$background': {'$regex': new RegExp(string, 'i')}},
       {'gsx$details': {'$regex': new RegExp(string, 'i')}}
@@ -89,14 +88,12 @@ class DBSearch extends React.Component {
 
     // Attributes   Background  Details
     battlegearResults = battlegearResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(string, 'i')}},
       {'gsx$attributes': {'$regex': new RegExp(string, 'i')}},
       {'gsx$background': {'$regex': new RegExp(string, 'i')}},
       {'gsx$details': {'$regex': new RegExp(string, 'i')}}
     ]});
     // Appearance   Background  Special Abilities   Details
     creatureResults = creatureResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(string, 'i')}},
       {'gsx$appearance': {'$regex': new RegExp(string, 'i')}},
       {'gsx$background': {'$regex': new RegExp(string, 'i')}},
       {'gsx$specialabilities': {'$regex': new RegExp(string, 'i')}},
@@ -104,14 +101,12 @@ class DBSearch extends React.Component {
     ]});
     // Local Features   Background  Details
     locationResults = locationResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(string, 'i')}},
       {'gsx$localfeatures': {'$regex': new RegExp(string, 'i')}},
       {'gsx$background': {'$regex': new RegExp(string, 'i')}},
       {'gsx$details': {'$regex': new RegExp(string, 'i')}}
     ]});
     // Background   Details
     mugicResults = mugicResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(string, 'i')}},
       {'gsx$background': {'$regex': new RegExp(string, 'i')}},
       {'gsx$details': {'$regex': new RegExp(string, 'i')}}
     ]});
@@ -141,7 +136,7 @@ class DBSearch extends React.Component {
     let results = pview.data();
     this.filter.removeCollection('filter');
 
-    let content = results.map((card, i) => {
+    let makeLink = (card, i) => {
       let link = "/portal";
 
       switch (card.gsx$type) {
@@ -165,14 +160,28 @@ class DBSearch extends React.Component {
       return (<div key={i}><Interactive as={Link} {...s.link} to={link}>
         {card.gsx$name}
       </Interactive><br /></div>);
-    });
+    };
+
+    let content = results.map(makeLink);
+
+    // This prioritizes names in the results
+    attackResults = API.portal.attacks.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
+    battlegearResults = API.portal.battlegear.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
+    creatureResults = API.portal.creatures.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
+    locationResults = API.portal.locations.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
+    mugicResults = API.portal.mugic.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
+
+    let names = [].concat(attackResults, battlegearResults, creatureResults, locationResults, mugicResults).map(makeLink);
 
     if (results.length == 0) {
       content = (<div>No Results Found</div>);
     }
 
     return (<div className="results">
-      <div>Results containing {string}:</div><br />
+      <br />
+      {names}
+      <hr />
+      <div>Results containing {string}:</div>
       {content}
     </div>);
   }

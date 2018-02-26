@@ -63,6 +63,7 @@ export default class SearchForm extends React.Component {
 
     const card_tribes = (
       <div>
+        <div>Tribes</div>
         <input type="checkbox" ref={(input) => this.tribes.danian = input}/><img className="icon16" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.tribes.mipedian = input}/><img className="icon16" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.tribes.overworld = input}/><img className="icon16" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
@@ -74,6 +75,7 @@ export default class SearchForm extends React.Component {
 
     const card_elements = (
       <div>
+        <div>Elements</div>
         <input type="checkbox" ref={(input) => this.elements.fire = input} /><img className="icon16" src={"/src/img/icons/elements/fire.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.elements.air = input}/><img className="icon16" src={"/src/img/icons/elements/air.png"} />&nbsp;
         <input type="checkbox" ref={(input) => this.elements.earth = input}/><img className="icon16" src={"/src/img/icons/elements/earth.png"} />&nbsp;
@@ -87,6 +89,7 @@ export default class SearchForm extends React.Component {
 
     const card_disciplines = (
       <div className="disciplines">
+        <div>Disciplines</div>
         <input type="text" ref={(input) => this.stones.courage = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/courage.png"} />&nbsp;
         <input type="text" ref={(input) => this.stones.power = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/power.png"} />&nbsp;
         <input type="text" ref={(input) => this.stones.wisdom = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/wisdom.png"} />&nbsp;
@@ -98,21 +101,19 @@ export default class SearchForm extends React.Component {
       <div className="SearchForm">
         <form onSubmit={this.search}>
           <br />
-          <label>Name: <input type="text" ref={(input) => this.stones.name = input} /></label>
+          <label>Name <input type="text" ref={(input) => this.stones.name = input} /></label>
           <br />
-          <label>Text: &nbsp;&nbsp;&nbsp;<input type="text" ref={(input) => this.stones.text = input} /></label>
+          <label>Text &nbsp;&nbsp;&nbsp;<input type="text" ref={(input) => this.stones.text = input} /></label>
           <br />
           <div>
-            <label>Subtypes | Initiative:<br />
+            <label>Subtypes | Initiative<br />
               <input type="text" ref={(input) => this.stones.subtypes = input} />
             </label><br />
             <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
           </div>
           <br />
-          <label>Types:</label>
-          {card_types}
-          <br />
+          <Collapsible trigger="Types">{card_types}</Collapsible>
           {card_tribes}
           <br />
           {card_elements}
@@ -126,7 +127,8 @@ export default class SearchForm extends React.Component {
           </div>
           <br />
           <div>
-            <span>Mugic Counters/Cost | Build Points</span><br />
+            <span>Mugic Counters/Cost
+            <br />Build Points</span><br />
             <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
             <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.max = input} /></label>
           </div>
@@ -134,8 +136,9 @@ export default class SearchForm extends React.Component {
           <div>
             <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>Loyal</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.mixed = input}/>Mixed</label>&nbsp;
             <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Legendary</label>
+            <br />
+            <label><input type="checkbox" ref={(input) => this.stones.mixed = input}/>Non-Loyal</label>
           </div>
           <br />
           <Collapsible trigger="Rarity">{card_rarity}</Collapsible>
@@ -375,14 +378,19 @@ export default class SearchForm extends React.Component {
     }
 
     if (this.stones.loyal.checked) {
-      attackResults = attackResults.find({'gsx$loyal': {'$gt': 0}});
+      attackResults = attackResults.limit(0);
       battlegearResults = battlegearResults.find({'gsx$loyal': {'$gt': 0}});
       creatureResults = creatureResults.find({'gsx$loyal': {'$gt': 0}});
-      mugicResults = mugicResults.find({'gsx$loyal': {'$gt': 0}});
+      mugicResults = mugicResults.limit(0);
+      locationResults = locationResults.limit(0);
     }
 
     if (this.stones.mixed.checked) {
+      attackResults = attackResults.limit(0);
       creatureResults = creatureResults.find({'gsx$loyal': {'$lte': 0}});
+      battlegearResults = battlegearResults.find({'gsx$loyal': {'$lte': 0}});
+      mugicResults = mugicResults.limit(0);
+      locationResults = locationResults.limit(0);
     }
 
     if (this.stones.legendary.checked) {
