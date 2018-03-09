@@ -45,7 +45,7 @@ export function Unique(props) {
     }
   }
   if (props.data.legendary) {
-    string+="Legendary";
+    string = (string) ? ("Legendary, " + string) : "Legendary";
   }
   string = string.replace(/,\s+$/, "");
   return (
@@ -97,9 +97,9 @@ export function Ability(props) {
   }
 
   const elements = {
-    regex: /(fire)|(air)|(earth)|(water)/i,
+    regex: new RegExp(/(\b((fire)|(air)|(earth)|(water)))/i),
     fn: (key, result) => {
-      return (<span key={key}><Element element={result[0]} value="true" size="icon14"/>{result[0]}</span>);
+      return (<span key={key}><Element element={result[0].replace(/\b/, '')} value="true" size="icon14"/>{result[0]}</span>);
     }
   }
 
