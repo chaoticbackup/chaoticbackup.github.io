@@ -113,7 +113,6 @@ export default class SearchForm extends React.Component {
             <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
           </div>
           <br />
-          <Collapsible trigger="Types">{card_types}</Collapsible>
           {card_tribes}
           <br />
           {card_elements}
@@ -141,6 +140,7 @@ export default class SearchForm extends React.Component {
             <label><input type="checkbox" ref={(input) => this.stones.mixed = input}/>Non-Loyal</label>
           </div>
           <br />
+          <Collapsible trigger="Types">{card_types}</Collapsible>
           <Collapsible trigger="Rarity">{card_rarity}</Collapsible>
           <Collapsible trigger="Sets">{setsInput}</Collapsible>
           <Collapsible trigger="Gender (fan content)">

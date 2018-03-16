@@ -94,6 +94,16 @@
     height: 24px;
 }
 
+.card_img {
+    width: 250px;
+    height: 350px;
+}
+
+.card_img img {
+   max-width: 250px;
+   max-height: 350px;
+}
+
 .bigger {
     font-size: 14px;
 }
@@ -140,26 +150,4 @@
 .Collapsible__trigger.is-disabled {
     opacity: 0.5;
     background-color: grey;
-}
-
-.left {
-    position: relative;
-}
-
-
-.card_img {
-    position: absolute;
-    width: 100%;
-    left: -10px;
-    z-index: 2;
-}
-
-.card_img .hidden {
-    display: none;
-    max-height 0;
-}
-
-.card_img img {
-   max-width: 250px;
-   max-height: 350px;
 }

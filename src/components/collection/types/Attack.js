@@ -1,5 +1,4 @@
 import React from 'react';
-import Interactive from 'react-interactive';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observable} from "mobx";

@@ -19,8 +19,13 @@ export default {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          loader: ['css-loader', 'sass-loader']
+        })
       },
+    ],
+    rules: [       
     ],
   },
 
@@ -32,6 +37,12 @@ export default {
     fs: 'empty',
   },
 
+  plugins: [
+    new ExtractTextPlugin('build/style.css', {
+      allChunks: true
+    }),
+  ],
+
   plugins: process.argv.indexOf('-p') === -1 ? null : [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
@@ -40,9 +51,6 @@ export default {
       output: {
         comments: false,
       },
-    }),
-    new ExtractTextPlugin('build/style.css', {
-        allChunks: true
     }),
   ],
 };
