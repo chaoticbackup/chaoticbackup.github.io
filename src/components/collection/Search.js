@@ -19,8 +19,8 @@ export default class SearchCollection extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.reset = this.reset.bind(this);
 
+    this.props.handleContent([{'text': 'Loading...'}]);
     this.cleanInput();
-
     this.parseQuery();
   }
 
@@ -46,7 +46,6 @@ export default class SearchCollection extends React.Component {
   }
 
   parseQuery() {
-    this.props.handleContent([{'text': 'Loading...'}]);
     const queryString = this.props.location.search.toLowerCase();
 
     let query = {};
@@ -56,49 +55,41 @@ export default class SearchCollection extends React.Component {
       query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
 
-    console.log(query); // TODO
-
-    if (query.sets) {
-      query.sets.split(',').map(item => {
-        this.input.sets[item] = true;
-      });
+    let update = (d) => {
+      if (query[d]) {
+        query[d].split(',').map(item => {
+          this.input[d][item] = true;
+        });
+      }
     }
 
-    if (query.types) {
-      query.types.split(',').map(item => {
-        this.input.types[item] = true;
-      });
-    }
-
-    console.log(this.input);
+    update("sets");
+    update("types");
+    update("rarity");
+    update("gender");
+    update("mull");
   }
 
-  updateQuery() {
-    console.log(this.input);
+  async updateQuery() {
+    console.log(this.input); //TODO
+
     let queryString = "";
-    let temp;
-
-    // Sets
-    temp = "";
-    Object.keys(this.input.sets).forEach((item) => {
-      if (this.input.sets[item] == true)
-        temp += item + ",";
-    });
-    if (temp.length > 0) {
-      queryString += "sets=" + temp.replace(/\,$/, '&');
-    }
-
-    // Types
-    temp = "";
-    Object.keys(this.input.types).forEach((item) => {
-      if (this.input.types[item] == true)
-        temp += item + ",";
-    });
-    if (temp.length > 0) {
-      queryString += "types=" + temp.replace(/\,$/, '&');
-    }
-
     // encodeURIComponent
+
+    let update = (query) => {
+      let temp = "";
+      Object.keys(this.input[query]).forEach((item) => {
+        if (this.input[query][item] == true) temp += item + ",";
+      });
+      if (temp.length > 0) return query + "=" + temp.replace(/\,$/, '&');
+      else return "";
+    }
+
+    queryString += update("sets");
+    queryString += update("types");
+    queryString += update("rarity");
+    queryString += update("gender");
+    queryString += update("mull");
     
     // Strip trailing &
     queryString = queryString.replace(/\&$/, '');
@@ -121,24 +112,81 @@ export default class SearchCollection extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    let sets = [];
-    Object.keys(this.input.sets).forEach((item, i) => {
-      sets.push(<label style={{display: 'block'}} key={i}><input type="checkbox" name={item} checked={this.input.sets[item]} onChange={e => this.handleChange(e, "sets")} />{API.sets[item.toUpperCase()]}</label>
-      );
+    let gen = (d, display) => {
+      let tmp = [];
+      Object.keys(this.input[d]).forEach((item, i) => {
+        tmp.push(<label style={{display: 'block'}} key={i}><input type="checkbox" name={item} checked={this.input[d][item]} onChange={e => this.handleChange(e, d)} />{display(item)}</label>
+        );
+      });
+      return tmp;
+    }
+
+    let sets = gen("sets", (item) => {
+      return API.sets[item.toUpperCase()];
     });
 
-    let types = [];
-    Object.keys(this.input.types).forEach((item, i) => {
-      types.push(<label style={{display: 'block'}} key={i}><input type="checkbox" name={item} checked={this.input.types[item]} onChange={e => this.handleChange(e, "types")} />{item.charAt(0).toUpperCase()+item.slice(1)}</label>)
+    let types = gen("types", (item) => {
+      return item.charAt(0).toUpperCase()+item.slice(1);
     });
 
-    let rarity = [];
+    let rarity = gen("rarity", (item) => {
+      return item.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ");
+    });
 
-    let gender = [];
+    let gender = gen("gender", (item) => {
+      return item.charAt(0).toUpperCase()+item.slice(1);
+    });
+
+    let tribes = [];
+
+    let elements = [];
+
+    let disciplines = [];
+
+    let mull = (<div>
+      <label><input type="checkbox" name="unique" checked={this.input.mull.unique} onChange={e => this.handleChange(e, "mull")} />Unique</label>&nbsp;
+      <label><input type="checkbox" name="loyal" checked={this.input.mull.loyal} onChange={e => this.handleChange(e, "mull")} />Loyal</label>&nbsp;
+      <label><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
+      <br />
+      <label><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
+    </div>);
+    
 
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
+          {/*<br />
+          <label>Name <input type="text" ref={(input) => this.stones.name = input} /></label>
+          <br />
+          <label>Text &nbsp;&nbsp;&nbsp;<input type="text" ref={(input) => this.stones.text = input} /></label>
+          <br />
+          <div>
+            <label>Subtypes | Initiative<br />
+              <input type="text" ref={(input) => this.stones.subtypes = input} />
+            </label><br />
+            <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
+            <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
+          </div>*/}
+          <br />
+          {tribes}
+          <br />
+          {elements}
+          <br />
+          {disciplines}
+          <br />
+          {/*<div>
+            <span>Energy</span><br />
+            <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.min = input} /></label>&nbsp;
+            <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.max = input} /></label>
+          </div>
+          <br />
+          <div>
+            <span>Mugic Counters/Cost
+            <br />Build Points</span><br />
+            <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
+            <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.max = input} /></label>
+          </div>*/}
+          {mull}<br />
           <Collapsible trigger="Types">{types}</Collapsible>
           <Collapsible trigger="Rarity">{rarity}</Collapsible>
           <Collapsible trigger="Sets">{sets}</Collapsible>
@@ -184,6 +232,38 @@ export default class SearchCollection extends React.Component {
     let locationResults = API.cards.locations.chain();
     let mugicResults = API.cards.mugic.chain();
 
+    if (this.input.mull.unique) {
+      attackResults = attackResults.find({'gsx$unique': {'$gt': 0}});
+      battlegearResults = battlegearResults.find({'gsx$unique': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$unique': {'$gt': 0}});
+      locationResults = locationResults.find({'gsx$unique': {'$gt': 0}});
+      mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
+    }
+
+    if (this.input.mull.loyal) {
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.find({'gsx$loyal': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$loyal': {'$gt': 0}});
+      mugicResults = mugicResults.limit(0);
+      locationResults = locationResults.limit(0);
+    }
+
+    if (this.input.mull.mixed) {
+      attackResults = attackResults.limit(0);
+      creatureResults = creatureResults.find({'gsx$loyal': {'$lte': 0}});
+      battlegearResults = battlegearResults.find({'gsx$loyal': {'$lte': 0}});
+      mugicResults = mugicResults.limit(0);
+      locationResults = locationResults.limit(0);
+    }
+
+    if (this.input.mull.legendary) {
+      attackResults = attackResults.find({'gsx$legendary': {'$gt': 0}});
+      battlegearResults = battlegearResults.find({'gsx$legendary': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$legendary': {'$gt': 0}});
+      locationResults = locationResults.find({'gsx$legendary': {'$gt': 0}});
+      mugicResults = mugicResults.find({'gsx$legendary': {'$gt': 0}});
+    }
+
     let setsList = [];
     for (const key in this.input.sets) {
       if (this.input.sets[key])
@@ -195,6 +275,33 @@ export default class SearchCollection extends React.Component {
       creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
       locationResults  = locationResults.find({'gsx$set': {'$or': setsList} });
       mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
+    }
+
+    let rarityList = [];
+    for (const key in this.input.rarity) {
+      if (this.input.rarity[key])
+        rarityList.push({'$eq': key.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ")});
+    }
+    if (rarityList.length > 0) {
+      attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList} });
+      battlegearResults = battlegearResults.find({'gsx$rarity': {'$or': rarityList} });
+      creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
+      locationResults = locationResults.find({'gsx$rarity': {'$or': rarityList} });
+      mugicResults = mugicResults.find({'gsx$rarity': {'$or': rarityList} });
+    }
+
+    let genderList = [];
+    for (const key in this.input.gender) {
+      if (this.input.gender[key]) {
+        genderList.push({'$regex': new RegExp(key, 'i')})
+      }
+    }
+    if (genderList.length > 0) {
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
+      locationResults = locationResults.limit(0);
+      mugicResults = mugicResults.limit(0);
     }
 
     // Merge data
