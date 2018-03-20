@@ -8,22 +8,41 @@ import API from '../SpreadsheetData';
 @inject((stores, props, context) => props) @observer
 export default class SearchCollection extends React.Component {
   @observable loaded = false;
-  @observable input = {};
+  @observable input;
 
   constructor(props) {
     super(props);
     this.filter = new loki("filter.db");
 
-    // Binding for keeping scope
+    // Binding for keeping scope with dom functions
     this.search = this.search.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.reset = this.reset.bind(this);
 
+    this.setInput();
+
     this.parseQuery();
   }
 
-  componentDidMount() {
-    // this.search();
+  setInput() {
+    let input = {
+      name: "",
+      text: "",
+      subtype: "",
+      sets: {},
+      types: {attack: false, battlegear: false, creature: false, location: false, mugic: false},
+      rarity: {common: false, uncommon: false, rare: false, 'super rare': false, 'ultra rare': false, promo: false},
+      tribes: {danian: false, generic: false, 'm\'arrillian': false, 'mipedian': false, overworld: false, underworld: false, frozen: false},
+      elements: {fire: false, air: false, earth: false, water: false},
+      disciplines: {courage: false, power: false, wisdom: false, speed: false},
+      energy: {min: 0, max: 0},
+      mcbp: {min: 0, max: 0},
+      mull: {unique: false, loyal: false, legendary: false, mixed: false},
+      gender: {ambiguous: false, female: false, male: false}
+    };
+    for (const key in API.sets) input.sets[key] = false;
+
+    this.input = input;
   }
 
   parseQuery() {
@@ -37,32 +56,46 @@ export default class SearchCollection extends React.Component {
       query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
 
-    console.log(query);
+    console.log(query); // TODO
 
     if (query.sets) {
       query.sets.split(',').map(item => {
-        this.input[item.toUpperCase()] = true;
+        this.input.sets[item.toUpperCase()] = true;
       });
     }
 
+    if (query.types) {
+      query.types.split(',').map(item => {
+        this.input.types[item] = true;
+      });
+    }
+
+    console.log(this.input);
   }
 
   updateQuery() {
-    let query = {sets:[]};
-
-    Object.keys(this.input).forEach((key) => {
-      if (key in API.sets) query.sets.push(key);
-    });
-
+    console.log(this.input);
     let queryString = "";
+    let temp;
 
     // Sets
-    if (query.sets.length > 0) {
-      queryString += "sets=";
-      query.sets.forEach(item => {
-        queryString += item.toLowerCase();
-      });
-      queryString += "&";
+    temp = "";
+    Object.keys(this.input.sets).forEach((item) => {
+      if (this.input.sets[item] == true)
+        temp += item.toLowerCase() + ",";
+    });
+    if (temp.length > 0) {
+      queryString += "sets=" + temp.replace(/\,$/, '&');
+    }
+
+    // Types
+    temp = "";
+    Object.keys(this.input.types).forEach((item) => {
+      if (this.input.types[item] == true)
+        temp += item.toLowerCase() + ",";
+    });
+    if (temp.length > 0) {
+      queryString += "types=" + temp.replace(/\,$/, '&');
     }
 
     // encodeURIComponent
@@ -73,48 +106,37 @@ export default class SearchCollection extends React.Component {
     this.props.history.push('/collection/?'+(queryString));
   }
 
-  reset(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.props.history.push('/collection/');
-    Object.keys(this.input).forEach((key) => {
-      (typeof(this.input[key]) === 'boolean' ? this.input[key] = false : this.input[key] = '');
-    });
-  }
-
-  handleChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    this.input[name] = value;
-
-    console.log(this.input);
-  }
-
   render() {
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
     if (this.loaded == false) {
-      API.buildCollection([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
-      .then(() => {
-        this.loaded = true;
-        this.search();
-      });
+      if (API.urls !== null &&
+        API.portal !== null &&
+        API.cards !== null
+      ) {
+        API.buildCollection([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
+        .then(() => {
+          this.loaded = true;
+          this.search();
+        });
+      }
       return (<span>Loading...</span>);
     }
 
     let setsInput = [];
-    for (const key in API.sets) {
-      setsInput.push(<label style={{display: 'block'}} key={key}><input name={key} checked={this.input[key]} type="checkbox" onChange={this.handleChange} />{API.sets[key]}</label>);
-    }
+    for (const key in API.sets) setsInput.push(
+      <label style={{display: 'block'}} key={key}>
+        <input type="checkbox" name={key} checked={this.input.sets[key]} onChange={e => this.handleChange(e, "sets")} />{API.sets[key]}
+      </label>
+    );
+
+    let card_types = [];
+    ["attack", "battlegear", "creature", "location", "mugic"].forEach((item, i) => {
+      card_types.push(<label style={{display: 'block'}} key={i}><input type="checkbox" name={item} checked={this.input.types[item]} onChange={e => this.handleChange(e, "types")} />{item.charAt(0).toUpperCase()+item.slice(1)}</label>)
+    });
 
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
+          <Collapsible trigger="Types">{card_types}</Collapsible>
           <Collapsible trigger="Sets">{setsInput}</Collapsible>
           <br />
           <input type="submit" value="Search" />&nbsp;&nbsp;
@@ -124,11 +146,29 @@ export default class SearchCollection extends React.Component {
     );
   }
 
+  handleChange = (event, obj) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.input[obj][name] = value;
+  }
+
+  reset = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.history.push('/collection/');
+    this.setInput();
+    // Object.keys(this.input).forEach((key) => {
+    //   Object.keys(this.input[key]).forEach((i) => {
+    //     (typeof(this.input[key][i]) === 'boolean' ? this.input[key][i] = false : this.input[key][i] = '');
+    //   }); 
+    // });
+  }
+
   search = (e) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
-
       this.updateQuery();
     }
 
@@ -144,34 +184,48 @@ export default class SearchCollection extends React.Component {
     let locationResults = API.cards.locations.chain();
     let mugicResults = API.cards.mugic.chain();
 
-    // Merge data
-    // let types = !(this.type.Attack.checked | this.type.Battlegear.checked | this.type.Creature.checked | this.type.Location.checked | this.type.Mugic.checked);
+    let setsList = [];
+    for (const key in this.input.sets) {
+      if (this.input.sets[key]) {
+        setsList.push({'$eq': key});
+      }
+    }
+    if (setsList.length > 0) {
+      attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
+      battlegearResults = battlegearResults.find({'gsx$set': {'$or': setsList} });
+      creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
+      locationResults  = locationResults.find({'gsx$set': {'$or': setsList} });
+      mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
+    }
 
-    // if (types || this.type.Attack.checked) {
-    //   let temp = attackResults.data();
-    //   temp.forEach(function(v){ delete v.$loki });
-    //   filter.insert(temp);
-    // }
-    // if (types || this.type.Battlegear.checked) {
-    //   let temp = battlegearResults.data();
-    //   temp.forEach(function(v){ delete v.$loki });
-    //   filter.insert(temp);
-    // }
-    // if (types || this.type.Creature.checked) {
-    //   let temp = creatureResults.data()
-    //   temp.forEach(function(v){ delete v.$loki });
-    //   filter.insert(temp);
-    // }
-    // if (types || this.type.Location.checked) {
-    //   let temp = locationResults.data()
-    //   temp.forEach(function(v){ delete v.$loki });
-    //   filter.insert(temp);
-    // }
-    // if (types || this.type.Mugic.checked) {
-    //   let temp = mugicResults.data()
-    //   temp.forEach(function(v){ delete v.$loki });
-    //   filter.insert(temp);
-    // }
+    // Merge data
+    let types = !(this.input.types.attack | this.input.types.battlegear | this.input.types.creature | this.input.types.location | this.input.types.mugic);
+
+    if (types || this.input.types.attack) {
+      let temp = attackResults.data();
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
+    if (types || this.input.types.battlegear) {
+      let temp = battlegearResults.data();
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
+    if (types || this.input.types.creature) {
+      let temp = creatureResults.data()
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
+    if (types || this.input.types.location) {
+      let temp = locationResults.data()
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
+    if (types || this.input.types.mugic) {
+      let temp = mugicResults.data()
+      temp.forEach(function(v){ delete v.$loki });
+      filter.insert(temp);
+    }
 
     let results = pview.data();
     this.filter.removeCollection('filter');
