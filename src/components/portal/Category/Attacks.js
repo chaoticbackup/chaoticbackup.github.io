@@ -12,23 +12,21 @@ export default class Attacks extends React.Component {
   @observable loaded = false;
 
   render() {
+    if (this.loaded == false) {
+      if (API.urls !== null &&
+        API.portal !== null &&
+        API.cards !== null
+      ) {
+        API.buildCollection([{'cards': 'attacks'}, {'portal': 'attacks'}])
+        .then(() => {
+          this.loaded = true;
+        });
+      }
+      return (<span>Loading...</span>);
+    }
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
-
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (this.loaded == false) {
-      API.buildCollection([{'cards': 'attacks'}, {'portal': 'attacks'}])
-      .then(() => {
-        this.loaded = true;
-      });
-      return (<span>Loading...</span>);
-    }
 
     const output = API.portal.attacks.data.map((attack, i) => {
       const card_data = API.cards.attacks.findOne({'gsx$name': attack.gsx$name});

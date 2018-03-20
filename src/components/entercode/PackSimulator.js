@@ -25,18 +25,17 @@ export default class PackSimulator extends React.Component {
   }
 
   render() {
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
     if (this.loaded == false) {
-      API.buildCollection([{'cards': 'attacks'}, , {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
-      .then(() => {
-        this.setupDB();
-        this.loaded = true;
-      });
+      if (API.urls !== null &&
+        API.portal !== null &&
+        API.cards !== null
+      ) {
+        API.buildCollection([{'cards': 'attacks'}, , {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
+        .then(() => {
+          this.setupDB();
+          this.loaded = true;
+        });
+      }
       return (<span>Loading...</span>);
     }
 
