@@ -19,12 +19,12 @@ export default class SearchCollection extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.reset = this.reset.bind(this);
 
-    this.setInput();
+    this.cleanInput();
 
     this.parseQuery();
   }
 
-  setInput() {
+  cleanInput() {
     let input = {
       name: "",
       text: "",
@@ -40,7 +40,7 @@ export default class SearchCollection extends React.Component {
       mull: {unique: false, loyal: false, legendary: false, mixed: false},
       gender: {ambiguous: false, female: false, male: false}
     };
-    for (const key in API.sets) input.sets[key] = false;
+    for (const key in API.sets) input.sets[key.toLowerCase()] = false;
 
     this.input = input;
   }
@@ -60,7 +60,7 @@ export default class SearchCollection extends React.Component {
 
     if (query.sets) {
       query.sets.split(',').map(item => {
-        this.input.sets[item.toUpperCase()] = true;
+        this.input.sets[item] = true;
       });
     }
 
@@ -82,7 +82,7 @@ export default class SearchCollection extends React.Component {
     temp = "";
     Object.keys(this.input.sets).forEach((item) => {
       if (this.input.sets[item] == true)
-        temp += item.toLowerCase() + ",";
+        temp += item + ",";
     });
     if (temp.length > 0) {
       queryString += "sets=" + temp.replace(/\,$/, '&');
@@ -92,7 +92,7 @@ export default class SearchCollection extends React.Component {
     temp = "";
     Object.keys(this.input.types).forEach((item) => {
       if (this.input.types[item] == true)
-        temp += item.toLowerCase() + ",";
+        temp += item + ",";
     });
     if (temp.length > 0) {
       queryString += "types=" + temp.replace(/\,$/, '&');
@@ -121,23 +121,28 @@ export default class SearchCollection extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    let setsInput = [];
-    for (const key in API.sets) setsInput.push(
-      <label style={{display: 'block'}} key={key}>
-        <input type="checkbox" name={key} checked={this.input.sets[key]} onChange={e => this.handleChange(e, "sets")} />{API.sets[key]}
-      </label>
-    );
-
-    let card_types = [];
-    ["attack", "battlegear", "creature", "location", "mugic"].forEach((item, i) => {
-      card_types.push(<label style={{display: 'block'}} key={i}><input type="checkbox" name={item} checked={this.input.types[item]} onChange={e => this.handleChange(e, "types")} />{item.charAt(0).toUpperCase()+item.slice(1)}</label>)
+    let sets = [];
+    Object.keys(this.input.sets).forEach((item, i) => {
+      sets.push(<label style={{display: 'block'}} key={i}><input type="checkbox" name={item} checked={this.input.sets[item]} onChange={e => this.handleChange(e, "sets")} />{API.sets[item.toUpperCase()]}</label>
+      );
     });
+
+    let types = [];
+    Object.keys(this.input.types).forEach((item, i) => {
+      types.push(<label style={{display: 'block'}} key={i}><input type="checkbox" name={item} checked={this.input.types[item]} onChange={e => this.handleChange(e, "types")} />{item.charAt(0).toUpperCase()+item.slice(1)}</label>)
+    });
+
+    let rarity = [];
+
+    let gender = [];
 
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
-          <Collapsible trigger="Types">{card_types}</Collapsible>
-          <Collapsible trigger="Sets">{setsInput}</Collapsible>
+          <Collapsible trigger="Types">{types}</Collapsible>
+          <Collapsible trigger="Rarity">{rarity}</Collapsible>
+          <Collapsible trigger="Sets">{sets}</Collapsible>
+          <Collapsible trigger="Gender (fan content)">{gender}</Collapsible>
           <br />
           <input type="submit" value="Search" />&nbsp;&nbsp;
           <input type="button" value="Reset" onClick={this.reset} />
@@ -157,12 +162,7 @@ export default class SearchCollection extends React.Component {
     event.preventDefault();
     event.stopPropagation();
     this.props.history.push('/collection/');
-    this.setInput();
-    // Object.keys(this.input).forEach((key) => {
-    //   Object.keys(this.input[key]).forEach((i) => {
-    //     (typeof(this.input[key][i]) === 'boolean' ? this.input[key][i] = false : this.input[key][i] = '');
-    //   }); 
-    // });
+    this.cleanInput();
   }
 
   search = (e) => {
@@ -186,9 +186,8 @@ export default class SearchCollection extends React.Component {
 
     let setsList = [];
     for (const key in this.input.sets) {
-      if (this.input.sets[key]) {
-        setsList.push({'$eq': key});
-      }
+      if (this.input.sets[key])
+        setsList.push({'$eq': key.toUpperCase()});
     }
     if (setsList.length > 0) {
       attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
