@@ -9,6 +9,7 @@ import API from '../SpreadsheetData';
 export default class SearchCollection extends React.Component {
   @observable loaded = false;
   @observable input;
+  list = ["sets", "types", "rarity", "tribes", "elements", "disciplines", "mull", "gender"];
 
   constructor(props) {
     super(props);
@@ -28,15 +29,17 @@ export default class SearchCollection extends React.Component {
     let input = {
       name: "",
       text: "",
-      subtype: "",
+      subtypes: "",
+      past: false,
+      mirage: false,
       sets: {},
       types: {attack: false, battlegear: false, creature: false, location: false, mugic: false},
       rarity: {common: false, uncommon: false, rare: false, 'super rare': false, 'ultra rare': false, promo: false},
       tribes: {danian: false, 'm\'arrillian': false, 'mipedian': false, overworld: false, underworld: false, generic: false},
       elements: {fire: false, air: false, earth: false, water: false, none: false, and: false},
-      disciplines: {courage: false, power: false, wisdom: false, speed: false},
-      energy: {min: 0, max: 0},
-      mcbp: {min: 0, max: 0},
+      disciplines: {courage: '', power: '', wisdom: '', speed: ''},
+      energy: {min: '', max: ''},
+      mcbp: {min: '', max: ''},
       mull: {unique: false, loyal: false, legendary: false, mixed: false},
       gender: {ambiguous: false, female: false, male: false}
     };
@@ -55,16 +58,13 @@ export default class SearchCollection extends React.Component {
       query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
 
-    let update = (d) => {
+    this.list.forEach((d) => {
       if (query[d]) {
         query[d].split(',').map(item => {
           this.input[d][item] = true;
         });
       }
-    }
-
-    ["sets", "types", "rarity", "gender", "mull", "elements"
-    ].forEach(item => update(item));
+    });
   }
 
   async updateQuery() {
@@ -82,8 +82,7 @@ export default class SearchCollection extends React.Component {
       else return "";
     }
 
-    ["sets", "types", "rarity", "gender", "mull", "elements"
-    ].forEach(item => queryString += update(item));
+    this.list.forEach(item => queryString += update(item));
     
     // Strip trailing &
     queryString = queryString.replace(/\&$/, '');
@@ -140,32 +139,26 @@ export default class SearchCollection extends React.Component {
     }).slice(0, -2);
 
     let disciplines = [];
-
-    let mull = (<div>
-      <label><input type="checkbox" name="unique" checked={this.input.mull.unique} onChange={e => this.handleChange(e, "mull")} />Unique</label>&nbsp;
-      <label><input type="checkbox" name="loyal" checked={this.input.mull.loyal} onChange={e => this.handleChange(e, "mull")} />Loyal</label>&nbsp;
-      <label><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
-      <br />
-      <label><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
-    </div>);
-    
+    Object.keys(this.input.disciplines).forEach((item, i) => {
+      disciplines.push(<label key={i} className="disciplines"><input type="text" name={item} value={this.input.disciplines[item]} onChange={e => this.handleChange(e, "disciplines")} />
+        <img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/"+item+".png"} />&nbsp;
+      </label>);
+    });
 
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
-          {/*<br />
-          <label>Name <input type="text" ref={(input) => this.stones.name = input} /></label>
           <br />
-          <label>Text &nbsp;&nbsp;&nbsp;<input type="text" ref={(input) => this.stones.text = input} /></label>
+          <label>Name&nbsp;<input type="text" name="name" value={this.input.name} onChange={this.handleChange} /></label>
           <br />
-          <div>
-            <label>Subtypes | Initiative<br />
-              <input type="text" ref={(input) => this.stones.subtypes = input} />
-            </label><br />
-            <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
-          </div>*/}
+          <label>Text&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="text" value={this.input.text} onChange={this.handleChange} /></label>
           <br />
+          <label>Subtypes | Initiative<br />
+            <input type="text" name="subtypes" value={this.input.subtypes} onChange={this.handleChange} />
+          </label><br />
+          <label><input type="checkbox" name="past" checked={this.input.past} onChange={this.handleChange} />Past</label>&nbsp;
+          <label><input type="checkbox" name="mirage" checked={this.input.mirage} onChange={this.handleChange} />Mirage</label>
+          <br /><br />
           <span>Tribes</span>
           <br />
           {tribes}
@@ -173,28 +166,32 @@ export default class SearchCollection extends React.Component {
           <span>Elements</span>
           <br />
           {elements}&nbsp;
-          <input type="button" value="or" style={{verticalAlign: "text-bottom"}} disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
-          <input type="button" value="and" style={{verticalAlign: "text-bottom"}} disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
+          <input type="button" value="or" className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
+          <input type="button" value="and" className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
           <br />
-          <label><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} />No Elements</label>
+          <label><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} />None</label>
           <br /> <br />
           <span>Disciplines</span>
           <br />
           {disciplines}
           <br /> <br />
-          {/*<div>
-            <span>Energy</span><br />
-            <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.min = input} /></label>&nbsp;
-            <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.max = input} /></label>
-          </div>
+          <span>Energy</span>
           <br />
-          <div>
-            <span>Mugic Counters/Cost
-            <br />Build Points</span><br />
-            <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
-            <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.max = input} /></label>
-          </div>*/}
-          {mull}<br />
+          <label className="mcbp">Min:&nbsp;<input type="text" name="min" value={this.input.energy.min} onChange={e => this.handleChange(e, "energy")} /></label>&nbsp;
+          <label className="mcbp">Max:&nbsp;<input type="text" name="max" value={this.input.energy.max} onChange={e => this.handleChange(e, "energy")}  /></label>
+          <br /><br />
+          <span>Mugic Counters/Cost
+          <br />Build Points</span>
+          <br />
+          <label className="mcbp">Min:&nbsp;<input type="text" name="min" value={this.input.mcbp.min} onChange={e => this.handleChange(e, "mcbp")} /></label>&nbsp;
+          <label className="mcbp">Max:&nbsp;<input type="text" name="max" value={this.input.mcbp.max} onChange={e => this.handleChange(e, "mcbp")} /></label>
+          <br /><br />
+          <label className="mull"><input type="checkbox" name="unique" checked={this.input.mull.unique} onChange={e => this.handleChange(e, "mull")} />Unique</label>&nbsp;
+          <label className="mull"><input type="checkbox" name="loyal" checked={this.input.mull.loyal} onChange={e => this.handleChange(e, "mull")} />Loyal</label>&nbsp;
+          <label className="mull"><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
+          <br />
+          <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
+          <br /><br />
           <Collapsible trigger="Types">{types}</Collapsible>
           <Collapsible trigger="Rarity">{rarity}</Collapsible>
           <Collapsible trigger="Sets">{sets}</Collapsible>
@@ -211,7 +208,8 @@ export default class SearchCollection extends React.Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    this.input[obj][name] = value;
+    if (!obj) this.input[name] = value;
+    else this.input[obj][name] = value;
   }
 
   reset = (event) => {
@@ -239,6 +237,94 @@ export default class SearchCollection extends React.Component {
     let creatureResults = API.cards.creatures.chain();
     let locationResults = API.cards.locations.chain();
     let mugicResults = API.cards.mugic.chain();
+
+    // Search by name
+    if (this.input.name.length > 0) {
+      attackResults = attackResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+      ]});
+      battlegearResults = battlegearResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+      ]});
+      creatureResults = creatureResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+      ]});
+      locationResults = locationResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}}
+      ]});
+      mugicResults = mugicResults.find({'$or': [
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+      ]});
+    }
+
+    // Text
+    if (this.input.text.length > 0) {
+      let textList = this.input.text.split(",").filter(Boolean).map((item) => {
+        return ({'$regex': new RegExp(item.trim(), 'i')});
+      });
+      attackResults = attackResults.find({'$or': [
+        {'gsx$tags': {"$or": textList}},
+        {'gsx$ability': {"$or": textList}},
+        {'gsx$flavortext': {"$or": textList}}
+      ]});
+      battlegearResults = battlegearResults.find({'$or': [
+        {'gsx$tags': {"$or": textList}},
+        {'gsx$ability': {"$or": textList}},
+        {'gsx$flavortext': {"$or": textList}}
+      ]});
+      creatureResults = creatureResults.find({'$or': [
+        {'gsx$tags': {"$or": textList}},
+        {'gsx$ability': {"$or": textList}},
+        {'gsx$flavortext': {"$or": textList}},
+        {'gsx$brainwashedability': {"$or": textList}}
+      ]});
+      locationResults = locationResults.find({'$or': [
+        {'gsx$tags': {"$or": textList}},
+        {'gsx$ability': {"$or": textList}},
+        {'gsx$flavortext': {"$or": textList}}
+      ]});
+      mugicResults = mugicResults.find({'$or': [
+        {'gsx$tags': {"$or": textList}},
+        {'gsx$ability': {"$or": textList}},
+        {'gsx$flavortext': {"$or": textList}}
+      ]});
+    }
+
+    // Past
+    if (this.input.past) {
+      attackResults = attackResults.find({'gsx$past': {'$gt': 0}});
+      battlegearResults = battlegearResults.find({'gsx$past': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$types': {'$regex': new RegExp("past", 'i')}});
+      locationResults = locationResults.find({'gsx$past': {'$gt': 0}});
+      mugicResults = mugicResults.find({'gsx$past': {'$gt': 0}});
+    }
+
+    // Mirage
+    if (this.input.mirage) {
+      locationResults = locationResults.find({'gsx$mirage': {'$gt': 0}});
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      creatureResults = creatureResults.limit(0);
+      mugicResults = mugicResults.limit(0);
+    }
+
+    // Subtypes / Initiative
+    if (this.input.subtypes.length > 0) {
+      let subtypesList = this.input.subtypes.split(",").filter(Boolean).map((item) => {
+        return ({'$regex': new RegExp(item.trim(), 'i')});
+      });
+
+      creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList} });
+      locationResults = locationResults.find({'gsx$initiative': {'$or': subtypesList}});
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      mugicResults = mugicResults.limit(0);
+    }
 
     // Search by tribe
     let tribesList = [];
@@ -294,6 +380,51 @@ export default class SearchCollection extends React.Component {
         locationResults = locationResults.limit(0);
         mugicResults = mugicResults.limit(0);
       }
+    }
+
+    // Stats
+    if (this.input.disciplines.courage > 0)
+      creatureResults = creatureResults.find({'gsx$courage': {'$gte': this.input.disciplines.courage}});
+    
+    if (this.input.disciplines.power > 0)
+      creatureResults = creatureResults.find({'gsx$power': {'$gte': this.input.disciplines.power}});
+    
+    if (this.input.disciplines.wisdom > 0)
+      creatureResults = creatureResults.find({'gsx$wisdom': {'$gte': this.input.disciplines.wisdom}});
+    
+    if (this.input.disciplines.speed > 0)
+      creatureResults = creatureResults.find({'gsx$speed': {'$gte': this.input.disciplines.speed}});
+
+    if (this.input.energy.min > 0)
+      creatureResults = creatureResults.find({'gsx$energy': {'$gte': this.input.energy.min}});
+
+    if (this.input.energy.max > 0 && this.input.energy.max >= this.input.energy.min)
+      creatureResults = creatureResults.find({'gsx$energy': {'$lte': this.input.energy.max}});
+
+    // (if any stats, filter out non-Creatures)
+    if (this.input.energy.min > 0 || this.input.energy.max > 0 || this.input.disciplines.courage > 0 || this.input.disciplines.power > 0 || this.input.disciplines.wisdom > 0 || this.input.disciplines.speed > 0) {
+      attackResults = attackResults.limit(0);
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
+      mugicResults = mugicResults.limit(0);
+    }
+
+    // Mugic Counters/Cost | Build Points
+    if (this.input.mcbp.min !== "" && this.input.mcbp.min >= 0) {
+      attackResults = attackResults.find({'gsx$bp': {'$gte': this.input.mcbp.min}});
+      creatureResults = creatureResults.find({'gsx$mugicability': {'$gte': this.input.mcbp.min}});
+      mugicResults = mugicResults.find({'gsx$cost': {'$gte': this.input.mcbp.min}});
+    }
+    if (this.input.mcbp.max !== "" && this.input.mcbp.max >= 0 && this.input.mcbp.max >= this.input.mcbp.min) {
+      attackResults = attackResults.find({'gsx$bp': {'$lte': this.input.mcbp.max}});
+      creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.input.mcbp.max}});
+      mugicResults = mugicResults.find({'gsx$cost': {'$lte': this.input.mcbp.max}});
+    }
+
+    // filter out Battlegear and Locations if mcbp
+    if (this.input.mcbp.max > 0 || this.input.mcbp.min > 0) {
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
     }
 
     // Unique

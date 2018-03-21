@@ -68,6 +68,25 @@
 .disciplines input {
     width: 30px;
     height: 14px;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.mull input {
+    vertical-align: middle;
+}
+
+.mcbp input {
+    width: 24px;
+    height: 14px;
+    padding: unset;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.and {
+    vertical-align: text-bottom;
+    padding: 0 4px;
 }
 
 } /* desktop */
