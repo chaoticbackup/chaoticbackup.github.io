@@ -9,7 +9,7 @@ import API from '../SpreadsheetData';
 export default class SearchCollection extends React.Component {
   @observable loaded = false;
   @observable input;
-  list = ["sets", "types", "rarity", "tribes", "elements", "disciplines", "mull", "gender"];
+  list = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
 
   constructor(props) {
     super(props);
@@ -58,6 +58,9 @@ export default class SearchCollection extends React.Component {
       query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
 
+    console.log(query);
+
+    // query -> input
     this.list.forEach((d) => {
       if (query[d]) {
         query[d].split(',').map(item => {
@@ -65,13 +68,30 @@ export default class SearchCollection extends React.Component {
         });
       }
     });
+
+    if (query.hasOwnProperty('past')) this.input.past = true;
+    if (query.hasOwnProperty('mirage')) this.input.mirage = true;
+    if (query.hasOwnProperty('name')) this.input.name = decodeURIComponent(query.name);
+    if (query.hasOwnProperty('text')) this.input.text = decodeURIComponent(query.text);
+    if (query.hasOwnProperty('subtypes')) this.input.subtypes = decodeURIComponent(query.subtypes);
+    if (query.hasOwnProperty('energy')) {
+      let q = query.energy.split(',');
+      if (q[0] > 1) this.input.energy.min = q[0];
+      if (q[1] > 1) this.input.energy.max = q[1];
+    }
+    if (query.hasOwnProperty('mcbp')) {
+      let q = query.mcbp.split(',');
+      if (q[0] > 1) this.input.mcbp.min = q[0];
+      if (q[1] > 1) this.input.mcbp.max = q[1];
+    }
+
+    // TODO disciplines
+    // decodeURIComponent
+
   }
 
   async updateQuery() {
-    console.log(this.input); //TODO
-
     let queryString = "";
-    // encodeURIComponent
 
     let update = (query) => {
       let temp = "";
@@ -83,6 +103,9 @@ export default class SearchCollection extends React.Component {
     }
 
     this.list.forEach(item => queryString += update(item));
+
+    // TODO name, text, subtype, past, mirage, disciplines, energy, mugic counters
+    // encodeURIComponent
     
     // Strip trailing &
     queryString = queryString.replace(/\&$/, '');
@@ -367,7 +390,6 @@ export default class SearchCollection extends React.Component {
         }
       }
       if (elementsList.length > 0) {
-        console.log(elementsList, elementsList2);
         if (this.input.elements.and) {
          creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList} });
          attackResults = attackResults.find({'$and': elementsList2});
