@@ -143,7 +143,7 @@ class CollectionDB {
         return resolve();
       }
       if (this.building[type] == "building") {
-        const disposer = observe(building[type], (change) => {
+        const disposer = observe(this.building[type], (change) => {
           disposer();
           resolve();
         });

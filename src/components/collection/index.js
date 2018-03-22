@@ -5,6 +5,7 @@ import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import CardList from './List';
 import SearchForm from './Search';
+import '../../scss/collection.scss'
 
 @inject((stores, props, context) => props) @observer
 export default class Home extends React.Component {
@@ -27,7 +28,6 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="collection">
-        <link rel="stylesheet" href="/src/css/collection.css" />
         <div className="left">
           <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
           <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />

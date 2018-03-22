@@ -14,13 +14,14 @@ import Mugic from './Category/Mugic';
 import Tribes from './Category/Tribes';
 import {SearchButton} from '../Snippets';
 
+import '../../scss/portal.scss';
+
 @inject((stores, props, context) => props) @observer
 export default class Base extends React.Component {
 
   render() {
     return (
       <div className="portal">
-        <link rel="stylesheet" href="/src/css/portal.css" />
         <Header />
         <br />
         <Routing {...this.props} />

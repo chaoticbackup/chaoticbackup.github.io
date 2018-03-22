@@ -68,6 +68,25 @@
 .disciplines input {
     width: 30px;
     height: 14px;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.mull input {
+    vertical-align: middle;
+}
+
+.mcbp input {
+    width: 24px;
+    height: 14px;
+    padding: unset;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.and {
+    vertical-align: text-bottom;
+    padding: 0 4px;
 }
 
 } /* desktop */
@@ -92,16 +111,6 @@
 
 .icon24 {
     height: 24px;
-}
-
-.card_img {
-    width: 250px;
-    height: 350px;
-}
-
-.card_img img {
-   max-width: 250px;
-   max-height: 350px;
 }
 
 .bigger {
@@ -150,4 +159,26 @@
 .Collapsible__trigger.is-disabled {
     opacity: 0.5;
     background-color: grey;
+}
+
+.left {
+    position: relative;
+}
+
+
+.card_img {
+    position: absolute;
+    width: 100%;
+    left: -10px;
+    z-index: 2;
+}
+
+.card_img .hidden {
+    display: none;
+    max-height: 0;
+}
+
+.card_img img {
+   max-width: 250px;
+   max-height: 350px;
 }

@@ -12,38 +12,36 @@ export default {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/, exclude: /node_modules/,
-        loader: 'babel'
+        use: 'babel-loader'
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          loader: ['css-loader', 'sass-loader']
+          use: ['css-loader', 'sass-loader']
         })
-      },
-    ],
-    rules: [       
-    ],
+      }
+    ]
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
 
   node: {
     fs: 'empty',
   },
 
-  plugins: [
-    new ExtractTextPlugin('build/style.css', {
+  // First array is dev only, second is production
+  plugins: process.argv.indexOf('-p') === -1 ? [
+    new ExtractTextPlugin({
+      filename: 'style.css',
       allChunks: true
-    }),
-  ],
-
-  plugins: process.argv.indexOf('-p') === -1 ? null : [
+    })
+  ] : [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
@@ -51,6 +49,11 @@ export default {
       output: {
         comments: false,
       },
+      warnings: true,
     }),
+    new ExtractTextPlugin({
+      filename: 'style.css',
+      allChunks: true
+    })
   ],
 };
