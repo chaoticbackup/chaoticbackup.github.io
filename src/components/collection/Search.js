@@ -1,167 +1,275 @@
 import React from 'react';
-import API from '../SpreadsheetData';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import loki from 'lokijs';
 import Collapsible from 'react-collapsible';
+import API from '../SpreadsheetData';
 
 @inject((stores, props, context) => props) @observer
-export default class SearchForm extends React.Component {
-  @observable swamp = "or";
+export default class SearchCollection extends React.Component {
+  @observable loaded = false;
+  @observable input;
+  list = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
 
-  constructor() {
-    super();
-    this.reset();
+  constructor(props) {
+    super(props);
     this.filter = new loki("filter.db");
+
+    // Binding for keeping scope with dom functions
+    this.search = this.search.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.reset = this.reset.bind(this);
+
+    this.props.handleContent([{'text': 'Loading...'}]);
+    this.cleanInput();
+    this.parseQuery();
   }
 
-  componentDidMount() {
-    this.search();
+  cleanInput() {
+    let input = {
+      name: "",
+      text: "",
+      subtypes: "",
+      past: false,
+      mirage: false,
+      sets: {},
+      types: {attack: false, battlegear: false, creature: false, location: false, mugic: false},
+      rarity: {common: false, uncommon: false, rare: false, 'super rare': false, 'ultra rare': false, promo: false},
+      tribes: {danian: false, 'm\'arrillian': false, 'mipedian': false, overworld: false, underworld: false, generic: false},
+      elements: {fire: false, air: false, earth: false, water: false, none: false, and: false},
+      disciplines: {courage: '', power: '', wisdom: '', speed: ''},
+      energy: {min: '', max: ''},
+      mcbp: {min: '', max: ''},
+      mull: {unique: false, loyal: false, legendary: false, mixed: false},
+      gender: {ambiguous: false, female: false, male: false}
+    };
+    for (const key in API.sets) input.sets[key.toLowerCase()] = false;
+
+    this.input = input;
   }
 
-  reset = () => {
-    this.type = {};
-    this.stones = {};
-    this.tribes = {};
-    this.elements = {};
-    this.rarity = {};
-    this.sets = {};
-    this.gender = {};
-    this.mc = {};
-    this.energy = {};
-    this.bp = {};
-    this.base = {};
-  };
+  parseQuery() {
+    const queryString = this.props.location.search.toLowerCase();
 
-  render() {
-
-    let setsInput = [];
-    for (const key in API.sets) {
-      setsInput.push(<label style={{display: 'block'}} key={key}><input type="checkbox" ref={(input) => this.sets[key] = input} />{API.sets[key]}</label>);
+    let query = {};
+    let pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+    for (let i = 0; i < pairs.length; i++) {
+      let pair = pairs[i].split('=');
+      query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
 
-    const card_types = (
-      <div>
-      <label><input type="checkbox" ref={(input) => this.type.Attack = input} />Attack</label><br />
-      <label><input type="checkbox" ref={(input) => this.type.Battlegear = input} />Battlegear</label><br />
-      <label><input type="checkbox" ref={(input) => this.type.Creature = input} />Creature</label><br />
-      <label><input type="checkbox" ref={(input) => this.type.Location = input} />Location</label><br />
-      <label><input type="checkbox" ref={(input) => this.type.Mugic = input} />Mugic</label>
-      </div>
-    );
+    // query -> input
+    this.list.forEach((d) => {
+      if (query[d]) {
+        query[d].split(',').map(item => {
+          this.input[d][item] = true;
+        });
+      }
+    });
 
-    const card_rarity = (
-      <div>
-        <label><input type="checkbox" ref={(input) => this.rarity["Common"] = input}/>Common</label><br />
-        <label><input type="checkbox" ref={(input) => this.rarity["Uncommon"] = input}/>Uncommon</label><br />
-        <label><input type="checkbox" ref={(input) => this.rarity["Rare"] = input}/>Rare</label><br />
-        <label><input type="checkbox" ref={(input) => this.rarity["Super Rare"] = input}/>Super Rare</label><br />
-        <label><input type="checkbox" ref={(input) => this.rarity["Ultra Rare"] = input}/>Ultra Rare</label><br />
-        <label><input type="checkbox" ref={(input) => this.rarity["Promo"] = input}/>Promo</label>
-      </div>
-    );
+    if (query.hasOwnProperty('past')) this.input.past = true;
+    if (query.hasOwnProperty('mirage')) this.input.mirage = true;
+    if (query.hasOwnProperty('name')) this.input.name = query.name;
+    if (query.hasOwnProperty('text')) this.input.text = query.text;
+    if (query.hasOwnProperty('subtypes')) this.input.subtypes = query.subtypes;
+    if (query.hasOwnProperty('courage')) this.input.disciplines.courage = query.courage;
+    if (query.hasOwnProperty('power')) this.input.disciplines.power = query.power;
+    if (query.hasOwnProperty('wisdom')) this.input.disciplines.wisdom = query.wisdom;
+    if (query.hasOwnProperty('speed')) this.input.disciplines.speed = query.speed;
+    if (query.hasOwnProperty('energy')) {
+      let q = query.energy.split(',');
+      if (q[0] >= 0) this.input.energy.min = q[0];
+      if (q[1] >= 0) this.input.energy.max = q[1];
+    }
+    if (query.hasOwnProperty('mcbp')) {
+      let q = query.mcbp.split(',');
+      if (q[0] >= 0) this.input.mcbp.min = q[0];
+      if (q[1] >= 0) this.input.mcbp.max = q[1];
+    }
 
-    const card_tribes = (
-      <div>
-        <div>Tribes</div>
-        <input type="checkbox" ref={(input) => this.tribes.danian = input}/><img className="icon16" src={"/src/img/icons/tribes/danian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.mipedian = input}/><img className="icon16" src={"/src/img/icons/tribes/mipedian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.overworld = input}/><img className="icon16" src={"/src/img/icons/tribes/overworld.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.underworld = input}/><img className="icon16" src={"/src/img/icons/tribes/underworld.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes["m'arrillian"] = input}/><img className="icon16" src={"/src/img/icons/tribes/m'arrillian.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.tribes.generic = input}/><img className="icon16" src={"/src/img/icons/tribes/generic.png"} />
-      </div>
-    );
+  }
 
-    const card_elements = (
-      <div>
-        <div>Elements</div>
-        <input type="checkbox" ref={(input) => this.elements.fire = input} /><img className="icon16" src={"/src/img/icons/elements/fire.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.elements.air = input}/><img className="icon16" src={"/src/img/icons/elements/air.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.elements.earth = input}/><img className="icon16" src={"/src/img/icons/elements/earth.png"} />&nbsp;
-        <input type="checkbox" ref={(input) => this.elements.water = input}/><img className="icon16" src={"/src/img/icons/elements/water.png"} />&nbsp;&nbsp;
-        <input type="button" value="or" disabled={this.swamp=="or"} onClick={(e)=>this.swamp="or"}/>
-        <input type="button" value="and" disabled={this.swamp=="and"} onClick={(e)=>this.swamp="and"} />
-        <br />
-        <input type="checkbox" ref={(input) => this.stones.noElements = input}/><span>No Elements</span>
-      </div>
-    );
+  async updateQuery() {
+    let queryString = "";
 
-    const card_disciplines = (
-      <div className="disciplines">
-        <div>Disciplines</div>
-        <input type="text" ref={(input) => this.stones.courage = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/courage.png"} />&nbsp;
-        <input type="text" ref={(input) => this.stones.power = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/power.png"} />&nbsp;
-        <input type="text" ref={(input) => this.stones.wisdom = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/wisdom.png"} />&nbsp;
-        <input type="text" ref={(input) => this.stones.speed = input} /><img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/speed.png"} />
-      </div>
-    );
+    let update = (query) => {
+      let temp = "";
+      Object.keys(this.input[query]).forEach((item) => {
+        if (this.input[query][item] == true) temp += item + ",";
+      });
+      if (temp.length > 0) return query + "=" + temp.replace(/\,$/, '&');
+      else return "";
+    }
+
+    this.list.forEach(item => queryString += update(item));
+
+    if (this.input.past) queryString += "past&";
+    if (this.input.mirage) queryString += "mirage&";
+    if (this.input.name) queryString += "name=" + encodeURIComponent(this.input.name) + "&";
+    if (this.input.text) queryString += "text=" + encodeURIComponent(this.input.text) + "&";
+    if (this.input.subtypes) queryString += "subtypes=" + encodeURIComponent(this.input.subtypes) + "&";
+    if (this.input.disciplines.courage > 0) queryString += "courage=" + this.input.disciplines.courage + "&";
+    if (this.input.disciplines.power > 0) queryString += "power=" + this.input.disciplines.power + "&";
+    if (this.input.disciplines.wisdom > 0) queryString += "wisdom=" + this.input.disciplines.wisdom + "&";
+    if (this.input.disciplines.speed > 0) queryString += "speed=" + this.input.disciplines.speed + "&";
+    if (this.input.energy.min != "" || this.input.energy.max != "") {
+      queryString += "energy=";
+      if (this.input.energy.min != "" && this.input.energy.min >= 0) queryString += this.input.energy.min;
+      queryString += ",";
+      if (this.input.energy.max != "" && this.input.energy.max >= 0) queryString += this.input.energy.max;
+      queryString += "&";
+    }
+    if (this.input.mcbp.min != "" || this.input.mcbp.max != "") {
+      queryString += "mcbp=";
+      if (this.input.mcbp.min != "" && this.input.mcbp.min >= 0) queryString += this.input.mcbp.min;
+      queryString += ",";
+      if (this.input.mcbp.max != "" && this.input.mcbp.max >= 0) queryString += this.input.mcbp.max;
+      queryString += "&";
+    }
+
+    // Strip trailing &
+    queryString = queryString.replace(/\&$/, '');
+
+    // Push to URL
+    this.props.history.push('/collection/?'+(queryString));
+  }
+
+  render() {
+    if (this.loaded == false) {
+      if (API.urls !== null &&
+        API.portal !== null &&
+        API.cards !== null
+      ) {
+        API.buildCollection([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
+        .then(() => {
+          this.loaded = true;
+          this.search();
+        });
+      }
+      return (<span>Loading...</span>);
+    }
+
+    let gen = (d, display, text) => {
+      let tmp = [];
+      Object.keys(this.input[d]).forEach((item, i) => {
+        tmp.push(<label style={{display: display}} key={i}><input type="checkbox" name={item} checked={this.input[d][item]} onChange={e => this.handleChange(e, d)} />{text(item)}</label>
+        );
+      });
+      return tmp;
+    }
+
+    let sets = gen("sets", "block", (item) => {
+      return API.sets[item.toUpperCase()];
+    });
+
+    let types = gen("types", "block", (item) => {
+      return item.charAt(0).toUpperCase()+item.slice(1);
+    });
+
+    let rarity = gen("rarity", "block", (item) => {
+      return item.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ");
+    });
+
+    let gender = gen("gender", "block", (item) => {
+      return item.charAt(0).toUpperCase()+item.slice(1);
+    });
+
+    let tribes = gen("tribes", "inline", (item) => {
+      return (<span><img className="icon16" src={"/src/img/icons/tribes/"+item+".png"} />&nbsp;</span>);
+    });
+
+    let elements = gen("elements", "inline", (item) => {
+      return (<span><img className="icon16" src={"/src/img/icons/elements/"+item+".png"} />&nbsp;</span>);
+    }).slice(0, -2);
+
+    let disciplines = [];
+    Object.keys(this.input.disciplines).forEach((item, i) => {
+      disciplines.push(<label key={i} className="disciplines"><input type="text" name={item} value={this.input.disciplines[item]} onChange={e => this.handleChange(e, "disciplines")} />
+        <img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/"+item+".png"} />&nbsp;
+      </label>);
+    });
 
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
           <br />
-          <label>Name <input type="text" ref={(input) => this.stones.name = input} /></label>
+          <label>Name&nbsp;<input type="text" name="name" value={this.input.name} onChange={this.handleChange} /></label>
           <br />
-          <label>Text &nbsp;&nbsp;&nbsp;<input type="text" ref={(input) => this.stones.text = input} /></label>
+          <label>Text&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="text" value={this.input.text} onChange={this.handleChange} /></label>
           <br />
-          <div>
-            <label>Subtypes | Initiative<br />
-              <input type="text" ref={(input) => this.stones.subtypes = input} />
-            </label><br />
-            <label><input type="checkbox" ref={(input) => this.stones.past = input}/>Past</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.mirage = input}/>Mirage</label>
-          </div>
+          <label>Subtypes | Initiative<br />
+            <input type="text" name="subtypes" value={this.input.subtypes} onChange={this.handleChange} />
+          </label><br />
+          <label><input type="checkbox" name="past" checked={this.input.past} onChange={this.handleChange} />Past</label>&nbsp;
+          <label><input type="checkbox" name="mirage" checked={this.input.mirage} onChange={this.handleChange} />Mirage</label>
+          <br /><br />
+          <span>Tribes</span>
           <br />
-          {card_tribes}
+          {tribes}
+          <br /> <br />
+          <span>Elements</span>
           <br />
-          {card_elements}
+          {elements}&nbsp;
+          <input type="button" value="or" className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
+          <input type="button" value="and" className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
           <br />
-          {card_disciplines}
+          <label><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} />None</label>
+          <br /> <br />
+          <span>Disciplines</span>
           <br />
-          <div>
-            <span>Energy</span><br />
-            <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.min = input} /></label>&nbsp;
-            <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.energy.max = input} /></label>
-          </div>
+          {disciplines}
+          <br /> <br />
+          <span>Energy</span>
           <br />
-          <div>
-            <span>Mugic Counters/Cost
-            <br />Build Points</span><br />
-            <label>Min: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.min = input} /></label>&nbsp;
-            <label>Max: <input type="text" style={{width: '30px'}} ref={(input) => this.mc.max = input} /></label>
-          </div>
+          <label className="mcbp">Min:&nbsp;<input type="text" name="min" value={this.input.energy.min} onChange={e => this.handleChange(e, "energy")} /></label>&nbsp;
+          <label className="mcbp">Max:&nbsp;<input type="text" name="max" value={this.input.energy.max} onChange={e => this.handleChange(e, "energy")}  /></label>
+          <br /><br />
+          <span>Mugic Counters/Cost
+          <br />Build Points</span>
           <br />
-          <div>
-            <label><input type="checkbox" ref={(input) => this.stones.unique = input}/>Unique</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.loyal = input}/>Loyal</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.stones.legendary = input}/>Legendary</label>
-            <br />
-            <label><input type="checkbox" ref={(input) => this.stones.mixed = input}/>Non-Loyal</label>
-          </div>
+          <label className="mcbp">Min:&nbsp;<input type="text" name="min" value={this.input.mcbp.min} onChange={e => this.handleChange(e, "mcbp")} /></label>&nbsp;
+          <label className="mcbp">Max:&nbsp;<input type="text" name="max" value={this.input.mcbp.max} onChange={e => this.handleChange(e, "mcbp")} /></label>
+          <br /><br />
+          <label className="mull"><input type="checkbox" name="unique" checked={this.input.mull.unique} onChange={e => this.handleChange(e, "mull")} />Unique</label>&nbsp;
+          <label className="mull"><input type="checkbox" name="loyal" checked={this.input.mull.loyal} onChange={e => this.handleChange(e, "mull")} />Loyal</label>&nbsp;
+          <label className="mull"><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
           <br />
-          <Collapsible trigger="Types">{card_types}</Collapsible>
-          <Collapsible trigger="Rarity">{card_rarity}</Collapsible>
-          <Collapsible trigger="Sets">{setsInput}</Collapsible>
-          <Collapsible trigger="Gender (fan content)">
-            <label><input type="checkbox" ref={(input) => this.gender.Ambiguous = input}/>Ambiguous</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.gender.Female = input}/>Female</label>&nbsp;
-            <label><input type="checkbox" ref={(input) => this.gender.Male = input}/>Male</label>
-          </Collapsible>
+          <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
+          <br /><br />
+          <Collapsible trigger="Types">{types}</Collapsible>
+          <Collapsible trigger="Rarity">{rarity}</Collapsible>
+          <Collapsible trigger="Sets">{sets}</Collapsible>
+          <Collapsible trigger="Gender (fan content)">{gender}</Collapsible>
           <br />
-          <input type="submit" value="Search" />&nbsp;&nbsp;
-          <input type="button" value="Reset" disabled onClick={this.reset()} />
+          <input type="submit" value="Search" />&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="button" value="Reset" onClick={this.reset} />
         </form>
       </div>
     );
   }
 
-  // TODO advanced filters
+  handleChange = (event, obj) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    if (!obj) this.input[name] = value;
+    else this.input[obj][name] = value;
+  }
+
+  reset = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.history.push('/collection/');
+    this.cleanInput();
+  }
+
   search = (e) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
+      this.updateQuery();
     }
+
     // Sort data descending alphabetically
     let filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');
@@ -175,31 +283,32 @@ export default class SearchForm extends React.Component {
     let mugicResults = API.cards.mugic.chain();
 
     // Search by name
-    if (this.stones.name.value) {
+    if (this.input.name.length > 0) {
       attackResults = attackResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
       ]});
       battlegearResults = battlegearResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
       ]});
       creatureResults = creatureResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
       ]});
       locationResults = locationResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}}
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}}
       ]});
       mugicResults = mugicResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.stones.name.value, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.stones.name.value, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
       ]});
     }
 
-    if (this.stones.text.value) {
-      let textList = this.stones.text.value.split(",").filter(Boolean).map((item) => {
+    // Text
+    if (this.input.text.length > 0) {
+      let textList = this.input.text.split(",").filter(Boolean).map((item) => {
         return ({'$regex': new RegExp(item.trim(), 'i')});
       });
       attackResults = attackResults.find({'$or': [
@@ -230,92 +339,27 @@ export default class SearchForm extends React.Component {
       ]});
     }
 
-    // Search by tribe
-    let tribesList = [];
-    for (const tribe in this.tribes) {
-      if (this.tribes[tribe].checked) {
-        tribesList.push({'$regex': new RegExp(tribe, 'i')});
-      }
+    // Past
+    if (this.input.past) {
+      attackResults = attackResults.find({'gsx$past': {'$gt': 0}});
+      battlegearResults = battlegearResults.find({'gsx$past': {'$gt': 0}});
+      creatureResults = creatureResults.find({'gsx$types': {'$regex': new RegExp("past", 'i')}});
+      locationResults = locationResults.find({'gsx$past': {'$gt': 0}});
+      mugicResults = mugicResults.find({'gsx$past': {'$gt': 0}});
     }
-    if (tribesList.length > 0) {
-      creatureResults = creatureResults.find({'gsx$tribe': {'$or': tribesList} });
-      mugicResults = mugicResults.find({'gsx$tribe': {'$or': tribesList} });
+
+    // Mirage
+    if (this.input.mirage) {
+      locationResults = locationResults.find({'gsx$mirage': {'$gt': 0}});
       attackResults = attackResults.limit(0);
       battlegearResults = battlegearResults.limit(0);
-      locationResults = locationResults.limit(0);
-    }
-
-    // no elements
-    if (this.stones.noElements.checked) {
-      creatureResults = creatureResults.where((obj) => {return (obj.gsx$elements == '');});
-      attackResults = attackResults.where(
-        (obj) => {return (obj.gsx$fire == ('') );}
-      ).where(
-        (obj) => {return (obj.gsx$air == ('') );}
-      ).where(
-        (obj) => {return (obj.gsx$earth == ('') );}
-      ).where(
-        (obj) => {return (obj.gsx$water == ('') );}
-      );
-      battlegearResults = battlegearResults.limit(0);
-      locationResults = locationResults.limit(0);
+      creatureResults = creatureResults.limit(0);
       mugicResults = mugicResults.limit(0);
     }
-    // Search by elements
-    else {
-      let elementsList = [];
-      let elementsList2 = [];
-      for (const element in this.elements) {
-        if (this.elements[element].checked) {
-          elementsList.push({'$regex': new RegExp(element, 'i')});
-          elementsList2.push({['gsx$'+element]: {'$gte': 0}})
-        }
-      }
-      if (elementsList.length > 0) {
-        if (this.swamp == "or") {
-          creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList} });
-          attackResults = attackResults.find({'$or': elementsList2});
-        }
-        if (this.swamp == "and") {
-         creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList} });
-         attackResults = attackResults.find({'$and': elementsList2});
-        }
-        battlegearResults = battlegearResults.limit(0);
-        locationResults = locationResults.limit(0);
-        mugicResults = mugicResults.limit(0);
-      }
-    }
 
-    let rarityList = [];
-    for (const key in this.rarity) {
-      if (this.rarity[key].checked) {
-        rarityList.push({'$eq': key});
-      }
-    }
-    if (rarityList.length > 0) {
-      attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList} });
-      battlegearResults = battlegearResults.find({'gsx$rarity': {'$or': rarityList} });
-      creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
-      locationResults = locationResults.find({'gsx$rarity': {'$or': rarityList} });
-      mugicResults = mugicResults.find({'gsx$rarity': {'$or': rarityList} });
-    }
-
-    let setsList = [];
-    for (const key in this.sets) {
-      if (this.sets[key].checked) {
-        setsList.push({'$eq': key});
-      }
-    }
-    if (setsList.length > 0) {
-      attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
-      battlegearResults = battlegearResults.find({'gsx$set': {'$or': setsList} });
-      creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
-      locationResults  = locationResults.find({'gsx$set': {'$or': setsList} });
-      mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
-    }
-
-    if (this.stones.subtypes.value) {
-      let subtypesList = this.stones.subtypes.value.split(",").filter(Boolean).map((item) => {
+    // Subtypes / Initiative
+    if (this.input.subtypes.length > 0) {
+      let subtypesList = this.input.subtypes.split(",").filter(Boolean).map((item) => {
         return ({'$regex': new RegExp(item.trim(), 'i')});
       });
 
@@ -326,50 +370,108 @@ export default class SearchForm extends React.Component {
       mugicResults = mugicResults.limit(0);
     }
 
-    if (this.mc.min.value !== "" && this.mc.min.value >= 0) {
-      attackResults = attackResults.find({'gsx$bp': {'$gte': this.mc.min.value}});
-      creatureResults = creatureResults.find({'gsx$mugicability': {'$gte': this.mc.min.value}});
-      mugicResults = mugicResults.find({'gsx$cost': {'$gte': this.mc.min.value}});
+    // Search by tribe
+    let tribesList = [];
+    for (const tribe in this.input.tribes) {
+      if (this.input.tribes[tribe])
+        tribesList.push({'$regex': new RegExp(tribe, 'i')});
     }
-    if (this.mc.max.value !== "" && this.mc.max.value >= 0 && this.mc.max.value >= this.mc.min.value) {
-      attackResults = attackResults.find({'gsx$bp': {'$lte': this.mc.max.value}});
-      creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.mc.max.value}});
-      mugicResults = mugicResults.find({'gsx$cost': {'$lte': this.mc.max.value}});
-    }
-
-    if (this.mc.max.value !== "" || this.mc.min.value !== "") {
+    if (tribesList.length > 0) {
+      creatureResults = creatureResults.find({'gsx$tribe': {'$or': tribesList} });
+      mugicResults = mugicResults.find({'gsx$tribe': {'$or': tribesList} });
+      attackResults = attackResults.limit(0);
       battlegearResults = battlegearResults.limit(0);
       locationResults = locationResults.limit(0);
     }
 
-    if (this.energy.min.value > 0) {
-      creatureResults = creatureResults.find({'gsx$energy': {'$gte': this.energy.min.value}});
+    // Search by elements
+    if (this.input.elements.none) {
+      attackResults = attackResults.where(
+        (obj) => {return (obj.gsx$fire == ('') );}
+      ).where(
+        (obj) => {return (obj.gsx$air == ('') );}
+      ).where(
+        (obj) => {return (obj.gsx$earth == ('') );}
+      ).where(
+        (obj) => {return (obj.gsx$water == ('') );}
+      );
+      battlegearResults = battlegearResults.limit(0);
+      creatureResults = creatureResults.where(obj => (obj.gsx$elements == ''));
+      locationResults = locationResults.limit(0);
+      mugicResults = mugicResults.limit(0);
     }
-    if (this.energy.max.value > 0 && this.energy.max.value >= this.energy.min.value) {
-      creatureResults = creatureResults.find({'gsx$energy': {'$lte': this.energy.max.value}});
+    else {
+      let elementsList = [];
+      let elementsList2 = [];
+      for (const element in this.input.elements) {
+        if (element === "none" || element === "and") continue;
+        if (this.input.elements[element]) {
+          elementsList.push({'$regex': new RegExp(element, 'i')});
+          elementsList2.push({['gsx$'+element]: {'$gte': 0}})
+        }
+      }
+      if (elementsList.length > 0) {
+        if (this.input.elements.and) {
+         creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList} });
+         attackResults = attackResults.find({'$and': elementsList2});
+        }
+        else {
+          creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList} });
+          attackResults = attackResults.find({'$or': elementsList2});
+        }
+        battlegearResults = battlegearResults.limit(0);
+        locationResults = locationResults.limit(0);
+        mugicResults = mugicResults.limit(0);
+      }
     }
 
-    if (this.stones.courage.value > 0) {
-      creatureResults = creatureResults.find({'gsx$courage': {'$gte': this.stones.courage.value}});
-    }
-    if (this.stones.power.value > 0) {
-      creatureResults = creatureResults.find({'gsx$power': {'$gte': this.stones.power.value}});
-    }
-    if (this.stones.wisdom.value > 0) {
-      creatureResults = creatureResults.find({'gsx$wisdom': {'$gte': this.stones.wisdom.value}});
-    }
-    if (this.stones.speed.value > 0) {
-      creatureResults = creatureResults.find({'gsx$speed': {'$gte': this.stones.speed.value}});
-    }
+    // Stats
+    if (this.input.disciplines.courage > 0)
+      creatureResults = creatureResults.find({'gsx$courage': {'$gte': this.input.disciplines.courage}});
+    
+    if (this.input.disciplines.power > 0)
+      creatureResults = creatureResults.find({'gsx$power': {'$gte': this.input.disciplines.power}});
+    
+    if (this.input.disciplines.wisdom > 0)
+      creatureResults = creatureResults.find({'gsx$wisdom': {'$gte': this.input.disciplines.wisdom}});
+    
+    if (this.input.disciplines.speed > 0)
+      creatureResults = creatureResults.find({'gsx$speed': {'$gte': this.input.disciplines.speed}});
 
-    if (this.energy.min.value > 0 || this.energy.max.value > 0 || this.stones.courage.value !== "" || this.stones.power.value !== "" || this.stones.wisdom.value !== "" || this.stones.speed.value !== "") {
+    if (this.input.energy.min > 0)
+      creatureResults = creatureResults.find({'gsx$energy': {'$gte': this.input.energy.min}});
+
+    if (this.input.energy.max > 0 && this.input.energy.max >= this.input.energy.min)
+      creatureResults = creatureResults.find({'gsx$energy': {'$lte': this.input.energy.max}});
+
+    // (if any stats, filter out non-Creatures)
+    if (this.input.energy.min > 0 || this.input.energy.max > 0 || this.input.disciplines.courage > 0 || this.input.disciplines.power > 0 || this.input.disciplines.wisdom > 0 || this.input.disciplines.speed > 0) {
       attackResults = attackResults.limit(0);
       battlegearResults = battlegearResults.limit(0);
       locationResults = locationResults.limit(0);
       mugicResults = mugicResults.limit(0);
     }
 
-    if (this.stones.unique.checked) {
+    // Mugic Counters/Cost | Build Points
+    if (this.input.mcbp.min !== "" && this.input.mcbp.min >= 0) {
+      attackResults = attackResults.find({'gsx$bp': {'$gte': this.input.mcbp.min}});
+      creatureResults = creatureResults.find({'gsx$mugicability': {'$gte': this.input.mcbp.min}});
+      mugicResults = mugicResults.find({'gsx$cost': {'$gte': this.input.mcbp.min}});
+    }
+    if (this.input.mcbp.max !== "" && this.input.mcbp.max >= 0 && this.input.mcbp.max >= this.input.mcbp.min) {
+      attackResults = attackResults.find({'gsx$bp': {'$lte': this.input.mcbp.max}});
+      creatureResults = creatureResults.find({'gsx$mugicability': {'$lte': this.input.mcbp.max}});
+      mugicResults = mugicResults.find({'gsx$cost': {'$lte': this.input.mcbp.max}});
+    }
+
+    // filter out Battlegear and Locations if mcbp
+    if (this.input.mcbp.max > 0 || this.input.mcbp.min > 0) {
+      battlegearResults = battlegearResults.limit(0);
+      locationResults = locationResults.limit(0);
+    }
+
+    // Unique
+    if (this.input.mull.unique) {
       attackResults = attackResults.find({'gsx$unique': {'$gt': 0}});
       battlegearResults = battlegearResults.find({'gsx$unique': {'$gt': 0}});
       creatureResults = creatureResults.find({'gsx$unique': {'$gt': 0}});
@@ -377,7 +479,8 @@ export default class SearchForm extends React.Component {
       mugicResults = mugicResults.find({'gsx$unique': {'$gt': 0}});
     }
 
-    if (this.stones.loyal.checked) {
+    // Loyal
+    if (this.input.mull.loyal) {
       attackResults = attackResults.limit(0);
       battlegearResults = battlegearResults.find({'gsx$loyal': {'$gt': 0}});
       creatureResults = creatureResults.find({'gsx$loyal': {'$gt': 0}});
@@ -385,15 +488,8 @@ export default class SearchForm extends React.Component {
       locationResults = locationResults.limit(0);
     }
 
-    if (this.stones.mixed.checked) {
-      attackResults = attackResults.limit(0);
-      creatureResults = creatureResults.find({'gsx$loyal': {'$lte': 0}});
-      battlegearResults = battlegearResults.find({'gsx$loyal': {'$lte': 0}});
-      mugicResults = mugicResults.limit(0);
-      locationResults = locationResults.limit(0);
-    }
-
-    if (this.stones.legendary.checked) {
+    // Legendary
+    if (this.input.mull.legendary) {
       attackResults = attackResults.find({'gsx$legendary': {'$gt': 0}});
       battlegearResults = battlegearResults.find({'gsx$legendary': {'$gt': 0}});
       creatureResults = creatureResults.find({'gsx$legendary': {'$gt': 0}});
@@ -401,60 +497,81 @@ export default class SearchForm extends React.Component {
       mugicResults = mugicResults.find({'gsx$legendary': {'$gt': 0}});
     }
 
-    if (this.stones.past.checked) {
-      attackResults = attackResults.find({'gsx$past': {'$gt': 0}});
-      battlegearResults = battlegearResults.find({'gsx$past': {'$gt': 0}});
-      creatureResults = creatureResults.find({'gsx$types': {'$regex': new RegExp("past", 'i')}});
-      locationResults = locationResults.find({'gsx$past': {'$gt': 0}});
-      mugicResults = mugicResults.find({'gsx$past': {'$gt': 0}});
-    }
-
-    if (this.stones.mirage.checked) {
-      locationResults = locationResults.find({'gsx$mirage': {'$gt': 0}});
+    // Non Loyal
+    if (this.input.mull.mixed) {
       attackResults = attackResults.limit(0);
-      battlegearResults = battlegearResults.limit(0);
-      creatureResults = creatureResults.limit(0);
+      creatureResults = creatureResults.find({'gsx$loyal': {'$lte': 0}});
+      battlegearResults = battlegearResults.find({'gsx$loyal': {'$lte': 0}});
       mugicResults = mugicResults.limit(0);
+      locationResults = locationResults.limit(0);
     }
 
+    // Sets
+    let setsList = [];
+    for (const key in this.input.sets) {
+      if (this.input.sets[key])
+        setsList.push({'$eq': key.toUpperCase()});
+    }
+    if (setsList.length > 0) {
+      attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
+      battlegearResults = battlegearResults.find({'gsx$set': {'$or': setsList} });
+      creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
+      locationResults  = locationResults.find({'gsx$set': {'$or': setsList} });
+      mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
+    }
+
+    // Rarity
+    let rarityList = [];
+    for (const key in this.input.rarity) {
+      if (this.input.rarity[key])
+        rarityList.push({'$eq': key.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ")});
+    }
+    if (rarityList.length > 0) {
+      attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList} });
+      battlegearResults = battlegearResults.find({'gsx$rarity': {'$or': rarityList} });
+      creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
+      locationResults = locationResults.find({'gsx$rarity': {'$or': rarityList} });
+      mugicResults = mugicResults.find({'gsx$rarity': {'$or': rarityList} });
+    }
+
+    // Gender
     let genderList = [];
-    for (const key in this.gender) {
-      if (this.gender[key].checked) {
+    for (const key in this.input.gender) {
+      if (this.input.gender[key])
         genderList.push({'$regex': new RegExp(key, 'i')})
-      }
     }
     if (genderList.length > 0) {
-      creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
       attackResults = attackResults.limit(0);
       battlegearResults = battlegearResults.limit(0);
+      creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
       locationResults = locationResults.limit(0);
       mugicResults = mugicResults.limit(0);
     }
 
     // Merge data
-    let types = !(this.type.Attack.checked | this.type.Battlegear.checked | this.type.Creature.checked | this.type.Location.checked | this.type.Mugic.checked);
+    let types = !(this.input.types.attack | this.input.types.battlegear | this.input.types.creature | this.input.types.location | this.input.types.mugic);
 
-    if (types || this.type.Attack.checked) {
+    if (types || this.input.types.attack) {
       let temp = attackResults.data();
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (types || this.type.Battlegear.checked) {
+    if (types || this.input.types.battlegear) {
       let temp = battlegearResults.data();
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (types || this.type.Creature.checked) {
+    if (types || this.input.types.creature) {
       let temp = creatureResults.data()
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (types || this.type.Location.checked) {
+    if (types || this.input.types.location) {
       let temp = locationResults.data()
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
     }
-    if (types || this.type.Mugic.checked) {
+    if (types || this.input.types.mugic) {
       let temp = mugicResults.data()
       temp.forEach(function(v){ delete v.$loki });
       filter.insert(temp);
@@ -466,4 +583,5 @@ export default class SearchForm extends React.Component {
     if (results.length > 0) this.props.handleContent(results);
     else this.props.handleContent([{'text': 'No Results Found'}]);
   }
+
 }

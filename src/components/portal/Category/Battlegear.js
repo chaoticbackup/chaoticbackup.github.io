@@ -12,22 +12,21 @@ export default class Battlegear extends React.Component {
   @observable loaded = false;
 
     render() {
+      if (this.loaded == false) {
+        if (API.urls !== null &&
+          API.portal !== null &&
+          API.cards !== null
+        ) {
+          API.buildCollection([{'cards': 'battlegear'}, {'portal': 'battlegear'}])
+          .then(() => {
+            this.loaded = true;
+          });
+        }
+        return (<span>Loading...</span>);
+      }
+
       let path = this.props.location.pathname.split("/");
       if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
-
-      if (API.urls === null ||
-        API.portal === null ||
-        API.cards === null) {
-        return (<span>Loading...</span>);
-      }
-
-      if (this.loaded == false) {
-        API.buildCollection([{'cards': 'battlegear'}, {'portal': 'battlegear'}])
-        .then(() => {
-          this.loaded = true;
-        });
-        return (<span>Loading...</span>);
-      }
 
       const battlegear = API.portal.battlegear.data;
 

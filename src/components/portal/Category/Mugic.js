@@ -16,24 +16,21 @@ export default class Mugic extends React.Component {
   // /portal/{Tribe}/Mugic/
   // The first / gets counted
   render() {
-    const store = API;
+    if (this.loaded == false) {
+      if (API.urls !== null &&
+        API.portal !== null &&
+        API.cards !== null
+      ) {
+        API.buildCollection([{'cards': 'mugic'}, {'portal': 'mugic'}])
+        .then(() => {
+          this.loaded = true;
+        });
+      }
+      return (<span>Loading...</span>);
+    }
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
-
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (this.loaded == false) {
-      API.buildCollection([{'cards': 'mugic'}, {'portal': 'mugic'}])
-      .then(() => {
-        this.loaded = true;
-      });
-      return (<span>Loading...</span>);
-    }
 
     const tribe = (() => {
       if (path.length >= 4 && API.tribes.includes(path[3])) return path[3];

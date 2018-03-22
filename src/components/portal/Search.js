@@ -48,21 +48,20 @@ class DBSearch extends React.Component {
   }
 
   render() {
-    let string = this.props.string;
-
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
     if (this.loaded == false) {
-      API.buildCollection([{'portal': 'attacks'}, , {'portal': 'battlegear'}, {'portal': 'creatures'}, {'portal': 'locations'}, {'portal': 'mugic'}])
-      .then(() => {
-      this.loaded = true;
-      });
+      if (API.urls !== null &&
+        API.portal !== null &&
+        API.cards !== null
+      ) {
+        API.buildCollection([{'portal': 'attacks'}, {'portal': 'battlegear'}, {'portal': 'creatures'}, {'portal': 'locations'}, {'portal': 'mugic'}])
+        .then(() => {
+          this.loaded = true;
+        });
+      }
       return (<span>Loading...</span>);
     }
+
+    let string = this.props.string;
 
     // No search
     if (string == "") {

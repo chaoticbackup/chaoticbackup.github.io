@@ -23,47 +23,24 @@ export default class Tribes extends React.Component {
   // to display the respective subcategories
   // -> /{Tribe}/Mugic || /{Tribe}/Creatures
   render() {
+    if (this.loaded == false) {
+      if (API.urls !== null &&
+        API.portal !== null &&
+        API.cards !== null
+      ) {
+        API.buildCollection([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
+        .then(() => {
+          this.loaded = true;
+        });
+      }
+      return (<span>Loading...</span>);
+    }
 
     let path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     let tribe = path[2];
 
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (!API.tribes.includes(tribe)) {
-      return(
-        <div>
-          <Interactive as={Link} {...s.link}
-            to="/portal/Danian"
-          >Danian</Interactive>
-          <br />
-          <Interactive as={Link} {...s.link}
-            to="/portal/OverWorld"
-          >OverWorld</Interactive>
-          <br />
-          <Interactive as={Link} {...s.link}
-            to="/portal/UnderWorld"
-          >UnderWorld</Interactive>
-          <br />
-          <Interactive as={Link} {...s.link}
-            to="/portal/Mipedian"
-          >Mipedian</Interactive>
-        </div>
-      );
-    }
-
-    if (this.loaded == false) {
-      API.buildCollection([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
-      .then(() => {
-        this.loaded = true;
-      });
-      return (<span>Loading...</span>);
-    }
 
     let filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');

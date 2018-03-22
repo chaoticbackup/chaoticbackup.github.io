@@ -25,31 +25,18 @@ export default class Home extends React.Component {
   }
 
   render() {
-
-    if (API.urls === null ||
-      API.portal === null ||
-      API.cards === null) {
-      return (<span>Loading...</span>);
-    }
-
-    if (this.loaded == false) {
-      API.buildCollection([{'cards': 'attacks'}, , {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
-      .then(() => {
-        this.loaded = true;
-      });
-      return (<span>Loading...</span>);
-    }
-
     return (
       <div className="collection">
         <link rel="stylesheet" href="/src/css/collection.css" />
         <div className="left">
           <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
-          <SearchForm handleContent={this.handleContent.bind(this)} />
+          <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
         </div>
         <div className="right">
-          {this.navigation()}<br />
+          {this.navigation()}
+          <br />
           <CardList cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
+          <br />
           {this.navigation()}
         </div>
       </div>
