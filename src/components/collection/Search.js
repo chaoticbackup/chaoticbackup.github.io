@@ -58,8 +58,6 @@ export default class SearchCollection extends React.Component {
       query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
 
-    console.log(query);
-
     // query -> input
     this.list.forEach((d) => {
       if (query[d]) {
@@ -71,22 +69,23 @@ export default class SearchCollection extends React.Component {
 
     if (query.hasOwnProperty('past')) this.input.past = true;
     if (query.hasOwnProperty('mirage')) this.input.mirage = true;
-    if (query.hasOwnProperty('name')) this.input.name = decodeURIComponent(query.name);
-    if (query.hasOwnProperty('text')) this.input.text = decodeURIComponent(query.text);
-    if (query.hasOwnProperty('subtypes')) this.input.subtypes = decodeURIComponent(query.subtypes);
+    if (query.hasOwnProperty('name')) this.input.name = query.name;
+    if (query.hasOwnProperty('text')) this.input.text = query.text;
+    if (query.hasOwnProperty('subtypes')) this.input.subtypes = query.subtypes;
+    if (query.hasOwnProperty('courage')) this.input.disciplines.courage = query.courage;
+    if (query.hasOwnProperty('power')) this.input.disciplines.power = query.power;
+    if (query.hasOwnProperty('wisdom')) this.input.disciplines.wisdom = query.wisdom;
+    if (query.hasOwnProperty('speed')) this.input.disciplines.speed = query.speed;
     if (query.hasOwnProperty('energy')) {
       let q = query.energy.split(',');
-      if (q[0] > 1) this.input.energy.min = q[0];
-      if (q[1] > 1) this.input.energy.max = q[1];
+      if (q[0] >= 0) this.input.energy.min = q[0];
+      if (q[1] >= 0) this.input.energy.max = q[1];
     }
     if (query.hasOwnProperty('mcbp')) {
       let q = query.mcbp.split(',');
-      if (q[0] > 1) this.input.mcbp.min = q[0];
-      if (q[1] > 1) this.input.mcbp.max = q[1];
+      if (q[0] >= 0) this.input.mcbp.min = q[0];
+      if (q[1] >= 0) this.input.mcbp.max = q[1];
     }
-
-    // TODO disciplines
-    // decodeURIComponent
 
   }
 
@@ -104,12 +103,34 @@ export default class SearchCollection extends React.Component {
 
     this.list.forEach(item => queryString += update(item));
 
-    // TODO name, text, subtype, past, mirage, disciplines, energy, mugic counters
-    // encodeURIComponent
-    
+    if (this.input.past) queryString += "past&";
+    if (this.input.mirage) queryString += "mirage&";
+    if (this.input.name) queryString += "name=" + encodeURIComponent(this.input.name) + "&";
+    if (this.input.text) queryString += "text=" + encodeURIComponent(this.input.text) + "&";
+    if (this.input.subtypes) queryString += "subtypes=" + encodeURIComponent(this.input.subtypes) + "&";
+    if (this.input.disciplines.courage > 0) queryString += "courage=" + this.input.disciplines.courage + "&";
+    if (this.input.disciplines.power > 0) queryString += "power=" + this.input.disciplines.power + "&";
+    if (this.input.disciplines.wisdom > 0) queryString += "wisdom=" + this.input.disciplines.wisdom + "&";
+    if (this.input.disciplines.speed > 0) queryString += "speed=" + this.input.disciplines.speed + "&";
+    if (this.input.energy.min != "" || this.input.energy.max != "") {
+      queryString += "energy=";
+      if (this.input.energy.min != "" && this.input.energy.min >= 0) queryString += this.input.energy.min;
+      queryString += ",";
+      if (this.input.energy.max != "" && this.input.energy.max >= 0) queryString += this.input.energy.max;
+      queryString += "&";
+    }
+    if (this.input.mcbp.min != "" || this.input.mcbp.max != "") {
+      queryString += "mcbp=";
+      if (this.input.mcbp.min != "" && this.input.mcbp.min >= 0) queryString += this.input.mcbp.min;
+      queryString += ",";
+      if (this.input.mcbp.max != "" && this.input.mcbp.max >= 0) queryString += this.input.mcbp.max;
+      queryString += "&";
+    }
+
     // Strip trailing &
     queryString = queryString.replace(/\&$/, '');
 
+    // Push to URL
     this.props.history.push('/collection/?'+(queryString));
   }
 
