@@ -259,7 +259,7 @@ export default class SearchCollection extends React.Component {
   reset = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.history.push('/collection/');
+    // this.props.history.push('/collection/');
     this.cleanInput();
   }
 
@@ -428,13 +428,13 @@ export default class SearchCollection extends React.Component {
     // Stats
     if (this.input.disciplines.courage > 0)
       creatureResults = creatureResults.find({'gsx$courage': {'$gte': this.input.disciplines.courage}});
-    
+
     if (this.input.disciplines.power > 0)
       creatureResults = creatureResults.find({'gsx$power': {'$gte': this.input.disciplines.power}});
-    
+
     if (this.input.disciplines.wisdom > 0)
       creatureResults = creatureResults.find({'gsx$wisdom': {'$gte': this.input.disciplines.wisdom}});
-    
+
     if (this.input.disciplines.speed > 0)
       creatureResults = creatureResults.find({'gsx$speed': {'$gte': this.input.disciplines.speed}});
 
