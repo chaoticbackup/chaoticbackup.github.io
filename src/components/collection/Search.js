@@ -25,7 +25,7 @@ export default class SearchCollection extends React.Component {
     this.parseQuery();
   }
 
-  cleanInput() {
+  cleanInput = () => {
     let input = {
       name: "",
       text: "",
@@ -48,7 +48,7 @@ export default class SearchCollection extends React.Component {
     this.input = input;
   }
 
-  parseQuery() {
+  parseQuery = () => {
     const queryString = this.props.location.search.toLowerCase();
 
     let query = {};
@@ -259,7 +259,6 @@ export default class SearchCollection extends React.Component {
   reset = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    // this.props.history.push('/collection/');
     this.cleanInput();
   }
 
@@ -582,6 +581,7 @@ export default class SearchCollection extends React.Component {
 
     if (results.length > 0) this.props.handleContent(results);
     else this.props.handleContent([{'text': 'No Results Found'}]);
+
   }
 
 }

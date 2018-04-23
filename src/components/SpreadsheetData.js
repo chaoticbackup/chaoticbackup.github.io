@@ -162,40 +162,47 @@ class CollectionDB {
   }
 
   setupDB() {
+    let db = new loki("chaotic_portal.db", {
+      autosave: true,
+      autoload: true,
+      autoloadCallback: databaseInitialize,
+      autosaveInterval: 4000,
+      persistenceMethod: 'localStorage'
+    });
+
     // ignoring persistence for now
-    let db = new loki("chaotic_portal.db");
+    // let db = new loki("chaotic_portal.db");
     this.attacks = db.addCollection('attacks');
     this.battlegear = db.addCollection('battlegear');
     this.creatures = db.addCollection('creatures');
     this.locations = db.addCollection('locations');
     this.mugic = db.addCollection('mugic');
+
     this.db = db;
 
-  //   let db = new loki("chaotic_portal.db", { autosave: true, autoload: true, autoloadCallback: databaseInitialize, autosaveInterval: 4000, persistenceMethod: 'localStorage' });
-  //   this.db = db;
+    let databaseInitialize = () => {
+      var entries;
+      console.log(this);
+      // if ((entries = db.getCollection("attacks")) === null)
+      //   entries = db.addCollection("attacks");
+      // this.attacks = entries;
 
-  //   let databaseInitialize = () => {
-  //     var entries;
-  //     if ((entries = db.getCollection("attacks")) === null)
-  //       entries = db.addCollection("attacks");
-  //     this.attacks = entries;
+      // if ((entries = db.getCollection("battlegear")) === null)
+      //   entries = db.addCollection("battlegear");
+      // this.battlegear = entries;
 
-  //     if ((entries = db.getCollection("battlegear")) === null)
-  //       entries = db.addCollection("battlegear");
-  //     this.battlegear = entries;
+      // console.log(db.getCollection("creatures"));
+      // if ((entries = db.getCollection("creatures")) === null)
+      //   entries = db.addCollection("creatures");
+      // this.creatures = db.addCollection('creatures');
 
-  //     console.log(db.getCollection("creatures"));
-  //     if ((entries = db.getCollection("creatures")) === null)
-  //       entries = db.addCollection("creatures");
-  //     this.creatures = db.addCollection('creatures');
+      // if ((entries = db.getCollection("locations")) === null)
+      //   entries = db.addCollection("locations");
+      // this.locations = entries
 
-  //     if ((entries = db.getCollection("locations")) === null)
-  //       entries = db.addCollection("locations");
-  //     this.locations = entries
-
-  //     if ((entries = db.getCollection("mugic")) === null)
-  //       entries = db.addCollection("mugic");
-  //     this.mugic = entries;
-  //   };
+      // if ((entries = db.getCollection("mugic")) === null)
+      //   entries = db.addCollection("mugic");
+      // this.mugic = entries;
+    };
   }
 }

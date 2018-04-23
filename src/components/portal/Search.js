@@ -15,7 +15,7 @@ export default class SearchPortal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.search = this.search.bind(this);
+    // this.search = this.search.bind(this);
     this.query = this.input = decodeURIComponent(this.props.location.search.substr(1));
   }
 
@@ -29,7 +29,7 @@ export default class SearchPortal extends React.Component {
   </div>);
   }
 
-  search(event) {
+  search = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
