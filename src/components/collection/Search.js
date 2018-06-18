@@ -170,9 +170,9 @@ export default class SearchCollection extends React.Component {
       return item.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ");
     });
 
-    let gender = gen("gender", "block", (item) => {
-      return item.charAt(0).toUpperCase()+item.slice(1);
-    });
+    // let gender = gen("gender", "block", (item) => {
+    //   return item.charAt(0).toUpperCase()+item.slice(1);
+    // });
 
     let tribes = gen("tribes", "inline", (item) => {
       return (<span><img className="icon16" src={"/src/img/icons/tribes/"+item+".png"} />&nbsp;</span>);
@@ -239,7 +239,7 @@ export default class SearchCollection extends React.Component {
           <Collapsible trigger="Types">{types}</Collapsible>
           <Collapsible trigger="Rarity">{rarity}</Collapsible>
           <Collapsible trigger="Sets">{sets}</Collapsible>
-          <Collapsible trigger="Gender (fan content)">{gender}</Collapsible>
+          {/*<Collapsible trigger="Gender (fan content)">{gender}</Collapsible>*/}
           <br />
           <input type="submit" value="Search" />&nbsp;&nbsp;&nbsp;&nbsp;
           <input type="button" value="Reset" onClick={this.reset} />
@@ -534,18 +534,18 @@ export default class SearchCollection extends React.Component {
     }
 
     // Gender
-    let genderList = [];
-    for (const key in this.input.gender) {
-      if (this.input.gender[key])
-        genderList.push({'$regex': new RegExp(key, 'i')})
-    }
-    if (genderList.length > 0) {
-      attackResults = attackResults.limit(0);
-      battlegearResults = battlegearResults.limit(0);
-      creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
-      locationResults = locationResults.limit(0);
-      mugicResults = mugicResults.limit(0);
-    }
+    // let genderList = [];
+    // for (const key in this.input.gender) {
+    //   if (this.input.gender[key])
+    //     genderList.push({'$regex': new RegExp(key, 'i')})
+    // }
+    // if (genderList.length > 0) {
+    //   attackResults = attackResults.limit(0);
+    //   battlegearResults = battlegearResults.limit(0);
+    //   creatureResults = creatureResults.find({'gsx$gender': {'$or': genderList} });
+    //   locationResults = locationResults.limit(0);
+    //   mugicResults = mugicResults.limit(0);
+    // }
 
     // Merge data
     let types = !(this.input.types.attack | this.input.types.battlegear | this.input.types.creature | this.input.types.location | this.input.types.mugic);
