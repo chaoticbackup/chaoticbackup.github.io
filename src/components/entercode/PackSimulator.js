@@ -6,6 +6,7 @@ import loki from 'lokijs';
 import Interactive from 'react-interactive';
 import API from '../SpreadsheetData';
 import s from '../../styles/style';
+import '../../scss/packs.scss';
 
 @inject((stores, props, context) => props) @observer
 export default class PackSimulator extends React.Component {

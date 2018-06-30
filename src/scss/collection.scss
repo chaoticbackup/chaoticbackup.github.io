@@ -1,3 +1,5 @@
+@import 'base';
+
 @media only screen and (min-width: 975px) {
 
 .collection > .left {
@@ -94,27 +96,6 @@
 .card .icon14, .card .icon16,
 .card .icon20, .card .icon24 {
     vertical-align: middle;
-}
-
-.icon14 {
-    height: 14px;
-    padding-bottom: 2px;
-}
-
-.icon16 {
-    height: 16px;
-}
-
-.icon20 {
-    height: 20px;
-}
-
-.icon24 {
-    height: 24px;
-}
-
-.bigger {
-    font-size: 14px;
 }
 
 .thumb {
