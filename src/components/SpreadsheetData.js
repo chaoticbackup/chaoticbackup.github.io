@@ -118,7 +118,7 @@ class CollectionDB {
   constructor(API, format) {
     this.api = API;
     this.format = format;
-    this.setupDB();
+    this.setupDB(format);
   }
 
   getSpreadsheetData(spreadsheet, type, callback) {
@@ -138,7 +138,7 @@ class CollectionDB {
   // example format
   // this.setup(this.api.urls.Attacks["portal"], "Attack", (data) => {});
   async setupType(type, resolve) {
-    if (this.building[type]) {
+    if (this.building[type] != null) {
       if (this.building[type] == "built") {
         return resolve();
       }
@@ -149,60 +149,65 @@ class CollectionDB {
         });
         return disposer;
       }
+      if (this.building[type] == "setup") {
+        this.building[type] = "building";
+        // check if the collection already exists in memory
+        if (this[type].data.length == 0) {
+          let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
+          return this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, (data) => {
+            this[type].insert(data);
+            this.building[type] = "built";
+            resolve();
+          });
+        }
+        else {
+          this.building[type] = "built";
+          return resolve();
+        }
+      }
     }
     else {
-      this.building[type] = "building";
-      let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
-      return this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, (data) => {
-        this[type].insert(data);
-        this.building[type] = "built";
-        resolve();
+      // Wait until the database is initialized
+      this.building[type] = observable.box("");
+      const disposer = observe(this.building[type], () => {
+        disposer();
+        return this.setupType(type, resolve);
       });
+      return disposer;
     }
   }
 
-  setupDB() {
-    let db = new loki("chaotic_portal.db", {
+  setupDB(format) {
+    let db = new loki(`chaotic_${format}.db`, {
       autosave: true,
       autoload: true,
-      autoloadCallback: databaseInitialize,
+      autoloadCallback: databaseInitialize.bind(this),
       autosaveInterval: 4000,
       persistenceMethod: 'localStorage'
     });
 
-    // ignoring persistence for now
-    // let db = new loki("chaotic_portal.db");
-    this.attacks = db.addCollection('attacks');
-    this.battlegear = db.addCollection('battlegear');
-    this.creatures = db.addCollection('creatures');
-    this.locations = db.addCollection('locations');
-    this.mugic = db.addCollection('mugic');
-
     this.db = db;
 
-    let databaseInitialize = () => {
-      var entries;
-      console.log(this);
-      // if ((entries = db.getCollection("attacks")) === null)
-      //   entries = db.addCollection("attacks");
-      // this.attacks = entries;
-
-      // if ((entries = db.getCollection("battlegear")) === null)
-      //   entries = db.addCollection("battlegear");
-      // this.battlegear = entries;
-
-      // console.log(db.getCollection("creatures"));
-      // if ((entries = db.getCollection("creatures")) === null)
-      //   entries = db.addCollection("creatures");
-      // this.creatures = db.addCollection('creatures');
-
-      // if ((entries = db.getCollection("locations")) === null)
-      //   entries = db.addCollection("locations");
-      // this.locations = entries
-
-      // if ((entries = db.getCollection("mugic")) === null)
-      //   entries = db.addCollection("mugic");
-      // this.mugic = entries;
+    function databaseInitialize() {
+      ["attacks","battlegear", "creatures", "locations", "mugic"]
+        .forEach((item, i) => {
+          // check if the db already exists in memory
+          let entries = db.getCollection(item);
+          if (entries === null) {
+            this[item] = db.addCollection(item);
+            if (this.building[item])
+              this.building[item].set("setup");
+            else
+              this.building[item] = observable.box("setup");
+          }
+          else {
+            this[item] = entries;
+            if (this.building[item])
+              this.building[item].set("built");
+            else
+              this.building[item] = observable.box("built");
+          }
+      });
     };
   }
 }
