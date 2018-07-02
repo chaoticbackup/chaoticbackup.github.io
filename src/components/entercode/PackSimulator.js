@@ -47,8 +47,7 @@ export default class PackSimulator extends React.Component {
       if (i>9) break;
     }
 
-    return (<div>
-      <link rel="stylesheet" href="/src/css/packs.css" />
+    return (<div className="packsim">
       <Interactive as={Link} {...s.link}
        to={`/EnterTheCode/`}>Enter The Code</Interactive>
       <br /><br />

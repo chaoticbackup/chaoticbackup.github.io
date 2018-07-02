@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import {Donate} from './Snippets';
+import "../scss/with_love.scss";
 
 export default function Home() {
   return (
     <div>
-      <link rel="stylesheet" href="/src/css/with_love.css" />
       <br />
       <div className="with-love">
         <div>Welcome to the <a href="https://github.com/chaoticbackup" className="name" target="_blank">Chaotic Backup Project</a>.

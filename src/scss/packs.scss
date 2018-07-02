@@ -4,6 +4,13 @@
 }
 } /* Desktop */
 
+.packsim {
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+       opacity: 1;
+    }
+}
+
 .pack {
     height: 100%;
     display: flex;
@@ -11,92 +18,88 @@
     flex-wrap: wrap;
     justify-content: center;
     margin: auto;
-}
 
-.card {
-    width: 150px;
-    height: 210px;
-    background-size: cover;
-    box-sizing: content-box;
-    margin: 5px;
-    -webkit-transition: -webkit-transform 1s,opacity 1s,background 1s,width 1s,height 1s,font-size 1s,top 1s,left 1s;
-    -webkit-border-radius: 5px;
-    -o-transition-property: width,height,-o-transform,background,font-size,opacity,top,left;
-    -o-transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
-    -moz-transition-property: width,height,-o-transform,background,font-size,opacity,top,left;
-    -moz-transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
-    transition-property: width,height,transform,background,font-size,opacity,top,left;
-    transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
-}
+    .card {
+        width: 150px;
+        height: 210px;
+        background-size: cover;
+        box-sizing: content-box;
+        margin: 5px;
+        -webkit-transition: -webkit-transform 1s,opacity 1s,background 1s,width 1s,height 1s,font-size 1s,top 1s,left 1s;
+        -webkit-border-radius: 5px;
+        -o-transition-property: width,height,-o-transform,background,font-size,opacity,top,left;
+        -o-transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
+        -moz-transition-property: width,height,-o-transform,background,font-size,opacity,top,left;
+        -moz-transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
+        transition-property: width,height,transform,background,font-size,opacity,top,left;
+        transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
+    }
 
-.card:hover {
-    width: 250px;
-    height: 350px;
-}
+    .card:hover {
+        width: 250px;
+        height: 350px;
+    }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-   opacity: 1;
-}
+    .stats {
+        height: 100%;
+        width: 100%;
+        text-align: left;
+    }
 
-.stats {
-    height: 100%;
-    width: 100%;
-    text-align: left;
-}
+    .stats span {
+        position: relative;
+        color: black;
+        display: block;
+        left: 10px;
+        font-size: 12px;
+    }
 
-.stats span {
-    position: relative;
-    color: black;
-    display: block;
-    left: 10px;
-    font-size: 12px;
-}
+    .stats span:nth-of-type(1) {
+        top: 130px;
+    }
+    .stats span:nth-of-type(2) {
+        top: 128px;
+    }
+    .stats span:nth-of-type(3) {
+        top: 126px;
+    }
+    .stats span:nth-of-type(4) {
+        top: 124px;
+    }
 
-.stats span:nth-of-type(1) {
-    top: 130px;
-}
-.stats span:nth-of-type(2) {
-    top: 128px;
-}
-.stats span:nth-of-type(3) {
-    top: 126px;
-}
-.stats span:nth-of-type(4) {
-    top: 124px;
-}
+    /* Energy */
+    .stats span:nth-of-type(5) {
+        text-align: right;
+        top: 125px;
+        left: -11px;
+        font-size: 14px;
+    }
 
-/* Energy */
-.stats span:nth-of-type(5) {
-    text-align: right;
-    top: 125px;
-    left: -11px;
-    font-size: 14px;
-}
+    .card:hover .stats span {
+        left: 20px;
+        font-size: 14px;
+        font-weight: bold;
+    }
 
-.card:hover .stats span {
-    left: 20px;
-    font-size: 14px;
-    font-weight: bold;
-}
+    .card:hover .stats span:nth-of-type(1) {
+        top: 220px;
+    }
+    .card:hover .stats span:nth-of-type(2) {
+        top: 229px;
+    }
+    .card:hover .stats span:nth-of-type(3) {
+        top: 237px;
+    }
+    .card:hover .stats span:nth-of-type(4) {
+        top: 245px;
+    }
 
-.card:hover .stats span:nth-of-type(1) {
-    top: 220px;
-}
-.card:hover .stats span:nth-of-type(2) {
-    top: 229px;
-}
-.card:hover .stats span:nth-of-type(3) {
-    top: 237px;
-}
-.card:hover .stats span:nth-of-type(4) {
-    top: 245px;
-}
+    /* Energy */
+    .card:hover .stats span:nth-of-type(5) {
+        text-align: right;
+        top: 258px;
+        left: -21px;
+        font-size: 20px;
+    }
 
-/* Energy */
-.card:hover .stats span:nth-of-type(5) {
-    text-align: right;
-    top: 258px;
-    left: -21px;
-    font-size: 20px;
 }
