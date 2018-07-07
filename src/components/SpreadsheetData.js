@@ -2,115 +2,6 @@ import 'whatwg-fetch';
 import loki from 'lokijs';
 import {observable, observe} from "mobx";
 
-class API {
-  @observable portal = null;
-  @observable cards = null;
-  @observable urls = null;
-  instance = null;
-
-  static base_url = "https://spreadsheets.google.com/feeds/list/";
-  static data_format = "/od6/public/values?alt=json";
-  // + "/od6/public/basic?alt=json"; // Alternate data format
-  static base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
-  get base_image() { return "https://drive.google.com/uc?id="; }
-  get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp"; }
-  get card_back() { return "1_MgWDPsPGf-gPBArn2v6ideJcqOPsSYC"; }
-
-  // Singleton
-  static getInstance() {
-    if (!this.instance) { this.instance = new API(); }
-    return this.instance;
-  }
-
-  static path(spreadsheetID) {
-    return API.base_url + spreadsheetID + API.data_format;
-  }
-
-  // Wrapper
-  path(spreadsheetID) {
-    return API.path(spreadsheetID);
-  }
-
-  constructor() {
-    // This sets up urls and kicks off db
-    let urls = {};
-    this.getSpreadsheet(API.path(API.base_spreadsheet), (data) => {
-      if (data == null) return;
-      data.forEach((d) => {
-        if (!urls[d.gsx$type.$t]) urls[d.gsx$type.$t] = {};
-        urls[d.gsx$type.$t][d.gsx$subtype.$t] = API.path(d.gsx$url.$t);
-      });
-      this.urls = urls;
-      this.setupDB();
-    });
-  }
-
-  getSpreadsheet(spreadsheet, callback) {
-    fetch(spreadsheet)
-      .then((response) => {
-        // console.log(response);
-        return response.json();
-      }).then((json) => {
-        return callback(json.feed.entry);
-      }).catch((err) => {
-        console.log('parsing failed', err);
-        return callback(null);
-      });
-  }
-
-  setupDB() {
-    try {
-      this.portal = new CollectionDB(this, 'portal');
-      this.cards = new CollectionDB(this, 'cards');
-    }
-    catch (err) {
-      console.log('setting up database failed', err);
-    }
-  }
-
-  get tribes() {
-    return ["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld"];
-  }
-
-  // For the conversion of shorthand in database
-  get sets() {
-    return {
-      "DOP": "Dawn of Perim",
-      "ZOTH": "Zenith of the Hive",
-      "SS": "Silent Sands",
-      "MI": "M'arrillian Invasion",
-      "ROTO": "Rise of the Oligarch",
-      "TOTT": "Turn of the Tide",
-      "FUN": "Forged Unity",
-      "AU": "Alliance Unraveled",
-      "FAS": "Fire and Stone",
-      "SAS": "Storm and Sea",
-      "EE": "Elemental Emperors",
-      "BR": "Beyond Rare",
-      "LR": "League Rewards",
-      "OP1": "Organized Play 1"
-    };
-  }
-
-  // Input format
-  // [{cards: 'attacks'}, {portal: 'attacks'}]
-  async buildCollection(input) {
-    return await Promise.all(input.map((item) => {
-      return new Promise((resolve, reject) => {
-        if ('cards' in item)
-          return this.cards.setupType(item.cards, resolve);
-        if ('portal' in item)
-          return this.portal.setupType(item.portal, resolve);
-        console.log('cards or portal');
-        return reject();
-      });
-    }));
-  }
-
-}
-
-export default API.getInstance();
-
 class CollectionDB {
   // Keeps track of what collections have been populated
   @observable building = {};
@@ -121,7 +12,7 @@ class CollectionDB {
     this.setupDB(format);
   }
 
-  getSpreadsheetData(spreadsheet, type, callback) {
+  async getSpreadsheetData(spreadsheet, type, callback) {
     this.api.getSpreadsheet(spreadsheet, (data) => {
       callback(data.map((item) => {
         let temp = {};
@@ -211,3 +102,113 @@ class CollectionDB {
     };
   }
 }
+
+class API {
+  @observable portal = null;
+  @observable cards = null;
+  @observable urls = null;
+  instance = null;
+
+  static base_url = "https://spreadsheets.google.com/feeds/list/";
+  static data_format = "/od6/public/values?alt=json";
+  // + "/od6/public/basic?alt=json"; // Alternate data format
+  static base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
+  get base_image() { return "https://drive.google.com/uc?id="; }
+  get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp"; }
+  get card_back() { return "1_MgWDPsPGf-gPBArn2v6ideJcqOPsSYC"; }
+
+  // Singleton
+  static getInstance() {
+    if (!this.instance) { this.instance = new API(); }
+    return this.instance;
+  }
+
+  static path(spreadsheetID) {
+    return API.base_url + spreadsheetID + API.data_format;
+  }
+
+  // Wrapper
+  path(spreadsheetID) {
+    return API.path(spreadsheetID);
+  }
+
+  constructor() {
+    this.setupDB();
+  }
+
+  async getSpreadsheet(spreadsheet, callback) {
+    fetch(spreadsheet)
+      .then((response) => {
+        // console.log(response);
+        return response.json();
+      }).then((json) => {
+        return callback(json.feed.entry);
+      }).catch((err) => {
+        console.log('parsing failed', err);
+        return callback(null);
+      });
+  }
+
+  // This sets up urls and kicks off db
+  setupDB() {
+    let urls = {};
+    this.getSpreadsheet(API.path(API.base_spreadsheet), (data) => {
+      if (data == null) return;
+      data.forEach((d) => {
+        if (!urls[d.gsx$type.$t]) urls[d.gsx$type.$t] = {};
+        urls[d.gsx$type.$t][d.gsx$subtype.$t] = API.path(d.gsx$url.$t);
+      });
+      this.urls = urls;   
+    });
+    
+    try {
+      this.portal = new CollectionDB(this, 'portal');
+      this.cards = new CollectionDB(this, 'cards');
+    }
+    catch (err) {
+      console.log('setting up database failed', err);
+    }
+  }
+
+  get tribes() {
+    return ["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld"];
+  }
+
+  // For the conversion of shorthand in database
+  get sets() {
+    return {
+      "DOP": "Dawn of Perim",
+      "ZOTH": "Zenith of the Hive",
+      "SS": "Silent Sands",
+      "MI": "M'arrillian Invasion",
+      "ROTO": "Rise of the Oligarch",
+      "TOTT": "Turn of the Tide",
+      "FUN": "Forged Unity",
+      "AU": "Alliance Unraveled",
+      "FAS": "Fire and Stone",
+      "SAS": "Storm and Sea",
+      "EE": "Elemental Emperors",
+      "BR": "Beyond Rare",
+      "LR": "League Rewards",
+      "OP1": "Organized Play 1"
+    };
+  }
+
+  // Input format
+  // [{cards: 'attacks'}, {portal: 'attacks'}]
+  async buildCollection(input) {
+    return await Promise.all(input.map((item) => {
+      return new Promise((resolve, reject) => {
+        if ('cards' in item)
+          return this.cards.setupType(item.cards, resolve);
+        if ('portal' in item)
+          return this.portal.setupType(item.portal, resolve);
+        console.error('cards or portal');
+        return reject();
+      });
+    }));
+  }
+
+}
+
+export default API.getInstance();
