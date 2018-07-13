@@ -101,6 +101,10 @@ class CollectionDB {
       });
     };
   }
+
+  purgeDB() {
+    this.db.deleteDatabase();
+  }
 }
 
 class API {
@@ -170,6 +174,21 @@ class API {
     }
   }
 
+  // Input format
+  // [{cards: 'attacks'}, {portal: 'attacks'}]
+  async buildCollection(input) {
+    return await Promise.all(input.map((item) => {
+      return new Promise((resolve, reject) => {
+        if ('cards' in item)
+          return this.cards.setupType(item.cards, resolve);
+        if ('portal' in item)
+          return this.portal.setupType(item.portal, resolve);
+        console.error('cards or portal');
+        return reject();
+      });
+    }));
+  }
+
   get tribes() {
     return ["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld"];
   }
@@ -194,19 +213,11 @@ class API {
     };
   }
 
-  // Input format
-  // [{cards: 'attacks'}, {portal: 'attacks'}]
-  async buildCollection(input) {
-    return await Promise.all(input.map((item) => {
-      return new Promise((resolve, reject) => {
-        if ('cards' in item)
-          return this.cards.setupType(item.cards, resolve);
-        if ('portal' in item)
-          return this.portal.setupType(item.portal, resolve);
-        console.error('cards or portal');
-        return reject();
-      });
-    }));
+  purgeDB()
+  {
+    this.cards.purgeDB();
+    this.portal.purgeDB();
+    window.location.reload();
   }
 
 }

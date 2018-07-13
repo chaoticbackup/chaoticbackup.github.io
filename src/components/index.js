@@ -5,6 +5,7 @@ import {observer, inject} from 'mobx-react';
 import s from '../styles/app.style';
 
 /* Components */
+import API from './SpreadsheetData';
 import {PageNotFound, UnderConstruction, Donate} from './Snippets';
 import EnterTheCode from './entercode/index';
 import Collection from './collection/index';
@@ -137,7 +138,7 @@ function Base(props) {
                           </div>
                         </div>
                         <div className="footer-language">
-                          <a href="javascript:showLanguageSelection();" className="page-options" title="Change Language">
+                          <a href="" onClick={(e) => {API.purgeDB(); return;}} className="page-options" title="Change Language">
                             <img src="/src/img/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
                             <br />English (Change Language)
                           </a>

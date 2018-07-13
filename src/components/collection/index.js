@@ -57,18 +57,16 @@ export default class Home extends React.Component {
     }
 
     return (
-      <div style={{textAlign: 'left'}}>
-        <p>Showing page {this.p} of {numpages} {prev()} {next()}</p>
-        <p>
-          Entries per page:&nbsp;
-          {/*<input type="text" style={{width: '40px'}} value={this.n}
-            onChange={(event) => {let x = event.target.value; if (!isNaN(x)) this.n=x;}
-          />*/}
-          <input type="button" value="5" disabled={this.n=="5"} onClick={(e) => this.n=e.target.value} />&nbsp;
-          <input type="button" value="10" disabled={this.n=="10"} onClick={(e) => this.n=e.target.value} />&nbsp;
-          <input type="button" value="20" disabled={this.n=="20"} onClick={(e) => this.n=e.target.value} />&nbsp;
-          <input type="button" value="50" disabled={this.n=="50"} onClick={(e) => this.n=e.target.value} />
-        </p>
+      <div style={{textAlign: 'left'}} className="entries">
+        {this.content.length} results - page {this.p} of {numpages} {prev()} {next()}
+        <br/>Entries per page:&nbsp;
+        {/*<input type="text" style={{width: '40px'}} value={this.n}
+          onChange={(event) => {let x = event.target.value; if (!isNaN(x)) this.n=x;}
+        />*/}
+        <input type="button" value="5" disabled={this.n=="5"} onClick={(e) => this.n=e.target.value} />&nbsp;
+        <input type="button" value="10" disabled={this.n=="10"} onClick={(e) => this.n=e.target.value} />&nbsp;
+        <input type="button" value="20" disabled={this.n=="20"} onClick={(e) => this.n=e.target.value} />&nbsp;
+        <input type="button" value="50" disabled={this.n=="50"} onClick={(e) => this.n=e.target.value} />
       </div>
     );
   };
