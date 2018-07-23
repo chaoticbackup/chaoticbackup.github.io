@@ -55,16 +55,12 @@ export function Unique(props) {
 
 export function Name(props) {
   let name = props.name.split(",");
-  if (name.length > 1) {
-    return (<span>
-      <span className="bigger">{name[0]}</span><br />
-      &nbsp;&nbsp;<span style={{fontSize: "13px",paddingBottom: "4px", display: "inline-block"}}>{name[1]}</span>
-    </span>);
-  } else {
-    return (<span>
-      <span className="bigger">{name[0]}</span>
-    </span>);
-  }
+  return (<span className="name">
+    <span className="bigger">{name[0]}</span><span style={{opacity: "0"}}>,</span>
+    { name.length >1 &&
+      <span className="subname">{name[1]}</span>
+    }
+  </span>);
 }
 
 export function Element(props) {
