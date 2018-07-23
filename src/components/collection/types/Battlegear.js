@@ -10,19 +10,30 @@ import {Rarity, Unique, Name, Ability} from '../../Snippets';
 export default class Battlegear extends React.Component {
 
   render() {
-    let battlegear = this.props.battlegear;
+    let card = this.props.card;
 
-    return(
-      <div className="card">
-        <img className="thumb" style={{float: 'left'}} src={API.base_image + (battlegear.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(battlegear.gsx$image)} />
+    if (this.props.ext == false) return (
+      <div className="card battlegear">
+        <img className="thumb" style={{float: 'left'}} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
         <div className="left">
-          <Name name={battlegear.gsx$name} /><br />
-          <Rarity set={battlegear.gsx$set} rarity={battlegear.gsx$rarity} /><br />
+          <Name name={card.gsx$name} /><br />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
         </div>
         <div className="right" >
-          <Ability ability={battlegear.gsx$ability} />
-          <Unique data={{unique: battlegear.gsx$unique, loyal: battlegear.gsx$loyal, legendary: battlegear.gsx$legendary}} /><br />
-          <span className="flavortext">{battlegear.gsx$flavortext}</span>
+          <Ability ability={card.gsx$ability} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
+        </div>
+      </div>
+    );
+    else return (
+      <div className="card battlegear">
+        <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />
+        <div className="right" >
+          <Name name={card.gsx$name} /><br />
+          <Ability ability={card.gsx$ability} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
     );

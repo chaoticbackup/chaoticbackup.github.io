@@ -26,17 +26,17 @@ export default class CardList extends React.Component {
     return cards.map((card, i) => {
       switch (card.gsx$type) {
       case "Attacks":
-        return (<Attack attack={card} key={i} setImage={this.setImage.bind(this)}/>);
+        return (<Attack card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
       case "Battlegear":
-        return (<Battlegear battlegear={card} key={i} setImage={this.setImage.bind(this)}/>);
+        return (<Battlegear card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
       case "Creatures":
-        return (<Creature creature={card} key={i} setImage={this.setImage.bind(this)}/>);
+        return (<Creature card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
       case "Locations":
-        return (<Location location={card} key={i} setImage={this.setImage.bind(this)}/>);
+        return (<Location card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
       case "Mugic":
-        return (<Mugic mugic={card} key={i} setImage={this.setImage.bind(this)}/>);
+        return (<Mugic card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
       default:
-        return (<div key={i}>Invalid Type</div>);
+        return (<div key={i}>Invalid Card Type</div>);
       }
     });
   }

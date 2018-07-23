@@ -28,7 +28,7 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div className="collection">
+      <div className={"collection " + (this.ext ? "extended" : "short")}>
         <div className="left">
           <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
           <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
@@ -49,7 +49,7 @@ export default class Home extends React.Component {
 
   extended() {
     return (
-      <div className="extended">
+      <div className="ext-button">
         <button onClick={(e) => this.ext = !this.ext}
           >{this.ext ? "Short Format" : "Extended Format"}</button>
       </div>
@@ -60,12 +60,12 @@ export default class Home extends React.Component {
     let numpages = Math.ceil(this.content.length / this.n);
 
     let next = () => {
-      if (this.p < numpages) return(<button onClick={ () => {this.p++;} }>next</button>);
+      if (this.p < numpages) return(<button onClick={ () => {this.p++; window.scrollTo(0, 0);} }>next</button>);
       else return(<button disabled>next</button>);
     }
 
     let prev = () => {
-      if (this.p > 1) return(<button onClick={ () => {this.p--;} }>prev</button>);
+      if (this.p > 1) return(<button onClick={ () => {this.p--; window.scrollTo(0, 0);} }>prev</button>);
       else return(<button disabled>prev</button>);
     }
 

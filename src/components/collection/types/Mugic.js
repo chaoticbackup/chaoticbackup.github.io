@@ -10,35 +10,46 @@ import {Rarity, Unique, Name, Mugic, Ability} from '../../Snippets';
 export default class Attack extends React.Component {
 
   render() {
-    let mugic = this.props.mugic;
+    let card = this.props.card;
 
     let mugicCounters = [];
-    if (mugic.gsx$cost == 0) {
+    if (card.gsx$cost == 0) {
       mugicCounters.push(<span key={0}>0</span>);
     }
-    else if (mugic.gsx$cost.toLowerCase() == 'x') {
+    else if (card.gsx$cost.toLowerCase() == 'x') {
       mugicCounters.push(<span key={0}>X</span>);
     }
     else {
-      for (let i = 0; i < mugic.gsx$cost; i++) {
-        mugicCounters.push(<Mugic tribe={mugic.gsx$tribe} key={i} />);
+      for (let i = 0; i < card.gsx$cost; i++) {
+        mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={i} />);
       }
     }
 
-    return(
-      <div className="card">
-        <img className="thumb" style={{float: 'left'}} src={API.base_image + (mugic.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(mugic.gsx$image)} />
+    if (this.props.ext == false) return (
+      <div className="card mugic">
+        <img className="thumb" style={{float: 'left'}} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
         <div className="left">
-          <Name name={mugic.gsx$name} /><br />
-          <Rarity set={mugic.gsx$set} rarity={mugic.gsx$rarity} /> <br />
-          <img height="20" className="icon16" src={"/src/img/icons/tribes/"+(mugic.gsx$tribe.toLowerCase()||"generic")+".png"} /> {mugic.gsx$tribe}<br />
+          <Name name={card.gsx$name} /><br />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
+          <img height="20" className="icon16" src={"/src/img/icons/tribes/"+(card.gsx$tribe.toLowerCase()||"generic")+".png"} /> {card.gsx$tribe}<br />
           <span>{mugicCounters}</span><br />
         </div>
         <br />
         <div className="right" >
-          <Ability ability={mugic.gsx$ability} tribe={mugic.gsx$tribe} />
-          <Unique data={{unique: mugic.gsx$unique, loyal: mugic.gsx$loyal, legendary: mugic.gsx$legendary}} /><br />
-          <span className="flavortext">{mugic.gsx$flavortext}</span>
+          <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
+        </div>
+      </div>
+    )
+    else return (
+      <div className="card mugic">
+        <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />
+        <div className="right" >
+          <Name name={card.gsx$name} /><br />
+          <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
     );

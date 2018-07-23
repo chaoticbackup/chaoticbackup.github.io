@@ -9,31 +9,42 @@ import {Rarity, Unique, Name, Element, Ability} from '../../Snippets';
 export default class Attack extends React.Component {
 
   render() {
-  	let attack = this.props.attack;
+  	let card = this.props.card;
 
-  	return(
-  	  <div className="card">
-	      <img className="thumb" style={{float: 'left'}} src={API.base_image + (attack.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(attack.gsx$image)} />
+    if (this.props.ext == false) return (
+  	  <div className="card attack">
+	      <img className="thumb" src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
 	      <div className="left">
-	        <Name name={attack.gsx$name} /><br />
-          <Rarity set={attack.gsx$set} rarity={attack.gsx$rarity} /><br />
-          <span>Build Points: {attack.gsx$bp}</span><br />
+	        <Name name={card.gsx$name} /><br />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <span>Build Points: {card.gsx$bp}</span><br />
           <div>
-            <span className="bigger">{attack.gsx$base}</span> |&nbsp;
-            <Element element="fire" value={attack.gsx$fire} />{attack.gsx$fire}&nbsp;
-            <Element element="air" value={attack.gsx$air} />{attack.gsx$air}&nbsp;
-            <Element element="earth" value={attack.gsx$earth} />{attack.gsx$earth}&nbsp;
-            <Element element="water" value={attack.gsx$water} />{attack.gsx$water}
+            <span className="bigger">{card.gsx$base}</span> |&nbsp;
+            <Element element="fire" value={card.gsx$fire} />{card.gsx$fire}&nbsp;
+            <Element element="air" value={card.gsx$air} />{card.gsx$air}&nbsp;
+            <Element element="earth" value={card.gsx$earth} />{card.gsx$earth}&nbsp;
+            <Element element="water" value={card.gsx$water} />{card.gsx$water}
           </div>
 	      </div>
         <br />
         <div className="right" >
-          <Ability ability={attack.gsx$ability} />
-          <Unique data={{unique: attack.gsx$unique, loyal: attack.gsx$loyal, legendary: attack.gsx$legendary}} /><br />
-          <span className="flavortext">{attack.gsx$flavortext}</span>
+          <Ability ability={card.gsx$ability} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
   	  </div>
-  	);
+  	)
+    else return (
+      <div className="card attack">
+        <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />
+        <div className="right">
+          <Name name={card.gsx$name} /><br />
+          <Ability ability={card.gsx$ability} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
+        </div>
+      </div>
+    );
   }
 }
 

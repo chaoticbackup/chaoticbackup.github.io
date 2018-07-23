@@ -103,6 +103,10 @@
     height: 98px;
 }
 
+.card .thumb {
+    float: left;
+}
+
 .Collapsible {
     margin-bottom: 10px;
     width: 250px;
@@ -171,9 +175,15 @@
 .list-nav-top {
     display: flex;
 
-    .extended {
+    .ext-button {
         float: right;
         margin: auto 0 0 auto;
     }
 }
 
+.extended {
+    .fullcard {
+        max-width: 250px;
+        max-height: 350px;
+    }
+}

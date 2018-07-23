@@ -10,20 +10,31 @@ import {Rarity, Unique, Name, Ability, Initiative} from '../../Snippets';
 export default class Location extends React.Component {
 
   render() {
-    let location = this.props.location;
+    let card = this.props.card;
 
-    return(
-      <div className="card">
-        <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (location.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(location.gsx$image)} />
+    if (this.props.ext == false) return (
+      <div className="card location">
+        <img className="thumb" style={{float: 'left', width: '100px', height: '98px'}} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
         <div className="left">
-          <Name name={location.gsx$name} /><br />
-          <Rarity set={location.gsx$set} rarity={location.gsx$rarity} /><br />
-          <Initiative initiative={location.gsx$initiative} /><br />
+          <Name name={card.gsx$name} /><br />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <Initiative initiative={card.gsx$initiative} /><br />
         </div>
         <div className="right">
-          <Ability ability={location.gsx$ability} />
-          <Unique data={{unique: location.gsx$unique, loyal: location.gsx$loyal, legendary: location.gsx$legendary}} /><br />
-          <span className="flavortext">{location.gsx$flavortext}</span>
+          <Ability ability={card.gsx$ability} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
+        </div>
+      </div>
+    )
+    else return (
+      <div className="card location">
+        <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />
+        <div className="right">
+          <Name name={card.gsx$name} /><br />
+          <Ability ability={card.gsx$ability} />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
     );
