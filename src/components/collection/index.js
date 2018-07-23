@@ -12,6 +12,7 @@ export default class Home extends React.Component {
   @observable loaded = false;
   @observable n = 10;
   @observable p = 1;
+  @observable ext = false;
   @observable content = [];
   @observable card_img = API.card_back;
 
@@ -33,12 +34,24 @@ export default class Home extends React.Component {
           <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
         </div>
         <div className="right">
-          {this.navigation()}
+          <div className="list-nav-top">
+            {this.navigation()}
+            {this.extended()}
+          </div>
           <br />
-          <CardList cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
+          <CardList ext={this.ext} cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
           <br />
           {this.navigation()}
         </div>
+      </div>
+    );
+  }
+
+  extended() {
+    return (
+      <div className="extended">
+        <button onClick={(e) => this.ext = !this.ext}
+          >{this.ext ? "Short Format" : "Extended Format"}</button>
       </div>
     );
   }
@@ -57,7 +70,7 @@ export default class Home extends React.Component {
     }
 
     return (
-      <div style={{textAlign: 'left'}} className="entries">
+      <div className="entries">
         {this.content.length} results - page {this.p} of {numpages} {prev()} {next()}
         <br/>Entries per page:&nbsp;
         {/*<input type="text" style={{width: '40px'}} value={this.n}
@@ -73,7 +86,7 @@ export default class Home extends React.Component {
 
 }
 
-const onClickOutside = require("react-onclickoutside").default;
+
 
 @observer
 class imgbase extends React.Component {
@@ -87,7 +100,7 @@ class imgbase extends React.Component {
   changeImage = () => {
     this.display = true;
   }
-   
+
   render() {
     return(
       <div className="card_img">
@@ -97,6 +110,9 @@ class imgbase extends React.Component {
   }
 }
 
+const onClickOutside = require("react-onclickoutside").default;
+const ImagePreview = onClickOutside(imgbase);
+
 // var clickOutsideConfig = {
 //   handleClickOutside: function(instance) {
 //     console.log(instance);
@@ -105,8 +121,6 @@ class imgbase extends React.Component {
 // };
 //
 // const ImagePreview = onClickOutside(imgbase, clickOutsideConfig);
-
-const ImagePreview = onClickOutside(imgbase);
 
 // const createReactClass = require("create-react-class");
 // const ImagePreview = onClickOutside(createReactClass({

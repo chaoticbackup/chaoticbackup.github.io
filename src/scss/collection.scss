@@ -163,3 +163,17 @@
    max-width: 250px;
    max-height: 350px;
 }
+
+.entries {
+    text-align: left;
+}
+
+.list-nav-top {
+    display: flex;
+
+    .extended {
+        float: right;
+        margin: auto 0 0 auto;
+    }
+}
+

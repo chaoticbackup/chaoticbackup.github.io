@@ -10,6 +10,11 @@ import Mugic from './types/Mugic';
 @inject((stores, props, context) => props) @observer
 export default class CardList extends React.Component {
 
+  setImage(img) {
+    if (this.props.ext == false)
+      this.props.setImage(img);
+  }
+
   render() {
     let cards = this.props.cards;
 
@@ -21,15 +26,15 @@ export default class CardList extends React.Component {
     return cards.map((card, i) => {
       switch (card.gsx$type) {
       case "Attacks":
-        return (<Attack attack={card} key={i} setImage={this.props.setImage.bind(this)}/>);
+        return (<Attack attack={card} key={i} setImage={this.setImage.bind(this)}/>);
       case "Battlegear":
-        return (<Battlegear battlegear={card} key={i} setImage={this.props.setImage.bind(this)}/>);
+        return (<Battlegear battlegear={card} key={i} setImage={this.setImage.bind(this)}/>);
       case "Creatures":
-        return (<Creature creature={card} key={i} setImage={this.props.setImage.bind(this)}/>);
+        return (<Creature creature={card} key={i} setImage={this.setImage.bind(this)}/>);
       case "Locations":
-        return (<Location location={card} key={i} setImage={this.props.setImage.bind(this)}/>);
+        return (<Location location={card} key={i} setImage={this.setImage.bind(this)}/>);
       case "Mugic":
-        return (<Mugic mugic={card} key={i} setImage={this.props.setImage.bind(this)}/>);
+        return (<Mugic mugic={card} key={i} setImage={this.setImage.bind(this)}/>);
       default:
         return (<div key={i}>Invalid Type</div>);
       }
