@@ -56,9 +56,12 @@ export function Unique(props) {
 export function Name(props) {
   let name = props.name.split(",");
   return (<span className="name">
-    <span className="bigger">{name[0]}</span><span style={{opacity: "0"}}>,</span>
-    { name.length >1 &&
-      <span className="subname">{name[1]}</span>
+    <span className="bigger">{name[0]}</span>
+    { name.length > 1 &&
+      <span>
+        <span style={{opacity: "0"}}>,</span>
+        <span className="subname">{name[1]}</span>
+      </span>
     }
   </span>);
 }
