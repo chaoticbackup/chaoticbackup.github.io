@@ -47,7 +47,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "node-sass": "^4.8.3",
     "sass-loader": "^7.0.x",
-    "style-loader": "^0.21.x",
+    "style-loader": "^0.22.x",
     "webpack": "^3.11",
     "webpack-dev-server": "^2.11.1"
   }

@@ -283,25 +283,28 @@ export default class SearchCollection extends React.Component {
 
     // Search by name
     if (this.input.name.length > 0) {
+      // clean name
+      let inputname = this.input.name.replace(/\\/g, '').replace(/\(|\)/g, (match) => {return ("\\"+match)});
+      console.log(inputname);
       attackResults = attackResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
       ]});
       battlegearResults = battlegearResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
       ]});
       creatureResults = creatureResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
       ]});
       locationResults = locationResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}}
+        {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}}
       ]});
       mugicResults = mugicResults.find({'$or': [
-        {'gsx$name': {'$regex': new RegExp(this.input.name, 'i')}},
-        {'gsx$tags': {'$regex': new RegExp(this.input.name, 'i')}},
+        {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
+        {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
       ]});
     }
 
