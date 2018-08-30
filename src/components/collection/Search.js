@@ -327,7 +327,7 @@ export default class SearchCollection extends React.Component {
         {'gsx$tags': {"$or": textList}},
         {'gsx$ability': {"$or": textList}},
         {'gsx$flavortext': {"$or": textList}},
-        {'gsx$brainwashedability': {"$or": textList}}
+        {'gsx$brainwashed': {"$or": textList}}
       ]});
       locationResults = locationResults.find({'$or': [
         {'gsx$tags': {"$or": textList}},
