@@ -73,6 +73,8 @@ function Base(props) {
                 </div>
               </div>
             </div>
+            <div className="banner-ad-top">
+            </div>
             <div className="legacy content">
               <div className="left-column">
                 <div className="full-width clear-line" style={{marginBottom: "5px"}}>
@@ -119,6 +121,8 @@ function Base(props) {
                 <div className="full-width clear-line" style={{marginBottom: "5px"}}>
                 </div>
               </div>
+            </div>
+            <div className="banner-ad-bottom">
             </div>
             <div className="legacy legacy-footer">
               <div className="footer-wrap">
