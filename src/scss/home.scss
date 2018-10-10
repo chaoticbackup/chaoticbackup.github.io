@@ -1,3 +1,30 @@
+.lore {
+  text-align: left;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.lore .title {
+	margin-top: 6px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.lore div {
+	margin: 0 0 6px;
+	line-height: 22px !important;
+}
+
+.donate {
+	margin-bottom: 6px;
+}
+
+.donate form a {
+	border-bottom: none;
+}
+
+/* With Love */
 @-webkit-keyframes love {
     to { -webkit-transform: scale(1.1); }
 }
@@ -18,7 +45,7 @@
 .with-love span,
 .with-love div {
     font-size: 14px !important;
-    line-height: 18px;
+    line-height: 18px !important;
 }
 
 .with-love div {
