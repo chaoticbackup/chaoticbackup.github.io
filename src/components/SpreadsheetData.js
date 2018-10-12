@@ -84,7 +84,7 @@ class CollectionDB {
         .forEach((item, i) => {
           // check if the db already exists in memory
           let entries = db.getCollection(item);
-          if (entries === null) {
+          if (entries === null || entries.data.length === 0) {
             this[item] = db.addCollection(item);
             if (this.building[item])
               this.building[item].set("setup");
@@ -143,7 +143,6 @@ class API {
   async getSpreadsheet(spreadsheet, callback) {
     fetch(spreadsheet)
       .then((response) => {
-        // console.log(response);
         return response.json();
       }).then((json) => {
         return callback(json.feed.entry);
@@ -162,9 +161,9 @@ class API {
         if (!urls[d.gsx$type.$t]) urls[d.gsx$type.$t] = {};
         urls[d.gsx$type.$t][d.gsx$subtype.$t] = API.path(d.gsx$url.$t);
       });
-      this.urls = urls;   
+      this.urls = urls;
     });
-    
+
     try {
       this.portal = new CollectionDB(this, 'portal');
       this.cards = new CollectionDB(this, 'cards');
