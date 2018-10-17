@@ -316,12 +316,14 @@ export default class SearchCollection extends React.Component {
       attackResults = attackResults.find({'$or': [
         {'gsx$tags': {"$or": textList}},
         {'gsx$ability': {"$or": textList}},
-        {'gsx$flavortext': {"$or": textList}}
+        {'gsx$flavortext': {"$or": textList}},
+        {'gsx$artist': {"$or": textList}}
       ]});
       battlegearResults = battlegearResults.find({'$or': [
         {'gsx$tags': {"$or": textList}},
         {'gsx$ability': {"$or": textList}},
-        {'gsx$flavortext': {"$or": textList}}
+        {'gsx$flavortext': {"$or": textList}},
+        {'gsx$artist': {"$or": textList}}
       ]});
       creatureResults = creatureResults.find({'$or': [
         {'gsx$tags': {"$or": textList}},
