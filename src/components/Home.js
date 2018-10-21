@@ -15,6 +15,7 @@ export default function Home() {
         <div>Made with <span className="heart">♥</span> by
           <br />Danude Sandstorm
           <br />Database contributed by Chiodosin1
+          <br />Full Art provided by Afjak and Blitser
         </div>
         <div>Do you like the site? You can donate to support it!</div>
         <div className="donate"><Donate /></div>

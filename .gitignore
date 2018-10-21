@@ -10,3 +10,5 @@ node_modules
 .cekey
 
 *.sublime-workspace
+
+package-lock.json
