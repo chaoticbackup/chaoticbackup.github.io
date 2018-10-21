@@ -25,7 +25,7 @@ export default class Tribes extends React.Component {
   // -> /{Tribe}/Mugic || /{Tribe}/Creatures
   render() {
     if (this.loaded == false) {
-      API.buildCollection([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
+      API.LoadDB([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
       .then(() => {
         this.loaded = true;
       });
@@ -36,7 +36,6 @@ export default class Tribes extends React.Component {
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     let tribe = path[2];
-
 
     let filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');

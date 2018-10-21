@@ -72,10 +72,6 @@
     width: 18px;
 }
 
-.entry {
-    padding: 10px;
-}
-
 .entry .title {
     font-weight: bold;
     font-size: 16px;
@@ -108,4 +104,60 @@
 .search .results a {
     font-size: 16px;
     line-height: 20px;
+}
+
+.portal {
+  .entry {
+    font-size: 1.2em;
+
+    .top_content {
+      min-height: 600px;
+      height: calc(100vh - 200px);
+      overflow-y: scroll;
+
+      /* width */
+      ::-webkit-scrollbar {
+          width: 10px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+          background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+          background: #555;
+      }
+    }
+
+    .cat_title {
+       text-align: left;
+       background-color: #1a1a1a;
+       font-weight: bold;
+       font-size: 16px;
+       padding-top: 1px;
+       padding-left: 4px;
+    }
+
+    /* height is 118px */
+    .bottom_nav {
+      background-color: #1a1a1a;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      > div {
+        display: inline-block;
+        img {
+          margin-right: 3px;
+          margin-left: 3px;
+        }
+      }
+    }
+  }
 }

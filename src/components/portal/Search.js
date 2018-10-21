@@ -49,15 +49,10 @@ class DBSearch extends React.Component {
 
   render() {
     if (this.loaded == false) {
-      if (API.urls !== null &&
-        API.portal !== null &&
-        API.cards !== null
-      ) {
-        API.buildCollection([{'portal': 'attacks'}, {'portal': 'battlegear'}, {'portal': 'creatures'}, {'portal': 'locations'}, {'portal': 'mugic'}])
-        .then(() => {
-          this.loaded = true;
-        });
-      }
+      API.LoadDB([{'portal': 'attacks'}, {'portal': 'battlegear'}, {'portal': 'creatures'}, {'portal': 'locations'}, {'portal': 'mugic'}])
+      .then(() => {
+        this.loaded = true;
+      });
       return (<span>Loading...</span>);
     }
 

@@ -6,12 +6,13 @@ import {Link, Route} from 'react-router-dom';
 import API from '../SpreadsheetData';
 import Home from './Home';
 import Search from './Search';
-import Attacks from './Category/Attacks';
-import Battlegear from './Category/Battlegear';
+import Category from './Category/Category';
 import Creatures from './Category/Creatures';
-import Locations from './Category/Locations';
 import Mugic from './Category/Mugic';
 import Tribes from './Category/Tribes';
+import Attack from './Single/Attack';
+import Battlegear from './Single/Battlegear';
+import Location from './Single/Location';
 import {SearchButton} from '../Snippets';
 
 import '../../scss/portal.scss';
@@ -31,21 +32,20 @@ export default class Base extends React.Component {
 }
 
 function Routing(props) {
-  const match = props.match;
+  const url = props.match.url;
 
-  const tribes = API.tribes.map((tribe, i) => (
-    <Route key={i} path={`${match.url}/${tribe}`} component={Tribes} />
-  ));
   return (
     <div>
-      <Route exact path={match.url} component={Home} />
-      <Route path={`${match.url}/Attacks`} component={Attacks} />
-      <Route path={`${match.url}/Battlegear`} component={Battlegear} />
-      <Route path={`${match.url}/Creatures`} component={Creatures} />
-      <Route path={`${match.url}/Locations`} component={Locations} />
-      <Route path={`${match.url}/Mugic`} component={Mugic} />
-      {tribes}
-      <Route path={`${match.url}/Search`} component={Search} />
+      <Route exact path={url} component={Home} />
+      <Route path={`${url}/Attacks`} render={(props) => <Category {...props} type="attacks" component={Attack} />} />
+      <Route path={`${url}/Battlegear`} render={(props) => <Category {...props} type="battlegear" component={Battlegear} />} />
+      <Route path={`${url}/Creatures`} component={Creatures} />
+      <Route path={`${url}/Locations`} render={(props) => <Category {...props} type="locations" component={Location} />} />
+      <Route path={`${url}/Mugic`} component={Mugic} />
+      {API.tribes.map((tribe, i) => (
+      <Route key={i} path={`${url}/${tribe}`} component={Tribes} />
+      ))}
+      <Route path={`${url}/Search`} component={Search} />
     </div>
   );
 }
