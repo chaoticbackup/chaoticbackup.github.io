@@ -73,7 +73,7 @@ export default class Mugic extends React.Component {
     ));
 
     if (!tribe) {
-      tribes.push(<Route key={5} path={`${this.props.match.url}/:card`} component={SingleMugic} />)
+      tribes.push(<Route key={10} path={`${this.props.match.url}/:card`} component={SingleMugic} />)
     }
 
     return (<div className="entry mugic">

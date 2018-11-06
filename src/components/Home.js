@@ -15,7 +15,7 @@ export default function Home() {
         <div>Made with <span className="heart">♥</span> by
           <br />Danude Sandstorm
           <br />Database contributed by Chiodosin1
-          <br />Full Art provided by Afjak and Blitser
+          <br />Art provided by Afjak and Blitser
         </div>
         <div>Do you like the site? You can donate to support it!</div>
         <div className="donate"><Donate /></div>
@@ -45,7 +45,7 @@ export default function Home() {
         <div className="lore">
           <div className="title">M'arrillian Invasion</div>
           <div>Sitting on his throne, Chaor stared at the strange Creature called Phelphor. "Tell me again," the ruler of the UnderWorld commanded.</div>
-          <div>"Long ago a Tribe now-forgotten, called the M'arrillians, located teh Cothica. In fact, they stole it from us." Phelphor gestured with an open hand toward the others in the room. "And when I say 'us,' my friends, I mean all of us, as I am also an UnderWorlder!"</div>
+          <div>"Long ago a Tribe now-forgotten, called the M'arrillians, located the Cothica. In fact, they stole it from us." Phelphor gestured with an open hand toward the others in the room. "And when I say 'us,' my friends, I mean all of us, as I am also an UnderWorlder!"</div>
           <div>"You look very little like an UnderWorlder," Agitos remarked coldly.</div>
           <div>Phelphor continued unphazed. "That forgotten Tribe took the Cothica into the Deep, beyond the Doors of the Deepmines and hid it there, to prevent us from getting what is rightfully ours."</div>
           <div>Chaor looked at Takinom who was seated nearby, "Have you heard of a forgotten Tribe beyond the Doors of the Deepmines, Takinom?"</div>
@@ -56,7 +56,7 @@ export default function Home() {
           <div>"The M'arrillian Tribe has mastered the power of the mind," replied Phelphor. "No one recalls this Tribe, or their claiming of the Cothica, because their Chieftains made Perim forget all about them as they left. They didn't just retract into the Deep; they retracted into voluntary oblivion."</div>
           <div>Takinom shook her head, "And they missed you because you were frozen?"</div>
           <div>"Yes, I wouldn't be standing here today if I had not been frozen and out of their sight."</div>
-          <div>Far from the throne room, more strangers observed teh scene. In M'arr, the capital of the Deep, the Oligarchs of the governing Council, the Psikoom, gathered to receive the mental projection sent telepathically by their undercover agent, Phelphor.</div>
+          <div>Far from the throne room, more strangers observed the scene. In M'arr, the capital of the Deep, the Oligarchs of the governing Council, the Psikoom, gathered to receive the mental projection sent telepathically by their undercover agent, Phelphor.</div>
           <div>"The trap is set," the voice of the Oligarch echoed in the minds of the council. "Phelphor will succeed in getting the doors unlocked. Prepare the first wave of Chieftains to pass through the doors as they open, the Cothica will soon be ours." The Oligarch of the M'arrillians motioned at the members of the oligarchy before turning to leave.</div>
           <div>And, indeed, this menacing new Tribe's plan came to fruition not long after.</div>
           <div>The Doors of the Deepmines opened slowly at first, but the massive rush of water from the Deep soon forced the doors open wide. A torrent of tainted water poured into the UnderWorld, carrying within it a host of sinister Creatures. These strange entities seemed to be part aquatic, part pure energy and were unlike anything known in Perim. These were the Chieftains, and they embraced Perim with a greed and determination of frightening proportion. The Chieftains quickly established footholds at key points in the lands of the four Tribes.</div>

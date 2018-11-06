@@ -33,11 +33,11 @@ export default class SingleCreature extends React.Component {
 
     const card_data = API.cards.creatures.findOne({'gsx$name': name});
 
-    const locations = creature.gsx$location.split(/[,]+\s*/).map((item, i) => {
+    const locations = creature.gsx$location.split(/[;]+\s*/).map((item, i) => {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
     });
 
-    const battlegear = creature.gsx$battlegear.split(/[,]+\s*/).map((item, i) => {
+    const battlegear = creature.gsx$battlegear.split(/[;]+\s*/).map((item, i) => {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
     });
 
@@ -48,7 +48,9 @@ export default class SingleCreature extends React.Component {
 
     return (
       <div>
+        {card_data.gsx$splash &&
         <img className="splash" src={API.base_image + card_data.gsx$splash} />
+        }
         <div className="title">{creature.gsx$name}</div>
         <hr />
         <div>

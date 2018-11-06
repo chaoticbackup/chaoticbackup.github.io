@@ -37,7 +37,7 @@ export default class Home extends React.Component {
 
       let Illexia = new Image();
       Illexia.src = API.base_image + "0B6oyUfwoM3u1YzNhLUdSMHlmdFE";
-      Illexia.onload = (() => { ctx.drawImage(Illexia, canvas.width-350, Logo.height + 10); });
+      Illexia.onload = (() => { ctx.drawImage(Illexia, canvas.width - 350, Logo.height + 10); });
 
       let Maxxor = new Image();
       Maxxor.src =  API.base_image + "0B6oyUfwoM3u1MVVqQlpqYldsVDQ";

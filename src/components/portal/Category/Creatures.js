@@ -68,12 +68,12 @@ export default class Creatures extends React.Component {
       );
     });
 
-    let tribes = ["Danian", "Mipedian", "OverWorld", "UnderWorld"].map((tribe, i) => (
+    let tribes = API.tribes.map((tribe, i) => {
       <Route key={i} path={`${this.props.match.url}/${tribe}/:card`} component={Creature} />
-    ));
+    });
 
     if (!tribe) {
-      tribes.push(<Route key={5} path={`${this.props.match.url}/:card`} component={Creature} />)
+      tribes.push(<Route key={10} path={`${this.props.match.url}/:card`} component={Creature} />)
     }
 
     return (<div className="entry creatures">

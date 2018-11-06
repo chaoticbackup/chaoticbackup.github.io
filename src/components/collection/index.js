@@ -115,7 +115,6 @@ const ImagePreview = onClickOutside(imgbase);
 
 // var clickOutsideConfig = {
 //   handleClickOutside: function(instance) {
-//     console.log(instance);
 //     return instance.handleClickOutside;
 //   }
 // };
@@ -125,7 +124,6 @@ const ImagePreview = onClickOutside(imgbase);
 // const createReactClass = require("create-react-class");
 // const ImagePreview = onClickOutside(createReactClass({
 //     handleClickOutside: function(event) {
-//       console.log("click outside");
 //       this.display = false;
 //     },
 //     render: function() {

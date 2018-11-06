@@ -147,7 +147,7 @@ class API {
       }).then((json) => {
         return callback(json.feed.entry);
       }).catch((err) => {
-        console.log('parsing failed', err);
+        console.error('parsing failed', err);
         return callback(null);
       });
   }
@@ -169,7 +169,7 @@ class API {
       this.cards = new CollectionDB(this, 'cards');
     }
     catch (err) {
-      console.log('setting up database failed', err);
+      console.error('setting up database failed', err);
     }
   }
 
@@ -189,7 +189,7 @@ class API {
   }
 
   get tribes() {
-    return ["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld"];
+    return ["Danian", "Generic", "Mipedian", encodeURIComponent("M'arrillian"), "OverWorld", "UnderWorld"];
   }
 
   // For the conversion of shorthand in database

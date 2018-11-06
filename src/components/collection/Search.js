@@ -285,7 +285,6 @@ export default class SearchCollection extends React.Component {
     if (this.input.name.length > 0) {
       // clean name
       let inputname = this.input.name.replace(/\\/g, '').replace(/\(|\)/g, (match) => {return ("\\"+match)});
-      console.log(inputname);
       attackResults = attackResults.find({'$or': [
         {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
         {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
