@@ -1,0 +1,52 @@
+[
+  {
+    "gsx$type": {"$t": "Creatures"},
+    "gsx$subtype": {"$t": "cards"},
+    "gsx$url": {"$t": "1fUFYhG1NLLkSTzrdbevm6ZMKNP6xLiKUZvM1sY10pVI"}
+  },
+  {
+    "gsx$type": {"$t": "Creatures"},
+    "gsx$subtype": {"$t": "portal"},
+    "gsx$url": {"$t": "1eGQsy2kYk7HfnQetsjobMqank4bg6iWOOaSYykg3Yec"}
+  },
+  {
+    "gsx$type": {"$t": "Mugic"},
+    "gsx$subtype": {"$t": "cards"},
+    "gsx$url": {"$t": "1rOMFKnWaz6XmhD43YFpcemWGzEok9IgtKCoiPMwA35s"}
+  },
+  {
+    "gsx$type": {"$t": "Mugic"},
+    "gsx$subtype": {"$t": "portal"},
+    "gsx$url": {"$t": "1tEuwPGixJH2A03YtYL6Ar-MSFvtfrlaveT98GwJhw1g"}
+  },
+  {
+    "gsx$type": {"$t": "Attacks"},
+    "gsx$subtype": {"$t": "cards"},
+    "gsx$url": {"$t": "1yXFijC2hN1vybU3ejdINYoTOTG62qCkpPLPsiYUEEyo"}
+  },
+  {
+    "gsx$type": {"$t": "Attacks"},
+    "gsx$subtype": {"$t": "portal"},
+    "gsx$url": {"$t": "1KUk5J-3ZeMlEBXOfDb2h4GUUJK_0_yOq0EUDitQgNa8"}
+  },
+  {
+    "gsx$type": {"$t": "Battlegear"},
+    "gsx$subtype": {"$t": "cards"},
+    "gsx$url": {"$t": "1UUEPAEHZwmH52AJj2Jtskf6d4z5XIFEBb3HT-FTAcgs"}
+  },
+  {
+    "gsx$type": {"$t": "Battlegear"},
+    "gsx$subtype": {"$t": "portal"},
+    "gsx$url": {"$t": "1S5AVw-E_sFO257uzajauP31bOI0LPmrbTcUzSpa2i60"}
+  },
+  {
+    "gsx$type": {"$t": "Locations"},
+    "gsx$subtype": {"$t": "cards"},
+    "gsx$url": {"$t": "15QPS08iq6pkyMFsYuDsKIXX8LQmQ8MUoJeeNtjU54Xo"}
+  },
+  {
+    "gsx$type": {"$t": "Locations"},
+    "gsx$subtype": {"$t": "portal"},
+    "gsx$url": {"$t": "1U07n2keHNxL-6y5zUcHlb220zT9A_MrVEansOAMQFCA"}
+  }
+]

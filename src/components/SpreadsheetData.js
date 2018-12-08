@@ -116,7 +116,6 @@ class API {
   static base_url = "https://spreadsheets.google.com/feeds/list/";
   static data_format = "/od6/public/values?alt=json";
   // + "/od6/public/basic?alt=json"; // Alternate data format
-  static base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
   get base_image() { return "https://drive.google.com/uc?id="; }
   get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp"; }
   get card_back() { return "1_MgWDPsPGf-gPBArn2v6ideJcqOPsSYC"; }
@@ -154,17 +153,19 @@ class API {
 
   // This sets up urls and kicks off db
   setupDB() {
-    let urls = {};
-    this.getSpreadsheet(API.path(API.base_spreadsheet), (data) => {
-      if (data == null) return;
+    // let base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
+    try {
+      let urls = {};
+      let data = require('./meta_spreadsheet.json');
+      // this.getSpreadsheet(API.path(API.base_spreadsheet), (data) => {
+      //   if (data == null) throw "no data from base_spreadsheet";
       data.forEach((d) => {
         if (!urls[d.gsx$type.$t]) urls[d.gsx$type.$t] = {};
         urls[d.gsx$type.$t][d.gsx$subtype.$t] = API.path(d.gsx$url.$t);
       });
       this.urls = urls;
-    });
+      // });
 
-    try {
       this.portal = new CollectionDB(this, 'portal');
       this.cards = new CollectionDB(this, 'cards');
     }
