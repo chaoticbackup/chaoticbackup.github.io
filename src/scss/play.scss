@@ -1,0 +1,122 @@
+@import 'base';
+
+.play {
+	$margin_offset: 45;
+	$card_width: calc(350px / 2);
+	$card_height: calc(250px / 2);
+
+	height: 50em;
+
+	.space {
+		position: absolute;
+		background-color: grey;
+		width: calc(#{$card_width} + 20px);
+		height: #{$card_height};		
+		border: 1px solid #36a8ff;
+
+		img:hover, img.selected {
+
+		}
+
+		img.selectable:hover, img.selected {
+			// border: 1px solid #f41111;
+			box-shadow: 5px 5px 5px red, -5px 5px 5px red, 5px -5px 5px red, -5px -5px 5px red;
+			border-radius: 10px;
+			z-index: 11;
+		}
+
+		img {
+			display: block;
+			width: #{$card_height};
+			height: #{$card_width};
+			transform: rotate(90deg);
+		}
+
+		:first-child {
+			position: inherit;
+			z-index: 10;
+		}
+
+		:nth-child(2) {
+			position: relative;
+			z-index: 9;
+		}
+
+	}
+
+	.r1 {
+		:first-child{
+			top: 50%;
+		}
+		.space {
+			left: calc(#{$margin_offset+px} + 5px);
+			:first-child {
+				margin: -87px 25px;
+			}
+			:nth-child(2) {
+				margin: -25px 45px;
+			}
+		}
+	}
+
+	.r2 {
+		.space {
+			left: calc(#{$margin_offset+px} + #{$card_width} + 25px + 10px);
+			:first-child {
+				margin: -77px 25px;
+			}
+			:nth-child(2) {
+				margin: -97px 45px;
+			}
+		}
+		:first-child {
+			top: 42%;
+		}
+		:nth-child(2) {
+			top: 58%;
+		}
+	}
+
+	.r3 {
+		.space {
+			left: calc(#{$margin_offset+px} + (#{$card_width} + 25px + 10px)*2);
+			:first-child {
+				margin: -67px 25px;
+			}
+			:nth-child(2) {
+				margin: -87px 45px;
+			}
+		}
+		:first-child {
+			top: 33.3%;
+		}
+		:nth-child(2) {
+			top: 50%;
+		}
+		:nth-child(3) {
+			top: 66.6%;
+		}
+	}
+
+	.r4 {
+		.space {
+			left: calc(#{$margin_offset+px} + (#{$card_width} + 25px + 10px)*3);
+			:first-child {
+				margin: -67px 45px;
+			}
+			:nth-child(2) {
+				margin: -87px 25px;
+			}
+		}
+		:first-child {
+			top: 33.3%;
+		}
+		:nth-child(2) {
+			top: 50%;
+		}
+		:nth-child(3) {
+			top: 66.6%;
+		}
+	}
+
+}

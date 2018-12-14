@@ -7,10 +7,11 @@ import s from '../styles/app.style';
 /* Components */
 import API from './SpreadsheetData';
 import {PageNotFound, UnderConstruction, Donate} from './Snippets';
+import Home from './Home';
 import EnterTheCode from './entercode/index';
 import Collection from './collection/index';
 import Portal from './portal/index';
-import Home from './Home';
+import Play from './play/index';
 
 // const BlockAvoider = withRouter(Base)
 
@@ -31,6 +32,7 @@ function Routing(props) {
       <Route path="/EnterTheCode" component={EnterTheCode} />
       <Route path="/collection" component={Collection} />
       <Route path="/portal" component={Portal} />
+      <Route path="/play" component={Play} />
     </div>
   );
 }
