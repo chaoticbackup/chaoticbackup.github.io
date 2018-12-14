@@ -5,6 +5,7 @@ import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
+import {Loading} from '../../Snippets';
 import Location from '../Single/Location';
 
 @inject((stores, props, context) => props) @observer
@@ -13,16 +14,11 @@ export default class Locations extends React.Component {
 
   render() {
     if (this.loaded == false) {
-      if (API.urls !== null &&
-        API.portal !== null &&
-        API.cards !== null
-      ) {
-        API.buildCollection([{'cards': 'locations'}, {'portal': 'locations'}])
-        .then(() => {
-          this.loaded = true;
-        });
-      }
-      return (<span>Loading...</span>);
+      API.buildCollection([{'cards': 'locations'}, {'portal': 'locations'}])
+      .then(() => {
+        this.loaded = true;
+      });
+      return (<Loading />);
     }
 
     let path = this.props.location.pathname.split("/");

@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import Interactive from 'react-interactive';
 import DigitInput from 'react-digit-input';
 import API from '../SpreadsheetData';
+import {Loading} from '../Snippets';
 import style from '../../styles/style';
 
 const s = Object.create(style);
@@ -39,7 +40,7 @@ export default class EnterTheCode extends React.Component {
       API.getSpreadsheet(API.path("1hzSojB76Me-P1qppxYR0oiHSU56jyK59x3DKm660ntc"), (data) => {
         this.fan = data;
       });
-      return (<span>Loading...</span>);
+      return (<Loading />);
     }
 
     let getRandomInt = (min, max) => {

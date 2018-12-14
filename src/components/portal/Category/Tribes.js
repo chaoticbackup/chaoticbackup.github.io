@@ -6,6 +6,7 @@ import {observer, inject} from 'mobx-react';
 import loki from 'lokijs';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
+import {Loading} from '../../Snippets';
 import Creature from '../Single/Creature';
 import Mugic from '../Single/Mugic';
 
@@ -24,16 +25,11 @@ export default class Tribes extends React.Component {
   // -> /{Tribe}/Mugic || /{Tribe}/Creatures
   render() {
     if (this.loaded == false) {
-      if (API.urls !== null &&
-        API.portal !== null &&
-        API.cards !== null
-      ) {
-        API.buildCollection([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
-        .then(() => {
-          this.loaded = true;
-        });
-      }
-      return (<span>Loading...</span>);
+      API.buildCollection([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
+      .then(() => {
+        this.loaded = true;
+      });
+      return (<Loading />);
     }
 
     let path = this.props.location.pathname.split("/");

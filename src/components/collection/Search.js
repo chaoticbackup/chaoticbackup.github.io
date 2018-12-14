@@ -4,6 +4,7 @@ import {observer, inject} from 'mobx-react';
 import loki from 'lokijs';
 import Collapsible from 'react-collapsible';
 import API from '../SpreadsheetData';
+import {Loading} from '../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SearchCollection extends React.Component {
@@ -135,19 +136,14 @@ export default class SearchCollection extends React.Component {
   }
 
   render() {
-    if (this.loaded == false) {
-      if (API.urls !== null &&
-        API.portal !== null &&
-        API.cards !== null
-      ) {
-        API.buildCollection([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
-        .then(() => {
-          this.loaded = true;
+      if (this.loaded == false) {
+        API.LoadDB([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
+        .then(() => { 
+          this.loaded = true; 
           this.search();
         });
+        return (<Loading />);
       }
-      return (<span>Loading...</span>);
-    }
 
     let gen = (d, display, text) => {
       let tmp = [];

@@ -1,7 +1,7 @@
 import React from 'react';
 import API from './SpreadsheetData';
 import {observable} from "mobx";
-import {observer, inject} from 'mobx-react';
+import {observer, inject, action} from 'mobx-react';
 import processString from 'react-process-string';
 import s from '../styles/app.style';
 
@@ -18,6 +18,10 @@ export function PageNotFound(props) {
       did not match any React Router routes.
     </p>
   );
+}
+
+export function Loading(props) {
+  return (<span>Loading...</span>);
 }
 
 export function Rarity(props) {

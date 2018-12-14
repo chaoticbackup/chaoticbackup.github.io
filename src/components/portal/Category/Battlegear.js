@@ -5,6 +5,7 @@ import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
+import {Loading} from '../../Snippets';
 import SingleBattlegear from '../Single/Battlegear';
 
 @inject((stores, props, context) => props) @observer
@@ -13,16 +14,11 @@ export default class Battlegear extends React.Component {
 
     render() {
       if (this.loaded == false) {
-        if (API.urls !== null &&
-          API.portal !== null &&
-          API.cards !== null
-        ) {
-          API.buildCollection([{'cards': 'battlegear'}, {'portal': 'battlegear'}])
-          .then(() => {
-            this.loaded = true;
-          });
-        }
-        return (<span>Loading...</span>);
+        API.LoadDB([{'cards': 'battlegear'}, {'portal': 'battlegear'}])
+        .then(() => {
+          this.loaded = true;
+        });
+        return (<Loading />);
       }
 
       let path = this.props.location.pathname.split("/");

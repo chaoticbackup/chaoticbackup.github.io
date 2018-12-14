@@ -176,6 +176,23 @@ class API {
 
   // Input format
   // [{cards: 'attacks'}, {portal: 'attacks'}]
+  async LoadDB(collection) {
+    return new Promise((resolve, reject) => {
+      if (this.urls !== null &&
+        this.portal !== null &&
+        this.cards !== null
+      ) {
+        this.buildCollection(collection)
+        .then(() => {
+          resolve();
+        });
+      }
+      else resolve();
+    });
+  }
+
+  // Input format
+  // [{cards: 'attacks'}, {portal: 'attacks'}]
   async buildCollection(input) {
     return await Promise.all(input.map((item) => {
       return new Promise((resolve, reject) => {

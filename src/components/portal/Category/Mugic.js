@@ -5,6 +5,7 @@ import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import s from '../../../styles/app.style';
 import API from '../../SpreadsheetData';
+import {Loading} from '../../Snippets';
 import SingleMugic from '../Single/Mugic';
 
 @inject((stores, props, context) => props) @observer
@@ -17,16 +18,11 @@ export default class Mugic extends React.Component {
   // The first / gets counted
   render() {
     if (this.loaded == false) {
-      if (API.urls !== null &&
-        API.portal !== null &&
-        API.cards !== null
-      ) {
-        API.buildCollection([{'cards': 'mugic'}, {'portal': 'mugic'}])
-        .then(() => {
-          this.loaded = true;
-        });
-      }
-      return (<span>Loading...</span>);
+      API.LoadDB([{'cards': 'mugic'}, {'portal': 'mugic'}])
+      .then(() => {
+        this.loaded = true;
+      });
+      return (<Loading />);
     }
 
     let path = this.props.location.pathname.split("/");

@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import loki from 'lokijs';
 import Interactive from 'react-interactive';
 import API from '../SpreadsheetData';
+import {Loading} from '../Snippets';
 import s from '../../styles/style';
 import '../../scss/packs.scss';
 
@@ -27,17 +28,12 @@ export default class PackSimulator extends React.Component {
 
   render() {
     if (this.loaded == false) {
-      if (API.urls !== null &&
-        API.portal !== null &&
-        API.cards !== null
-      ) {
-        API.buildCollection([{'cards': 'attacks'}, , {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
-        .then(() => {
-          this.setupDB();
-          this.loaded = true;
-        });
-      }
-      return (<span>Loading...</span>);
+      API.LoadDB([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
+      .then(() => {
+        this.setupDB();
+        this.loaded = true;
+      });
+      return (<Loading />);
     }
 
     let setsInput = [];
