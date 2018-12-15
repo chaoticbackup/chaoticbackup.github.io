@@ -19,10 +19,18 @@ export default class SearchPortal extends React.Component {
     this.query = this.input = decodeURIComponent(this.props.location.search.substr(1));
   }
 
+  componentDidUpdate() {
+    this.inputState.focus();
+  }
+
   render() {
   return (<div className="search">
     <form onSubmit={this.search}>
-      <input type="text" value={this.query} onChange={(e) => this.query = e.target.value} />
+      <input type="text" value={this.query}
+        autoFocus 
+        ref={(input) => {this.inputState = input;}}
+        onChange={(e) => this.query = e.target.value}
+      />
       <button type="submit"><SearchButton /></button>
     </form>
     <DBSearch string={this.input}/>
