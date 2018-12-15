@@ -14,10 +14,6 @@
 		height: #{$card_height};		
 		border: 1px solid #36a8ff;
 
-		img:hover, img.selected {
-
-		}
-
 		img.selectable:hover, img.selected {
 			// border: 1px solid #f41111;
 			box-shadow: 5px 5px 5px red, -5px 5px 5px red, 5px -5px 5px red, -5px -5px 5px red;
@@ -30,6 +26,9 @@
 			width: #{$card_height};
 			height: #{$card_width};
 			transform: rotate(90deg);
+			&.opposing {
+				transform: rotate(270deg);
+			}
 		}
 
 		:first-child {
@@ -52,9 +51,15 @@
 			left: calc(#{$margin_offset+px} + 5px);
 			:first-child {
 				margin: -87px 25px;
+				&.opposing {
+					margin: -87px 45px;
+				}
 			}
 			:nth-child(2) {
 				margin: -25px 45px;
+				&.opposing {
+					margin: -25px 25px;
+				}
 			}
 		}
 	}
@@ -64,9 +69,15 @@
 			left: calc(#{$margin_offset+px} + #{$card_width} + 25px + 10px);
 			:first-child {
 				margin: -77px 25px;
+				&.opposing {
+					margin: -77px 45px;
+				}
 			}
 			:nth-child(2) {
 				margin: -97px 45px;
+				&.opposing {
+					margin: -97px 25px;
+				}
 			}
 		}
 		:first-child {
@@ -82,9 +93,15 @@
 			left: calc(#{$margin_offset+px} + (#{$card_width} + 25px + 10px)*2);
 			:first-child {
 				margin: -67px 25px;
+				&.opposing {
+					margin: -67px 45px;
+				}
 			}
 			:nth-child(2) {
 				margin: -87px 45px;
+				&.opposing {
+					margin: -87px 25px;
+				}
 			}
 		}
 		:first-child {
@@ -103,9 +120,15 @@
 			left: calc(#{$margin_offset+px} + (#{$card_width} + 25px + 10px)*3);
 			:first-child {
 				margin: -67px 45px;
+				&.controlled {
+					margin: -67px 25px;
+				}
 			}
 			:nth-child(2) {
 				margin: -87px 25px;
+				&.controlled {
+					margin: -87px 45px;
+				}
 			}
 		}
 		:first-child {
