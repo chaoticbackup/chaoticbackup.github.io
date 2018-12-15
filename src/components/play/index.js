@@ -19,7 +19,7 @@ export default class Play extends React.Component {
   }
 
   componentDidUpdate() {
-    this.makeChange();
+    // this.makeChange();
   }
 
   render() {
