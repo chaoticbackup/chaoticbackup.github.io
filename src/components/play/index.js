@@ -15,11 +15,17 @@ export default class Play extends React.Component {
   }
 
   handleChange() {
-
+    // When handling movement, flip the card's owner before sending network
   }
 
   componentDidUpdate() {
     // this.makeChange();
+    this.makeChange({event:"active", action: true});
+  }
+
+  // TODO own GUI class
+  endTurn() {
+    this.makeChange({event: "active", action: true});
   }
 
   render() {
@@ -31,6 +37,9 @@ export default class Play extends React.Component {
     
     return (
       <div className="play">
+        <div className="gui">
+          <div className="endturn"><button onClick={this.endTurn.bind(this)}>End Turn</button></div>
+        </div>
         <Board 
           submitChange={this.handleChange.bind(this)} 
           ref={n => {if (n) this.makeChange = n.makeChange}}

@@ -4,15 +4,35 @@
 	$margin_offset: 10px;
 	$card_width: calc(350px / 2);
 	$card_height: calc(250px / 2);
+	$view_height: 600px;
 
-	height: 50em;
+	height: $view_height;
+	position: relative;
+
+	.gui {
+		position: absolute;
+		width: 100%;
+		height: calc(#{$view_height} - 20px);
+		// all children are above field
+		>* {
+			z-index: 20;
+		}
+	}
+
+	.endturn {
+		position: absolute;
+		border: 1px solid red;
+		border-radius: 5px;
+		right: 0%;
+		bottom: 0%;
+	}
 
 	.battleboard {
-		position: relative;
+		position: absolute;
 		overflow-x: auto;
 		display: block;
 		width: 100%;
-		height: 50em;
+		height: $view_height;
 
 		> div {
 			height: 100%;
@@ -92,7 +112,7 @@
 	}
 
 	.r1 {
-		left: calc(#{$margin_offset});
+		padding-left: $margin_offset;
 		.space:first-child{
 			top: calc(50% - #{$card_height}/2);
 		}
@@ -145,6 +165,7 @@
 	}
 
 	.r6 {
+		padding-right: $margin_offset;
 		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*5);
 		.space:first-child{
 			top: calc(50% - #{$card_height}/2);
