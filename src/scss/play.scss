@@ -1,11 +1,25 @@
 @import 'base';
 
 .play {
-	$margin_offset: 45;
+	$margin_offset: 10px;
 	$card_width: calc(350px / 2);
 	$card_height: calc(250px / 2);
 
 	height: 50em;
+
+	.battleboard {
+		position: relative;
+		overflow-x: auto;
+		display: block;
+		width: 100%;
+		height: 50em;
+
+		> div {
+			height: 100%;
+			width: calc(#{$card_width} + 20px);
+			position: absolute;
+		}
+	}
 
 	.space {
 		position: absolute;
@@ -43,16 +57,12 @@
 
 	}
 
-	.r1 {
-		:first-child{
-			top: 50%;
-		}
+	.r1, .r2, .r3 {
 		.space {
-			left: calc(#{$margin_offset+px} + 5px);
 			:first-child {
-				margin: -87px 25px;
+				margin: -25px 25px;
 				&.opposing {
-					margin: -87px 45px;
+					margin: -25px 45px;
 				}
 			}
 			:nth-child(2) {
@@ -64,81 +74,80 @@
 		}
 	}
 
-	.r2 {
+	.r4, .r5, .r6 {
 		.space {
-			left: calc(#{$margin_offset+px} + #{$card_width} + 25px + 10px);
 			:first-child {
-				margin: -77px 25px;
-				&.opposing {
-					margin: -77px 45px;
+				margin: -25px 45px;
+				&.controlled {
+					margin: -25px 25px;
 				}
 			}
 			:nth-child(2) {
-				margin: -97px 45px;
-				&.opposing {
-					margin: -97px 25px;
+				margin: -25px 25px;
+				&.controlled {
+					margin: -25px 45px;
 				}
 			}
 		}
-		:first-child {
-			top: 42%;
+	}
+
+	.r1 {
+		left: calc(#{$margin_offset});
+		.space:first-child{
+			top: calc(50% - #{$card_height}/2);
 		}
-		:nth-child(2) {
-			top: 58%;
+	}
+
+	.r2 {
+		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*1);
+		.space:first-child {
+			top: calc(38% - #{$card_height}/2);
+		}
+		.space:nth-child(2) {
+			top: calc(62% - #{$card_height}/2);
 		}
 	}
 
 	.r3 {
-		.space {
-			left: calc(#{$margin_offset+px} + (#{$card_width} + 25px + 10px)*2);
-			:first-child {
-				margin: -67px 25px;
-				&.opposing {
-					margin: -67px 45px;
-				}
-			}
-			:nth-child(2) {
-				margin: -87px 45px;
-				&.opposing {
-					margin: -87px 25px;
-				}
-			}
+		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*2);
+		.space:first-child {
+			top: calc(26% - #{$card_height}/2);
 		}
-		:first-child {
-			top: 33.3%;
+		.space:nth-child(2) {
+			top: calc(50% - #{$card_height}/2);
 		}
-		:nth-child(2) {
-			top: 50%;
-		}
-		:nth-child(3) {
-			top: 66.6%;
+		.space:nth-child(3) {
+			top: calc(74% - #{$card_height}/2);
 		}
 	}
 
 	.r4 {
-		.space {
-			left: calc(#{$margin_offset+px} + (#{$card_width} + 25px + 10px)*3);
-			:first-child {
-				margin: -67px 45px;
-				&.controlled {
-					margin: -67px 25px;
-				}
-			}
-			:nth-child(2) {
-				margin: -87px 25px;
-				&.controlled {
-					margin: -87px 45px;
-				}
-			}
+		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*3);
+		.space:first-child {
+			top: calc(26% - #{$card_height}/2);
 		}
-		:first-child {
-			top: 33.3%;
+		.space:nth-child(2) {
+			top: calc(50% - #{$card_height}/2);
 		}
-		:nth-child(2) {
-			top: 50%;
+		.space:nth-child(3) {
+			top: calc(74% - #{$card_height}/2);
 		}
-		:nth-child(3) {
-			top: 66.6%;
+	}
+
+	.r5 {
+		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*4);
+		.space:first-child {
+			top: calc(38% - #{$card_height}/2);
+		}
+		.space:nth-child(2) {
+			top: calc(62% - #{$card_height}/2);
+		}
+	}
+
+	.r6 {
+		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*5);
+		.space:first-child{
+			top: calc(50% - #{$card_height}/2);
 		}
 	}
 
