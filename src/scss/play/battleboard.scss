@@ -1,44 +1,26 @@
-@import 'base';
+@import 'shared';
 
-.play {
-	$margin_offset: 10px;
-	$card_width: calc(350px / 2);
-	$card_height: calc(250px / 2);
-	$view_height: 600px;
-
+.battleboard {
+	position: absolute;
+	overflow-x: auto;
+	display: block;
+	width: 100%;
 	height: $view_height;
-	position: relative;
 
-	.gui {
-		position: absolute;
+	.field {
 		width: 100%;
-		height: calc(#{$view_height} - 20px);
-		// all children are above field
-		>* {
-			z-index: 20;
-		}
-	}
-
-	.endturn {
+		// width: calc(100% - #{$burst_width});
+		height: calc(#{$view_height} - 100px);
 		position: absolute;
-		border: 1px solid red;
-		border-radius: 5px;
-		right: 0%;
-		bottom: 0%;
-	}
-
-	.battleboard {
-		position: absolute;
-		overflow-x: auto;
-		display: block;
-		width: 100%;
-		height: $view_height;
+		margin-right: $burst_width;
+		top: -80px;
 
 		> div {
 			height: 100%;
 			width: calc(#{$card_width} + 20px);
 			position: absolute;
 		}
+
 	}
 
 	.space {
@@ -52,7 +34,7 @@
 			// border: 1px solid #f41111;
 			box-shadow: 5px 5px 5px red, -5px 5px 5px red, 5px -5px 5px red, -5px -5px 5px red;
 			border-radius: 10px;
-			z-index: 11;
+			z-index: 21;
 		}
 
 		img {
@@ -165,7 +147,7 @@
 	}
 
 	.r6 {
-		padding-right: $margin_offset;
+		padding-right: calc(#{$margin_offset} + #{$burst_width});
 		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*5);
 		.space:first-child{
 			top: calc(50% - #{$card_height}/2);

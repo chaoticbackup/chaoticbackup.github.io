@@ -1,0 +1,141 @@
+@import 'shared';
+
+
+$chat_height: 240px;
+$chat_width: 250px;
+$turn_action_height: 30px;
+
+.gui {
+	position: absolute;
+	width: 100%;
+	height: calc(#{$view_height} - 20px);
+	// all children are above field
+	>* {
+		z-index: 20;
+	}
+
+	.right-gui {
+		position: absolute;
+		width: $chat_width;
+		height: 100%;
+		right: 0;
+		z-index: unset;// prevents blocking card hover
+
+		>* {
+			z-index: 20;
+			position: relative;
+			float: right;
+			border-left: 1px solid gray;
+			background-color: #555e6fd1;
+		}
+	}
+
+	.burst {
+		height: calc(100% - #{$turn_action_height} - #{$chat_height});
+		width: $burst_width;
+		overflow-y: auto;
+
+		span {
+			color: darkgray;
+			text-shadow: 1px 1px black;
+		}
+	}
+
+	.turn-actions {
+		height: $turn_action_height;
+		width: $burst_width;
+	}
+
+	.endturn {
+		border: 1px solid red;
+		border-radius: 5px;
+		float: right;
+
+		:hover {
+			background-color: gray;
+		}
+	}
+
+	.chat {
+		height: $chat_height;
+		width: $chat_width;
+		border-top: 1px solid gray;
+
+		span {
+			color: darkgray;
+			text-shadow: 1px 1px black;
+			display: block;
+	    bottom: 0;
+	    float: left;
+	    position: absolute;
+		}
+	}
+
+	.hand {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 240px;
+		width: calc(100% - #{$chat_width} - 100px);
+		background-color: #555e6fd1;
+		border-top: 1px solid gray;
+
+		.attacks div, .mugic div {
+			float: left;
+			width: 100px;
+			height: 120px;
+		}
+	}
+
+	.discard {
+		position: absolute;
+		bottom: 0;
+		right: $chat_width;
+		border-top: 1px solid gray;
+		border-left: 1px solid gray;
+		height: 240px;
+		background-color: #555e6fd1;
+
+		.card_name {
+			display: block;
+		}
+
+		div {
+			// float: left;
+			width: 100px;
+			height: 120px;
+		}
+		div:first-child {
+			border-right: 1px solid gray;
+			border-bottom: 1px solid gray;
+		}
+	}
+
+	.location {
+		position: absolute;
+		left: 20px;
+		top: -20px;
+		width: calc(250px / 2);
+		height: calc(350px / 2);
+
+		&:hover {
+			left: 50px;
+			top: -45px;
+			width: 250px;
+			height: 350px;
+		}
+		img {
+			transform: rotate(90deg);
+			max-height: 100%;
+			max-width: 100%;
+		}
+		-webkit-transition: -webkit-transform 1s,opacity 1s,background 1s,width 1s,height 1s,font-size 1s,top 1s,left 1s;
+		-o-transition-property: width,height,-o-transform,background,font-size,opacity,top,left;
+		-o-transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
+		-moz-transition-property: width,height,-o-transform,background,font-size,opacity,top,left;
+		-moz-transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
+		transition-property: width,height,transform,background,font-size,opacity,top,left;
+		transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
+	}
+
+}

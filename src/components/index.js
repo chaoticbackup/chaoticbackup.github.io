@@ -65,7 +65,7 @@ function Base(props) {
                       <li id="unity-nav5" className={language}><Link to={`/`}><span>Home</span></Link></li>
                       <li id="unity-nav6" className={language}><a href="http://chaoticbackup.forumotion.com"><span>Forums</span></a></li>
                       <li id="unity-nav7" className={language}><Link to={`/portal/`}><span>Portal</span></Link></li>
-                      <li id="unity-nav8" className={language}><a href="http://www.tradecardsonline.com/?action=selectCard&goal=DK&game_id=82"><span>Play</span></a></li>
+                      <li id="unity-nav8" className={language}><Link to={`/play/`}><span>Play</span></Link></li>
                       <li id="unity-nav9" className={language}></li>
                     </ul>
                     <ul id="unityETC-sprite" className={language}>

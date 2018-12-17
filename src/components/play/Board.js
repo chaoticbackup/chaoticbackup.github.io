@@ -2,6 +2,7 @@ import React from 'react';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import API from '../SpreadsheetData';
+import '../../scss/play/battleboard.scss';
 
 // array of array of accesible spaces per swift
 const adjacency_6 = {
@@ -47,6 +48,8 @@ export default class Board extends React.Component {
 		this.spaces[4].battlegear[0].data = API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Maxxor's Torch", 'i')}});
 		this.spaces[1].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Staluk", 'i')}});
 		this.spaces[1].battlegear[0].data = API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Vlaric Shard", 'i')}});
+		this.spaces[0].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Vidav", 'i')}});
+		this.spaces[2].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Dractyl", 'i')}});
 		for (let i = 0; i < 6; i++) {
 			this.spaces[i].creatures[0].controlled = true;
 			this.spaces[i].battlegear[0].controlled = true;
@@ -122,18 +125,30 @@ export default class Board extends React.Component {
 		// add a card to a space
 		case "add": {
 			// action: {space, type, card}
-			this.spaces[action.space][action.type] = action.card;
+			this.spaces[action.space][action.type].push(action.card);
 			break;
 		}
 
 		// remove a specific card at a space
 		case "remove": {
+			// action: {space, type, index}
+			if (index == 0) {
+				this.space[action.space][action.type][0] = this.empty_card(action.type);
+			}
+			else if (index > 0) {
+				this.space[action.space][action.type].splice(index, 1);
+			}
+			break;
+		}
+
+		case "removeall": {
 			// action: {space, type}
-			this.space[action.space][action.type] = this.empty_card(action.type);
+			this.space[action.space][action.type] = [this.empty_card(action.type)];
 			break;
 		}
 
 		// this is a short hand for moving a creature and its battlegear
+		// as part of the movement operation
 		case "movement": {
 			// action: {src, dest}
 			let src = action.src;
@@ -257,7 +272,7 @@ export default class Board extends React.Component {
 
 	render() {
 		return(
-			<div className="battleboard">
+			<div className="battleboard"><div className="field">
 				<div className="r1">
 					<div className="space">
 						<Space id={"c0"} cards={this.spaces[0].creatures} selectCard={this.selectCard} />
@@ -318,7 +333,7 @@ export default class Board extends React.Component {
 						<Space id={"b11"} cards={this.spaces[11].battlegear} selectCard={this.selectCard} />
 					</div>
 				</div>
-			</div>
+			</div></div>
 		);
 	}
 }
