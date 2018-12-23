@@ -10,10 +10,11 @@
 	.field {
 		width: 100%;
 		// width: calc(100% - #{$burst_width});
-		height: calc(#{$view_height} - 100px);
+		// height: calc(#{$view_height} - 100px);
+		height: $view_height;
 		position: absolute;
-		margin-right: $burst_width;
-		top: -80px;
+		top: -60px;
+		left: $burst_width;
 
 		> div {
 			height: 100%;
@@ -147,7 +148,7 @@
 	}
 
 	.r6 {
-		padding-right: calc(#{$margin_offset} + #{$burst_width});
+		padding-right: $margin_offset;
 		left: calc(#{$margin_offset} + (#{$card_width} + 25px + 10px)*5);
 		.space:first-child{
 			top: calc(50% - #{$card_height}/2);
