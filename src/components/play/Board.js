@@ -6,18 +6,18 @@ import '../../scss/play/battleboard.scss';
 
 // array of array of accesible spaces per swift
 const adjacency_6 = {
-	1: [2, 3],
-	2: [1, 3, 4, 5],
-	3: [1, 2, 5, 6],
-	4: [2, 5, 7, 8],
-	5: [2, 3, 4, 6, 7, 8, 9],
-	6: [3, 5, 8, 9],
-	7: [4, 5, 8, 10],
-	8: [4, 5, 6, 7, 9, 10, 11],
-	9: [5, 6, 8, 11],
-	10: [7, 8, 11, 12],
-	11: [8, 9, 10, 12],
-	12: [10, 11]
+	0: [1, 2],
+	1: [0, 2, 3, 4],
+	2: [0, 1, 4, 5],
+	3: [1, 4, 6, 7],
+	4: [1, 2, 3, 5, 6, 7, 8],
+	5: [2, 4, 7, 8],
+	6: [3, 4, 7, 9],
+	7: [3, 4, 5, 6, 8, 9, 10],
+	8: [4, 5, 7, 10],
+	9: [6, 7, 10, 11],
+	10: [7, 8, 9, 11],
+	11: [9, 10]
 }
 
 @observer
@@ -185,7 +185,7 @@ export default class Board extends React.Component {
 	}
 
 	selectCard(e) {
-		let id = e.target.id.substr(1);
+		let id = parseInt(e.target.id.substr(1));
 		let type = (() => {
 			switch (e.target.id.charAt(0)) {
 				case 'b': return 'battlegear';
@@ -221,47 +221,76 @@ export default class Board extends React.Component {
 			let src_card = this.spaces[this.source].creatures[0];
 
 			// Calculate range of spaces based on swift
-			let mv = ((data) => {
-				let swift = (new RegExp(/swift ([0-9]+)/gi).exec(data.gsx$ability));
-				if (swift) return parseInt(swift[1]) + 1;
-				return 1;
+			let swift = ((data) => {
+				let s = (new RegExp(/swift ([0-9]+)/gi).exec(data.gsx$ability));
+				// TODO brainwashed
+				if (s) return parseInt(s[1]);
+				return 0;
 			})(this.spaces[id].creatures[0].data);
+
+			let range = ((data) => {
+				let r = (new RegExp(/^range/mi).exec(data.gsx$ability));
+				// TODO brainwashed
+				if (r) return true;
+				return false;
+			})(this.spaces[id].creatures[0].data);
+
+			// Start with adjacent spaces
+			let valid = adjacency_6[id];
+			let invalid = [];
+			let attackable = [];
+			let last_inx = 0;
+
+			// determine a list of valid spaces to move into
+			// for each level of swift, increase moveable range
+			for (let mv = 0; mv <= swift; mv++) {
+				let lvl = valid;
+				for (let i = last_inx; i < valid.length; i++) {
+					// if (invalid.includes(valid[i])) continue;
+					let des_card = this.spaces[valid[i]].creatures[0];
+					// Ocupied spaces are invalid, but can be used to start combat
+					if (des_card.data != null) {
+						invalid.push(valid[i]);
+						// Can't move into space of own creatures
+						// Otherwise check if can start combat
+						if (!des_card.controlled && this.canAttack()) {
+							attackable.push(i);
+						}
+					}
+					if (swift == 0) continue;
+					//  Can't move through without range
+					if (des_card.data == null || range) {
+						lvl = [].concat(lvl, adjacency_6[valid[i]])
+							.filter(function(item, pos, self) {
+								return self.indexOf(item) == pos;
+							});
+					}
+				}
+				if (mv + 1 > swift) break; // ignore last set
+				last_inx = valid.length; // don't reiterate same spaces
+				valid = lvl;
+			}
+			// remove invalid spaces
+			valid = valid.filter(x => !invalid.includes(x));
 
 			// set selectable options
 			this.spaces.forEach((space, i) => {
 				space.battlegear.forEach((card) => {
 					card.selectable = false;
 				});
-				space.creatures.forEach((card) => {
-					let des_card = this.spaces[i].creatures[0];
-					card.selectable = ((src_id, dest_id, movement) => {
-						// If already moved, no valid movement
-						if (!src_card.moveable) return false;
-						// No self space movement
-						if (src_id == dest_id) return false;
-
-						// for each level of swift, increase moveable range
-						// TODO account for range
-						let valid = adjacency_6[parseInt(src_id) + 1]; // fix offset
-						for (let i = 0; i < movement; i++) {
-							if (valid.includes(parseInt(dest_id) + 1)) {  // fix offset
-								// Check if space occupied
-								if (des_card.data != null) {
-									// Can't move into occupied space of own tribe
-									if (des_card.controlled) return false;
-									// Check if can start combat
-									else return this.canAttack();
-								}
-								return true;
-							} 
-							valid.forEach((i) => {
-								valid = [].concat(valid, adjacency_6[i]);
-							});
-						}
-
-						return false; // if all else its probably not moveable
-					})(id, i, mv);
-				});
+				let des_card = space.creatures[0];
+				des_card.selectable = ((src_id, dest_id) => {
+					// If already moved, no valid movement
+					if (!src_card.moveable) return false;
+					// No self space movement
+					else if (src_id == dest_id) return false;
+					// If its a valid spot
+					else if (valid.includes(dest_id)) return true;
+					// TODO different effect for attackable?
+					else if (attackable.includes(dest_id)) return true;
+					// if all else its probably not moveable
+					else return false;
+				})(id, i);
 			});
 
 			// creature is now selected
