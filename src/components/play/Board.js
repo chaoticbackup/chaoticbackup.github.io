@@ -1,4 +1,5 @@
 import React from 'react';
+import Base from './_base';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import API from '../SpreadsheetData';
@@ -6,7 +7,7 @@ import Movement from './rules/movement';
 import '../../scss/play/battleboard.scss';
 
 @observer
-export default class Board extends React.Component {
+export default class Board extends Base {
 	@observable spaces = [];
 	@observable phase = "none";
 	@observable activeplayer = true;
@@ -23,8 +24,6 @@ export default class Board extends React.Component {
 			'mirage': [this.empty_card("mirage")]
 		});
 
-		// todo remove / currently simulating
-		this.submitChange({event: "phase", action: "movement"});
 		this.loadcards();
 	}
 
@@ -57,21 +56,12 @@ export default class Board extends React.Component {
 		return card;
 	}
 
-	// This is a wraper function for preforming changes to game state
-	// It preforms the change locally and propegates it higher
-	// So that a network listener can reflect the change on the other client
-	// Local changes only could use "make change"
-	submitChange = (change) => {
-		this.props.submitChange(change);
-		this.makeChange(change);
-	}
-
 	// TODO if the board state is changed externally
 	// {'event': 'action'}
 	makeChange = (change) => {
 		// seriously calling without a change?
 		if (!change) return;
-		console.log(change); // TODO remove
+		console.log("board ->", change); // TODO remove
 
 		let action = change.action;
 		switch (change.event) {
