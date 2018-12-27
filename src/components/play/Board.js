@@ -4,12 +4,12 @@ import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import API from '../SpreadsheetData';
 import Movement from './rules/movement';
+import {Phase} from './rules/turn';
 import '../../scss/play/battleboard.scss';
 
 @observer
 export default class Board extends Base {
 	@observable spaces = [];
-	@observable phase = "none";
 	@observable activeplayer = true;
 
 	constructor(props) {
@@ -56,7 +56,6 @@ export default class Board extends Base {
 		return card;
 	}
 
-	// TODO if the board state is changed externally
 	// {'event': 'action'}
 	makeChange = (change) => {
 		// seriously calling without a change?
@@ -88,13 +87,6 @@ export default class Board extends Base {
 					});
 				});  
 			}
-			break;
-		}
-
-		// change the game's phase
-		case "phase": {
-			// action: "string"
-			this.phase = action;
 			break;
 		}
 
@@ -140,7 +132,6 @@ export default class Board extends Base {
 		}
 	}
 
-
 	resetCardSelection() {
 		this.spaces.forEach((space) => {
 			space.battlegear.forEach((card) => {
@@ -175,7 +166,7 @@ export default class Board extends Base {
 			return this.resetCardSelection();
 		}
 
-		if (this.phase == "movement" && type == "creatures") {
+		if (Phase.phase == "movement" && type == "creatures") {
 			// TODO combat
 			// TODO if self selection, check activated ability
 			if (this.movement.source == id) {
@@ -192,6 +183,9 @@ export default class Board extends Base {
 			// don't select a blank space
 			if (this.spaces[id].creatures[0].data == null) return;
 			
+			// can't select opposing creatures
+			if (this.spaces[id].creatures[0].controlled == false) return;
+
 			// select a card
 			let src_card = this.spaces[id].creatures[0];
 			this.movement.source = id;

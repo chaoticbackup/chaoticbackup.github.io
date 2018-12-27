@@ -5,6 +5,7 @@ import API from '../SpreadsheetData';
 import {Loading} from '../Snippets';
 import Board from './Board';
 import Gui from './Gui';
+import {Turn} from './rules/turn';
 
 import '../../scss/play/play.scss';
 import '../../scss/play/gui.scss';
@@ -15,12 +16,14 @@ export default class Play extends React.Component {
 
   constructor(props) {
   	super(props);
+    const turn = new Turn(this.receiveTurnChange.bind(this));
+    this.makeTurnChange = turn.makeChange;
   }
 
   componentDidUpdate() {
     // todo remove / currently simulating
     this.makeBoardChange({event:"active", action: true});
-    this.makeBoardChange({event: "phase", action: "movement"});
+    this.makeTurnChange({event: "phase", action: "movement"});
   }
 
   sendNetworkChange(change, destination) {
@@ -43,6 +46,9 @@ export default class Play extends React.Component {
       case "gui":
         this.makeGuiChange(change);
         break;
+      case "turn":
+        this.makeTurnChange(change);
+        break;
       default:
         throw "invalid destination";
     }
@@ -58,6 +64,10 @@ export default class Play extends React.Component {
   receiveBoardChange(change, destination) {
     if (destination) this.recieveChange(change, destination);
     this.sendNetworkChange(change, destination || "board");
+  }
+
+  receiveTurnChange(change, destination) {
+
   }
 
   render() {

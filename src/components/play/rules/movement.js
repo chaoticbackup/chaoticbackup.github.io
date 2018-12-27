@@ -1,4 +1,4 @@
-import Rule from './rule';
+import Rule from './_rule';
 import {observable} from "mobx";
 
 // array of array of accesible spaces per swift
