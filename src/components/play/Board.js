@@ -2,34 +2,20 @@ import React from 'react';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import API from '../SpreadsheetData';
+import Movement from './rules/movement';
 import '../../scss/play/battleboard.scss';
-
-// array of array of accesible spaces per swift
-const adjacency_6 = {
-	0: [1, 2],
-	1: [0, 2, 3, 4],
-	2: [0, 1, 4, 5],
-	3: [1, 4, 6, 7],
-	4: [1, 2, 3, 5, 6, 7, 8],
-	5: [2, 4, 7, 8],
-	6: [3, 4, 7, 9],
-	7: [3, 4, 5, 6, 8, 9, 10],
-	8: [4, 5, 7, 10],
-	9: [6, 7, 10, 11],
-	10: [7, 8, 9, 11],
-	11: [9, 10]
-}
 
 @observer
 export default class Board extends React.Component {
 	@observable spaces = [];
 	@observable phase = "none";
-	@observable source = -1;
 	@observable activeplayer = true;
 
 	constructor(props) {
 		super(props);
 		this.selectCard = this.selectCard.bind(this);
+
+		this.movement = new Movement();
 
 		this.spaces = Array(12).fill({
 			'creatures': [this.empty_card("creatures")],
@@ -176,7 +162,7 @@ export default class Board extends React.Component {
 				card.selected = false;
 			});
 		});  
-		this.source = -1;
+		this.movement.source = (-1);
 	}
 
 	// TODO
@@ -202,12 +188,12 @@ export default class Board extends React.Component {
 		if (this.phase == "movement" && type == "creatures") {
 			// TODO combat
 			// TODO if self selection, check activated ability
-			if (this.source == id) {
+			if (this.movement.source == id) {
 				return this.resetCardSelection();
 			}
 			// moving into a space
-			if (this.source > 0) {
-				this.submitChange({event: "movement", action: {src: this.source, dest: id}});
+			if (this.movement.source > 0) {
+				this.submitChange({event: "movement", action: {src: this.movement.source, dest: id}});
 				// Only one move per turn
 				this.spaces[id].creatures[0].moveable = false;
 				return this.resetCardSelection();
@@ -217,61 +203,10 @@ export default class Board extends React.Component {
 			if (this.spaces[id].creatures[0].data == null) return;
 			
 			// select a card
-			this.source = id;
-			let src_card = this.spaces[this.source].creatures[0];
+			let src_card = this.spaces[id].creatures[0];
+			this.movement.source = id;
 
-			// Calculate range of spaces based on swift
-			let swift = ((data) => {
-				let s = (new RegExp(/swift ([0-9]+)/gi).exec(data.gsx$ability));
-				// TODO brainwashed
-				if (s) return parseInt(s[1]);
-				return 0;
-			})(this.spaces[id].creatures[0].data);
-
-			let range = ((data) => {
-				let r = (new RegExp(/^range/mi).exec(data.gsx$ability));
-				// TODO brainwashed
-				if (r) return true;
-				return false;
-			})(this.spaces[id].creatures[0].data);
-
-			// Start with adjacent spaces
-			let valid = adjacency_6[id];
-			let invalid = [];
-			let attackable = [];
-			let last_inx = 0;
-
-			// determine a list of valid spaces to move into
-			// for each level of swift, increase moveable range
-			for (let mv = 0; mv <= swift; mv++) {
-				let lvl = valid;
-				for (let i = last_inx; i < valid.length; i++) {
-					// if (invalid.includes(valid[i])) continue;
-					let des_card = this.spaces[valid[i]].creatures[0];
-					// Ocupied spaces are invalid, but can be used to start combat
-					if (des_card.data != null) {
-						invalid.push(valid[i]);
-						// Can't move into space of own creatures
-						// Otherwise check if can start combat
-						if (!des_card.controlled && this.canAttack()) {
-							attackable.push(i);
-						}
-					}
-					if (swift == 0) continue;
-					//  Can't move through without range
-					if (des_card.data == null || range) {
-						lvl = [].concat(lvl, adjacency_6[valid[i]])
-							.filter(function(item, pos, self) {
-								return self.indexOf(item) == pos;
-							});
-					}
-				}
-				if (mv + 1 > swift) break; // ignore last set
-				last_inx = valid.length; // don't reiterate same spaces
-				valid = lvl;
-			}
-			// remove invalid spaces
-			valid = valid.filter(x => !invalid.includes(x));
+			let {valid, attackable} = this.movement.moves(this.spaces, id);
 
 			// set selectable options
 			this.spaces.forEach((space, i) => {
@@ -287,7 +222,7 @@ export default class Board extends React.Component {
 					// If its a valid spot
 					else if (valid.includes(dest_id)) return true;
 					// TODO different effect for attackable?
-					else if (attackable.includes(dest_id)) return true;
+					else if (attackable.includes(dest_id) && this.canAttack()) return true;
 					// if all else its probably not moveable
 					else return false;
 				})(id, i);
