@@ -16,6 +16,7 @@
     "lokijs": "^1.5.1",
     "mobx": "^4.5.1",
     "mobx-react": "^5.3.4",
+    "peerjs": "^0.3.18",
     "prop-types": "^15.6.0",
     "react": "^16.5.2",
     "react-collapsible": "^2.3.1",
@@ -49,8 +50,7 @@
     "node-sass": "^4.10.0",
     "sass-loader": "^7.0.x",
     "style-loader": "^0.23.1",
-    "webpack": "^3.11",
-    "webpack-cli": "^2.0.x",
-    "webpack-dev-server": "^2.11.1"
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.3"
   }
 }
