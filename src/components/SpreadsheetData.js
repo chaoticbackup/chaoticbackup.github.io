@@ -207,7 +207,7 @@ class API {
   }
 
   get tribes() {
-    return ["Danian", "Generic", "Mipedian", encodeURIComponent("M'arrillian"), "OverWorld", "UnderWorld"];
+    return ["Danian", "Generic", "Mipedian", "M'arrillian", "OverWorld", "UnderWorld"];
   }
 
   // For the conversion of shorthand in database

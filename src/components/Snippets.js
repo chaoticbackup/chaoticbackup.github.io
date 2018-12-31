@@ -14,8 +14,7 @@ export function UnderConstruction(props) {
 export function PageNotFound(props) {
   return (
     <p style={s.p}>
-      Page not found - the path, {s.code(props.location.pathname)},
-      did not match any React Router routes.
+      Page not found - the path, {s.code(props.location.pathname)}, did not match any routes.
     </p>
   );
 }

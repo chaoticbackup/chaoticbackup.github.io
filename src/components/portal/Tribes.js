@@ -4,11 +4,11 @@ import { Link, Route } from 'react-router-dom';
 import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import loki from 'lokijs';
-import s from '../../../styles/app.style';
-import API from '../../SpreadsheetData';
-import {Loading} from '../../Snippets';
-import Creature from '../Single/Creature';
-import Mugic from '../Single/Mugic';
+import s from '../../styles/app.style';
+import API from '../SpreadsheetData';
+import {Loading} from '../Snippets';
+import Creature from './Single/Creature';
+import Mugic from './Single/Mugic';
 
 @inject((stores, props, context) => props) @observer
 export default class Tribes extends React.Component {
