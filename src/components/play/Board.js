@@ -4,7 +4,7 @@ import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import API from '../SpreadsheetData';
 import Movement from './rules/movement';
-import {Phase} from './rules/turn';
+import Phase from './rules/phase';
 import '../../scss/play/battleboard.scss';
 
 @observer
@@ -16,31 +16,57 @@ export default class Board extends Base {
 		super(props);
 		this.selectCard = this.selectCard.bind(this);
 
+		// Movement Rule
 		this.movement = new Movement();
 
+		// Create board
 		this.spaces = Array(12).fill({
 			'creatures': [this.empty_card("creatures")],
 			'battlegear': [this.empty_card("battlegear")],
 			'mirage': [this.empty_card("mirage")]
 		});
 
-		this.loadcards();
-	}
-
-	// TODO
-	loadcards() {
-		this.spaces[4].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Maxxor", 'i')}});
-		this.spaces[4].battlegear[0].data = API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Maxxor's Torch", 'i')}});
-		this.spaces[1].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Staluk", 'i')}});
-		this.spaces[1].battlegear[0].data = API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Vlaric Shard", 'i')}});
-		this.spaces[0].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Vidav", 'i')}});
-		this.spaces[2].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Dractyl", 'i')}});
 		for (let i = 0; i < 6; i++) {
 			this.spaces[i].creatures[0].controlled = true;
 			this.spaces[i].battlegear[0].controlled = true;
 		}
-		this.spaces[7].creatures[0].data = API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Chaor", 'i')}});
-		this.spaces[7].battlegear[0].data = API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Whepcrack", 'i')}});
+
+		setTimeout(() => this.loadgame(), 500);  // TODO
+	}
+
+	// todo remove / currently simulating
+	loadgame() {
+		if (this.props.player == 0 || this.props.player == 1) {
+		  this.submitChange({event: "load", action: {space: 0, type: "creatures", 
+		    data: API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Vidav", 'i')}})
+		  }});
+		  this.submitChange({event: "load", action: {space: 1, type: "creatures", 
+		    data: API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Staluk", 'i')}})
+		  }});
+		  this.submitChange({event: "load", action: {space: 1, type: "battlegear", 
+		    data: API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Vlaric Shard", 'i')}})
+		  }});
+		  this.submitChange({event: "load", action: {space: 2, type: "creatures", 
+		    data: API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Dractyl", 'i')}})
+		  }});
+		  this.submitChange({event: "load", action: {space: 4, type: "creatures", 
+		    data: API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Maxxor", 'i')}})
+		  }});
+		  this.submitChange({event: "load", action: {space: 4, type: "battlegear", 
+		    data: API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Maxxor's Torch", 'i')}})
+		  }});
+
+		  this.makeChange({event:"active", action: true});
+		  this.submitChange({event: "phase", action: "movement"}, "turn");
+		}
+		else {
+		  this.submitChange({event: "load", action: {space: 4, type: "creatures", 
+		    data: API.cards.creatures.findOne({'gsx$name': {'$regex': new RegExp("Chaor", 'i')}})
+		  }});
+		  this.submitChange({event: "load", action: {space: 4, type: "battlegear", 
+		    data: API.cards.battlegear.findOne({'gsx$name': {'$regex': new RegExp("Whepcrack", 'i')}})
+		  }});
+		}
 	}
 
 	empty_card(type) {
@@ -58,9 +84,8 @@ export default class Board extends Base {
 
 	// {'event': 'action'}
 	makeChange = (change) => {
-		// seriously calling without a change?
 		if (!change) return;
-		console.log("board ->", change); // TODO remove
+		console.log(change);
 
 		let action = change.action;
 		switch (change.event) {
@@ -87,6 +112,15 @@ export default class Board extends Base {
 					});
 				});  
 			}
+			break;
+		}
+
+		// loads the card data into a blank space
+		// used when initial card loading, 
+		// or when bringing back cards from discard
+		case "load": {
+			// action: {space, type, data}
+			this.spaces[action.space][action.type][0].data = action.data;
 			break;
 		}
 
@@ -146,17 +180,13 @@ export default class Board extends Base {
 		this.movement.source = (-1);
 	}
 
-	// TODO
-	canAttack(id) {
-		return false;
-	}
-
 	selectCard(e) {
 		let id = parseInt(e.target.id.substr(1));
 		let type = (() => {
 			switch (e.target.id.charAt(0)) {
 				case 'b': return 'battlegear';
 				case 'c': return 'creatures';
+				case 'm': return 'mirage';
 				default: return "";
 			}
 		})();
@@ -167,54 +197,21 @@ export default class Board extends Base {
 		}
 
 		if (Phase.phase == "movement" && type == "creatures") {
-			// TODO combat
 			// TODO if self selection, check activated ability
 			if (this.movement.source == id) {
 				return this.resetCardSelection();
 			}
 			// moving into a space
 			if (this.movement.source > 0) {
+				// TODO combat
 				this.submitChange({event: "movement", action: {src: this.movement.source, dest: id}});
 				// Only one move per turn
 				this.spaces[id].creatures[0].moveable = false;
-				return this.resetCardSelection();
+				this.resetCardSelection();
+				return;
 			}
 
-			// don't select a blank space
-			if (this.spaces[id].creatures[0].data == null) return;
-			
-			// can't select opposing creatures
-			if (this.spaces[id].creatures[0].controlled == false) return;
-
-			// select a card
-			let src_card = this.spaces[id].creatures[0];
-			this.movement.source = id;
-
-			let {valid, attackable} = this.movement.moves(this.spaces, id);
-
-			// set selectable options
-			this.spaces.forEach((space, i) => {
-				space.battlegear.forEach((card) => {
-					card.selectable = false;
-				});
-				let des_card = space.creatures[0];
-				des_card.selectable = ((src_id, dest_id) => {
-					// If already moved, no valid movement
-					if (!src_card.moveable) return false;
-					// No self space movement
-					else if (src_id == dest_id) return false;
-					// If its a valid spot
-					else if (valid.includes(dest_id)) return true;
-					// TODO different effect for attackable?
-					else if (attackable.includes(dest_id) && this.canAttack()) return true;
-					// if all else its probably not moveable
-					else return false;
-				})(id, i);
-			});
-
-			// creature is now selected
-			this.spaces[id].creatures[0].selected = true;
-			this.spaces[id].creatures[0].selectable = false;
+			this.spaces = this.movement.moves(this.spaces, id);
 		}
 	}
 

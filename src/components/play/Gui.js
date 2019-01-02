@@ -15,7 +15,7 @@ export default class Gui extends Base {
 	}
 
 	endTurn() {
-	  this.props.submitChange({event: "active", action: true}, "board");
+	  this.submitChange({event: "active", action: true}, "board");
 	}
 
 	render() {
@@ -25,7 +25,7 @@ export default class Gui extends Base {
 			    <div className="location"><img src="https://drive.google.com/uc?id=0B6oyUfwoM3u1SHJ5ejJPTk85THM" /></div>
 			  </div>
 			  <div className="hand">
-			    <span className="card_name">Hand</span>
+			    <span className="card_name">Player {this.props.player} Hand</span>
 			    <div className="attacks">
 			      <div></div>
 			      <div></div>

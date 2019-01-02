@@ -24,7 +24,22 @@ export default class Movement extends Rule {
 		super();
 	}
 
+	// TODO
+	canAttack(id) {
+		return false;
+	}
+
 	moves(spaces, id) {
+		// don't select a blank space
+		if (spaces[id].creatures[0].data == null) return spaces;
+		
+		// can't select opposing creatures
+		if (spaces[id].creatures[0].controlled == false) return spaces;
+
+		// select a card
+		let src_card = spaces[id].creatures[0];
+		this.source = id;
+
 		// Calculate range of spaces based on swift
 		let swift = ((data) => {
 			let s = (new RegExp(/swift ([0-9]+)/gi).exec(data.gsx$ability));
@@ -78,6 +93,30 @@ export default class Movement extends Rule {
 		// remove invalid spaces
 		valid = valid.filter(x => !invalid.includes(x));
 
-		return {valid: valid, attackable: attackable};
+		// set selectable options
+		spaces.forEach((space, i) => {
+			space.battlegear.forEach((card) => {
+				card.selectable = false;
+			});
+			let des_card = space.creatures[0];
+			des_card.selectable = ((src_id, dest_id) => {
+				// If already moved, no valid movement
+				if (!src_card.moveable) return false;
+				// No self space movement
+				else if (src_id == dest_id) return false;
+				// If its a valid spot
+				else if (valid.includes(dest_id)) return true;
+				// TODO different effect for attackable?
+				else if (attackable.includes(dest_id) && this.canAttack()) return true;
+				// if all else its probably not moveable
+				else return false;
+			})(id, i);
+		});
+
+		// creature is now selected
+		spaces[id].creatures[0].selected = true;
+		spaces[id].creatures[0].selectable = false;
+
+		return spaces;
 	}
 }
