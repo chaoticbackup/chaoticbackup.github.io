@@ -142,7 +142,7 @@ function Base(props) {
                           </div>
                         </div>
                         <div className="footer-language">
-                          <a href="" onClick={(e) => {API.purgeDB(); return;}} className="page-options" title="Change Language">
+                          <a href="javascript:;" onClick={(e) => {e.stopPropagation(); e.preventDefault(); API.purgeDB()}} className="page-options" title="Change Language">
                             <img src="/src/img/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
                             <br />English (Change Language)
                           </a>

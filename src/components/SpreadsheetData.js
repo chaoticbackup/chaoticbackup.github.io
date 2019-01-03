@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import loki from 'lokijs';
-import {observable, observe} from "mobx";
+import {observable, observe, action} from "mobx";
 
 class CollectionDB {
   // Keeps track of what collections have been populated
@@ -28,38 +28,39 @@ class CollectionDB {
 
   // example format
   // this.setup(this.api.urls.Attacks["portal"], "Attack", (data) => {});
+  @action
   async setupType(type, resolve) {
-    if (this.building[type] != null) {
-      if (this.building[type] == "built") {
+    if (this.building.hasOwnProperty(type)) {
+      if (this.building[type].get() == "built") {
         return resolve();
       }
-      if (this.building[type] == "building") {
+      if (this.building[type].get() == "building") {
         const disposer = observe(this.building[type], (change) => {
           disposer();
           resolve();
         });
         return disposer;
       }
-      if (this.building[type] == "setup") {
-        this.building[type] = "building";
+      if (this.building[type].get() == "setup") {
+        this.building[type].set("building");
         // check if the collection already exists in memory
         if (this[type].data.length == 0) {
           let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
           return this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, (data) => {
             this[type].insert(data);
-            this.building[type] = "built";
-            resolve();
+            this.building[type].set("built");
+            return resolve();
           });
         }
         else {
-          this.building[type] = "built";
+          this.building[type].set("built");
           return resolve();
         }
       }
     }
     else {
       // Wait until the database is initialized
-      this.building[type] = observable.box("");
+      this.building[type] = observable.box("wait");
       const disposer = observe(this.building[type], () => {
         disposer();
         return this.setupType(type, resolve);
@@ -68,6 +69,7 @@ class CollectionDB {
     }
   }
 
+  @action
   setupDB(format) {
     let db = new loki(`chaotic_${format}.db`, {
       autosave: true,
@@ -81,28 +83,28 @@ class CollectionDB {
 
     function databaseInitialize() {
       ["attacks","battlegear", "creatures", "locations", "mugic"]
-        .forEach((item, i) => {
+        .forEach((type, i) => {
           // check if the db already exists in memory
-          let entries = db.getCollection(item);
+          let entries = db.getCollection(type);
           if (entries === null || entries.data.length === 0) {
-            this[item] = db.addCollection(item);
-            if (this.building[item])
-              this.building[item].set("setup");
+            this[type] = db.addCollection(type);
+            if (this.building[type])
+              this.building[type].set("setup");
             else
-              this.building[item] = observable.box("setup");
+              this.building[type] = observable.box("setup");
           }
           else {
-            this[item] = entries;
-            if (this.building[item])
-              this.building[item].set("built");
+            this[type] = entries;
+            if (this.building[type])
+              this.building[type].set("built");
             else
-              this.building[item] = observable.box("built");
+              this.building[type] = observable.box("built");
           }
       });
     };
   }
 
-  purgeDB() {
+  purgeDB = () => {
     this.db.deleteDatabase();
   }
 }
