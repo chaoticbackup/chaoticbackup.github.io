@@ -16,6 +16,10 @@ export default class Category extends React.Component {
     this.type = props.type.toLowerCase();
   }
 
+  scrollLeft(amount) {
+    document.getElementsByClassName('bottom_nav')[0].scrollLeft = (amount);
+  }
+
   render() {
     if (this.loaded == false) {
       API.LoadDB([{'cards': this.type}, {'portal': this.type}])
@@ -38,9 +42,9 @@ export default class Category extends React.Component {
       );
     };
 
-    let bottom_nav = [];
     let cat_title = "";
     let top_content = (<div></div>);
+    let bottom_nav = [];
 
     // ** Process the tribe ** //
     if (this.type == "creatures" || this.type == "mugic") {
@@ -89,9 +93,9 @@ export default class Category extends React.Component {
     }
 
     return (<div className={`entry ${this.type}`}>
-      <div className="top_content">{top_content}</div>
+      <div className="entry_content">{top_content}</div>
       <div className="cat_title">{cat_title}</div>
-      <div className="bottom_nav">{bottom_nav}</div>
+      <div className="entry_nav">{bottom_nav}</div>
     </div>);
   }
 }

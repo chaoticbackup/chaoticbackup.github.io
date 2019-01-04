@@ -21,11 +21,12 @@ export default class Single extends React.Component {
 			  <span className="close" onClick={this.close.bind(this)}>&times;</span>
 			  <img className="modal-content" src={API.base_image + this.props.image} />
 			</div>
+			{this.props.image && (
 			<div className="splash">
-			{this.props.image &&
+				{/*<span className="arrow">&#8681;</span>*/}
 			  <img onClick={this.expand.bind(this)} src={API.base_image + this.props.image} />
-			}
 			</div>
+			)}
 			<div className="entry_text">
 				<span className="title">{this.props.name}</span>
 				{this.props.text &&

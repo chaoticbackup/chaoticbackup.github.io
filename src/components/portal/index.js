@@ -22,6 +22,14 @@ import '../../scss/portal.scss';
 @inject((stores, props, context) => props) @observer
 export default class Base extends React.Component {
 
+  componentDidUpdate() {
+    window.scrollTo({
+      top: 220,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
   render() {
     return (
       <div className="portal">
