@@ -10,10 +10,15 @@ import {Loading} from '../Snippets';
 @inject((stores, props, context) => props) @observer
 export default class Category extends React.Component {
   @observable loaded = false;
+  @observable bottom_nav = [];
 
   constructor(props) {
     super(props);
     this.type = props.type.toLowerCase();
+  }
+
+  scrollLeft(amount) {
+    document.getElementsByClassName('bottom_nav')[0].scrollLeft = (amount);
   }
 
   render() {
@@ -38,7 +43,6 @@ export default class Category extends React.Component {
       );
     };
 
-    let bottom_nav = [];
     let cat_title = "";
     let top_content = (<div></div>);
 
@@ -55,7 +59,7 @@ export default class Category extends React.Component {
         else return null;
       })();
 
-      bottom_nav = ((tribe) ?
+      this.bottom_nav = ((tribe) ?
         API.portal[this.type].find({'gsx$tribe': tribe})
         :
         API.portal[this.type].chain().simplesort('gsx$name').data()
@@ -80,7 +84,7 @@ export default class Category extends React.Component {
       );
     }
     else {
-      bottom_nav = API.portal[this.type].data.map((card_portal, i) => {
+      this.bottom_nav = API.portal[this.type].data.map((card_portal, i) => {
         let card_data = API.cards[this.type].findOne({'gsx$name': card_portal.gsx$name});
         return create_link(card_portal, card_data, i);
       });
@@ -89,9 +93,9 @@ export default class Category extends React.Component {
     }
 
     return (<div className={`entry ${this.type}`}>
-      <div className="top_content">{top_content}</div>
+      <div className="entry_content">{top_content}</div>
       <div className="cat_title">{cat_title}</div>
-      <div className="bottom_nav">{bottom_nav}</div>
+      <div className="entry_nav">{this.bottom_nav}</div>
     </div>);
   }
 }

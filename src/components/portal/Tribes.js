@@ -76,12 +76,12 @@ export default class Tribes extends React.Component {
     });
 
     return (<div className="entry tribe">
-      <div className="top_content">
+      <div className="entry_content">
         <Route path={`${this.props.match.url}/Creatures/:card`} component={Creature} />
         <Route path={`${this.props.match.url}/Mugic/:card`} component={Mugic} />
       </div>
       <div className="cat_title">{path[2]}</div>
-      <div className="bottom_nav">{bottom_nav}</div>
+      <div className="entry_nav">{bottom_nav}</div>
     </div>);
   }
 }
