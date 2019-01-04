@@ -31,8 +31,8 @@ export default class SingleAttack extends React.Component {
 
     return (<Single 
         image={card_data.gsx$splash}
+        name={card_data.gsx$name}
         text={<div>
-          <div className="title">{attack.gsx$name}</div>
           <hr />
           <div>
             <strong>Attributes:</strong><br />

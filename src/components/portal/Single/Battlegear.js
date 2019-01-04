@@ -31,6 +31,7 @@ export default class SingleBattlegear extends React.Component {
 
     return (<Single 
       image={card_data.gsx$splash}
+      name={card_data.gsx$name}
       text={<div>
         <hr />
         <div>

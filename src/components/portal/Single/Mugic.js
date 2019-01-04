@@ -49,8 +49,8 @@ export default class SingleMugic extends React.Component {
 
     return (<Single 
       image={card_data.gsx$splash}
+      name={card_data.gsx$name}
       text={<div>
-        <div className="title">{mugic.gsx$name}</div>
         <hr />
         <div>
           <strong>Background:</strong><br />
