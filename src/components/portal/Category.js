@@ -10,7 +10,6 @@ import {Loading} from '../Snippets';
 @inject((stores, props, context) => props) @observer
 export default class Category extends React.Component {
   @observable loaded = false;
-  @observable bottom_nav = [];
 
   constructor(props) {
     super(props);
@@ -31,20 +30,19 @@ export default class Category extends React.Component {
     }
 
     const create_link = (card, data, i, url) => {
-      return (
-        <div key={i}>
-          <Interactive key={i} as={Link} {...s.link}
+      return (<div key={i}>
+          <Interactive as={Link} {...s.link}
             to={url || `/portal/${this.props.type}/${card.gsx$name}`}
           >
             <span>{card.gsx$name}</span><br />
             <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
           </Interactive>
-        </div>
-      );
+      </div>);
     };
 
     let cat_title = "";
     let top_content = (<div></div>);
+    let bottom_nav = [];
 
     // ** Process the tribe ** //
     if (this.type == "creatures" || this.type == "mugic") {
@@ -59,7 +57,7 @@ export default class Category extends React.Component {
         else return null;
       })();
 
-      this.bottom_nav = ((tribe) ?
+      bottom_nav = ((tribe) ?
         API.portal[this.type].find({'gsx$tribe': tribe})
         :
         API.portal[this.type].chain().simplesort('gsx$name').data()
@@ -84,7 +82,7 @@ export default class Category extends React.Component {
       );
     }
     else {
-      this.bottom_nav = API.portal[this.type].data.map((card_portal, i) => {
+      bottom_nav = API.portal[this.type].data.map((card_portal, i) => {
         let card_data = API.cards[this.type].findOne({'gsx$name': card_portal.gsx$name});
         return create_link(card_portal, card_data, i);
       });
@@ -95,7 +93,7 @@ export default class Category extends React.Component {
     return (<div className={`entry ${this.type}`}>
       <div className="entry_content">{top_content}</div>
       <div className="cat_title">{cat_title}</div>
-      <div className="entry_nav">{this.bottom_nav}</div>
+      <div className="entry_nav">{bottom_nav}</div>
     </div>);
   }
 }
