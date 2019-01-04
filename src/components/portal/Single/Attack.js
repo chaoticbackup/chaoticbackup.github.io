@@ -5,6 +5,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
 import {PageNotFound} from '../../Snippets';
+import Single from './_base';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleAttack extends React.Component {
@@ -28,41 +29,42 @@ export default class SingleAttack extends React.Component {
 
     const card_data = API.cards.attacks.findOne({'gsx$name': name});
 
-    return (
-      <div>
-        <img className="splash" src={API.base_image + card_data.gsx$splash} />
-        <div className="title">{attack.gsx$name}</div>
-        <hr />
-        <div>
-          <strong>Attributes:</strong><br />
-          {attack.gsx$attributes}
-        </div>
-        <hr />
-        <div>
-          <strong>Background:</strong><br />
-          {attack.gsx$background}
-        </div>
-        <hr />
-        <div>
-          <strong>Details:</strong><br />
-          {attack.gsx$details}
-        </div>
-        <hr />
-        <div>
-          <strong>Card ID: </strong>
-          {card_data.gsx$id}
-        </div>
-        <hr />
-        <div>
-          <strong>Set: </strong>
-          {card_data.gsx$set}
-        </div>
-        <hr />
-        <div>
-          <strong>Rarity: </strong>
-          {card_data.gsx$rarity}
-        </div>
-      </div>
+    return (<Single 
+        image={card_data.gsx$splash}
+        text={<div>
+          <div className="title">{attack.gsx$name}</div>
+          <hr />
+          <div>
+            <strong>Attributes:</strong><br />
+            {attack.gsx$attributes}
+          </div>
+          <hr />
+          <div>
+            <strong>Background:</strong><br />
+            {attack.gsx$background}
+          </div>
+          <hr />
+          <div>
+            <strong>Details:</strong><br />
+            {attack.gsx$details}
+          </div>
+          <hr />
+          <div>
+            <strong>Card ID: </strong>
+            {card_data.gsx$id}
+          </div>
+          <hr />
+          <div>
+            <strong>Set: </strong>
+            {card_data.gsx$set}
+          </div>
+          <hr />
+          <div>
+            <strong>Rarity: </strong>
+            {card_data.gsx$rarity}
+          </div>
+        </div>}
+      />
     );
   }
 }

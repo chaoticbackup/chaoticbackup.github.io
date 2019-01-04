@@ -29,10 +29,9 @@ export default class SingleBattlegear extends React.Component {
 
     const card_data = API.cards.battlegear.findOne({'gsx$name': name});
 
-    return (
-      <div>
-        <img className="splash" src={API.base_image + card_data.gsx$splash} />
-        <div className="title">{battlegear.gsx$name}</div>
+    return (<Single 
+      image={card_data.gsx$splash}
+      text={<div>
         <hr />
         <div>
           <strong>Attributes:</strong><br />
@@ -68,7 +67,7 @@ export default class SingleBattlegear extends React.Component {
           <strong>Ability:</strong><br />
           <Ability ability={card_data.gsx$ability} />
         </div>
-      </div>
-    );
+      </div>}
+    />);
   }
 }

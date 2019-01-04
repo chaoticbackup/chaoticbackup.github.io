@@ -26,7 +26,6 @@ export default class Base extends React.Component {
     return (
       <div className="portal">
         <Header />
-        <br />
         <Routing {...this.props} />
       </div>
     );

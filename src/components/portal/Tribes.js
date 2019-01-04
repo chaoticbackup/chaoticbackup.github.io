@@ -54,7 +54,7 @@ export default class Tribes extends React.Component {
     let results = pview.data();
     this.filter.removeCollection('filter');
 
-    const output = results.map((card, i) => {
+    const bottom_nav = results.map((card, i) => {
       let card_data, url;
 
       if (card.gsx$type == "Mugic") {
@@ -75,15 +75,13 @@ export default class Tribes extends React.Component {
       </div>);
     });
 
-    return (<div className="entry creatures">
-      <div className="left">
-        <div className="title">{path[2]}<hr /></div>
-        {output}
-      </div>
-      <div className="right">
+    return (<div className="entry tribe">
+      <div className="top_content">
         <Route path={`${this.props.match.url}/Creatures/:card`} component={Creature} />
         <Route path={`${this.props.match.url}/Mugic/:card`} component={Mugic} />
       </div>
+      <div className="cat_title">{path[2]}</div>
+      <div className="bottom_nav">{bottom_nav}</div>
     </div>);
   }
 }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
+import Single from './_base';
 import {PageNotFound, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
@@ -46,9 +47,9 @@ export default class SingleMugic extends React.Component {
       }
     }
 
-    return (
-      <div>
-        <img className="splash" src={API.base_image + card_data.gsx$splash} />
+    return (<Single 
+      image={card_data.gsx$splash}
+      text={<div>
         <div className="title">{mugic.gsx$name}</div>
         <hr />
         <div>
@@ -95,7 +96,7 @@ export default class SingleMugic extends React.Component {
           <strong>Flavortext:</strong><br />
           {card_data.gsx$flavortext}
         </div>
-      </div>
-    );
+      </div>}
+    />);
   }
 }

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
-import {PageNotFound} from '../../Snippets';
-import {Rarity, Unique, Name, Ability, Initiative} from '../../Snippets';
+import Single from './_base';
+import {PageNotFound, Rarity, Unique, Name, Ability, Initiative} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleLocation extends React.Component {
@@ -29,9 +29,9 @@ export default class SingleLocation extends React.Component {
 
     const card_data = API.cards.locations.findOne({'gsx$name': name});
 
-    return (
-      <div>
-        <img className="splash" src={API.base_image + card_data.gsx$splash} />
+    return (<Single
+      image={card_data.gsx$splash}
+      text={<div>
         <div className="title">{location.gsx$name}</div>
         <hr />
         <div>
@@ -78,7 +78,7 @@ export default class SingleLocation extends React.Component {
           <strong>Ability:</strong><br />
           <Ability ability={card_data.gsx$ability} />
         </div>
-      </div>
-    );
+      </div>}
+    />);
   }
 }

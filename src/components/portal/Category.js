@@ -73,7 +73,6 @@ export default class Category extends React.Component {
         :
         this.props.type
       );
-      console.log(this.props.match);
       top_content = ((tribe) ?
         (<Route path={`${this.props.match.url}/${tribe}/:card`} component={this.props.component} />)
         :
@@ -88,7 +87,6 @@ export default class Category extends React.Component {
       cat_title = this.props.type;
       top_content = (<Route path={`${this.props.match.url}/:card`} component={this.props.component} />);
     }
-    console.log(top_content);
 
     return (<div className={`entry ${this.type}`}>
       <div className="top_content">{top_content}</div>
