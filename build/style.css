@@ -104,6 +104,9 @@
   padding-bottom: 4px;
   display: inherit; }
 
+#player {
+  text-align: center; }
+
 @media only screen and (min-width: 975px) {
   .collection > .left {
     float: left;
@@ -324,20 +327,48 @@
       overflow-y: auto;
       width: 100%;
       position: relative; }
-      .portal .entry .entry_content .splash {
+      .portal .entry .entry_content .entry_splash {
         padding-bottom: 4px; }
-        .portal .entry .entry_content .splash img {
+        .portal .entry .entry_content .entry_splash img {
           max-width: 100%; }
-        .portal .entry .entry_content .splash .arrow {
+        .portal .entry .entry_content .entry_splash .arrow {
           position: absolute;
           color: #f1f1f1;
           font-size: 40px;
           font-weight: bold;
           width: 100%;
           top: 95%; }
-      .portal .entry .entry_content .entry_text {
+      .portal .entry .entry_content .entry_body {
         position: relative;
-        max-width: 100%; }
+        max-width: 100%;
+        padding-bottom: 4px;
+        display: flex;
+        flex-wrap: wrap; }
+        .portal .entry .entry_content .entry_body hr {
+          margin: 0px; }
+        .portal .entry .entry_content .entry_body .title {
+          min-width: 100%; }
+        .portal .entry .entry_content .entry_body .title hr {
+          margin-top: 8px; }
+        .portal .entry .entry_content .entry_body .column > div,
+        .portal .entry .entry_content .entry_body .nocolumn > div {
+          padding-left: 8px;
+          padding-right: 8px;
+          padding-top: 8px;
+          padding-bottom: 8px; }
+        .portal .entry .entry_content .entry_body .column:nth-child(2) {
+          flex-grow: 1;
+          text-align: left;
+          min-width: 0;
+          width: 30%; }
+        .portal .entry .entry_content .entry_body .column:last-child {
+          flex-grow: 2;
+          min-width: 0;
+          flex: 60%;
+          border-left: 1px solid white; }
+        .portal .entry .entry_content .entry_body .ability {
+          white-space: pre-line;
+          word-wrap: break-all; }
       .portal .entry .entry_content::-webkit-scrollbar {
         width: 1px; }
     .portal .entry .cat_title {

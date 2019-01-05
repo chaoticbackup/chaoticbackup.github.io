@@ -44,7 +44,7 @@ function Routing(props) {
   const url = props.match.url;
 
   return (
-    <div>
+    <React.Fragment>
       <Route exact path={url} component={Home} />
       <Route path={`${url}/Attacks`} render={(props) => <Category {...props} type="Attacks" component={Attack} />} />
       <Route path={`${url}/Battlegear`} render={(props) => <Category {...props} type="Battlegear" component={Battlegear} />} />
@@ -55,7 +55,7 @@ function Routing(props) {
       <Route key={i} path={`${url}/${tribe}`} component={Tribes} />
       ))}
       <Route path={`${url}/Search`} component={Search} />
-    </div>
+    </React.Fragment> 
   );
 }
 

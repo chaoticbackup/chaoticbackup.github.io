@@ -5,7 +5,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
 import Single from './_base';
-import {PageNotFound, Rarity, Unique, Name, Ability, Initiative} from '../../Snippets';
+import {PageNotFound, Initiative} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleLocation extends React.Component {
@@ -30,10 +30,12 @@ export default class SingleLocation extends React.Component {
     const card_data = API.cards.locations.findOne({'gsx$name': name});
 
     return (<Single
-      image={card_data.gsx$splash}
-      name={card_data.gsx$name}
-      text={<div>
-        <hr />
+      card={card_data}
+      col0={<React.Fragment>
+        <strong>Initiative: </strong>
+        <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
+      </React.Fragment>}
+      col2={<React.Fragment>
         <div>
           <strong>Local Features:</strong><br />
           {location.gsx$localfeatures}
@@ -45,40 +47,10 @@ export default class SingleLocation extends React.Component {
         </div>
         <hr />
         <div>
-          <strong>Card Flavor:</strong><br />
-          {card_data.gsx$flavortext}
-        </div>
-        <hr />
-        <div>
           <strong>Details:</strong><br />
           {location.gsx$details}
         </div>
-        <hr />
-        <div>
-          <strong>Card ID: </strong>
-          {card_data.gsx$id}
-        </div>
-        <hr />
-        <div>
-          <strong>Set: </strong>
-          {card_data.gsx$set}
-        </div>
-        <hr />
-        <div>
-          <strong>Rarity: </strong>
-          {card_data.gsx$rarity}
-        </div>
-        <hr />
-        <div>
-          <strong>Location Initiative: </strong>
-          <Initiative initiative={card_data.gsx$initiative} />
-        </div>
-        <hr />
-        <div>
-          <strong>Ability:</strong><br />
-          <Ability ability={card_data.gsx$ability} />
-        </div>
-      </div>}
+      </React.Fragment>}
     />);
   }
 }

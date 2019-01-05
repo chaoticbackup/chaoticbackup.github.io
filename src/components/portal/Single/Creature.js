@@ -48,9 +48,8 @@ export default class SingleCreature extends React.Component {
     }
 
     return (<Single
-      image={card_data.gsx$splash}
-      name={card_data.gsx$name}
-      text={<div>
+      card={card_data}
+      text={<React.Fragment>
         <hr />
         <div>
           <strong>Appearance:</strong><br />
@@ -165,7 +164,7 @@ export default class SingleCreature extends React.Component {
           <strong>Mugic Ability: </strong>
           {mugic}
         </div>
-      </div>}
+      </React.Fragment>}
     />);
   }
 }

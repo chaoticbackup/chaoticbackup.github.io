@@ -24,14 +24,14 @@ render(
 
 function Routing(props) {
   return (
-    <div>
+    <React.Fragment>
       <Route exact path="/" component={Home} />
       <Route path="/PageNotFound" component={PageNotFound} />
       <Route path="/UnderConstruction" component={UnderConstruction} />
       <Route path="/EnterTheCode" component={EnterTheCode} />
       <Route path="/collection" component={Collection} />
       <Route path="/portal" component={Portal} />
-    </div>
+    </React.Fragment>
   );
 }
 
@@ -44,7 +44,7 @@ function Base(props) {
   const children = <Routing {...props} />;
 
   return (
-    <div>
+    <React.Fragment>
       <div className="fix-pgBkgrnd-repeat-x">
         <div className={"fix-img-bkgrnd fix-img-bkgrnd_"+bkgrnd}></div>
       </div>
@@ -97,7 +97,7 @@ function Base(props) {
                       <div className="content-area-left-repeat-y">
                         <div className="content-area-right-repeat-y">
                           <div style={{margin: "0 8px 0 10px"}}>
-                            <div id="player" style={{textAlign: "center"}}>
+                            <div id="player">
                               {children}
                             </div>
                           </div>
@@ -156,6 +156,6 @@ function Base(props) {
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 }

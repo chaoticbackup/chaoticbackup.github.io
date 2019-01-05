@@ -30,10 +30,8 @@ export default class SingleAttack extends React.Component {
     const card_data = API.cards.attacks.findOne({'gsx$name': name});
 
     return (<Single 
-        image={card_data.gsx$splash}
-        name={card_data.gsx$name}
-        text={<div>
-          <hr />
+        card={card_data}
+        col2={<React.Fragment>
           <div>
             <strong>Attributes:</strong><br />
             {attack.gsx$attributes}
@@ -48,22 +46,7 @@ export default class SingleAttack extends React.Component {
             <strong>Details:</strong><br />
             {attack.gsx$details}
           </div>
-          <hr />
-          <div>
-            <strong>Card ID: </strong>
-            {card_data.gsx$id}
-          </div>
-          <hr />
-          <div>
-            <strong>Set: </strong>
-            {card_data.gsx$set}
-          </div>
-          <hr />
-          <div>
-            <strong>Rarity: </strong>
-            {card_data.gsx$rarity}
-          </div>
-        </div>}
+        </React.Fragment>}
       />
     );
   }

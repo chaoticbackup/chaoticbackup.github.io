@@ -48,35 +48,8 @@ export default class SingleMugic extends React.Component {
     }
 
     return (<Single 
-      image={card_data.gsx$splash}
-      name={card_data.gsx$name}
-      text={<div>
-        <hr />
-        <div>
-          <strong>Background:</strong><br />
-          {mugic.gsx$background}
-        </div>
-        <hr />
-        <div>
-          <strong>Details:</strong><br />
-          {mugic.gsx$details}
-        </div>
-        <hr />
-        <div>
-          <strong>Card ID: </strong>
-          {card_data.gsx$id}
-        </div>
-        <hr />
-        <div>
-          <strong>Set: </strong>
-          {card_data.gsx$set}
-        </div>
-        <hr />
-        <div>
-          <strong>Rarity: </strong>
-          {card_data.gsx$rarity}
-        </div>
-        <hr />
+      card={card_data}
+      col0={<React.Fragment>
         <div>
           <strong>Tribe: </strong>
           <Tribe tribe={tribe} />
@@ -86,17 +59,18 @@ export default class SingleMugic extends React.Component {
           <strong>Cost: </strong>
           {cost}
         </div>
-        <hr />
+      </React.Fragment>}
+      col2={<React.Fragment>
         <div>
-          <strong>Ability:</strong><br />
-          <Ability ability={card_data.gsx$ability} tribe={card_data.gsx$tribe} />
+          <strong>Background:</strong><br />
+          {mugic.gsx$background}
         </div>
         <hr />
         <div>
-          <strong>Flavortext:</strong><br />
-          {card_data.gsx$flavortext}
+          <strong>Details:</strong><br />
+          {mugic.gsx$details}
         </div>
-      </div>}
+      </React.Fragment>}
     />);
   }
 }

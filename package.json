@@ -4,8 +4,7 @@
   "description": "Chaotic Backup",
   "scripts": {
     "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback",
-    "build": "webpack -d",
-    "v": "webpack -v"
+    "build": "webpack -d"
   },
   "repository": {
     "type": "git",
@@ -50,7 +49,7 @@
     "node-sass": "^4.10.0",
     "sass-loader": "^7.0.x",
     "style-loader": "^0.23.1",
-    "webpack": "^3.11.0",
+    "webpack": "^3.12.0",
     "webpack-dev-server": "^2.11.3"
   }
 }

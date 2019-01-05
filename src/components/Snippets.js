@@ -27,7 +27,9 @@ export function Rarity(props) {
   return (
     <span>
       <img className={props.size||"icon16"} style={{verticalAlign: 'middle'}} src={("/src/img/icons/set/"+props.set+"/"+props.rarity+".png").toLowerCase()} />
-      {API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}
+      {!props.notext &&
+      <React.Fragment>{API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}</React.Fragment>
+      }
     </span>
   );
 }
@@ -139,7 +141,7 @@ export function Initiative(props) {
   else if (initiative.toLowerCase() == "mugic counter") {
     image = <img className="icon16" style={{verticalAlign: 'middle'}} src={("/src/img/icons/mugic/generic.png").toLowerCase()} />
   }
-  return (<span>Initiative: {image} {initiative}</span>);
+  return (<span>{!props.notitle && ("Initiative: ")}{image}&nbsp;{initiative}</span>);
 }
 
 export function Splash(props) {
