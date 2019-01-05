@@ -1,31 +1,58 @@
-import webpack from 'webpack';
-import path from 'path';
+const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack');
+require("@babel/register");
 
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('-p') === -1);
 
-export default {
-  entry: ['babel-polyfill', `${__dirname}/src/components/index.js`],
+const config = {
+  entry: ["@babel/polyfill", `${__dirname}/src/components/index.js`],
+
   output: {
     path: `${__dirname}/build`,
     publicPath: '/build/',
     filename: 'bundle.js',
   },
 
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
+  },
+
   module: {
     rules: [
       {
-        test: /\.jsx?$/, exclude: /node_modules/,
-        use: 'babel-loader'
+        test: /\.(js|jsx)$/, 
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react",
+            "@babel/preset-flow",
+          ],
+          "plugins": [
+            "@babel/plugin-transform-runtime",
+            ["@babel/plugin-proposal-decorators", {"legacy": true }],
+            ["@babel/plugin-proposal-class-properties", { "loose": true }]
+          ]
+        }
       },
       {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {loader: 'css-loader', options: { sourceMap: true }},
-            {loader: 'sass-loader', options: { sourceMap: true }},
-          ]
-        })
+        test: /\.s?[ac]ss$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       }
     ]
   },
@@ -39,10 +66,10 @@ export default {
   },
 
   // First array is dev only, second is production
-  plugins: process.argv.indexOf('-p') === -1 ? [
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      allChunks: true
+  plugins: devMode ? [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
     })
   ] : [
     new webpack.DefinePlugin({
@@ -54,9 +81,12 @@ export default {
       },
       warnings: true,
     }),
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      allChunks: true
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
     })
   ],
 };
+
+// Exports
+module.exports = config;
