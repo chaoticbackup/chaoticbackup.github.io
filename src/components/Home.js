@@ -13,9 +13,9 @@ export default function Home() {
         <span>Built by fans for fans.</span>
         <br /><br />
         <div>Made with <span className="heart">♥</span> by
-          <br />Danude Sandstorm
-          <br />Database contributed by Chiodosin1
-          <br />Art provided by Afjak and Blitser
+          <br />Danude Sandstorm (Project Lead)
+          <br />Chiodosin1 (Database Contributions)
+          <br />Afjak and Blitser (Art and Knowledge)
         </div>
         <div>Do you like the site? You can donate to support it!</div>
         <div className="donate"><Donate /></div>
