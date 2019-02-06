@@ -30,11 +30,14 @@ export default class Category extends React.Component {
     }
 
     const create_link = (card, data, i, url) => {
+      // Prevent site from crashing due to misspelled/missing data
+      if (!data) return (<div key={i}></div>);
+
       return (<div key={i}>
           <Interactive as={Link} {...s.link}
             to={url || `/portal/${this.props.type}/${card.gsx$name}`}
           >
-            <span>{card.gsx$name}</span><br />
+            <span>{card.gsx$name.split(",")[0]}</span><br />
             <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
           </Interactive>
       </div>);
@@ -58,7 +61,7 @@ export default class Category extends React.Component {
       })();
 
       bottom_nav = ((tribe) ?
-        API.portal[this.type].find({'gsx$tribe': tribe})
+        API.portal[this.type].chain().find({'gsx$tribe': tribe}).simplesort('gsx$name').data()
         :
         API.portal[this.type].chain().simplesort('gsx$name').data()
       ).map((card_portal, i) => {

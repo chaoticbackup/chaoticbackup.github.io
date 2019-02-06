@@ -32,8 +32,10 @@ export default class SingleLocation extends React.Component {
     return (<Single
       card={card_data}
       col0={<React.Fragment>
-        <strong>Initiative: </strong>
-        <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
+        <div>
+          <strong>Initiative: </strong>
+          <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
+        </div>
       </React.Fragment>}
       col2={<React.Fragment>
         <div>

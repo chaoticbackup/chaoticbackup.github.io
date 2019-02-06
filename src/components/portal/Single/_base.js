@@ -2,7 +2,18 @@ import React from 'react';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import API from '../../SpreadsheetData';
-import {Rarity, Unique, Name, Ability} from '../../Snippets';
+import {Rarity, Unique, Ability} from '../../Snippets';
+
+// own "name" display function
+function Name(props) {
+	let name = props.name.split(",");
+	return (<React.Fragment>
+	  <span>{name[0]}</span>
+	  { name.length > 1 && 
+	    <span className="bigger"><br />{name[1].trim()}</span>
+	  }
+	</React.Fragment>);
+}
 
 @inject((stores, props, context) => props) @observer
 export default class Single extends React.Component {
@@ -39,6 +50,13 @@ export default class Single extends React.Component {
 				}
 				{!this.props.text &&
 					<div className="column">
+					{card.gsx$artist && <React.Fragment>
+						<div>
+						  <strong>Artist(s):</strong>
+						  <Ability ability={card.gsx$artist} />
+						</div>
+						<hr />
+					</React.Fragment>}
 						<div>
 						  <strong>Set: </strong>
 						  {`${API.sets[card.gsx$set]} (${card.gsx$set})`}
