@@ -63,10 +63,10 @@ export function Name(props) {
   return (<span className="name">
     <span className="bigger">{name[0]}</span>
     { name.length > 1 &&
-      <span>
+      <React.Fragment>
         <span style={{opacity: "0"}}>,</span>
         <span className="subname">{name[1]}</span>
-      </span>
+      </React.Fragment>
     }
   </span>);
 }

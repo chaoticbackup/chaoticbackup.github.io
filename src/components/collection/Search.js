@@ -277,6 +277,23 @@ export default class SearchCollection extends React.Component {
     let locationResults = API.cards.locations.chain();
     let mugicResults = API.cards.mugic.chain();
 
+    // ignore cards with no set
+    attackResults = attackResults.where((obj) => 
+      {return (obj.gsx$set != ('') );}
+    );
+    battlegearResults = battlegearResults.where((obj) => 
+      {return (obj.gsx$set != ('') );}
+    );
+    creatureResults = creatureResults.where((obj) => 
+      {return (obj.gsx$set != ('') );}
+    );
+    locationResults = locationResults.where((obj) => 
+      {return (obj.gsx$set != ('') );}
+    );
+    mugicResults = mugicResults.where((obj) => 
+      {return (obj.gsx$set != ('') );}
+    );
+
     // Search by name
     if (this.input.name.length > 0) {
       // clean name

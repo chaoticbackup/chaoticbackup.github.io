@@ -21,7 +21,7 @@ export default class Battlegear extends React.Component {
         </div>
         <div className="right" >
           <Ability ability={card.gsx$ability} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
@@ -32,7 +32,7 @@ export default class Battlegear extends React.Component {
         <div className="right" >
           <Name name={card.gsx$name} /><br />
           <Ability ability={card.gsx$ability} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} /><br />
+          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
