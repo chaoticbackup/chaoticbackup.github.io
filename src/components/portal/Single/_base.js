@@ -1,8 +1,10 @@
 import React from 'react';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
+import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
-import {Rarity, Unique, Ability} from '../../Snippets';
+import {Rarity, Ability} from '../../Snippets';
+import s from '../../../styles/app.style';
 
 // own "name" display function
 function Name(props) {
@@ -13,6 +15,14 @@ function Name(props) {
 	    <span className="bigger"><br />{name[1].trim()}</span>
 	  }
 	</React.Fragment>);
+}
+
+function Artist(props) {
+	let artists = [];
+	props.artist.split(/(?=, )/).forEach((artist, i) => {
+		artists.push(<Link key={i} to={`/portal/Search/?${artist.replace(", ", "")}`}>{artist}</Link>);
+	});
+	return (<div className="ability">{artists}</div>)
 }
 
 @inject((stores, props, context) => props) @observer
@@ -53,7 +63,7 @@ export default class Single extends React.Component {
 					{card.gsx$artist && <React.Fragment>
 						<div>
 						  <strong>Artist(s):</strong>
-						  <Ability ability={card.gsx$artist} />
+						  <Artist artist={card.gsx$artist} />
 						</div>
 						<hr />
 					</React.Fragment>}

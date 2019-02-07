@@ -22,7 +22,7 @@ export default class SearchPortal extends React.Component {
   render() {
   return (<div className="search">
     <form onSubmit={this.search}>
-      <input type="text" value={this.query} onChange={(e) => this.query = e.target.value} />
+      <input type="text" value={this.query} autoFocus onChange={(e) => this.query = e.target.value} />
       <button type="submit"><SearchButton /></button>
     </form>
     <DBSearch string={this.input}/>
@@ -49,8 +49,10 @@ class DBSearch extends React.Component {
 
   render() {
     if (this.loaded == false) {
-      API.LoadDB([{'portal': 'attacks'}, {'portal': 'battlegear'}, {'portal': 'creatures'}, {'portal': 'locations'}, {'portal': 'mugic'}])
-      .then(() => {
+      API.LoadDB([
+        {'portal': 'attacks'}, {'portal': 'battlegear'}, {'portal': 'creatures'}, {'portal': 'locations'}, {'portal': 'mugic'},
+        {'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}
+      ]).then(() => {
         this.loaded = true;
       });
       return (<span>Loading...</span>);
@@ -167,15 +169,36 @@ class DBSearch extends React.Component {
 
     let names = [].concat(attackResults, battlegearResults, creatureResults, locationResults, mugicResults).map(makeLink);
 
+    attackResults = API.cards.attacks.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
+    battlegearResults = API.cards.battlegear.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
+    creatureResults = API.cards.creatures.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
+    locationResults = API.cards.locations.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
+    mugicResults = API.cards.mugic.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
+
+    let artists = [].concat(attackResults, battlegearResults, creatureResults, locationResults, mugicResults).map(makeLink);
+    
+    let header;
+
     if (results.length == 0) {
-      content = (<div>No Results Found</div>);
+      if (artists.length > 0) {
+        header = `Art contributed by ${string}:`;
+        content = artists;
+      }
+      else {
+        header = 'No Results Found';
+      }
+    }
+    else {
+      header = `Results containing ${string}:`;
     }
 
     return (<div className="results">
       <br />
-      {names}
-      <hr />
-      <div>Results containing {string}:</div>
+      {names.length > 0 && <React.Fragment>
+        {names}
+        <hr />
+      </React.Fragment>}
+      <div>{header}</div>
       {content}
     </div>);
   }
