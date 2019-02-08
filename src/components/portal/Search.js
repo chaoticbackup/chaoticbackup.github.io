@@ -65,6 +65,31 @@ class DBSearch extends React.Component {
       return (<div style={{minHeight: '50px'}}></div>);
     }
 
+    const makeLink = (card, i) => {
+      let link = "/portal";
+      switch (card.gsx$type) {
+      case "Attacks":
+        link += '/Attacks/' + encodeURIComponent(card.gsx$name);
+        break;
+      case "Battlegear":
+        link += '/Battlegear/' + encodeURIComponent(card.gsx$name);
+        break;
+      case "Creatures":
+        link += '/Creatures/' + encodeURIComponent(card.gsx$name);
+        break;
+      case "Locations":
+        link += '/Locations/' + encodeURIComponent(card.gsx$name);
+        break;
+      case "Mugic":
+        link += '/Mugic/' + encodeURIComponent(card.gsx$name);
+        break;
+      }
+      return (<div key={i}>
+        <Interactive as={Link} {...s.link} to={link}>{card.gsx$name}</Interactive>
+        <br />
+      </div>);
+    };
+
     let filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');
     pview.applySimpleSort('gsx$name');
@@ -129,49 +154,43 @@ class DBSearch extends React.Component {
     temp.forEach(function(v){ delete v.$loki });
     filter.insert(temp);
 
-    let results = pview.data();
+    let content = pview.data().map(makeLink);
     this.filter.removeCollection('filter');
 
-    let makeLink = (card, i) => {
-      let link = "/portal";
-
-      switch (card.gsx$type) {
-      case "Attacks":
-        link += '/Attacks/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Battlegear":
-        link += '/Battlegear/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Creatures":
-        link += '/Creatures/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Locations":
-        link += '/Locations/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Mugic":
-        link += '/Mugic/' + encodeURIComponent(card.gsx$name);
-        break;
-      }
-
-      return (<div key={i}><Interactive as={Link} {...s.link} to={link}>
-        {card.gsx$name}
-      </Interactive><br /></div>);
-    };
-
-    let content = results.map(makeLink);
-
-    // This prioritizes names in the results
-    attackResults = API.portal.attacks.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
-    battlegearResults = API.portal.battlegear.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
-    creatureResults = API.portal.creatures.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
-    locationResults = API.portal.locations.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
-    mugicResults = API.portal.mugic.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
-
-    let names = [].concat(attackResults, battlegearResults, creatureResults, locationResults, mugicResults).map(makeLink);
-    
     let header;
 
-    if (results.length == 0) {
+    // This prioritizes names in the results
+    let names = [].concat(
+      API.portal.attacks.find({'gsx$name': {'$regex': new RegExp(string, 'i')}}),
+      API.portal.battlegear.find({'gsx$name': {'$regex': new RegExp(string, 'i')}}),
+      API.portal.creatures.find({'gsx$name': {'$regex': new RegExp(string, 'i')}}),
+      API.portal.locations.find({'gsx$name': {'$regex': new RegExp(string, 'i')}}),
+      API.portal.mugic.find({'gsx$name': {'$regex': new RegExp(string, 'i')}}),
+      API.cards.attacks.chain()
+        .find({'gsx$name': {'$regex': new RegExp(string, 'i')}})
+        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+      API.cards.battlegear.chain()
+        .find({'gsx$name': {'$regex': new RegExp(string, 'i')}})
+        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+      // TODO after rewriting Single Creature
+      // API.cards.creatures.chain()
+      //   .find({'gsx$name': {'$regex': new RegExp(string, 'i')}})
+      //   .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+      API.cards.locations.chain()
+        .find({'gsx$name': {'$regex': new RegExp(string, 'i')}})
+        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+      API.cards.mugic.chain()
+        .find({'gsx$name': {'$regex': new RegExp(string, 'i')}})
+        .where((obj) => {return (obj.gsx$splash != ('') )}).data()
+    ).sort((a, b) => {
+        a = a.gsx$name.toLowerCase();
+        b = b.gsx$name.toLowerCase();
+        if (a < b) return -1;
+        else if (a > b) return 1;
+        else return 0;
+      }).map(makeLink);
+    
+    if (content.length == 0) {
       let artists = [].concat(
         API.cards.attacks.chain()
           .find({'gsx$artist': {'$regex': new RegExp(string, 'i')}})
@@ -188,7 +207,13 @@ class DBSearch extends React.Component {
         API.cards.mugic.chain()
           .find({'gsx$artist': {'$regex': new RegExp(string, 'i')}})
           .where((obj) => {return (obj.gsx$splash != ('') )}).data()
-      ).map(makeLink);
+      ).sort((a, b) => {
+        a = a.gsx$name.toLowerCase();
+        b = b.gsx$name.toLowerCase();
+        if (a < b) return -1;
+        else if (a > b) return 1;
+        else return 0;
+      }).map(makeLink);
 
       if (artists.length > 0) {
         header = `Art contributed by ${string}:`;

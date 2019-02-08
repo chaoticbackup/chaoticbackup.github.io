@@ -47,15 +47,19 @@ export default class SingleCreature extends React.Component {
       mugic.push(<Mugic key={i} tribe={tribe} />);
     }
 
+      // TODO readd creature to Portal Search after rewrite
+
     return (<Single
       card={card_data}
       text={<React.Fragment>
         <hr />
-        <div>
-          <strong>Appearance:</strong><br />
-          {creature.gsx$appearance}
-        </div>
-        <hr />
+        {creature.gsx$appearance && <React.Fragment>
+          <div>
+            <strong>Appearance:</strong><br />
+            {creature.gsx$appearance}
+          </div>
+          <hr />
+        </React.Fragment>}
         <div>
           <strong>Background:</strong><br />
           {creature.gsx$background}
@@ -91,6 +95,13 @@ export default class SingleCreature extends React.Component {
           {creature.gsx$weight}
         </div>
         <hr />
+        {card_data.gsx$artist && <React.Fragment>
+          <div>
+            <strong>Artist(s):</strong>
+            <Artist artist={card_data.gsx$artist} />
+          </div>
+          <hr />
+        </React.Fragment>}
         <div>
           <strong>Card ID: </strong>
           {card_data.gsx$id}
