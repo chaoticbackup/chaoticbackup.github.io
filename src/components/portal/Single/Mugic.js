@@ -1,11 +1,9 @@
 import React from 'react';
-import Interactive from 'react-interactive';
-import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
 import Single from './_base';
-import {PageNotFound, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
+import {PageNotFound, Mugic, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleMugic extends React.Component {
@@ -25,52 +23,71 @@ export default class SingleMugic extends React.Component {
     })();
 
     const mugic = API.portal.mugic.findOne({'gsx$name': name});
-
-    if (!mugic) {
-      return(<PageNotFound location={this.props.location}/>);
-    }
-
-    const tribe = mugic.gsx$tribe;
-
     const card_data = API.cards.mugic.findOne({'gsx$name': name});
 
-    let cost = [];
-    if (card_data.gsx$cost == 0) {
-      cost.push(<span key={0}>0</span>);
-    }
-    else if (card_data.gsx$cost.toLowerCase() == 'x') {
-      cost.push(<span key={0}>X</span>);
-    }
-    else {
-      for (let i = 0; i < card_data.gsx$cost; i++) {
-        cost.push(<Mugic tribe={card_data.gsx$tribe} key={i} />);
+    const cost = () => {
+      let cost = [];
+      if (card_data.gsx$cost == 0) {
+        cost.push(<span key={0}>0</span>);
       }
+      else if (card_data.gsx$cost.toLowerCase() == 'x') {
+        cost.push(<span key={0}>X</span>);
+      }
+      else {
+        for (let i = 0; i < card_data.gsx$cost; i++) {
+          cost.push(<Mugic tribe={card_data.gsx$tribe} key={i} />);
+        }
+      }
+      return cost;
     }
 
-    return (<Single 
-      card={card_data}
-      col0={<React.Fragment>
-        <div>
-          <strong>Tribe: </strong>
-          <Tribe tribe={tribe} />
-        </div>
-        <hr />
-        <div>
-          <strong>Cost: </strong>
-          {cost}
-        </div>
-      </React.Fragment>}
-      col2={<React.Fragment>
-        <div>
-          <strong>Background:</strong><br />
-          {mugic.gsx$background}
-        </div>
-        <hr />
-        <div>
-          <strong>Details:</strong><br />
-          {mugic.gsx$details}
-        </div>
-      </React.Fragment>}
-    />);
+    if (mugic) {
+      return (<Single 
+        card={card_data}
+        col0={<React.Fragment>
+          <div>
+            <strong>Tribe: </strong>
+            <Tribe tribe={mugic.gsx$tribe} />
+          </div>
+          <hr />
+          <div>
+            <strong>Cost: </strong>
+            {cost()}
+          </div>
+        </React.Fragment>}
+        col2={<React.Fragment>
+          <div>
+            <strong>Background:</strong><br />
+            {mugic.gsx$background}
+          </div>
+          <hr />
+          <div>
+            <strong>Details:</strong><br />
+            {mugic.gsx$details}
+          </div>
+        </React.Fragment>}
+      />);
+    }
+    else {
+      if (card_data.gsx$splash) {
+        return (<Single 
+          card={card_data}
+          col0={<React.Fragment>
+            <div>
+              <strong>Tribe: </strong>
+              <Tribe tribe={card_data.gsx$tribe} />
+            </div>
+            <hr />
+            <div>
+              <strong>Cost: </strong>
+              {cost()}
+            </div>
+          </React.Fragment>}
+        />);
+      }
+      else {
+        return(<PageNotFound location={this.props.location}/>);
+      }
+    }
   }
 }
