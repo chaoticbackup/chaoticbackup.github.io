@@ -41,7 +41,10 @@ export default class Attack extends React.Component {
           <Name name={card.gsx$name} /><br />
           <Ability ability={card.gsx$ability} />
           <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
-          <span className="flavortext">{card.gsx$flavortext}</span>
+          {card.gsx$flavortext && <React.Fragment>
+            <span className="flavortext">{card.gsx$flavortext}</span><br />
+          </React.Fragment>}
+          <span>Art By: {card.gsx$artist}</span>
         </div>
       </div>
     );

@@ -71,7 +71,10 @@ export default class Creature extends React.Component {
             card.gsx$types.includes("Chieftain") &&
             <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
           }
-          <span className="flavortext">{card.gsx$flavortext}</span>
+          {card.gsx$flavortext && <React.Fragment>
+            <span className="flavortext">{card.gsx$flavortext}</span><br />
+          </React.Fragment>}
+          <span>Art By: {card.gsx$artist}</span>
         </div>
       </div>
     );

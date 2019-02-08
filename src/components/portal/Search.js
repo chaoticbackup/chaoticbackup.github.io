@@ -137,19 +137,19 @@ class DBSearch extends React.Component {
 
       switch (card.gsx$type) {
       case "Attacks":
-        link += '/Attacks/' + card.gsx$name;
+        link += '/Attacks/' + encodeURIComponent(card.gsx$name);
         break;
       case "Battlegear":
-        link += '/Battlegear/' + card.gsx$name;
+        link += '/Battlegear/' + encodeURIComponent(card.gsx$name);
         break;
       case "Creatures":
-        link += '/Creatures/' + card.gsx$name;
+        link += '/Creatures/' + encodeURIComponent(card.gsx$name);
         break;
       case "Locations":
-        link += '/Locations/' + card.gsx$name;
+        link += '/Locations/' + encodeURIComponent(card.gsx$name);
         break;
       case "Mugic":
-        link += '/Mugic/' + card.gsx$name;
+        link += '/Mugic/' + encodeURIComponent(card.gsx$name);
         break;
       }
 
@@ -168,18 +168,28 @@ class DBSearch extends React.Component {
     mugicResults = API.portal.mugic.find({'gsx$name': {'$regex': new RegExp(string, 'i')}});
 
     let names = [].concat(attackResults, battlegearResults, creatureResults, locationResults, mugicResults).map(makeLink);
-
-    attackResults = API.cards.attacks.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
-    battlegearResults = API.cards.battlegear.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
-    creatureResults = API.cards.creatures.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
-    locationResults = API.cards.locations.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
-    mugicResults = API.cards.mugic.find({'gsx$artist': {'$regex': new RegExp(string, 'i')}});
-
-    let artists = [].concat(attackResults, battlegearResults, creatureResults, locationResults, mugicResults).map(makeLink);
     
     let header;
 
     if (results.length == 0) {
+      let artists = [].concat(
+        API.cards.attacks.chain()
+          .find({'gsx$artist': {'$regex': new RegExp(string, 'i')}})
+          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        API.cards.battlegear.chain()
+          .find({'gsx$artist': {'$regex': new RegExp(string, 'i')}})
+          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        API.cards.creatures.chain()
+          .find({'gsx$artist': {'$regex': new RegExp(string, 'i')}})
+          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        API.cards.locations.chain()
+          .find({'gsx$artist': {'$regex': new RegExp(string, 'i')}})
+          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        API.cards.mugic.chain()
+          .find({'gsx$artist': {'$regex': new RegExp(string, 'i')}})
+          .where((obj) => {return (obj.gsx$splash != ('') )}).data()
+      ).map(makeLink);
+
       if (artists.length > 0) {
         header = `Art contributed by ${string}:`;
         content = artists;
@@ -193,8 +203,9 @@ class DBSearch extends React.Component {
     }
 
     return (<div className="results">
-      <br />
+      <hr />
       {names.length > 0 && <React.Fragment>
+        <div>Entries</div>
         {names}
         <hr />
       </React.Fragment>}
