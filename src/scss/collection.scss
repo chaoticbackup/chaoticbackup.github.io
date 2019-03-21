@@ -2,43 +2,49 @@
 
 @media only screen and (min-width: 975px) {
 
-.collection > .left {
-    float: left;
-    width: 30%;
-}
-
-.collection > .right {
-    float: right;
-    width: 70%;
+.collection {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    
+    > .left {
+        float: left;
+        width: 30%;
+    }
+    
+    > .right {
+        float: right;
+        width: 70%;
+    }
 }
 
 .card {
     text-align: left;
     display: flex;
     border: 1px solid #AEAEAE;
-}
 
-.card .left,
-.card .right,
-.card .stats {
-    padding-top: 2px;
-}
+    .left,
+    .right,
+    .stats {
+        padding-top: 2px;
+    }
 
-.card .left {
-    vertical-align: text-top;
-    float: left;
-    width: 210px;
-    padding-left: 4px;
-}
+    .left {
+        vertical-align: text-top;
+        float: left;
+        width: 210px;
+        padding-left: 4px;
+    }
 
-.card .right {
-    float: left;
-    width: calc(100% - (100px + 4px + 4px + 4px + 210px));
-    border-left: 2px solid #AEAEAE;
-    padding-left: 4px;
-    padding-right: 4px;
-    padding-bottom: 6px;
-    white-space: pre-line;
+    .right {
+        float: left;
+        width: calc(100% - (100px + 4px + 4px + 4px + 210px));
+        border-left: 2px solid #AEAEAE;
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-bottom: 6px;
+        white-space: pre-line;
+    }
 }
 
 .creature .right {
@@ -154,8 +160,8 @@
 .card_img {
     position: absolute;
     width: 100%;
-    left: -10px;
     z-index: 2;
+    left: -11px;
 }
 
 .card_img .hidden {

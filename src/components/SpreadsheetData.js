@@ -228,7 +228,8 @@ class API {
       "EE": "Elemental Emperors",
       "BR": "Beyond Rare",
       "LR": "League Rewards",
-      "OP1": "Organized Play 1"
+      "OP1": "Organized Play 1",
+      "PROMO": "Promotional"
     };
   }
 

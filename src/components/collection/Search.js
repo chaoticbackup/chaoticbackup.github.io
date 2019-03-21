@@ -188,7 +188,6 @@ export default class SearchCollection extends React.Component {
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
-          <br />
           <label>Name&nbsp;<input type="text" name="name" value={this.input.name} onChange={this.handleChange} /></label>
           <br />
           <label>Text&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="text" value={this.input.text} onChange={this.handleChange} /></label>
@@ -232,8 +231,8 @@ export default class SearchCollection extends React.Component {
           <br />
           <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
           <br /><br />
-          <Collapsible trigger="Types">{types}</Collapsible>
           <Collapsible trigger="Rarity">{rarity}</Collapsible>
+          <Collapsible trigger="Types">{types}</Collapsible>
           <Collapsible trigger="Sets">{sets}</Collapsible>
           {/*<Collapsible trigger="Gender (fan content)">{gender}</Collapsible>*/}
           <br />
