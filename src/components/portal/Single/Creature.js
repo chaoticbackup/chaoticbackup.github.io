@@ -7,6 +7,14 @@ import {observer, inject} from 'mobx-react';
 import Single from './_base';
 import {PageNotFound, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
+function Artist(props) {
+  let artists = [];
+  props.artist.split(/(?=, )/).forEach((artist, i) => {
+    artists.push(<Link key={i} to={`/portal/Search/?${artist.replace(", ", "")}`}>{artist}</Link>);
+  });
+  return (<div className="ability">{artists}</div>)
+}
+
 @inject((stores, props, context) => props) @observer
 export default class SingleCreature extends React.Component {
 
