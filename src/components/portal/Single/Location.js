@@ -49,7 +49,7 @@ export default class SingleLocation extends React.Component {
         </React.Fragment>}
       />);
     }
-    else {
+    else if (card_data) {
       if (card_data.gsx$splash) {
         return (<Single 
           card={card_data}
@@ -61,9 +61,8 @@ export default class SingleLocation extends React.Component {
           </React.Fragment>}
         />);
       }
-      else {
-        return(<PageNotFound location={this.props.location}/>);
-      }
     }
+      
+    return(<PageNotFound location={this.props.location}/>);
   }
 }

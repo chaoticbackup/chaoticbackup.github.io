@@ -47,13 +47,12 @@ export default class SingleAttack extends React.Component {
         />
       );
     }
-    else {
+    else if (card_data) {
       if (card_data.gsx$splash) {
         return (<Single card={card_data}/>);
       }
-      else {
-        return(<PageNotFound location={this.props.location}/>);
-      }
     }
+
+    return(<PageNotFound location={this.props.location}/>);
   }
 }
