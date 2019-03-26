@@ -25,6 +25,7 @@ export default class SingleBattlegear extends React.Component {
     const battlegear = API.portal.battlegear.findOne({'gsx$name': name});
     const card_data = API.cards.battlegear.findOne({'gsx$name': name});
 
+
     if (battlegear) {
       return (<Single 
         card={card_data}
@@ -46,13 +47,16 @@ export default class SingleBattlegear extends React.Component {
         </React.Fragment>}
       />);
     }
-    else {
+    else if (card_data) {
       if (card_data.gsx$splash) {
         return (<Single card={card_data}/>);
       }
       else {
         return(<PageNotFound location={this.props.location}/>);
       }
+    }
+    else {
+      return(<PageNotFound location={this.props.location}/>);
     }
   }
 }

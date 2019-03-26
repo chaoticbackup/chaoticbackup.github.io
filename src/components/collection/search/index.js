@@ -244,8 +244,8 @@ export default class SearchCollection extends React.Component {
           {elements}&nbsp;
           <label className="none"><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} /><span>None</span></label>
           <br />
-          <input type="button" value="or" className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
-          <input type="button" value="and" className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
+          <input type="button" value={this.input.elements.none ? "none" : "or"} className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
+          <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
           <br /> <hr />
           {disciplines}
           <br /> <hr />

@@ -79,7 +79,6 @@ export default function search_api(input) {
 
     attackResults = attackResults.find({'$or': parm});
     battlegearResults = battlegearResults.find({'$or': parm});
-    let cparm = parm.push
     creatureResults = creatureResults.find({'$or': 
       (parm.concat([{'gsx$brainwashed': {"$or": textList}}]))
     });
@@ -146,17 +145,41 @@ export default function search_api(input) {
 
   // Search by elements
   if (input.elements.none) {
-    attackResults = attackResults.where(
-      (obj) => {return (obj.gsx$fire == ('') );}
-    ).where(
-      (obj) => {return (obj.gsx$air == ('') );}
-    ).where(
-      (obj) => {return (obj.gsx$earth == ('') );}
-    ).where(
-      (obj) => {return (obj.gsx$water == ('') );}
-    );
+    if (!input.elements.and) {
+      attackResults = attackResults
+        .where((obj) => {return (obj.gsx$fire == (''))})
+        .where((obj) => {return (obj.gsx$air == (''))})
+        .where((obj) => {return (obj.gsx$earth == (''))})
+        .where((obj) => {return (obj.gsx$water == (''))});
+
+      creatureResults = creatureResults
+        .where(obj => (obj.gsx$elements == ''));
+    }
+    else {
+      attackResults = attackResults.where(
+        (obj) => {return (input.elements.fire ? obj.gsx$fire != ('') : obj.gsx$fire == (''));}
+      ).where(
+        (obj) => {return (input.elements.air ? obj.gsx$air != ('') : obj.gsx$air == (''));}
+      ).where(
+        (obj) => {return (input.elements.earth ? obj.gsx$earth != ('') : obj.gsx$earth == (''));}
+      ).where(
+        (obj) => {return (input.elements.water ? obj.gsx$water != ('') : obj.gsx$water == (''));}
+      );
+
+      let el = "";
+      ["fire", "air", "earth", "water"].forEach((element) => {
+        if (input.elements[element])
+          el += element + ", ";
+      });
+
+      if (el !== "") {
+        creatureResults = creatureResults.find({'gsx$elements': 
+            {'$regex': new RegExp(el.substring(0, el.length-2), 'i')}
+        });
+      }
+    }
+
     battlegearResults = battlegearResults.limit(0);
-    creatureResults = creatureResults.where(obj => (obj.gsx$elements == ''));
     locationResults = locationResults.limit(0);
     mugicResults = mugicResults.limit(0);
   }
@@ -179,6 +202,7 @@ export default function search_api(input) {
         creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList} });
         attackResults = attackResults.find({'$or': elementsList2});
       }
+
       battlegearResults = battlegearResults.limit(0);
       locationResults = locationResults.limit(0);
       mugicResults = mugicResults.limit(0);
