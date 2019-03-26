@@ -2,19 +2,31 @@
 
 @media only screen and (min-width: 975px) {
 
-.collection {
-    margin-top: 5px;
-    margin-right: 5px;
-    margin-left: 5px;
-    
-    > .left {
-        float: left;
-        width: 30%;
+    .collection {
+        margin-top: 5px;
+        margin-right: 5px;
+        margin-left: 5px;
+        
+        > .left {
+            float: left;
+            width: 30%;
+        }
+        
+        > .right {
+            float: right;
+            width: 70%;
+        }
     }
-    
-    > .right {
-        float: right;
-        width: 70%;
+}
+
+.collection {
+
+@media only screen and (min-width: 975px) {
+
+.text-entry {
+    input[type="text"] {
+        margin-bottom: 2px;
+        width: 200px;
     }
 }
 
@@ -61,6 +73,7 @@
 
 .SearchForm {
     text-align: left;
+    padding-top: 3px;
 }
 
 .brainwashed {
@@ -80,7 +93,8 @@
     margin-top: 2px;
 }
 
-.mull input {
+.mull input,
+.Collapsible__contentInner input {
     vertical-align: middle;
 }
 
@@ -152,6 +166,14 @@
     background-color: grey;
 }
 
+.Collapsible__contentOuter {
+    margin-top: 4px;
+}
+
+.Collapsible__contentInner {
+    margin-left: 2px;
+}
+
 .left {
     position: relative;
 }
@@ -193,3 +215,28 @@
         max-height: 350px;
     }
 }
+
+hr {
+    width: 250px;
+    margin-inline-start: 0;
+}
+
+
+.none {
+    display:inline;
+    > span {
+        top: -3px;
+        position: relative;
+    }
+}
+
+label {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+}
+
+} // Collection Specific Styling

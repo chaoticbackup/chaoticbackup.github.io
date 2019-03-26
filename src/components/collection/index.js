@@ -4,7 +4,7 @@ import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import CardList from './List';
-import SearchForm from './Search';
+import SearchForm from './search/index.js';
 import '../../scss/collection.scss'
 
 @inject((stores, props, context) => props) @observer
