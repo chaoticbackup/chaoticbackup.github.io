@@ -174,7 +174,7 @@ export default function search_api(input) {
 
       if (el !== "") {
         creatureResults = creatureResults.find({'gsx$elements': 
-            {'$regex': new RegExp(el.substring(0, el.length-2), 'i')}
+            {'$regex': new RegExp("^" + el.substring(0, el.length-2), 'i')}
         });
       }
     }
