@@ -218,7 +218,7 @@ class API {
       "DOP": "Dawn of Perim",
       "ZOTH": "Zenith of the Hive",
       "SS": "Silent Sands",
-      "MI": "M'arrillian Invasion",
+      "MI": "Beyond the Doors",
       "ROTO": "Rise of the Oligarch",
       "TOTT": "Turn of the Tide",
       "FUN": "Forged Unity",
