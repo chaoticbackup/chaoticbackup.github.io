@@ -71,6 +71,11 @@
         padding-top: 2px;
       }
 
+      .energy {
+        display: flex;
+        width: 20px !important;
+      }
+
       .left {
         vertical-align: text-top;
         float: left;
@@ -110,7 +115,6 @@
       display: flex;
       justify-content: center; /* align horizontal */
       align-items: center; /* align vertical */
-      font-size: 16pt;
       padding: 2%;
     }
 

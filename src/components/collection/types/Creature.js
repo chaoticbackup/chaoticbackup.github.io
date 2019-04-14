@@ -41,13 +41,22 @@ export default class Creature extends React.Component {
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
         <br />
-	      <div className="stats">
-	     	  <span>{card.gsx$courage}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/courage.png"}></img></span><br />
-	     	  <span>{card.gsx$power}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/power.png"}></img></span><br />
-	     	  <span>{card.gsx$wisdom}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/wisdom.png"}></img></span><br />
-	     	  <span>{card.gsx$speed}&nbsp;<img className="icon16" src={"/src/img/icons/disciplines/speed.png"}></img></span><br />
-          <span style={{fontWeight: 'bold'}}>{card.gsx$energy}</span>
-        </div>
+          <div className="stats">
+              <div className="energy">
+                  {card.gsx$courage}<img className="icon16" src={"/src/img/icons/disciplines/courage.png"}></img>
+              </div>
+              <div className="energy">
+                  {card.gsx$power}<img className="icon16"src={"/src/img/icons/disciplines/power.png"}></img>
+              </div>
+              <div className="energy">
+                  {card.gsx$wisdom}<img className="icon16"src={"/src/img/icons/disciplines/wisdom.png"}></img>
+              </div>
+              <div className="energy">
+                  {card.gsx$speed}<img className="icon16"src={"/src/img/icons/disciplines/speed.png"}></img>
+              </div>
+              <div className="energy" style={{fontWeight: 'bold'}}>{card.gsx$energy}
+              </div>
+          </div>
   	  </div>
   	)
     else return (
