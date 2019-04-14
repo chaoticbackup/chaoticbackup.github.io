@@ -71,6 +71,15 @@
         padding-top: 2px;
       }
 
+      .stats {
+        padding-top: 2%;
+      }
+
+      .bigger {
+        text-align: center;
+        font-weight: bold;
+      }
+
       .energy {
         display: flex;
         width: 20px !important;
@@ -111,11 +120,12 @@
       font-family: Roboto, Arial, sans-serif;
     }
 
-    .bigger {
+    .searchName {
       display: flex;
       justify-content: center; /* align horizontal */
       align-items: center; /* align vertical */
       padding: 2%;
+      font-size: 16pt;
     }
 
     .centeredCheckBox {
@@ -153,6 +163,7 @@
     }
 
     .brainwashed {
+      border-radius: 3px;
       background-color: #dcdddf;
       color: black !important;
     }
