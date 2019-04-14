@@ -1,6 +1,7 @@
 /*-------------- Collection --------------*/
 /*------------------------------------------------------*/
 /*-------------- Save/noSave Button --------------*/
+
 .saveBtn {
   width:35px; height:35px; border:none; outline:none;
   background:url(http://web.archive.org/web/20120207003733im_/http://www.chaoticgame.com/Images/save-sprite.png) 0 0 no-repeat;
