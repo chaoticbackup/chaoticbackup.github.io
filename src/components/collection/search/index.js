@@ -201,7 +201,7 @@ export default class SearchCollection extends React.Component {
     // });
 
     let tribes = gen("tribes", "inline", (item) => {
-      return (<span><img className="icon16" src={"/src/img/icons/tribes/"+item+".png"} />&nbsp;</span>);
+      return (<span><img className="icon16" src={"/src/img/icons/tribes/"+item+".png"} /></span>);
     });
 
     let elements = gen("elements", "inline", (item) => {
@@ -218,52 +218,98 @@ export default class SearchCollection extends React.Component {
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
-          <label className="bigger">Search</label>
+          <label className="searchName">Search</label>
           <br />
           <div className="text-entry">
             <input type="text" name="name" placeholder="Card Name" value={this.input.name} onChange={this.handleChange} />
-            <br />
+          </div>
+          <div className="text-entry">
             <input type="text" name="text" placeholder="Card Text" value={this.input.text} onChange={this.handleChange} />
-            <br />
-            <label className="mull"><input type="checkbox" name="flavor" value={!this.input.flavor} onChange={(e) => {this.input.flavor = !e.target.checked}} />Ignore Flavortext</label>
-            <br />
+          </div>
+          <div className="text-entry">
             <input type="text" name="subtypes" placeholder="Subtypes | Initiative" value={this.input.subtypes} onChange={this.handleChange} />
           </div>
-          <label className="mull"><input type="checkbox" name="past" checked={this.input.past} onChange={this.handleChange} />Past</label>&nbsp;
-          <label className="mull"><input type="checkbox" name="mirage" checked={this.input.mirage} onChange={this.handleChange} />Mirage</label>&nbsp;
-          <label className="mull"><input type="checkbox" name="minion" checked={this.input.minion} onChange={this.handleChange} />Minion</label>
-          <br /><br />
-          <label className="mull"><input type="checkbox" name="unique" checked={this.input.mull.unique} onChange={e => this.handleChange(e, "mull")} />Unique</label>&nbsp;
-          <label className="mull"><input type="checkbox" name="loyal" checked={this.input.mull.loyal} onChange={e => this.handleChange(e, "mull")} />Loyal</label>&nbsp;
-          <label className="mull"><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
           <br />
-          <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="flavor" value={!this.input.flavor} onChange={(e) => {this.input.flavor = !e.target.checked}} />Ignore Flavortext</label>
+          </div>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="past" checked={this.input.past} onChange={this.handleChange} />Past</label>
+          </div>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="mirage" checked={this.input.mirage} onChange={this.handleChange} />Mirage</label>
+          </div>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="minion" checked={this.input.minion} onChange={this.handleChange} />Minion</label>
+          </div>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="unique" checked={this.input.mull.unique} onChange={e => this.handleChange(e, "mull")} />Unique</label>
+          </div>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="loyal" checked={this.input.mull.loyal} onChange={e => this.handleChange(e, "mull")} />Loyal</label>
+          </div>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
+          </div>
+          <div className="centeredCheckBox">
+              <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
+          </div>
           <br /><hr />
-          {tribes}
-          <br /> <hr />
-          {elements}&nbsp;
-          <label className="none"><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} /><span>None</span></label>
-          <br />
-          <input type="button" value={this.input.elements.none ? "none" : "or"} className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
-          <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
-          <br /> <hr />
+          <div className="tribes">
+            {tribes}
+          </div>
+          <hr />
+          <div className="tribes">
+            {elements}
+            <label className="none"><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} /><span>None</span></label>
+          </div>
+          <div className="centeredButtons">
+            <input type="button" value={this.input.elements.none ? "none" : "or"} className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
+            <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
+          </div>
+          <hr />
+          <div className="disciplines">
           {disciplines}
-          <br /> <hr />
+          </div>
+          <hr />
           <Collapsible open={true} trigger="Energy">
-            <label className="mcbp">Min:&nbsp;<input type="text" name="min" value={this.input.energy.min} onChange={e => this.handleChange(e, "energy")} /></label>&nbsp;
-            <label className="mcbp">Max:&nbsp;<input type="text" name="max" value={this.input.energy.max} onChange={e => this.handleChange(e, "energy")}  /></label>
+            <div className="minMax">
+              <label className="mcbp">Min <input type="text" name="min" value={this.input.energy.min} onChange={e => this.handleChange(e, "energy")} /></label>
+            </div>
+            <div className="minMax">
+              <label className="mcbp">Max <input type="text" name="max" value={this.input.energy.max} onChange={e => this.handleChange(e, "energy")}  /></label>
+            </div>
           </Collapsible>
           <Collapsible open={true} trigger="Build Points & Mugic Counters/Cost">
-            <label className="mcbp">Min:&nbsp;<input type="text" name="min" value={this.input.mcbp.min} onChange={e => this.handleChange(e, "mcbp")} /></label>&nbsp;
-            <label className="mcbp">Max:&nbsp;<input type="text" name="max" value={this.input.mcbp.max} onChange={e => this.handleChange(e, "mcbp")} /></label>
+            <div className="minMax">
+              <label className="mcbp">Min <input type="text" name="min" value={this.input.mcbp.min} onChange={e => this.handleChange(e, "mcbp")} /></label>
+            </div>
+            <div className="minMax">
+              <label className="mcbp">Max <input type="text" name="max" value={this.input.mcbp.max} onChange={e => this.handleChange(e, "mcbp")} /></label>
+            </div>
           </Collapsible>
-          <Collapsible open={true} trigger="Types">{types}</Collapsible>
-          <Collapsible trigger="Rarity">{rarity}</Collapsible>
-          <Collapsible trigger="Sets">{sets}</Collapsible>
+          <Collapsible open={true} trigger="Types">
+            <div className="centeredCheckBox">
+              {types}
+            </div>
+          </Collapsible>
+          <Collapsible trigger="Rarity">
+            <div className="centeredCheckBox">
+              {rarity}
+            </div>
+          </Collapsible>
+          <Collapsible trigger="Sets">
+            <div className="setBox">
+              <div className="centeredCheckBox" id="sets">
+                {sets}
+              </div>
+            </div>
+          </Collapsible>
           {/*<Collapsible trigger="Gender (fan content)">{gender}</Collapsible>*/}
-          <br />
-          <input type="submit" value="Search" />&nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="button" value="Reset" onClick={this.reset} />
+          <div className="centeredButtons">
+            <input id="search" type="submit" value="Search" />
+            <input id="search" type="button" value="Reset" onClick={this.reset} />
+          </div>
         </form>
       </div>
     );

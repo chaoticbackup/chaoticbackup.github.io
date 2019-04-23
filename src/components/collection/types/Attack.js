@@ -1,7 +1,5 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
-import s from '../../../styles/app.style';
-import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import {Rarity, Unique, Name, Element, Ability} from '../../Snippets';
 

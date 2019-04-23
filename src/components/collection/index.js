@@ -50,7 +50,7 @@ export default class Home extends React.Component {
   extended() {
     return (
       <div className="ext-button">
-        <button onClick={(e) => this.ext = !this.ext}
+        <button id="buttons" onClick={(e) => this.ext = !this.ext}
           >{this.ext ? "Short Format" : "Extended Format"}</button>
       </div>
     );
@@ -60,19 +60,19 @@ export default class Home extends React.Component {
     let numpages = Math.ceil(this.content.length / this.n);
 
     let next = () => {
-      if (this.p < numpages) return(<button onClick={ () => {this.p++; window.scrollTo(0, 0);} }>next</button>);
-      else return(<button disabled>next</button>);
+      if (this.p < numpages) return(<button id="buttons" onClick={ () => {this.p++; window.scrollTo(0, 0);} }>next</button>);
+      else return(<button id="buttons" disabled>next</button>);
     }
 
     let prev = () => {
-      if (this.p > 1) return(<button onClick={ () => {this.p--; window.scrollTo(0, 0);} }>prev</button>);
-      else return(<button disabled>prev</button>);
+      if (this.p > 1) return(<button id="buttons" onClick={ () => {this.p--; window.scrollTo(0, 0);} }>prev</button>);
+      else return(<button id="buttons" disabled>prev</button>);
     }
 
     return (
       <div className="entries">
         {this.content.length} results - page {this.p} of {numpages} {prev()} {next()}
-        <br/>Entries per page:&nbsp;
+        <br/>Entries per page
         {/*<input type="text" style={{width: '40px'}} value={this.n}
           onChange={(event) => {let x = event.target.value; if (!isNaN(x)) this.n=x;}
         />*/}

@@ -12,3 +12,5 @@ node_modules
 *.sublime-workspace
 
 package-lock.json
+
+*.idea
