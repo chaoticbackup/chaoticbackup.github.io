@@ -10,6 +10,13 @@ const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('
 const config = {
   entry: ['@babel/polyfill', `${__dirname}/src/components/index.js`],
 
+  devServer: {
+    host: '0.0.0.0',
+    historyApiFallback: {
+      index: 'index.dev.html',
+    },
+  },
+
   output: {
     path: `${__dirname}/build`,
     publicPath: '/build/',
@@ -22,9 +29,9 @@ const config = {
         cache: true,
         parallel: true,
         sourceMap: true,
-        extractComments: true
+        extractComments: true,
       }),
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin({}),
     ],
     splitChunks: {
       cacheGroups: {
@@ -32,30 +39,30 @@ const config = {
           name: 'styles',
           test: /\.css$/,
           chunks: 'all',
-          enforce: true
-        }
-      }
-    }
+          enforce: true,
+        },
+      },
+    },
   },
 
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, 
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          'presets': [
+          presets: [
             '@babel/preset-env',
             '@babel/preset-react',
             '@babel/preset-flow',
           ],
-          'plugins': [
+          plugins: [
             '@babel/plugin-transform-runtime',
-            ['@babel/plugin-proposal-decorators', {'legacy': true }],
-            ['@babel/plugin-proposal-class-properties', { 'loose': true }]
-          ]
-        }
+            ['@babel/plugin-proposal-decorators', {legacy: true }],
+            ['@babel/plugin-proposal-class-properties', { loose: true }],
+          ],
+        },
       },
       {
         test: /\.s?[ac]ss$/,
@@ -64,8 +71,8 @@ const config = {
           'css-loader',
           'sass-loader',
         ],
-      }
-    ]
+      },
+    ],
   },
 
   resolve: {
@@ -84,7 +91,7 @@ const config = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
-    })
+    }),
   ],
 };
 
