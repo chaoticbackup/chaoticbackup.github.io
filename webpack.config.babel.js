@@ -10,6 +10,10 @@ const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('
 const config = {
   entry: ['@babel/polyfill', `${__dirname}/src/components/index.js`],
 
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+
   devServer: {
     host: '0.0.0.0',
     historyApiFallback: {
@@ -73,10 +77,6 @@ const config = {
         ],
       },
     ],
-  },
-
-  resolve: {
-    extensions: ['.js', '.jsx'],
   },
 
   node: {
