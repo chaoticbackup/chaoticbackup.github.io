@@ -168,8 +168,8 @@ export default class SearchCollection extends React.Component {
   render() {
       if (this.loaded == false) {
         API.LoadDB([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
-        .then(() => { 
-          this.loaded = true; 
+        .then(() => {
+          this.loaded = true;
           this.search();
         });
         return (<Loading />);
@@ -226,35 +226,27 @@ export default class SearchCollection extends React.Component {
           <div className="text-entry">
             <input type="text" name="text" placeholder="Card Text" value={this.input.text} onChange={this.handleChange} />
           </div>
-          <div className="text-entry">
-            <input type="text" name="subtypes" placeholder="Subtypes | Initiative" value={this.input.subtypes} onChange={this.handleChange} />
-          </div>
-          <br />
           <div className="centeredCheckBox">
             <label className="mull"><input type="checkbox" name="flavor" value={!this.input.flavor} onChange={(e) => {this.input.flavor = !e.target.checked}} />Ignore Flavortext</label>
           </div>
-          <div className="centeredCheckBox">
+          <div className="text-entry">
+            <input type="text" name="subtypes" placeholder="Subtypes | Initiative" value={this.input.subtypes} onChange={this.handleChange} />
+          </div>
+          <div className="centeredCheckBox centeredSpacing">
             <label className="mull"><input type="checkbox" name="past" checked={this.input.past} onChange={this.handleChange} />Past</label>
-          </div>
-          <div className="centeredCheckBox">
             <label className="mull"><input type="checkbox" name="mirage" checked={this.input.mirage} onChange={this.handleChange} />Mirage</label>
-          </div>
-          <div className="centeredCheckBox">
             <label className="mull"><input type="checkbox" name="minion" checked={this.input.minion} onChange={this.handleChange} />Minion</label>
           </div>
-          <div className="centeredCheckBox">
+          <br />
+          <div className="centeredCheckBox centeredSpacing">
             <label className="mull"><input type="checkbox" name="unique" checked={this.input.mull.unique} onChange={e => this.handleChange(e, "mull")} />Unique</label>
-          </div>
-          <div className="centeredCheckBox">
             <label className="mull"><input type="checkbox" name="loyal" checked={this.input.mull.loyal} onChange={e => this.handleChange(e, "mull")} />Loyal</label>
-          </div>
-          <div className="centeredCheckBox">
             <label className="mull"><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
           </div>
           <div className="centeredCheckBox">
               <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
           </div>
-          <br /><hr />
+          <hr />
           <div className="tribes">
             {tribes}
           </div>
@@ -269,22 +261,17 @@ export default class SearchCollection extends React.Component {
           </div>
           <hr />
           <div className="disciplines">
-          {disciplines}
+            {disciplines}
           </div>
-          <hr />
           <Collapsible open={true} trigger="Energy">
             <div className="minMax">
               <label className="mcbp">Min <input type="text" name="min" value={this.input.energy.min} onChange={e => this.handleChange(e, "energy")} /></label>
-            </div>
-            <div className="minMax">
               <label className="mcbp">Max <input type="text" name="max" value={this.input.energy.max} onChange={e => this.handleChange(e, "energy")}  /></label>
             </div>
           </Collapsible>
-          <Collapsible open={true} trigger="Build Points & Mugic Counters/Cost">
+          <Collapsible open={true} trigger="Build Points&#10;Mugic Counters/Cost">
             <div className="minMax">
               <label className="mcbp">Min <input type="text" name="min" value={this.input.mcbp.min} onChange={e => this.handleChange(e, "mcbp")} /></label>
-            </div>
-            <div className="minMax">
               <label className="mcbp">Max <input type="text" name="max" value={this.input.mcbp.max} onChange={e => this.handleChange(e, "mcbp")} /></label>
             </div>
           </Collapsible>

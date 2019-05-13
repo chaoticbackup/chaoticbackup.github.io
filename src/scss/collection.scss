@@ -42,11 +42,15 @@
 
     input[type="text"] {
       margin-bottom: 2px;
-      width: 200px;
       border-radius: 5px;
       border-color: transparent;
       text-align: center;
       outline: none;
+    }
+
+    input[type="text"],
+    .centeredCheckBox {
+      width: 220px;
     }
 
     .text-entry {
@@ -68,11 +72,7 @@
       .left,
       .right,
       .stats {
-        padding-top: 2px;
-      }
-
-      .stats {
-        padding-top: 2%;
+        padding-top: 4px;
       }
 
       .bigger {
@@ -112,7 +112,6 @@
       float: left;
       text-align: right;
       width: 40px;
-      padding-right: 4px;
     }
 
     .SearchForm {
@@ -130,8 +129,12 @@
 
     .centeredCheckBox {
       margin: 0 auto;
-      width: 43%;
       text-align: left;
+    }
+
+    .centeredSpacing {
+      display: flex;
+      justify-content: space-between;
     }
 
     .setBox {
@@ -158,8 +161,10 @@
     }
 
     .minMax {
+      display: flex;
+      justify-content: space-between;
       margin: 0 auto;
-      width: 25%;
+      width: 50%;
       text-align: right;
     }
 
@@ -181,9 +186,19 @@
       margin-top: 2px;
     }
 
+    .mull input {
+      margin-left: 0px;
+      margin-top: 1px;
+    }
+
     .mull input,
     .Collapsible__contentInner input {
       vertical-align: middle;
+    }
+
+    .Collapsible__contentInner
+    .centeredCheckBox {
+      width: 50%;
     }
 
     .mcbp input {
@@ -230,8 +245,9 @@
   }
 
   .Collapsible {
-    margin-bottom: 10px;
-    width: 250px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 96%;
   }
 
   .Collapsible__trigger {
@@ -241,6 +257,8 @@
     padding-top: 5px;
     padding-bottom: 5px;
     text-indent: 5px;
+    font-weight: bold;
+    white-space: pre;
   }
 
   .Collapsible__trigger:hover {
@@ -269,11 +287,12 @@
   }
 
   .Collapsible__contentOuter {
-    width: 96%;
+    // width: 96%;
   }
 
   .Collapsible__contentInner {
-    width: 96%;
+    // width: 96%;
+    margin-top: 5px;
   }
 
   .left {
