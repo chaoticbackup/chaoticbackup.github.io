@@ -71,7 +71,7 @@ export default function search_api(input) {
         {'gsx$ability': {"$or": textList}},
         {'gsx$artist': {"$or": textList}}
       ]
-      if (input.flavor) 
+      if (input.flavor)
         list.splice(3, 0, {'gsx$flavortext': {"$or": textList}});
 
       return list;
@@ -79,7 +79,7 @@ export default function search_api(input) {
 
     attackResults = attackResults.find({'$or': parm});
     battlegearResults = battlegearResults.find({'$or': parm});
-    creatureResults = creatureResults.find({'$or': 
+    creatureResults = creatureResults.find({'$or':
       (parm.concat([{'gsx$brainwashed': {"$or": textList}}]))
     });
     locationResults = locationResults.find({'$or': parm});
@@ -113,7 +113,7 @@ export default function search_api(input) {
     creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList} });
     locationResults = locationResults.find({'gsx$initiative': {'$or': subtypesList}});
     attackResults = attackResults.limit(0);
-    battlegearResults = battlegearResults.limit(0);
+    battlegearResults = battlegearResults.find({'gsx$types': {'$or': subtypesList} });
     mugicResults = mugicResults.limit(0);
   }
 
@@ -173,7 +173,7 @@ export default function search_api(input) {
       });
 
       if (el !== "") {
-        creatureResults = creatureResults.find({'gsx$elements': 
+        creatureResults = creatureResults.find({'gsx$elements':
             {'$regex': new RegExp("^" + el.substring(0, el.length-2) + "\s*$", 'i')}
         });
       }

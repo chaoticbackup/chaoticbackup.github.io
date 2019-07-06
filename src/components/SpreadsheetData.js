@@ -1,6 +1,8 @@
 import 'whatwg-fetch';
 import loki from 'lokijs';
 import {observable, observe, action} from "mobx";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 class CollectionDB {
   // Keeps track of what collections have been populated
@@ -31,7 +33,22 @@ class CollectionDB {
   @action
   async setupType(type, resolve) {
     if (this.building.hasOwnProperty(type)) {
+      let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
       if (this.building[type].get() == "built") {
+        // Check if data has been updated
+        this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, (data) => {
+          let cookie = cookies.get(`${this.format}_${type}`);
+          if (cookie) {
+            if ((new Date(data[0].updated)) > (new Date(cookie))) {
+              this[type].clear();
+              this[type].insert(data);
+              cookies.set(`${this.format}_${type}`, data[0].updated, { path: '/' });
+            }
+          }
+          else {
+            cookies.set(`${this.format}_${type}`, data[0].updated, { path: '/' });
+          }
+        });
         return resolve();
       }
       if (this.building[type].get() == "building") {
@@ -45,7 +62,6 @@ class CollectionDB {
         this.building[type].set("building");
         // check if the collection already exists in memory
         if (this[type].data.length == 0) {
-          let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
           return this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, (data) => {
             this[type].insert(data);
             this.building[type].set("built");
