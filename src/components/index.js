@@ -8,6 +8,7 @@ import s from '../styles/app.style';
 import API from './SpreadsheetData';
 import {PageNotFound, UnderConstruction, Donate} from './Snippets';
 import EnterTheCode from './entercode/index';
+import Create from './create/index';
 import Collection from './collection/index';
 import Portal from './portal/index';
 import Home from './Home';
@@ -29,6 +30,7 @@ function Routing(props) {
       <Route path="/PageNotFound" component={PageNotFound} />
       <Route path="/UnderConstruction" component={UnderConstruction} />
       <Route path="/EnterTheCode" component={EnterTheCode} />
+      <Route path="/create" component={Create} />
       <Route path="/collection" component={Collection} />
       <Route path="/portal" component={Portal} />
     </React.Fragment>
@@ -58,7 +60,7 @@ function Base(props) {
                     <ul id="unity-sprite" className={language}>
                       <li id="unity-nav1" className={language}></li>
                       <li id="unity-nav2" className={language}><Link to={`/collection/`}><span>Collect</span></Link></li>
-                      <li id="unity-nav3" className={language}><a href="http://chaoticbackup.forumotion.com/f11-deck-building"><span>Build</span></a></li>
+                      <li id="unity-nav3" className={language}><a href="/create/"><span>Build</span></a></li>
                       <li id="unity-nav4" className={language}><a href="http://chaoticbackup.forumotion.com/f16-trading-buying-and-selling"><span>Trade</span></a></li>
                       <li id="unity-nav5" className={language}><Link to={`/`}><span>Home</span></Link></li>
                       <li id="unity-nav6" className={language}><a href="http://chaoticbackup.forumotion.com"><span>Forums</span></a></li>

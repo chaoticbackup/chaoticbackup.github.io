@@ -218,8 +218,6 @@ export default class SearchCollection extends React.Component {
     return (
       <div className="SearchForm">
         <form onSubmit={this.search}>
-          <label className="searchName">Search</label>
-          <br />
           <div className="centeredButtons">
             <input id="search" type="submit" value="Search" />
             <input id="search" type="button" value="Reset" onClick={this.reset} />
