@@ -1,15 +1,23 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Donate} from './Snippets';
 import "../scss/home.scss";
+
+const GithubLink = () => (
+  <a 
+    href="https://github.com/chaoticbackup" className="name" 
+    rel='noreferrer noopener' target="_blank"
+  >
+    Chaotic Backup Project
+  </a>
+);
 
 export default function Home() {
   return (
     <div>
       <br />
       <div className="with-love">
-        <div>Welcome to the <a href="https://github.com/chaoticbackup" className="name" target="_blank">Chaotic Backup Project</a>.
-        </div>
+        <div>Welcome to the <GithubLink />.</div>
         <span>Built by fans for fans.</span>
         <br /><br />
         <div>Made with <span className="heart">♥</span> by
@@ -19,7 +27,7 @@ export default function Home() {
         </div>
         <div>Do you like the site? You can donate to support it!</div>
         <div className="donate"><Donate /></div>
-        <div className="lore">We were unsatisfied with the options on how to search for cards. I took the design of the old Chaotic website and added my own modernizations.  With an extensive lists of search options in the <a href="/collection">collection</a>, you'll find deck building mores streamlined than ever before.  Chaotic is full of rich lore, but unfortunately the best database of official lore disapeared when the <a href="/portal">Portal to Perim</a> disapeared along with the site. You can again explore the official lore and information of Creatures!
+        <div className="lore">We were unsatisfied with the options on how to search for cards. I took the design of the old Chaotic website and added my own modernizations.  With an extensive lists of search options in the <Link to="/collection">collection</Link>, you'll find deck building mores streamlined than ever before.  Chaotic is full of rich lore, but unfortunately the best database of official lore disapeared when the <Link to="/portal">Portal to Perim</Link> disapeared along with the site. You can again explore the official lore and information of Creatures!
         </div>
         <br />
         <div className="lore">

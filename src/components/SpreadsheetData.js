@@ -99,7 +99,7 @@ class CollectionDB {
 
     function databaseInitialize() {
       ["attacks","battlegear", "creatures", "locations", "mugic"]
-        .forEach((type, i) => {
+        .forEach((type) => {
           // check if the db already exists in memory
           let entries = db.getCollection(type);
           if (entries === null || entries.data.length === 0) {
@@ -117,7 +117,7 @@ class CollectionDB {
               this.building[type] = observable.box("built");
           }
       });
-    };
+    }
   }
 
   purgeDB = () => {

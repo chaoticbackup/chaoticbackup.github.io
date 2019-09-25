@@ -1,6 +1,5 @@
 import React from 'react';
 import API from '../SpreadsheetData';
-import s from '../../styles/app.style';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import CardList from './List';
@@ -82,11 +81,8 @@ export default class Home extends React.Component {
         <input type="button" value="50" disabled={this.n=="50"} onClick={(e) => this.n=e.target.value} />
       </div>
     );
-  };
-
+  }
 }
-
-
 
 @observer
 class imgbase extends React.Component {

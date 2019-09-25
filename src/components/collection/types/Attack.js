@@ -7,13 +7,13 @@ import {Rarity, Unique, Name, Element, Ability} from '../../Snippets';
 export default class Attack extends React.Component {
 
   render() {
-  	let card = this.props.card;
+    let card = this.props.card;
 
     if (this.props.ext == false) return (
-  	  <div className="card attack">
-	      <img className="thumb" src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
-	      <div className="left">
-	        <Name name={card.gsx$name} /><br />
+      <div className="card attack">
+        <img className="thumb" src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
+        <div className="left">
+          <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
           <span>Build Points: {card.gsx$bp}</span><br />
           <div>
@@ -23,15 +23,15 @@ export default class Attack extends React.Component {
             <Element element="earth" value={card.gsx$earth} />{card.gsx$earth}&nbsp;
             <Element element="water" value={card.gsx$water} />{card.gsx$water}
           </div>
-	      </div>
+        </div>
         <br />
         <div className="right" >
           <Ability ability={card.gsx$ability} />
           <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
-  	  </div>
-  	)
+      </div>
+    )
     else return (
       <div className="card attack">
         <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />

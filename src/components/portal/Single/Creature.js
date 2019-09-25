@@ -5,7 +5,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import {observer, inject} from 'mobx-react';
 import Single from './_base';
-import {PageNotFound, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
+import {PageNotFound, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
 
 function Artist(props) {
   let artists = [];

@@ -1,7 +1,5 @@
 import React from 'react';
 import API from './SpreadsheetData';
-import {observable} from "mobx";
-import {observer, inject, action} from 'mobx-react';
 import processString from 'react-process-string';
 import s from '../styles/app.style';
 
