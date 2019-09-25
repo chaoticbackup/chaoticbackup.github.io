@@ -1,22 +1,16 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import {observable} from "mobx";
 import API from '../SpreadsheetData';
 
 export default class Home extends React.Component {
+  @observable coin = null;
 
-  componentDidMount() {
-    this.coin = null;
-    this.updateCanvas();
-  }
+  updateCanvas(canvas) {
+    if (!canvas) return;
 
-  componentWillUnmount() {
-    this.coin = null;
-  }
-
-  updateCanvas() {
-    const canvas = this.refs.canvas;
     // Make it visually fill the positioned parent
-    canvas.style.width ='100%';
-    canvas.style.height='100%';
+    canvas.style.width  = '100%';
+    canvas.style.height = '100%';
     // ...then set the internal size to match
     canvas.width  = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
@@ -53,15 +47,6 @@ export default class Home extends React.Component {
       Creatures();
       ctx.drawImage(Logo, canvas.width/2-Logo.width/2, 0);
     });
-
-
-    let gameLoop = () => {
-      if (this.coin) {
-        window.requestAnimationFrame(gameLoop);
-        this.coin.update();
-        this.coin.render();
-      }
-    }
 
     function sprite (options) {
 
@@ -136,8 +121,16 @@ export default class Home extends React.Component {
       return that;
     }
 
+    const coinLoop = () => {
+      if (this.coin) {
+        window.requestAnimationFrame(coinLoop);
+        this.coin.update();
+        this.coin.render();
+      }
+    }
+
     // Create sprite sheet
-    let coinImage = new Image();
+    const coinImage = new Image();
 
     // Create sprite
     this.coin = sprite({
@@ -152,15 +145,15 @@ export default class Home extends React.Component {
     });
 
     // Load sprite sheet
-    coinImage.addEventListener("load", gameLoop);
+    coinImage.addEventListener("load", coinLoop);
     coinImage.src = API.base_image + "0B6oyUfwoM3u1cC1vaGVkU1J1ZzQ";
   }
 
   render() {
     return (
-      <div>
-        <canvas ref="canvas" height="600px" />
-      </div>
+      <Fragment>
+        <canvas ref={this.updateCanvas.bind(this)} height="600px" />
+      </Fragment>
     );
   }
 }

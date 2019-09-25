@@ -17,7 +17,7 @@ export default function search_api(input) {
 
   // ignore cards with no set
   attackResults = attackResults.where((obj) => {
-  	return obj.gsx$set != ('');
+    return obj.gsx$set != ('');
   });
   battlegearResults = battlegearResults.where((obj) => {
     return obj.gsx$set != ('');

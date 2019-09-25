@@ -102,7 +102,7 @@ export default class PackSimulator extends React.Component {
       return (Math.floor(Math.random() * 3)) * 5 + min;
     }
 
-    const gencard = (results) => {
+    const gencard = (results, i) => {
       let id = Math.floor(Math.random() * results.length);
       let card = results[id];
 
@@ -112,7 +112,7 @@ export default class PackSimulator extends React.Component {
       }
 
       if (card_names.indexOf(card.gsx$name) > -1) {
-        return gencard(results);
+        return gencard(results, i);
       }
       card_names.push(card.gsx$name);
 
@@ -142,7 +142,7 @@ export default class PackSimulator extends React.Component {
       pview.applyFind({'gsx$set': this.set})
         .applyFind({'gsx$rarity': rarity});
       let results = pview.data();
-      for (let i=0; i<num; i++) gencard(results);
+      for (let i=0; i<num; i++) gencard(results, i);
       pview.removeFilters();
     }
 

@@ -7,28 +7,28 @@ import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '
 export default class Creature extends React.Component {
 
   render() {
-  	let card = this.props.card;
+    let card = this.props.card;
 
     let mugic = [];
     for (let i = 0; i < card.gsx$mugicability; i++) {
       mugic.push(<Mugic key={i} tribe={card.gsx$tribe} />);
     }
 
-  	if (this.props.ext == false) return (
-  	  <div className="card creature">
-  	    <img className="thumb" style={{float: 'left'}} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
-  	    <div className="left">
+    if (this.props.ext == false) return (
+      <div className="card creature">
+        <img className="thumb" style={{float: 'left'}} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
+        <div className="left">
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
           <span><Tribe tribe={card.gsx$tribe} /> {card.gsx$tribe} {card.gsx$types}</span><br />
-	        <div>
+          <div>
             <Element element="fire" value={card.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
             <Element element="air" value={card.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
             <Element element="earth" value={card.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
             <Element element="water" value={card.gsx$elements.toLowerCase().indexOf("water") >=0} />
           </div>
           <span>{mugic}</span>
-	      </div>
+        </div>
         <br />
         <div className="right" >
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
@@ -57,8 +57,8 @@ export default class Creature extends React.Component {
               <div className="energy" style={{fontWeight: 'bold'}}>{card.gsx$energy}
               </div>
           </div>
-  	  </div>
-  	)
+      </div>
+    )
     else return (
       <div className="card creature">
         <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />

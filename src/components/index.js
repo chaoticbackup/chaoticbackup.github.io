@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Link, Route, withRouter } from 'react-router-dom';
-import {observer, inject} from 'mobx-react';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import s from '../styles/app.style';
 
 /* Components */
@@ -13,11 +12,9 @@ import Collection from './collection/index';
 import Portal from './portal/index';
 import Home from './Home';
 
-// const BlockAvoider = withRouter(Base)
 
 render(
   <Router>
-    {/* <BlockAvoider /> */}
     <Base path="/*" href="/" />
   </Router>
   , document.getElementById('root'),
@@ -144,7 +141,7 @@ function Base(props) {
                           </div>
                         </div>
                         <div className="footer-language">
-                          <a href="javascript:;" onClick={(e) => {e.stopPropagation(); e.preventDefault(); API.purgeDB()}} className="page-options" title="Change Language">
+                          <a href='#' onClick={(e) => {e.stopPropagation(); e.preventDefault(); API.purgeDB()}} className="page-options" title="Change Language">
                             <img src="/src/img/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
                             <br />English (Change Language)
                           </a>
