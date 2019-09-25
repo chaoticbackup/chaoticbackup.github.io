@@ -22,7 +22,7 @@ function Artist(props) {
     props.artist.split(/(?=, )/).forEach((artist, i) => {
         artists.push(<Link key={i} to={`/portal/Search/?${artist.replace(", ", "")}`}>{artist}</Link>);
     });
-    return (<div className="ability">{artists}</div>)
+    return (<div className="artist">{artists}</div>)
 }
 
 @inject((stores, props, context) => props) @observer

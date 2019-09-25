@@ -15,6 +15,12 @@ export default class Home extends React.Component {
   @observable content = [];
   @observable card_img = API.card_back;
 
+  componentDidMount() {
+    let ext = localStorage.getItem("extended");
+    if (ext == null) this.ext = false;
+    this.ext = (/true/i).test(ext);
+  }
+
   handleContent(content) {
     this.content = content;
     this.p = 1;
@@ -23,6 +29,11 @@ export default class Home extends React.Component {
   setImage(img) {
     this.card_img = (img || API.card_back);
     this.changeImage();
+  }
+
+  setExt() {
+    this.ext = !this.ext;
+    localStorage.setItem("extended", this.ext);
   }
 
   render() {
@@ -49,7 +60,7 @@ export default class Home extends React.Component {
   extended() {
     return (
       <div className="ext-button">
-        <button id="buttons" onClick={(e) => this.ext = !this.ext}
+        <button id="buttons" onClick={this.setExt.bind(this)}
           >{this.ext ? "Short Format" : "Extended Format"}</button>
       </div>
     );

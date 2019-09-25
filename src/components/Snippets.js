@@ -12,7 +12,7 @@ export function UnderConstruction(props) {
 export function PageNotFound(props) {
   return (
     <p style={s.p}>
-      Page not found - the path, {s.code(props.location.pathname)}, did not match any routes.
+      404 route not found - {s.code(props.location.pathname)}
     </p>
   );
 }
@@ -69,6 +69,10 @@ export function Name(props) {
   </span>);
 }
 
+export function Mugic(props) {
+  return <img className={props.size||"icon20"} src={("/src/img/icons/mugic/"+(props.tribe||"generic")+".png").toLowerCase()} alt={"MC"} />
+}
+
 export function Element(props) {
   if (props.value) {
     return <img className={props.size||"icon20"} src={("/src/img/icons/elements/"+props.element+".png").toLowerCase()} />
@@ -78,16 +82,24 @@ export function Element(props) {
   }
 }
 
-export function Mugic(props) {
-  return <img className={props.size||"icon20"} src={("/src/img/icons/mugic/"+(props.tribe||"generic")+".png").toLowerCase()} alt={"MC"} />
+export function Tribe(props) {
+  return <img className={props.size||"icon16"} src={("/src/img/icons/tribes/"+props.tribe+".png").toLowerCase()} />
 }
 
 export function Discipline(props) {
   return <img className={props.size||"icon16"} src={("/src/img/icons/disciplines/"+props.discipline+".png").toLowerCase()} />
 }
 
-export function Tribe(props) {
-  return <img className={props.size||"icon16"} src={("/src/img/icons/tribes/"+props.tribe+".png").toLowerCase()} />
+export function LocationIcon(props) {
+  return <img className={props.size||"icon16"} src="/src/img/icons/location.png" />
+}
+
+export function BattlegearIcon(props) {
+  return <img className={props.size||"icon16"} src="/src/img/icons/battlegear.png" />
+}
+
+export function AttackIcon(props) {
+  return <img className={props.size||"icon16"} src="/src/img/icons/attack.png" />
 }
 
 export function Ability(props) {

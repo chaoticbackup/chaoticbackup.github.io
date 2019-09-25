@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Mugic, Ability} from '../../Snippets';
+import {Rarity, Unique, Name, Mugic, Ability, Tribe} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -11,10 +11,10 @@ export default class Attack extends React.Component {
 
     let mugicCounters = [];
     if (card.gsx$cost == 0) {
-      mugicCounters.push(<span key={0}>0</span>);
+      mugicCounters.push(<span className="bigger" key={0}>0</span>);
     }
     else if (card.gsx$cost.toLowerCase() == 'x') {
-      mugicCounters.push(<span key={0}>X</span>);
+      mugicCounters.push(<span className="bigger" key={0}>X</span>);
     }
     else {
       for (let i = 0; i < card.gsx$cost; i++) {
@@ -28,7 +28,7 @@ export default class Attack extends React.Component {
         <div className="left">
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
-          <img height="20" className="icon16" src={"/src/img/icons/tribes/"+(card.gsx$tribe.toLowerCase()||"generic")+".png"} /> {card.gsx$tribe}<br />
+          <Tribe size="icon16" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}<br />
           <span>{mugicCounters}</span><br />
         </div>
         <br />

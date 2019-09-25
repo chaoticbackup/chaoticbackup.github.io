@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Ability, Initiative} from '../../Snippets';
+import {Rarity, Unique, Name, Ability, Initiative, LocationIcon} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Location extends React.Component {
@@ -15,7 +15,8 @@ export default class Location extends React.Component {
         <div className="left">
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
-          <Initiative initiative={card.gsx$initiative} /><br />
+          <span><LocationIcon /> Location{card.gsx$types.length > 0 ? " - " + card.gsx$types : null}</span><br />
+          <Initiative initiative={card.gsx$initiative} />
         </div>
         <div className="right">
           <Ability ability={card.gsx$ability} />

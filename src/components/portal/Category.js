@@ -34,8 +34,9 @@ export default class Category extends React.Component {
       if (!data) return (<div key={i}></div>);
 
       return (<div key={i}>
-          <Interactive as={Link} {...s.link}
+          <Interactive as={Link}
             to={url || `/portal/${this.props.type}/${card.gsx$name}`}
+            {...s.link}
           >
             <span>{card.gsx$name.split(",")[0]}</span><br />
             <img className="thumb" src={API.base_image + data.gsx$thumb}></img>

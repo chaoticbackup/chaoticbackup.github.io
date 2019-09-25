@@ -4,12 +4,13 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const AsyncChunkNames = require('webpack-async-chunk-names-plugin');
 require('@babel/register');
 
 const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('-p') === -1);
 
 const config = {
-  entry: ['@babel/polyfill', `${__dirname}/src/components/index.js`],
+  entry: ['@babel/polyfill', `./src/components/index.js`],
 
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -23,9 +24,10 @@ const config = {
   },
 
   output: {
-    path: `${__dirname}/build`,
+    path: path.resolve(__dirname, 'build'),
+    filename: 'main.js',
+    chunkFilename: '[name].js',
     publicPath: '/build/',
-    filename: 'bundle.js',
   },
 
   optimization: {
@@ -40,11 +42,29 @@ const config = {
     ],
     splitChunks: {
       cacheGroups: {
+        default: false,
+        vendor: {
+          // name of the chunk
+          name: 'vendor',
+          // sync + async chunks
+          chunks: 'all',
+          // import file path containing node_modules
+          test: /node_modules/,
+          priority: 20,
+        },
         styles: {
           name: 'styles',
           test: /\.css$/,
-          chunks: 'all',
+          chunks: "all",
           enforce: true,
+        },
+        common: {
+          name: 'common',
+          minChunks: 2,
+          chunks: 'async',
+          priority: 10,
+          reuseExistingChunk: true,
+          enforce: true
         },
       },
     },
@@ -66,6 +86,7 @@ const config = {
             '@babel/plugin-transform-runtime',
             ['@babel/plugin-proposal-decorators', {legacy: true }],
             ['@babel/plugin-proposal-class-properties', { loose: true }],
+            '@babel/plugin-syntax-dynamic-import',
           ],
         },
       },
@@ -85,13 +106,16 @@ const config = {
   },
 
   // First array is dev only, second is production
-  plugins: devMode ? [] : [
+  plugins: devMode 
+  ? [
+    new AsyncChunkNames(),
+  ] 
+  : [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: '[name].css'
     }),
   ],
 };

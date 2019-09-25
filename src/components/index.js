@@ -1,28 +1,37 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import loadable from 'react-loadable';
 import s from '../styles/app.style';
 
 /* Components */
 import API from './SpreadsheetData';
-import {PageNotFound, UnderConstruction, Donate} from './Snippets';
-import EnterTheCode from './entercode/index';
+import {PageNotFound, UnderConstruction, Donate, Loading} from './Snippets';
 import Create from './create/index';
-import Collection from './collection/index';
-import Portal from './portal/index';
-import Home from './Home';
 
+const EnterTheCode = loadable({
+  loader: () => import('./entercode'),
+  loading: Loading
+})
 
-render(
-  <Router>
-    <Base path="/*" href="/" />
-  </Router>
-  , document.getElementById('root'),
-);
+const Home = loadable({
+  loader: () => import('./home'),
+  loading: Loading
+});
+
+const Portal = loadable({
+  loader: () => import('./portal'),
+  loading: Loading
+});
+
+const Collection = loadable({
+  loader: () => import('./collection'),
+  loading: Loading
+});
 
 function Routing(props) {
   return (
-    <React.Fragment>
+    <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/PageNotFound" component={PageNotFound} />
       <Route path="/UnderConstruction" component={UnderConstruction} />
@@ -30,7 +39,7 @@ function Routing(props) {
       <Route path="/create" component={Create} />
       <Route path="/collection" component={Collection} />
       <Route path="/portal" component={Portal} />
-    </React.Fragment>
+    </Switch>
   );
 }
 
@@ -158,3 +167,10 @@ function Base(props) {
     </React.Fragment>
   );
 }
+
+render(
+  <Router>
+    <Base path="/*" href="/" />
+  </Router>
+  , document.getElementById('root'),
+);

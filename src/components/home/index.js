@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Donate} from './Snippets';
-import "../scss/home.scss";
+import {Donate} from '../Snippets';
+import "../../scss/home.scss";
 
 const GithubLink = () => (
   <a 
@@ -12,7 +12,7 @@ const GithubLink = () => (
   </a>
 );
 
-export default function Home() {
+export default function Home(props) {
   return (
     <div>
       <br />

@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Ability} from '../../Snippets';
+import {Rarity, Unique, Name, Ability, BattlegearIcon} from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Battlegear extends React.Component {
@@ -15,6 +15,7 @@ export default class Battlegear extends React.Component {
         <div className="left">
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <span><BattlegearIcon /> Battlegear{card.gsx$types.length > 0 ? " - " + card.gsx$types : null}</span>
         </div>
         <div className="right" >
           <Ability ability={card.gsx$ability} />

@@ -61,19 +61,22 @@ export default function search_api(input) {
 
   // Card Text
   if (input.text.length > 0) {
+    // split text by comma
     let textList = input.text.split(",").filter(Boolean).map((item) => {
       return ({'$regex': new RegExp(item.trim(), 'i')});
     });
+    // clean text
+    let inputtext = input.text.replace(/\\/g, '').replace(/\(|\)/g, (match) => {return ("\\"+match)});
 
     let parm = (() => {
       let list = [
         {'gsx$tags': {"$or": textList}},
-        {'gsx$ability': {"$or": textList}},
-        {'gsx$artist': {"$or": textList}}
+        {'gsx$ability': {"$or": {'$regex': new RegExp(inputtext, 'i')}}}
       ]
-      if (input.flavor)
-        list.splice(3, 0, {'gsx$flavortext': {"$or": textList}});
-
+      if (input.flavor) {
+        list.push({'gsx$flavortext': {"$or": textList}});
+        list.push({'gsx$artist': {"$or": textList}});
+      }
       return list;
     })();
 
@@ -86,24 +89,6 @@ export default function search_api(input) {
     mugicResults = mugicResults.find({'$or': parm});
   }
 
-  // Past
-  if (input.past) {
-    attackResults = attackResults.find({'gsx$past': {'$gt': 0}});
-    battlegearResults = battlegearResults.find({'gsx$past': {'$gt': 0}});
-    creatureResults = creatureResults.find({'gsx$types': {'$regex': new RegExp("past", 'i')}});
-    locationResults = locationResults.find({'gsx$past': {'$gt': 0}});
-    mugicResults = mugicResults.find({'gsx$past': {'$gt': 0}});
-  }
-
-  // Mirage
-  if (input.mirage) {
-    locationResults = locationResults.find({'gsx$mirage': {'$gt': 0}});
-    attackResults = attackResults.limit(0);
-    battlegearResults = battlegearResults.limit(0);
-    creatureResults = creatureResults.limit(0);
-    mugicResults = mugicResults.limit(0);
-  }
-
   // Subtypes / Initiative
   if (input.subtypes.length > 0) {
     let subtypesList = input.subtypes.split(",").filter(Boolean).map((item) => {
@@ -111,23 +96,11 @@ export default function search_api(input) {
     });
 
     creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList} });
-    locationResults = locationResults.find({'gsx$initiative': {'$or': subtypesList}});
+    locationResults = locationResults.find({'$or': [{'gsx$initiative': {'$or': subtypesList}}, {'gsx$types': {'$or': subtypesList}}]});
     attackResults = attackResults.limit(0);
     battlegearResults = battlegearResults.find({'gsx$types': {'$or': subtypesList} });
     mugicResults = mugicResults.limit(0);
   }
-
-  // Minion
-  if (input.minion) {
-    locationResults = locationResults.limit(0);
-    attackResults = attackResults.limit(0);
-    battlegearResults = battlegearResults.limit(0);
-    creatureResults = creatureResults.where((obj) => {
-      return obj.gsx$brainwashed != ('');
-    });
-    mugicResults = mugicResults.limit(0);
-  }
-
 
   // Search by tribe
   let tribesList = [];

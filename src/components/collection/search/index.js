@@ -30,14 +30,11 @@ export default class SearchCollection extends React.Component {
       name: "",
       text: "",
       subtypes: "",
-      past: false,
-      mirage: false,
-      minion: false,
       flavor: true,
       sets: {},
       types: {attack: false, battlegear: false, creature: false, location: false, mugic: false},
       rarity: {common: false, uncommon: false, rare: false, 'super rare': false, 'ultra rare': false, promo: false},
-      tribes: {danian: false, 'm\'arrillian': false, 'mipedian': false, overworld: false, underworld: false, generic: false},
+      tribes: {danian: false, 'm\'arrillian': false, mipedian: false, overworld: false, underworld: false, generic: false},
       elements: {fire: false, air: false, earth: false, water: false, none: false, and: false},
       disciplines: {courage: '', power: '', wisdom: '', speed: ''},
       energy: {min: '', max: ''},
@@ -69,9 +66,6 @@ export default class SearchCollection extends React.Component {
       }
     });
 
-    if (query.hasOwnProperty('past')) this.input.past = true;
-    if (query.hasOwnProperty('mirage')) this.input.mirage = true;
-    if (query.hasOwnProperty('minion')) this.input.minion = true;
     if (query.hasOwnProperty('name')) this.input.name = query.name;
     if (query.hasOwnProperty('text')) this.input.text = query.text;
     if (query.hasOwnProperty('subtypes')) this.input.subtypes = query.subtypes;
@@ -106,9 +100,6 @@ export default class SearchCollection extends React.Component {
 
     this.list.forEach(item => queryString += update(item));
 
-    if (this.input.past) queryString += "past&";
-    if (this.input.mirage) queryString += "mirage&";
-    if (this.input.minion) queryString += "minion&";
     if (this.input.name) queryString += "name=" + encodeURIComponent(this.input.name) + "&";
     if (this.input.text) queryString += "text=" + encodeURIComponent(this.input.text) + "&";
     if (this.input.subtypes) queryString += "subtypes=" + encodeURIComponent(this.input.subtypes) + "&";
@@ -229,16 +220,11 @@ export default class SearchCollection extends React.Component {
           <div className="text-entry">
             <input type="text" name="text" placeholder="Card Text" value={this.input.text} onChange={this.handleChange} />
           </div>
-          <div className="centeredCheckBox">
-            <label className="mull"><input type="checkbox" name="flavor" value={!this.input.flavor} onChange={(e) => {this.input.flavor = !e.target.checked}} />Ignore Flavortext</label>
-          </div>
           <div className="text-entry">
             <input type="text" name="subtypes" placeholder="Subtypes | Initiative" value={this.input.subtypes} onChange={this.handleChange} />
           </div>
-          <div className="centeredCheckBox centeredSpacing">
-            <label className="mull"><input type="checkbox" name="past" checked={this.input.past} onChange={this.handleChange} />Past</label>
-            <label className="mull"><input type="checkbox" name="mirage" checked={this.input.mirage} onChange={this.handleChange} />Mirage</label>
-            <label className="mull"><input type="checkbox" name="minion" checked={this.input.minion} onChange={this.handleChange} />Minion</label>
+          <div className="centeredCheckBox">
+            <label className="mull"><input type="checkbox" name="flavor" value={!this.input.flavor} onChange={(e) => {this.input.flavor = !e.target.checked}} />Ignore Flavortext & Artist</label>
           </div>
           <br />
           <div className="centeredCheckBox centeredSpacing">
