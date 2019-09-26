@@ -221,11 +221,13 @@
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    > div {
+    
+    .nav_item {
       display: inline-block;
+      margin-right: 3px;
+      margin-left: 3px;
+
       img {
-        margin-right: 3px;
-        margin-left: 3px;
         min-width: 96px;
         height: 100px;
       }
@@ -247,7 +249,8 @@
       flex-wrap: wrap;
       justify-content: flex-start;
       align-content: space-between;
-      > div {
+
+      .nav_item {
         overflow-wrap: break-word;
         margin: 3px;
         max-width: 106px;

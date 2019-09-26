@@ -10,6 +10,7 @@ import search_api from './search';
 export default class SearchCollection extends React.Component {
   @observable loaded = false;
   @observable input;
+  @observable collapsed;
   list = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
 
   constructor(props) {
@@ -19,10 +20,35 @@ export default class SearchCollection extends React.Component {
     this.search = this.search.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.reset = this.reset.bind(this);
+    this.handleTriggerClick = this.handleTriggerClick.bind(this);
 
     this.props.handleContent([{'text': 'Loading...'}]);
+
     this.cleanInput();
     this.parseQuery();
+
+    this.fetchCollapsed();
+  }
+
+  fetchCollapsed = () => {
+    let collapsed = localStorage.getItem("collapsed")
+
+    if (collapsed) collapsed = JSON.parse(collapsed);
+    else collapsed = {
+      disciplines: true,
+      energy: true,
+      bpmc: true,
+      types: true,
+      rarity: false,
+      sets: false
+    }
+
+    this.collapsed = collapsed;
+  }
+
+  handleTriggerClick = (type) => {
+    this.collapsed[type] = !this.collapsed[type];
+    localStorage.setItem("collapsed", JSON.stringify(this.collapsed));
   }
 
   cleanInput = () => {
@@ -249,38 +275,70 @@ export default class SearchCollection extends React.Component {
             <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
           </div>
           <hr />
-          <div className="disciplines">
-            {disciplines}
-          </div>
-          <Collapsible open={true} trigger="Energy">
+          <CollapsibleWrapper
+            type="disciplines"
+            trigger="Disciplines"
+            open={this.collapsed.disciplines}
+            onClick={this.handleTriggerClick} 
+          >
+            <div className="disciplines">
+              {disciplines}
+            </div>
+          </CollapsibleWrapper>
+          <CollapsibleWrapper
+            type="energy"
+            trigger="Energy" 
+            open={this.collapsed.energy} 
+            onClick={this.handleTriggerClick} 
+          >
             <div className="minMax">
               <label className="mcbp">Min <input type="text" name="min" value={this.input.energy.min} onChange={e => this.handleChange(e, "energy")} /></label>
               <label className="mcbp">Max <input type="text" name="max" value={this.input.energy.max} onChange={e => this.handleChange(e, "energy")}  /></label>
             </div>
-          </Collapsible>
-          <Collapsible open={true} trigger="Build Points&#10;Mugic Counters/Cost">
+          </CollapsibleWrapper>
+          <CollapsibleWrapper 
+            type="bpmc"
+            trigger="Build Points&#10;Mugic Counters/Cost" 
+            open={this.collapsed.bpmc} 
+            onClick={this.handleTriggerClick} 
+          >
             <div className="minMax">
               <label className="mcbp">Min <input type="text" name="min" value={this.input.mcbp.min} onChange={e => this.handleChange(e, "mcbp")} /></label>
               <label className="mcbp">Max <input type="text" name="max" value={this.input.mcbp.max} onChange={e => this.handleChange(e, "mcbp")} /></label>
             </div>
-          </Collapsible>
-          <Collapsible open={true} trigger="Types">
+          </CollapsibleWrapper>
+          <CollapsibleWrapper
+            type="types"
+            trigger="Card Type" 
+            open={this.collapsed.types} 
+            onClick={this.handleTriggerClick} 
+          >
             <div className="centeredCheckBox">
               {types}
             </div>
-          </Collapsible>
-          <Collapsible trigger="Rarity">
+          </CollapsibleWrapper>
+          <CollapsibleWrapper
+            type="rarity"
+            trigger="Rarity" 
+            open={this.collapsed.rarity}
+            onClick={this.handleTriggerClick}   
+          >
             <div className="centeredCheckBox">
               {rarity}
             </div>
-          </Collapsible>
-          <Collapsible trigger="Sets">
+          </CollapsibleWrapper>
+          <CollapsibleWrapper 
+            type="sets"
+            trigger="Sets" 
+            open={this.collapsed.sets}
+            onClick={this.handleTriggerClick} 
+          >
             <div className="setBox">
               <div className="centeredCheckBox" id="sets">
                 {sets}
               </div>
             </div>
-          </Collapsible>
+          </CollapsibleWrapper>
           {/*<Collapsible trigger="Gender (fan content)">{gender}</Collapsible>*/}
           <div className="centeredButtons">
             <input id="search" type="submit" value="Search" />
@@ -290,5 +348,18 @@ export default class SearchCollection extends React.Component {
       </div>
     );
   }
-
 }
+
+function CollapsibleWrapper(props) {
+  const {type, children, onClick, ...rest} = props;
+
+  return (
+    <span onClick={() => onClick(type)} >
+      <Collapsible
+        {...rest}
+      >
+        {children}
+      </Collapsible>
+    </span>
+  );
+} 

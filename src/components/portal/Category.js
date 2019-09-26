@@ -33,7 +33,7 @@ export default class Category extends React.Component {
       // Prevent site from crashing due to misspelled/missing data
       if (!data) return (<div key={i}></div>);
 
-      return (<div key={i}>
+      return (<div key={i} className="nav_item">
           <Interactive as={Link}
             to={url || `/portal/${this.props.type}/${card.gsx$name}`}
             {...s.link}

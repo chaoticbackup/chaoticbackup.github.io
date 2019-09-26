@@ -1,11 +1,16 @@
 @import '../base';
 
 @media only screen and (min-width: 975px) {
-
   .collection {
     margin-top: 5px;
     margin-right: 5px;
     margin-left: 5px;
+  }
+}
+
+.collection {
+
+  @media only screen and (min-width: 975px) {
 
     > .left {
       font-family: Roboto, Arial, sans-serif;
@@ -18,12 +23,6 @@
       float: right;
       width: 70%;
     }
-  }
-}
-
-.collection {
-
-  @media only screen and (min-width: 975px) {
 
     #buttons {
       border-radius: 5px;
@@ -179,13 +178,6 @@
       font-style: italic;
     }
 
-    .disciplines input {
-      width: 30px;
-      height: 14px;
-      text-align: center;
-      margin-top: 2px;
-    }
-
     .mull input {
       margin-left: 0px;
       margin-top: 1px;
@@ -199,14 +191,6 @@
     .Collapsible__contentInner
     .centeredCheckBox {
       width: 50%;
-    }
-
-    .mcbp input {
-      width: 24px;
-      height: 14px;
-      padding: unset;
-      text-align: center;
-      margin-top: 2px;
     }
 
     .tribes {
@@ -229,6 +213,21 @@
 
   }
   /* desktop */
+
+  .disciplines input {
+    width: 30px;
+    height: 14px;
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .mcbp input {
+    width: 24px;
+    height: 14px;
+    padding: unset;
+    text-align: center;
+    margin-top: 2px;
+  }
 
   .card .icon14, .card .icon16,
   .card .icon20, .card .icon24 {

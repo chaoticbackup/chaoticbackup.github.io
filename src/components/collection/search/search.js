@@ -66,24 +66,26 @@ export default function search_api(input) {
       return ({'$regex': new RegExp(item.trim(), 'i')});
     });
     // clean text
-    let inputtext = input.text.replace(/\\/g, '').replace(/\(|\)/g, (match) => {return ("\\"+match)});
+    let inputtext = new RegExp(input.text.replace(/\\/g, '').replace(/\(|\)/g, (match) => {return ("\\"+match)}), "i");
 
+    console.log(inputtext);
     let parm = (() => {
       let list = [
         {'gsx$tags': {"$or": textList}},
-        {'gsx$ability': {"$or": {'$regex': new RegExp(inputtext, 'i')}}}
+        {'gsx$ability': {'$regex': inputtext}}
       ]
       if (input.flavor) {
         list.push({'gsx$flavortext': {"$or": textList}});
         list.push({'gsx$artist': {"$or": textList}});
       }
+      console.log(list);
       return list;
     })();
 
     attackResults = attackResults.find({'$or': parm});
     battlegearResults = battlegearResults.find({'$or': parm});
     creatureResults = creatureResults.find({'$or':
-      (parm.concat([{'gsx$brainwashed': {"$or": textList}}]))
+      (parm.concat([{'gsx$brainwashed': {'$regex': inputtext}}]))
     });
     locationResults = locationResults.find({'$or': parm});
     mugicResults = mugicResults.find({'$or': parm});
