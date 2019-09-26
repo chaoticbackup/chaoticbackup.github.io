@@ -3,7 +3,9 @@
 #player {
   width: calc(100% - 20px);
   margin: 0 10px;
+  text-align: center;
 }
+
 
 /*-------------- Content Formatting --------------*/
 /*------------------------------------------------------*/

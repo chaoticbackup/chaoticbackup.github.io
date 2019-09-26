@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import loadable from 'react-loadable';
+import loadable from '@loadable/component';
 import s from '../styles/app.style';
 
 /* Components */
@@ -9,25 +9,25 @@ import API from './SpreadsheetData';
 import {PageNotFound, UnderConstruction, Donate, Loading} from './Snippets';
 import Create from './create/index';
 
-const EnterTheCode = loadable({
-  loader: () => import('./entercode'),
-  loading: Loading
-})
+const EnterTheCode = loadable(
+  () => import('./entercode'), 
+  {fallback: <Loading />}
+);
 
-const Home = loadable({
-  loader: () => import('./home'),
-  loading: Loading
-});
+const Home = loadable(
+  () => import('./home'),
+  {fallback: <Loading />}
+);
 
-const Portal = loadable({
-  loader: () => import('./portal'),
-  loading: Loading
-});
+const Portal = loadable(
+  () => import('./portal'),
+  {fallback: <Loading />}
+);
 
-const Collection = loadable({
-  loader: () => import('./collection'),
-  loading: Loading
-});
+const Collection = loadable(
+  () => import('./collection'),
+  {fallback: <Loading />}
+);
 
 function Routing(props) {
   return (

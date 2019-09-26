@@ -44,22 +44,43 @@ export default class Category extends React.Component {
       </div>);
     };
 
+    let base_path = true;
     let cat_title = "";
-    let top_content = (<div></div>);
+    let top_content = (<div />);
     let bottom_nav = [];
+
+    let path = this.props.location.pathname.split("/");
+    if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // ** Process the tribe ** //
     if (this.type == "creatures" || this.type == "mugic") {
       // /portal/Creatures/
       // /portal/Creatures/{Tribe}
       // The first / gets counted
-      let path = this.props.location.pathname.split("/");
-      if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
       const tribe = (() => {
         if (path.length >= 4 && API.tribes.includes(path[3])) return path[3];
         else return null;
       })();
+
+      if (tribe) {
+        if (path.length > 4) {
+          base_path = false;
+          top_content = <Route path={`${this.props.match.url}/${tribe}/:card`} component={this.props.component} />;
+        }
+      }
+      else {
+        if (path.length > 3) {
+          base_path = false;
+          top_content = <Route path={`${this.props.match.url}/:card`} component={this.props.component} />;
+        }
+      }
+
+      cat_title = ((tribe) ?
+        `${tribe} ${this.props.type}`
+        :
+        this.props.type
+      );
 
       bottom_nav = ((tribe) ?
         API.portal[this.type].chain().find({'gsx$tribe': tribe}).simplesort('gsx$name').data()
@@ -74,30 +95,38 @@ export default class Category extends React.Component {
         );
         return create_link(card_portal, card_data, i, url);
       });
-      cat_title = ((tribe) ?
-        `${tribe} ${this.props.type}`
-        :
-        this.props.type
-      );
-      top_content = ((tribe) ?
-        (<Route path={`${this.props.match.url}/${tribe}/:card`} component={this.props.component} />)
-        :
-        (<Route path={`${this.props.match.url}/:card`} component={this.props.component} />)
-      );
     }
     else {
-      bottom_nav = API.portal[this.type].data.map((card_portal, i) => {
+      if (path.length > 3) {
+        base_path = false;
+        top_content = (<Route path={`${this.props.match.url}/:card`} component={this.props.component} />);
+      }
+
+      cat_title = this.props.type;
+
+      bottom_nav = API.portal[this.type].data
+      .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
+      .map((card_portal, i) => {
         let card_data = API.cards[this.type].findOne({'gsx$name': card_portal.gsx$name});
         return create_link(card_portal, card_data, i);
       });
-      cat_title = this.props.type;
-      top_content = (<Route path={`${this.props.match.url}/:card`} component={this.props.component} />);
     }
 
-    return (<div className={`entry ${this.type}`}>
+    if (base_path) {
+      return (
+      <div className={`entry ${this.type} base_path`}>
+        <div className="cat_title">{cat_title}</div>
+        <div className="entry_nav">{bottom_nav}</div>
+      </div>
+      );
+    }
+
+    return (
+    <div className={`entry ${this.type}`}>
       <div className="entry_content">{top_content}</div>
       <div className="cat_title">{cat_title}</div>
       <div className="entry_nav">{bottom_nav}</div>
-    </div>);
+    </div>
+    );
   }
 }

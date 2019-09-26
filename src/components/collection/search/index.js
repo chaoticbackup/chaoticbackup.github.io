@@ -166,7 +166,7 @@ export default class SearchCollection extends React.Component {
         return (<Loading />);
       }
 
-    let gen = (d, display, text) => {
+    const gen = (d, display, text) => {
       let tmp = [];
       Object.keys(this.input[d]).forEach((item, i) => {
         tmp.push(<label style={{display: display}} key={i}><input type="checkbox" name={item} checked={this.input[d][item]} onChange={e => this.handleChange(e, d)} />{text(item)}</label>
@@ -175,27 +175,27 @@ export default class SearchCollection extends React.Component {
       return tmp;
     }
 
-    let sets = gen("sets", "block", (item) => {
+    const sets = gen("sets", "block", (item) => {
       return API.sets[item.toUpperCase()];
     });
 
-    let types = gen("types", "block", (item) => {
+    const types = gen("types", "block", (item) => {
       return item.charAt(0).toUpperCase()+item.slice(1);
     });
 
-    let rarity = gen("rarity", "block", (item) => {
+    const rarity = gen("rarity", "block", (item) => {
       return item.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ");
     });
 
-    // let gender = gen("gender", "block", (item) => {
+    // const gender = gen("gender", "block", (item) => {
     //   return item.charAt(0).toUpperCase()+item.slice(1);
     // });
 
-    let tribes = gen("tribes", "inline", (item) => {
+    const tribes = gen("tribes", "inline", (item) => {
       return (<span><img className="icon16" src={"/src/img/icons/tribes/"+item+".png"} /></span>);
     });
 
-    let elements = gen("elements", "inline", (item) => {
+    const elements = gen("elements", "inline", (item) => {
       return (<span><img className="icon20" src={"/src/img/icons/elements/"+item+".png"} />&nbsp;</span>);
     }).slice(0, -2);
 

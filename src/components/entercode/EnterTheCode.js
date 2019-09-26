@@ -7,14 +7,17 @@ import DigitInput from 'react-digit-input';
 import API from '../SpreadsheetData';
 import {Loading} from '../Snippets';
 import style from '../../styles/style';
+import './packs.scss';
 
 const s = Object.create(style);
 s.input = {
-  width: '1em',
-  height: '1em',
+  width: '1.2em',
+  height: '1.4em',
   font: 'inherit',
   textAlign: 'center',
-  margin: '0.1em',
+  margin: '0.05em',
+  backgroundColor: "rgba(0,0,0,0)",
+  color: "white",
 }
 
 s.inputGroup = {
@@ -32,7 +35,7 @@ s.hyphen = {
 @inject((stores, props, context) => props) @observer
 export default class EnterTheCode extends React.Component {
   @observable code = "";
-  @observable message = null;
+  message = observable({contents: null}, { contents: observable.ref });
   @observable fan = null;
 
   render() {
@@ -53,18 +56,21 @@ export default class EnterTheCode extends React.Component {
     let validate = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (this.code == "" || this.code.indexOf(" ") === 1) {
-        this.message = (
+
+      if (this.code.length < 12 || this.code.indexOf(" ") != -1) {
+        this.message.contents = (
           <p style={{'color': 'red'}}>Please enter a 12 digit code</p>
         );
       }
       else {
         let card = this.fan[getRandomInt(0, this.fan.length)];
-        this.message = (
-          <div key="1">
+        let rgx = /.*.png|.*.jpg/i;
+        let img = (rgx.test(card.gsx$image.$t) ? card.gsx$image.$t : API.base_image + card.gsx$image.$t);
+        this.message.contents = (
+          <div key={0}>
             <p> Congrats on your scan! </p><br />
-            <p> {card.gsx$name.$t} </p><br />
-            <img className="card" src={API.base_image + card.gsx$image.$t} />
+            <p className="bigger"> {card.gsx$name.$t} </p><br />
+            <img className="card" src={img} />
           </div>
         );
       }
@@ -103,7 +109,7 @@ export default class EnterTheCode extends React.Component {
         <br />
         <button onClick={validate}>Validate Code</button>
         <br /><br />
-        {this.message}
+        {this.message.contents}
       </div>
     );
   }

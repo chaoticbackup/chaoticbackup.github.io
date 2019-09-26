@@ -1,3 +1,5 @@
+@import '../base';
+
 .portal {
 /* portal css */
 .navbar h1 {
@@ -224,6 +226,31 @@
       img {
         margin-right: 3px;
         margin-left: 3px;
+        min-width: 96px;
+        height: 100px;
+      }
+    }
+  }
+
+  &.base_path {
+    .entry_nav, .cat_title {
+      background-color: inherit;
+    }
+    .cat_title {
+      padding-top: 1em;
+      padding-bottom: 1em;
+    }
+    .entry_nav {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: space-between;
+      > div {
+        overflow-wrap: break-word;
+        margin: 3px;
+        max-width: 106px;
       }
     }
   }

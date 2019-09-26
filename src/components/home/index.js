@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Donate} from '../Snippets';
-import "../../scss/home.scss";
+import "./home.scss";
 
 const GithubLink = () => (
   <a 

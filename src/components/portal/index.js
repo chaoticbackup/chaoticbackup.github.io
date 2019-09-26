@@ -17,7 +17,7 @@ import Creature from './Single/Creature';
 import Location from './Single/Location';
 import Mugic from './Single/Mugic';
 
-import '../../scss/portal.scss';
+import './portal.scss';
 
 @inject((stores, props, context) => props) @observer
 export default class Base extends React.Component {

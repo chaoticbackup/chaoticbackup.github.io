@@ -16,7 +16,7 @@ export default class Base extends React.Component {
 function Routing(props) {
   const match = props.match;
   return (
-    <div>
+    <div className="pack">
       <Route exact path={match.url} component={EnterTheCode} />
       <Route path={`${match.url}/PackSimulator`} component={PackSimulator} />
     </div>

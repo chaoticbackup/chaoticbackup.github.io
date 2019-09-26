@@ -13,6 +13,7 @@
   "author": "Danude Sandstorm",
   "license": "MIT",
   "dependencies": {
+    "@loadable/component": "^5.10.3",
     "lokijs": "^1.5.7",
     "mobx": "^5.13.0",
     "mobx-react": "^5.4.4",
@@ -58,7 +59,6 @@
     "style-loader": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.0",
-    "webpack-async-chunk-names-plugin": "^0.1.1",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
   }
