@@ -24,6 +24,13 @@
       width: 70%;
     }
 
+    .fixed {
+      position: fixed;
+      top: 0;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
     #buttons {
       border-radius: 5px;
       border-color: transparent;
