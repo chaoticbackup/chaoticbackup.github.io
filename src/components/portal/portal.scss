@@ -226,9 +226,9 @@
       display: inline-block;
       margin-right: 3px;
       margin-left: 3px;
+      min-width: 96px;
 
       img {
-        min-width: 96px;
         height: 100px;
       }
     }
@@ -249,11 +249,17 @@
       flex-wrap: wrap;
       justify-content: flex-start;
       align-content: space-between;
+      position: relative;
 
       .nav_item {
-        overflow-wrap: break-word;
         margin: 3px;
         max-width: 106px;
+        white-space: initial;
+        overflow-wrap: break-word;
+
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
       }
     }
   }

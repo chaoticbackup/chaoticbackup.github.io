@@ -47,8 +47,9 @@ export default class SearchCollection extends React.Component {
   }
 
   handleTriggerClick = (type) => {
-    this.collapsed[type] = !this.collapsed[type];
-    localStorage.setItem("collapsed", JSON.stringify(this.collapsed));
+    let stored_collapse = this.collapsed;
+    stored_collapse[type] = !this.collapsed[type];
+    localStorage.setItem("collapsed", JSON.stringify(stored_collapse));
   }
 
   cleanInput = () => {
@@ -277,8 +278,8 @@ export default class SearchCollection extends React.Component {
           <hr />
           <CollapsibleWrapper
             type="disciplines"
-            trigger="Disciplines"
-            open={this.collapsed.disciplines}
+            title="Disciplines"
+            collapsed={this.collapsed}
             onClick={this.handleTriggerClick} 
           >
             <div className="disciplines">
@@ -287,8 +288,8 @@ export default class SearchCollection extends React.Component {
           </CollapsibleWrapper>
           <CollapsibleWrapper
             type="energy"
-            trigger="Energy" 
-            open={this.collapsed.energy} 
+            title="Energy" 
+            collapsed={this.collapsed} 
             onClick={this.handleTriggerClick} 
           >
             <div className="minMax">
@@ -298,8 +299,8 @@ export default class SearchCollection extends React.Component {
           </CollapsibleWrapper>
           <CollapsibleWrapper 
             type="bpmc"
-            trigger="Build Points&#10;Mugic Counters/Cost" 
-            open={this.collapsed.bpmc} 
+            title="Build Points&#10;Mugic Counters/Cost" 
+            collapsed={this.collapsed} 
             onClick={this.handleTriggerClick} 
           >
             <div className="minMax">
@@ -309,8 +310,8 @@ export default class SearchCollection extends React.Component {
           </CollapsibleWrapper>
           <CollapsibleWrapper
             type="types"
-            trigger="Card Type" 
-            open={this.collapsed.types} 
+            title="Card Type" 
+            collapsed={this.collapsed} 
             onClick={this.handleTriggerClick} 
           >
             <div className="centeredCheckBox">
@@ -319,8 +320,8 @@ export default class SearchCollection extends React.Component {
           </CollapsibleWrapper>
           <CollapsibleWrapper
             type="rarity"
-            trigger="Rarity" 
-            open={this.collapsed.rarity}
+            title="Rarity" 
+            collapsed={this.collapsed}
             onClick={this.handleTriggerClick}   
           >
             <div className="centeredCheckBox">
@@ -329,8 +330,8 @@ export default class SearchCollection extends React.Component {
           </CollapsibleWrapper>
           <CollapsibleWrapper 
             type="sets"
-            trigger="Sets" 
-            open={this.collapsed.sets}
+            title="Sets" 
+            collapsed={this.collapsed}
             onClick={this.handleTriggerClick} 
           >
             <div className="setBox">
@@ -351,15 +352,16 @@ export default class SearchCollection extends React.Component {
 }
 
 function CollapsibleWrapper(props) {
-  const {type, children, onClick, ...rest} = props;
+  const {type, children, onClick, title, collapsed} = props;
 
   return (
-    <span onClick={() => onClick(type)} >
-      <Collapsible
-        {...rest}
-      >
-        {children}
-      </Collapsible>
-    </span>
+    <Collapsible
+      trigger={title}
+      open={collapsed[type]}
+      onOpen={() => onClick(type)}
+      onClose={() => onClick(type)}
+    >
+      {children}
+    </Collapsible>
   );
 } 
