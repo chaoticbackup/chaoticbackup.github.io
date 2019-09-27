@@ -14,11 +14,21 @@ export default class Home extends React.Component {
   @observable ext = false;
   @observable content = [];
   @observable card_img = API.card_back;
+  @observable menu_fixed = false;
 
-  componentDidMount() {
+  constructor() {
+    super();
     let ext = localStorage.getItem("extended");
     if (ext == null) this.ext = false;
     this.ext = (/true/i).test(ext);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   handleContent(content) {
@@ -36,12 +46,32 @@ export default class Home extends React.Component {
     localStorage.setItem("extended", this.ext);
   }
 
+
+
+  handleScroll = (event) => {
+    if (this.menu_fixed !== null) {
+      if (window.scrollY >= 220) {
+        if (!this.menu_fixed.classList.contains("fixed"))
+        {
+          this.menu_fixed.classList.add("fixed");
+          // this.menu_fixed.className = "fixed";
+        }
+      }
+      else if (this.menu_fixed.classList.contains("fixed")) {
+        // this.menu_fixed.className = "";
+        this.menu_fixed.classList.remove("fixed");
+      }
+    }
+  };
+
   render() {
     return (
       <div className={"collection " + (this.ext ? "extended" : "short")}>
         <div className="left">
-          <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
-          <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
+          <div ref={(ref) => this.menu_fixed = ref}>
+            <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
+            <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
+          </div>
         </div>
         <div className="right">
           <div className="list-nav-top">
