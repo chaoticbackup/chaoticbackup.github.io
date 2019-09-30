@@ -351,17 +351,30 @@ export default class SearchCollection extends React.Component {
   }
 }
 
-function CollapsibleWrapper(props) {
-  const {type, children, onClick, title, collapsed} = props;
+class CollapsibleWrapper extends React.Component {
+  open = false;
+  trigger = "";
 
-  return (
-    <Collapsible
-      trigger={title}
-      open={collapsed[type]}
-      onOpen={() => onClick(type)}
-      onClose={() => onClick(type)}
-    >
-      {children}
-    </Collapsible>
-  );
-} 
+  constructor(props) {
+    super(props);
+    const {collapsed, type} = props;
+    this.open = collapsed[type];
+    this.trigger = props.title;
+  }
+
+  render() {
+    const {type, children, onClick} = this.props;
+
+    return (
+      <Collapsible
+        trigger={this.trigger}
+        open={this.open}
+        onOpen={() => onClick(type)}
+        onClose={() => onClick(type)}
+      >
+        {children}
+      </Collapsible>
+    );
+  }
+
+}
