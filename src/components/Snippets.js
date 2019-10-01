@@ -70,7 +70,9 @@ export function Name(props) {
 }
 
 export function Mugic(props) {
-  return <img className={props.size||"icon20"} src={("/src/img/icons/mugic/"+(props.tribe||"generic")+".png").toLowerCase()} alt={"MC"} />
+  let type = (props.tribe||"generic") + (props.amount != undefined ? `_${props.amount}` : "");
+  let src = ("/src/img/icons/mugic/"+type+".png").toLowerCase();
+  return <img className={props.size||"icon20"} src={src} alt={"MC"} />
 }
 
 export function Element(props) {
@@ -99,13 +101,17 @@ export function BattlegearIcon(props) {
 }
 
 export function AttackIcon(props) {
-  return <img className={props.size||"icon16"} src="/src/img/icons/attack.png" />
+  let attack = "attack" + ((props.bp && props.bp >= 0) ? "_" + props.bp : "");
+  return <img className={props.size||"icon16"} src={`/src/img/icons/attack/${attack}.png`} />
 }
 
 export function Ability(props) {
   const mugic_counters = {
-    regex: /{{mc}}/i,
+    regex: /([0-9x]*){{mc}}/i,
     fn: (key, result) => {
+      if (result.length > 1 && result[1] != "") {
+        return (<Mugic key={key} tribe={props.tribe} amount={result[1].toLowerCase()} size="icon14"/>);
+      }
       return (<Mugic key={key} tribe={props.tribe} size="icon14"/>);
     }
   }

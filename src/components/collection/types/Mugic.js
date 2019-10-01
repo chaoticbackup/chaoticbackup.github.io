@@ -11,14 +11,19 @@ export default class Attack extends React.Component {
 
     let mugicCounters = [];
     if (card.gsx$cost == 0) {
-      mugicCounters.push(<span className="bigger" key={0}>0</span>);
+      mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={0} amount={"0"}/>);
     }
     else if (card.gsx$cost.toLowerCase() == 'x') {
-      mugicCounters.push(<span className="bigger" key={0}>X</span>);
+      mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={0} amount={"x"}/>);
     }
     else {
-      for (let i = 0; i < card.gsx$cost; i++) {
-        mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={i} />);
+      if (card.gsx$cost > 5) {
+        mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={0} amount={card.gsx$cost} />);
+      }
+      else {
+        for (let i = 0; i < card.gsx$cost; i++) {
+          mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={i} />);
+        }
       }
     }
 

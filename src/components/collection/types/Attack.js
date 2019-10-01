@@ -15,9 +15,9 @@ export default class Attack extends React.Component {
         <div className="left">
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
-          <span><AttackIcon /> Attack - {card.gsx$bp}</span><br />
+          <span><AttackIcon bp={card.gsx$bp} /> Attack - {card.gsx$bp}</span><br />
           <div>
-            <span className="bigger">{card.gsx$base}</span> |&nbsp;
+            <span className="bp bigger" >{card.gsx$base}</span> |&nbsp;
             <Element element="fire" value={card.gsx$fire} />{card.gsx$fire}&nbsp;
             <Element element="air" value={card.gsx$air} />{card.gsx$air}&nbsp;
             <Element element="earth" value={card.gsx$earth} />{card.gsx$earth}&nbsp;
