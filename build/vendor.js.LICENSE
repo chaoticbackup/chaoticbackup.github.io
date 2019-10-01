@@ -35,7 +35,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.9.0
+/** @license React v16.10.1
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -44,7 +44,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.9.0
+/** @license React v16.10.1
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -53,7 +53,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v0.15.0
+/** @license React v0.16.1
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
