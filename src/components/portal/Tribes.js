@@ -70,7 +70,7 @@ export default class Tribes extends React.Component {
       // Prevent site from crashing due to misspelled/missing data
       if (!card_data) return (<div key={i}></div>);
 
-      return (<div key={i}>
+      return (<div key={i} className="nav_item">
         <Interactive as={Link} {...s.link} to={url}>
           <span>{card.gsx$name.split(",")[0]}</span><br />
           <img className="thumb" src={API.base_image + card_data.gsx$thumb} />
