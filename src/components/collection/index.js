@@ -1,10 +1,33 @@
 import React from 'react';
 import API from '../SpreadsheetData';
-import {observable} from "mobx";
+import {observable, action, autorun} from "mobx";
 import {observer, inject} from 'mobx-react';
 import CardList from './List';
 import SearchForm from './search/index.js';
 import './collection.scss'
+
+
+// https://mobx.js.org/refguide/object.html
+// TODO
+const fixedStyles = observable({
+  fixed: {},
+  setFixed(height) {
+    this.fixed = {
+      position: "fixed",
+      top: 0,
+      overflowY: "auto",
+      height: `${height}`,
+      width: "calc(30% - 30px)",
+    }
+  },
+  removeFixed() {
+    this.fixed = {}
+  }
+}, {
+  setFixed: action,
+  removeFixed: action
+});
+
 
 @inject((stores, props, context) => props) @observer
 export default class Home extends React.Component {
@@ -14,7 +37,7 @@ export default class Home extends React.Component {
   @observable ext = false;
   @observable content = [];
   @observable card_img = API.card_back;
-  @observable menu_fixed = false;
+  fixedStyles = autorun(() => fixedStyles.fixed);
 
   constructor() {
     super();
@@ -46,21 +69,25 @@ export default class Home extends React.Component {
     localStorage.setItem("extended", this.ext);
   }
 
-
-
   handleScroll = (event) => {
-    if (this.menu_fixed !== null) {
-      if (window.scrollY >= 220) {
-        if (!this.menu_fixed.classList.contains("fixed"))
-        {
-          this.menu_fixed.classList.add("fixed");
-          // this.menu_fixed.className = "fixed";
-        }
+    event.preventDefault();
+
+    if (window.pageYOffset >= 220) {
+      // console.log(this.fixedStyles);
+      console.log(window.pageYOffset, window.innerHeight) //window.innerHeight- window.pageYOffset
+      if (window.pageYOffset > window.innerHeight) {
+        // this.fixedStyles.fixed = 
+        // TODO variable to see if scroll has happend
+        // Fix with height of viewport
+        // When nearing the end of the screen (if page offset is higher then height)
+        // reduce height by difference so that it doesn't leak into footer
       }
-      else if (this.menu_fixed.classList.contains("fixed")) {
-        // this.menu_fixed.className = "";
-        this.menu_fixed.classList.remove("fixed");
+      else {
+        // this.fixedStyles = fixedStyles(window.innerHeight + "px");
       }
+    }
+    else {
+      // this.fixedStyles = {};
     }
   };
 
@@ -68,7 +95,7 @@ export default class Home extends React.Component {
     return (
       <div className={"collection " + (this.ext ? "extended" : "short")}>
         <div className="left">
-          <div ref={(ref) => this.menu_fixed = ref}>
+          <div style={fixedStyles}>
             <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
             <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
           </div>
