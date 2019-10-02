@@ -24,11 +24,12 @@
       width: 70%;
     }
 
-    .fixed {
+    .left > .fixed {
       position: fixed;
       top: 0;
       overflow-y: auto;
       height: 100vh;
+      width: calc(30% - 30px);
     }
 
     #buttons {
@@ -304,11 +305,6 @@
     // width: 96%;
     margin-top: 5px;
   }
-
-  .left {
-    position: relative;
-  }
-
 
   .card_img {
     position: absolute;
