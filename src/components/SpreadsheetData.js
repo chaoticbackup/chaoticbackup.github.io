@@ -245,12 +245,12 @@ class API {
       "BR": "Beyond Rare",
       "LR": "League Rewards",
       "OP1": "Organized Play 1",
-      "PROMO": "Promotional"
+      "PROMO": "Promotional",
+      "PROTO": "Prototype"
     };
   }
 
-  purgeDB()
-  {
+  purgeDB() {
     this.cards.purgeDB();
     this.portal.purgeDB();
     window.location.reload();
