@@ -104,7 +104,7 @@ function Base(props) {
                     <div className="content-area-top-repeat-x">
                       <div className="content-area-left-repeat-y">
                         <div className="content-area-right-repeat-y">
-                          <div style={{margin: "0 8px 0 10px"}}>
+                          <div className="content-area-inner-space">
                             <div id="player">
                               {children}
                             </div>

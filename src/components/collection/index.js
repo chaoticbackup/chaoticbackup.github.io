@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../SpreadsheetData';
-import {observable, action, autorun} from "mobx";
+import {observable, action} from "mobx";
 import {observer, inject} from 'mobx-react';
 import CardList from './List';
 import SearchForm from './search/index.js';
@@ -12,14 +12,16 @@ const fixedStyles = observable({
   get fixed() {return this.style},
   get isFixed() {return (Object.entries(this.style).length !== 0)},
   setFixed(height) {
-    if (window.matchMedia("(min-width: 975px)").matches)
+    if (!window.matchMedia("(min-width: 975px)").matches) return;
+    let left = document.getElementById('player').getBoundingClientRect().left + 4;
+    let width = document.querySelector('.collection > .left').getBoundingClientRect().width + 2;
     this.style = {
       position: "fixed",
       top: 0,
-      left: "31px",
+      left: `${left}px`,
       overflowY: "auto",
       height: `${height}px`,
-      width: "calc(30% - 20px)",
+      width: `${width}px`,
     }
   },
   removeFixed() {this.style = {}}
@@ -50,10 +52,12 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleScroll);
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('resize', this.handleScroll);
   }
 
   handleContent(content) {
@@ -76,6 +80,8 @@ export default class Home extends React.Component {
 
     // Fix the side menu in place when scrolling down
     if (window.pageYOffset >= 235) {
+      console.log(document.querySelector('.collection > .left').getBoundingClientRect().width);
+
       const 
       h = document.documentElement, 
       b = document.body,

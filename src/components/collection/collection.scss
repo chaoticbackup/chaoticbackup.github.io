@@ -24,12 +24,8 @@
       width: 70%;
     }
 
-    .left > .fixed {
-      position: fixed;
-      top: 0;
-      overflow-y: auto;
-      height: 100vh;
-      width: calc(30% - 30px);
+    #side-menu {
+      position: relative;
     }
 
     #buttons {

@@ -550,6 +550,11 @@
   background-repeat:no-repeat;
   float:right;
 }
+
+.content-area-inner-space {
+  margin: 0 8px 0 10px;
+}
+
 .content-area-repeat-xy2{
   width:100%;
   float:left; clear:both;
