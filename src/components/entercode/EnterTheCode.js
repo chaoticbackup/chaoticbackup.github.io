@@ -35,7 +35,7 @@ s.hyphen = {
 @inject((stores, props, context) => props) @observer
 export default class EnterTheCode extends React.Component {
   @observable code = "";
-  message = observable({contents: null}, { contents: observable.ref });
+  message = observable({contents: null}, {contents: observable.ref});
   @observable fan = null;
 
   render() {

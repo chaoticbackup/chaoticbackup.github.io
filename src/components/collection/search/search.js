@@ -97,10 +97,10 @@ export default function search_api(input) {
       return ({'$regex': new RegExp(item.trim(), 'i')});
     });
 
-    creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList} });
+    creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList}});
     locationResults = locationResults.find({'$or': [{'gsx$initiative': {'$or': subtypesList}}, {'gsx$types': {'$or': subtypesList}}]});
     attackResults = attackResults.limit(0);
-    battlegearResults = battlegearResults.find({'gsx$types': {'$or': subtypesList} });
+    battlegearResults = battlegearResults.find({'gsx$types': {'$or': subtypesList}});
     mugicResults = mugicResults.limit(0);
   }
 
@@ -111,8 +111,8 @@ export default function search_api(input) {
       tribesList.push({'$regex': new RegExp(tribe, 'i')});
   }
   if (tribesList.length > 0) {
-    creatureResults = creatureResults.find({'gsx$tribe': {'$or': tribesList} });
-    mugicResults = mugicResults.find({'gsx$tribe': {'$or': tribesList} });
+    creatureResults = creatureResults.find({'gsx$tribe': {'$or': tribesList}});
+    mugicResults = mugicResults.find({'gsx$tribe': {'$or': tribesList}});
     attackResults = attackResults.limit(0);
     battlegearResults = battlegearResults.limit(0);
     locationResults = locationResults.limit(0);
@@ -170,11 +170,11 @@ export default function search_api(input) {
     }
     if (elementsList.length > 0) {
       if (input.elements.and) {
-       creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList} });
+       creatureResults = creatureResults.find({'gsx$elements': {'$and': elementsList}});
        attackResults = attackResults.find({'$and': elementsList2});
       }
       else {
-        creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList} });
+        creatureResults = creatureResults.find({'gsx$elements': {'$or': elementsList}});
         attackResults = attackResults.find({'$or': elementsList2});
       }
 
@@ -272,11 +272,11 @@ export default function search_api(input) {
       setsList.push({'$eq': key.toUpperCase()});
   }
   if (setsList.length > 0) {
-    attackResults = attackResults.find({'gsx$set': {'$or': setsList} });
-    battlegearResults = battlegearResults.find({'gsx$set': {'$or': setsList} });
-    creatureResults = creatureResults.find({'gsx$set': {'$or': setsList} });
-    locationResults  = locationResults.find({'gsx$set': {'$or': setsList} });
-    mugicResults = mugicResults.find({'gsx$set': {'$or': setsList} });
+    attackResults = attackResults.find({'gsx$set': {'$or': setsList}});
+    battlegearResults = battlegearResults.find({'gsx$set': {'$or': setsList}});
+    creatureResults = creatureResults.find({'gsx$set': {'$or': setsList}});
+    locationResults  = locationResults.find({'gsx$set': {'$or': setsList}});
+    mugicResults = mugicResults.find({'gsx$set': {'$or': setsList}});
   }
 
   // Rarity
@@ -286,11 +286,11 @@ export default function search_api(input) {
       rarityList.push({'$eq': key.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ")});
   }
   if (rarityList.length > 0) {
-    attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList} });
-    battlegearResults = battlegearResults.find({'gsx$rarity': {'$or': rarityList} });
-    creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList} });
-    locationResults = locationResults.find({'gsx$rarity': {'$or': rarityList} });
-    mugicResults = mugicResults.find({'gsx$rarity': {'$or': rarityList} });
+    attackResults = attackResults.find({'gsx$rarity': {'$or': rarityList}});
+    battlegearResults = battlegearResults.find({'gsx$rarity': {'$or': rarityList}});
+    creatureResults = creatureResults.find({'gsx$rarity': {'$or': rarityList}});
+    locationResults = locationResults.find({'gsx$rarity': {'$or': rarityList}});
+    mugicResults = mugicResults.find({'gsx$rarity': {'$or': rarityList}});
   }
 
   // Gender

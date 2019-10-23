@@ -1,6 +1,6 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import { Link, Route } from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import loki from 'lokijs';

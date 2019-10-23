@@ -58,7 +58,7 @@ export default {
       }}
       {...props}
     >
-      <span style={{ paddingRight: '7px' }}>&ndash;</span>
+      <span style={{paddingRight: '7px'}}>&ndash;</span>
       {content}
     </li>
   ),
