@@ -12,7 +12,7 @@ const config = {
   entry: ['@babel/polyfill', `./src/components/index.js`],
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
 
   devServer: {
