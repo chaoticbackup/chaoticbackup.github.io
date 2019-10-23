@@ -6,26 +6,28 @@ import CardList from './List';
 import SearchForm from './search/index.js';
 import './collection.scss'
 
-
 // https://mobx.js.org/refguide/object.html
-// TODO
 const fixedStyles = observable({
-  fixed: {},
+  style: {},
+  get fixed() {return this.style},
+  get isFixed() {return (Object.entries(this.style).length !== 0)},
   setFixed(height) {
-    this.fixed = {
+    if (window.matchMedia("(min-width: 975px)").matches)
+    this.style = {
       position: "fixed",
       top: 0,
+      left: "31px",
       overflowY: "auto",
-      height: `${height}`,
-      width: "calc(30% - 30px)",
+      height: `${height}px`,
+      width: "calc(30% - 20px)",
     }
   },
-  removeFixed() {
-    this.fixed = {}
-  }
+  removeFixed() {this.style = {}}
 }, {
   setFixed: action,
   removeFixed: action
+}, { 
+  deep: false 
 });
 
 
@@ -37,7 +39,7 @@ export default class Home extends React.Component {
   @observable ext = false;
   @observable content = [];
   @observable card_img = API.card_back;
-  fixedStyles = autorun(() => fixedStyles.fixed);
+  @observable fixedStyles;
 
   constructor() {
     super();
@@ -72,22 +74,34 @@ export default class Home extends React.Component {
   handleScroll = (event) => {
     event.preventDefault();
 
-    if (window.pageYOffset >= 220) {
-      // console.log(this.fixedStyles);
-      console.log(window.pageYOffset, window.innerHeight) //window.innerHeight- window.pageYOffset
-      if (window.pageYOffset > window.innerHeight) {
-        // this.fixedStyles.fixed = 
-        // TODO variable to see if scroll has happend
-        // Fix with height of viewport
-        // When nearing the end of the screen (if page offset is higher then height)
-        // reduce height by difference so that it doesn't leak into footer
+    // Fix the side menu in place when scrolling down
+    if (window.pageYOffset >= 235) {
+      const 
+      h = document.documentElement, 
+      b = document.body,
+      st = 'scrollTop',
+      sh = 'scrollHeight',
+      ch = 'clientHeight';
+      const percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h[ch]) * 100;
+      const sm = document.getElementById("side-menu");
+
+      // When nearing the end of the screen
+      // (if element height offset is higher then height of screen)
+      // reduce height by difference so that it doesn't leak into footer
+      if (percent >= 88) {
+        let exp = h[ch] - (h[ch] * (percent - 85) / 100);
+        fixedStyles.setFixed(exp);
       }
-      else {
-        // this.fixedStyles = fixedStyles(window.innerHeight + "px");
+      // Fix with height of viewport when changed
+      else if (sm[sh] >= h[ch]){
+        fixedStyles.setFixed(window.innerHeight);
+      }
+      else if (!fixedStyles.isFixed) {
+        fixedStyles.setFixed(window.innerHeight);
       }
     }
-    else {
-      // this.fixedStyles = {};
+    else if (fixedStyles.isFixed) {
+      fixedStyles.removeFixed();
     }
   };
 
@@ -95,7 +109,7 @@ export default class Home extends React.Component {
     return (
       <div className={"collection " + (this.ext ? "extended" : "short")}>
         <div className="left">
-          <div style={fixedStyles}>
+          <div id="side-menu" style={fixedStyles.fixed}>
             <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
             <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
           </div>
