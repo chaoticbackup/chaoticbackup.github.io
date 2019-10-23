@@ -72,11 +72,12 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
           presets: [
+            '@babel/typescript',
             '@babel/preset-env',
             '@babel/preset-react',
             '@babel/preset-flow',
@@ -86,6 +87,7 @@ const config = {
             ['@babel/plugin-proposal-decorators', {legacy: true }],
             ['@babel/plugin-proposal-class-properties', { loose: true }],
             '@babel/plugin-syntax-dynamic-import',
+            '@babel/proposal-object-rest-spread',
           ],
         },
       },

@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    // Target latest version of ECMAScript.
+    "target": "esnext",
+    // Search under node_modules for non-relative imports.
+    "moduleResolution": "node",
+    // Process & infer types from .js files.
+    "allowJs": true,
+    // Support jsx in .tsx files (https://www.typescriptlang.org/docs/handbook/jsx.html)
+    "jsx": "preserve",
+    // Don't emit; allow Babel to transform files.
+    "noEmit": true,
+    // Enable strictest settings like strictNullChecks & noImplicitAny.
+    // "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "alwaysStrict": false,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": false,
+    // Disallow features that require cross-file information for emit.
+    "isolatedModules": true,
+    // Import non-ES modules as default imports.
+    "esModuleInterop": true,
+    // Allow default imports from modules with no default export (e.g 
+    // import React from "React")
+    "allowSyntheticDefaultImports": true,
+    // Include modules imported with .json extension.
+    "resolveJsonModule": true,
+    // Library files to be used in the project. 
+    // Tells the compiler that "DOM-APIs" and new ECMAScript features are valid.
+    "lib": ["dom", "es2018"],
+    // Allows @decorators
+    "experimentalDecorators": true,
+    // List of folders to include type definitions from.
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "./build/*",
+    "./node_modules/*"
+  ]
+}
