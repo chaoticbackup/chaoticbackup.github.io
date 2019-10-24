@@ -80,31 +80,46 @@ export default class Home extends React.Component {
 
     // Fix the side menu in place when scrolling down
     if (window.pageYOffset >= 235) {
-      console.log(document.querySelector('.collection > .left').getBoundingClientRect().width);
-
       const 
       h = document.documentElement, 
-      b = document.body,
+      // b = document.body,
       st = 'scrollTop',
       sh = 'scrollHeight',
       ch = 'clientHeight';
-      const percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h[ch]) * 100;
+      // const percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h[ch]) * 100;
+      // let exp = h[ch] - (h[ch] * (percent - 85) / 100);
       const sm = document.getElementById("side-menu");
+      const list = document.querySelector('.collection > .right');
+      const scrollBottom = (h[sh] - window.innerHeight - h[st]);
+
+      const setListHeight = (height) => {
+        if (list[ch] < window.innerHeight) {
+          list.style.minHeight = `${height}px`;
+        } 
+        else if (list[ch] === window.innerHeight) return;
+        else if (list.style.minHeight) {
+          list.style.minHeight = null;
+        }
+      }
 
       // When nearing the end of the screen
       // (if element height offset is higher then height of screen)
-      // reduce height by difference so that it doesn't leak into footer
-      if (percent >= 88) {
-        let exp = h[ch] - (h[ch] * (percent - 85) / 100);
+      // reduce height by difference so that it doesn't leak past body
+      if (scrollBottom <= 90) {
+        let exp = h[ch] - (90 - scrollBottom);
         fixedStyles.setFixed(exp);
       }
-      // Fix with height of viewport when changed
-      else if (sm[sh] >= h[ch]){
+      // Fix with height of side menu to height of viewport
+      else if (sm[sh] > h[ch]){
         fixedStyles.setFixed(window.innerHeight);
       }
-      else if (!fixedStyles.isFixed) {
+      // Extra check to prevent unnecessary rerenders
+      // Fix it when smaller than viewport keep height
+      else if (sm[ch] !== h[ch]) {
         fixedStyles.setFixed(window.innerHeight);
       }
+      
+      setListHeight(window.innerHeight);
     }
     else if (fixedStyles.isFixed) {
       fixedStyles.removeFixed();
