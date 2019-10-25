@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react';
 import {Link} from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import {Rarity, Ability} from '../../Snippets';
-import s from '../../../styles/app.style';
+import s from '../../app.style';
 
 // own "name" display function
 function Name(props) {

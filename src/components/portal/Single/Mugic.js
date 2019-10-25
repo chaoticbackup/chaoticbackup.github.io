@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
-import s from '../../../styles/app.style';
+import s from '../../app.style';
 import {observer, inject} from 'mobx-react';
 import Single from './_base';
 import {PageNotFound, Mugic, Tribe} from '../../Snippets';

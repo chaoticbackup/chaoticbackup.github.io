@@ -5,10 +5,11 @@ import loadable from '@loadable/component';
 import windowWidth from './windowWidth';
 import Desktop from './desktop';
 import Mobile from './mobile';
-import s from '../styles/app.style';
+import s from './app.style';
+
 
 /* Components */
-import {PageNotFound, UnderConstruction, Loading} from './Snippets';
+import {Loading} from './Snippets';
 import Create from './create/index';
 
 const EnterTheCode = loadable(

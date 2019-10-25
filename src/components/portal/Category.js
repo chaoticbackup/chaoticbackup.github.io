@@ -3,7 +3,7 @@ import Interactive from 'react-interactive';
 import {Link, Route} from 'react-router-dom';
 import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
-import s from '../../styles/app.style';
+import s from '../app.style';
 import API from '../SpreadsheetData';
 import {Loading} from '../Snippets';
 

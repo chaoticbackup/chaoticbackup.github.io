@@ -6,7 +6,7 @@ import loki from 'lokijs';
 import Interactive from 'react-interactive';
 import API from '../SpreadsheetData';
 import {Loading} from '../Snippets';
-import s from '../../styles/style';
+import s from '../style';
 import './packs.scss';
 
 @inject((stores, props, context) => props) @observer

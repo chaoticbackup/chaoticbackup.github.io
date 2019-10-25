@@ -5,7 +5,7 @@ import API from '../SpreadsheetData';
 import {observable} from "mobx";
 import {observer, inject} from 'mobx-react';
 import loki from 'lokijs';
-import s from '../../styles/app.style';
+import s from '../app.style';
 import {SearchButton} from '../Snippets';
 
 @inject((stores, props, context) => props) @observer

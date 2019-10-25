@@ -1,7 +1,7 @@
 import React from 'react';
 import API from './SpreadsheetData';
 import processString from 'react-process-string';
-import s from '../styles/app.style';
+import s from './app.style';
 
 export function UnderConstruction(props) {
   return (

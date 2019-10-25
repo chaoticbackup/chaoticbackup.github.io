@@ -6,7 +6,7 @@ import Interactive from 'react-interactive';
 import DigitInput from 'react-digit-input';
 import API from '../SpreadsheetData';
 import {Loading} from '../Snippets';
-import style from '../../styles/style';
+import style from '../style';
 import './packs.scss';
 
 const s = Object.create(style);

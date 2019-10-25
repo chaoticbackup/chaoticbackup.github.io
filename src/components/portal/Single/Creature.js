@@ -2,7 +2,7 @@ import React from 'react';
 import Interactive from 'react-interactive';
 import {Link} from 'react-router-dom';
 import API from '../../SpreadsheetData';
-import s from '../../../styles/app.style';
+import s from '../../app.style';
 import {observer, inject} from 'mobx-react';
 import Single from './_base';
 import {PageNotFound, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
