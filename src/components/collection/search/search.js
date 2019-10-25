@@ -267,9 +267,19 @@ export default function search_api(input) {
 
   // Sets
   let setsList = [];
-  for (const key in input.sets) {
-    if (input.sets[key])
-      setsList.push({'$eq': key.toUpperCase()});
+  if (!input.sets.proto) {
+    // Only show prototype cards when explicitly selected
+    let keys = Object.keys(input.sets);
+    keys.splice(keys.indexOf("proto"));
+    for (const i in keys) {
+      setsList.push({'$eq': keys[i].toUpperCase()});
+    }
+  }
+  else {
+    for (const key in input.sets) {
+      if (input.sets[key])
+        setsList.push({'$eq': key.toUpperCase()});
+    }
   }
   if (setsList.length > 0) {
     attackResults = attackResults.find({'gsx$set': {'$or': setsList}});
