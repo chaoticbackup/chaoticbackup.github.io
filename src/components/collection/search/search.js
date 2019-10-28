@@ -267,18 +267,17 @@ export default function search_api(input) {
 
   // Sets
   let setsList = [];
-  if (!input.sets.proto) {
+
+  for (let key in input.sets) {
+    if (input.sets[key])
+      setsList.push({'$eq': key.toUpperCase()});
+  }
+  if (setsList.length === 0) {
     // Only show prototype cards when explicitly selected
     let keys = Object.keys(input.sets);
-    keys.splice(keys.indexOf("proto"));
-    for (const i in keys) {
+    if (!input.sets.proto) keys.splice(keys.indexOf("proto"));
+    for (let i in keys) {
       setsList.push({'$eq': keys[i].toUpperCase()});
-    }
-  }
-  else {
-    for (const key in input.sets) {
-      if (input.sets[key])
-        setsList.push({'$eq': key.toUpperCase()});
     }
   }
   if (setsList.length > 0) {
