@@ -3,11 +3,11 @@ module.exports = exports = {
   "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended"
   ],
   "env": {
     "browser": true,
-    "es6": true,
     "node": true,
     "amd": true
   },
@@ -18,7 +18,8 @@ module.exports = exports = {
       "modules": true,
       "jsx": true,
       "experimentalObjectRestSpread": true,
-      "legacyDecorators": true
+      "legacyDecorators": true,
+      "objectLiteralComputedProperties": true
     }
   },
   "rules": {
@@ -48,6 +49,7 @@ module.exports = exports = {
   "plugins": [
     "react",
     "import",
-    "react-hooks"
+    "react-hooks",
+    "flowtype"
   ]
 }
