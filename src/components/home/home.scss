@@ -1,60 +1,44 @@
-@import '../base';
+@media only screen and (min-width: 975px) {
+    @import '../base';
 
-.lore {
-  text-align: left;
-  padding-left: 10%;
-  padding-right: 10%;
+    @-webkit-keyframes love {
+        to { -webkit-transform: scale(1.1); }
+    }
+
+    @-moz-keyframes love {
+        to { -moz-transform: scale(1.1); }
+    }
+
+    @keyframes love {
+        to { transform: scale(1.1); }
+    }
+
+    .with-love {
+        color: #333;
+        /*display: inline-block;*/
+
+        span, div {
+            font-size: 14px !important;
+            line-height: 18px !important;
+        }
+
+        div {
+            padding-bottom: 4px;
+        }
+
+        a {
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+    }
+
+    .welcome {
+        text-align: center;
+    }
+
 }
 
-.lore .title {
-	margin-top: 6px;
-	text-align: center;
-	font-weight: bold;
-	font-size: 18px;
-}
-
-.lore div {
-	margin: 0 0 6px;
-	line-height: 22px !important;
-}
-
-.donate {
-	margin-bottom: 6px;
-}
-
-.donate form a {
-	border-bottom: none;
-}
-
-/* With Love */
-@-webkit-keyframes love {
-    to { -webkit-transform: scale(1.1); }
-}
-
-@-moz-keyframes love {
-    to { -moz-transform: scale(1.1); }
-}
-
-@keyframes love {
-    to { transform: scale(1.1); }
-}
-
-.with-love {
-    color: #333;
-    /*display: inline-block;*/
-}
-
-.with-love span,
-.with-love div {
-    font-size: 14px !important;
-    line-height: 18px !important;
-}
-
-.with-love div {
-    padding-bottom: 4px;
-}
-
-.with-love .heart {
+.heart {
     font-size: 1.4em;
     color: #ff79c6;
     -webkit-transform: scale(.9);
@@ -63,9 +47,4 @@
     -webkit-animation: love .5s infinite linear alternate-reverse;
     -moz-animation: love .5s infinite linear alternate-reverse;
     animation: love .5s infinite linear alternate-reverse;
-}
-
-.with-love a {
-    text-decoration: none;
-    border-bottom: 1px dotted;
 }

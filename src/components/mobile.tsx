@@ -1,6 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, MouseEvent } from 'react';
+import {Link} from 'react-router-dom';
 import { makeStyles, useTheme, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Toolbar, IconButton, AppBar, Typography, Container, Box 
+import { Toolbar, IconButton, AppBar, Typography, Container, Box, Menu,
+  MenuItem
 } from '@material-ui/core';
 import {Menu as MenuIcon} from '@material-ui/icons';
 import { blue } from '@material-ui/core/colors';
@@ -33,6 +35,9 @@ const headerStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+  },
+  menu: {
+    marginTop: theme.spacing(6),
   }
 }));
 
@@ -49,13 +54,33 @@ function Base(props: { routing: any; }) {
   const children = props.routing();
   const header = headerStyles(useTheme());
   const main = mainStyles(useTheme());
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleClick = (event) => {
-    console.log("toggle");
-  }
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Fragment>
+      <Menu
+        id="top-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        className={header.menu}
+      >
+        <MenuItem onClick={handleClose}><Link to="/">Home</Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link to={`/collection/`}>Collect</Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link to="create">Build</Link></MenuItem>
+        <MenuItem onClick={handleClose}><a href="http://chaoticbackup.forumotion.com">Forums</a></MenuItem>
+        <MenuItem onClick={handleClose}><Link to={`/portal/`}>Portal</Link></MenuItem>
+        <MenuItem onClick={handleClose}><a href="https://untap.in">Play</a></MenuItem>
+      </Menu>
       <AppBar className={header.root} position="static">
         <Toolbar>
           <IconButton 
@@ -67,9 +92,7 @@ function Base(props: { routing: any; }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={header.title}>
-            Chaotic Backup
-          </Typography>
+          <Typography variant="h6" className={header.title}>Chaotic Backup</Typography>
         </Toolbar>
       </AppBar>
       <Container className={main.root}>

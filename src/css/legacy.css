@@ -1,5 +1,14 @@
 @media only screen and (min-width: 975px) {
 
+html, body, div, a, p {
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 #player {
   width: calc(100% - 20px);
   margin: 0 10px;
