@@ -1,6 +1,14 @@
 import loki from 'lokijs';
 import API from '../../SpreadsheetData';
 
+function cleanInputRegex(input) {
+ input = input
+  .replace(/\\/g, '')
+  .replace(/\(|\)/g, (match) => {return ("\\"+match)})
+  .replace(/\‘|\’/g, "'");
+ return new RegExp(input.trim(), 'i');
+}
+
 export default function search_api(input) {
 
   // Sort data descending alphabetically
@@ -34,27 +42,27 @@ export default function search_api(input) {
 
   // Search by name
   if (input.name.length > 0) {
-    // clean name
-    let inputname = input.name.replace(/\\/g, '').replace(/\(|\)/g, (match) => {return ("\\"+match)});
+    let inputname = cleanInputRegex(input.name);
+
     attackResults = attackResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
-      {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
+      {'gsx$name': {'$regex': inputname}},
+      {'gsx$tags': {'$regex': inputname}},
     ]});
     battlegearResults = battlegearResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
-      {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
+      {'gsx$name': {'$regex': inputname}},
+      {'gsx$tags': {'$regex': inputname}},
     ]});
     creatureResults = creatureResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
-      {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
+      {'gsx$name': {'$regex': inputname}},
+      {'gsx$tags': {'$regex': inputname}},
     ]});
     locationResults = locationResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
-      {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}}
+      {'gsx$name': {'$regex': inputname}},
+      {'gsx$tags': {'$regex': inputname}}
     ]});
     mugicResults = mugicResults.find({'$or': [
-      {'gsx$name': {'$regex': new RegExp(inputname, 'i')}},
-      {'gsx$tags': {'$regex': new RegExp(inputname, 'i')}},
+      {'gsx$name': {'$regex': inputname}},
+      {'gsx$tags': {'$regex': inputname}},
     ]});
   }
 
@@ -63,12 +71,11 @@ export default function search_api(input) {
   if (input.text.length > 0) {
     // split text by comma
     let textList = input.text.split(",").filter(Boolean).map((item) => {
-      return ({'$regex': new RegExp(item.trim(), 'i')});
+      return ({'$regex': cleanInputRegex(item)});
     });
     // clean text
-    let inputtext = new RegExp(input.text.replace(/\\/g, '').replace(/\(|\)/g, (match) => {return ("\\"+match)}), "i");
+    let inputtext = cleanInputRegex(input.text);
 
-    console.log(inputtext);
     let parm = (() => {
       let list = [
         {'gsx$tags': {"$or": textList}},
@@ -78,7 +85,6 @@ export default function search_api(input) {
         list.push({'gsx$flavortext': {"$or": textList}});
         list.push({'gsx$artist': {"$or": textList}});
       }
-      console.log(list);
       return list;
     })();
 
@@ -94,7 +100,7 @@ export default function search_api(input) {
   // Subtypes / Initiative
   if (input.subtypes.length > 0) {
     let subtypesList = input.subtypes.split(",").filter(Boolean).map((item) => {
-      return ({'$regex': new RegExp(item.trim(), 'i')});
+      return ({'$regex': cleanInputRegex(item)});
     });
 
     creatureResults = creatureResults.find({'gsx$types': {'$or': subtypesList}});
@@ -321,27 +327,27 @@ export default function search_api(input) {
 
   if (types || input.types.attack) {
     let temp = attackResults.data();
-    temp.forEach(function(v){ delete v.$loki });
+    temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.battlegear) {
     let temp = battlegearResults.data();
-    temp.forEach(function(v){ delete v.$loki });
+    temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.creature) {
     let temp = creatureResults.data()
-    temp.forEach(function(v){ delete v.$loki });
+    temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.location) {
     let temp = locationResults.data()
-    temp.forEach(function(v){ delete v.$loki });
+    temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.mugic) {
     let temp = mugicResults.data()
-    temp.forEach(function(v){ delete v.$loki });
+    temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
 
