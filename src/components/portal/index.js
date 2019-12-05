@@ -100,12 +100,6 @@ function Header() {
         <li><Link to="/portal/">Home</Link></li>
         <li><Link to="/portal/Search"><SearchButton />Search</Link></li>
         {types}
-        <li className="dropdown">
-          <Link to=" " onClick={voidClick} className="dropbtn">Generic</Link>
-          <div className="dropdown-content">
-            <Link to={"/portal/Generic/Mugic"}>Mugic</Link>
-          </div>
-        </li>
         {tribes}
       </ul>
     </div>
