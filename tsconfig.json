@@ -33,6 +33,8 @@
     "lib": ["dom", "es2018"],
     // Allows @decorators
     "experimentalDecorators": true,
+    // Skips checking libraries
+    "skipLibCheck": true,
     // List of folders to include type definitions from.
     "typeRoots": [
       "./node_modules/@types"
