@@ -2,6 +2,7 @@ import React from 'react';
 import API from '../../SpreadsheetData';
 import {observer, inject} from 'mobx-react';
 import {Rarity, Unique, Name, Mugic, Ability, Tribe} from '../../Snippets';
+import MugicPlay from '../../mugicplayer/playbutton.tsx';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -34,7 +35,7 @@ export default class Attack extends React.Component {
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
           <Tribe size="icon16" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}<br />
-          <span>{mugicCounters}</span><br />
+          <span>{mugicCounters}</span><MugicPlay notes={card.gsx$notes}/><br />
         </div>
         <br />
         <div className="right" >

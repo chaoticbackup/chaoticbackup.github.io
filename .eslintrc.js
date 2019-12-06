@@ -1,4 +1,4 @@
-module.exports = exports = {
+export default exports = {
   "root": true,
   "parser": "babel-eslint",
   "extends": [
@@ -8,8 +8,7 @@ module.exports = exports = {
   "env": {
     "browser": true,
     "es6": true,
-    "node": true,
-    "amd": true
+    "node": true
   },
   "parserOptions": {
     "ecmaVersion": 8,

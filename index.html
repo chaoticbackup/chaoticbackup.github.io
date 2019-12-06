@@ -51,7 +51,7 @@
       (function(l) {
         if (l.search) {
           let title = l.search.split('&')[0].split('/')[1];
-          if (title != "") {
+          if (title && title != "") {
             document.title = title.charAt(0).toUpperCase() + title.slice(1);
           }
           else {

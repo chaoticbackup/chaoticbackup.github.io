@@ -30,7 +30,7 @@
     "resolveJsonModule": true,
     // Library files to be used in the project. 
     // Tells the compiler that "DOM-APIs" and new ECMAScript features are valid.
-    "lib": ["dom", "es2018"],
+    "lib": ["dom", "ES2019"],
     // Allows @decorators
     "experimentalDecorators": true,
     // Skips checking libraries

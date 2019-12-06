@@ -9,16 +9,16 @@ require('@babel/register');
 const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('-p') === -1);
 
 const config = {
-  entry: ['@babel/polyfill', `./src/components/index.js`],
+  entry: ['@babel/polyfill', './src/components/index.js'],
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
 
   devServer: {
     host: '0.0.0.0',
     historyApiFallback: {
-      index: 'index.dev.html',
+      index: 'index.html',
     },
   },
 
@@ -78,16 +78,16 @@ const config = {
         options: {
           presets: [
             '@babel/typescript',
-            '@babel/preset-env',
+            "@babel/preset-env",
             '@babel/preset-react',
             '@babel/preset-flow',
           ],
           plugins: [
             '@babel/plugin-transform-runtime',
+            '@babel/plugin-proposal-object-rest-spread',
             ['@babel/plugin-proposal-decorators', {legacy: true}],
             ['@babel/plugin-proposal-class-properties', {loose: true}],
-            '@babel/plugin-syntax-dynamic-import',
-            '@babel/proposal-object-rest-spread',
+            ['@babel/plugin-transform-computed-properties',  {loose: true}],
           ],
         },
       },
