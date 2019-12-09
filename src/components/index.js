@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Route, Switch, Redirect} from 'react-router-dom';
 import loadable from '@loadable/component';
 import s from '../styles/app.style';
 
@@ -29,6 +29,21 @@ const Collection = loadable(
   {fallback: <Loading />}
 );
 
+/**
+ * This function is to define beta routes
+ */
+function BetaRoutingWrapper(props) {
+  return (
+    <Switch>
+      <Route path="/beta/collection" component={Collection} />
+      <Route path="/beta">
+        {({location}) => <Redirect to={location.pathname.replace("/beta", "")} /> }
+      </Route>
+      <Route component={Routing} />
+    </Switch>
+  );
+}
+
 function Routing(props) {
   return (
     <Switch>
@@ -49,7 +64,7 @@ function Base(props) {
   const language = "ENG";
   const bkgrnd = "05";
 
-  const children = <Routing {...props} />;
+  const children = <BetaRoutingWrapper />;
 
   return (
     <React.Fragment>

@@ -1,14 +1,14 @@
 /*eslint global-require: "off"*/
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 require('@babel/register');
 
 const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('-p') === -1);
 
-const config = {
+module.exports = {
   entry: ['@babel/polyfill', './src/components/index.js'],
 
   resolve: {
@@ -31,11 +31,20 @@ const config = {
 
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      // https://www.stackery.io/blog/webpack-upgrade/
+      new TerserWebpackPlugin({
         cache: true,
         parallel: true,
         sourceMap: true,
         extractComments: true,
+        terserOptions: {
+          parse: {
+            ecma: 8
+          },
+          output: {
+            comments: false
+          }
+        }
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
@@ -78,13 +87,14 @@ const config = {
         options: {
           presets: [
             '@babel/typescript',
-            "@babel/preset-env",
+            '@babel/preset-env',
             '@babel/preset-react',
             '@babel/preset-flow',
           ],
           plugins: [
             '@babel/plugin-transform-runtime',
             '@babel/plugin-proposal-object-rest-spread',
+            '@babel/plugin-syntax-dynamic-import',
             ['@babel/plugin-proposal-decorators', {legacy: true}],
             ['@babel/plugin-proposal-class-properties', {loose: true}],
             ['@babel/plugin-transform-computed-properties',  {loose: true}],
@@ -118,6 +128,3 @@ const config = {
     }),
   ],
 };
-
-// Exports
-module.exports = config;
