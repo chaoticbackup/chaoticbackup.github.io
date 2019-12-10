@@ -3,24 +3,32 @@ import {Transport, Synth, Part} from 'tone';
 // https://github.com/Tonejs/Tone.js/wiki/Time
 // https://github.com/Tonejs/Tone.js/wiki/Events
 export class Note {
-    time: number;
     pitch: string;
     octave: number;
+    duration: number;
+    time: number;
 
-    constructor(time: number, value: {pitch: string, octave: number}) {
-        this.time = time;
+    constructor(duration: number, time: number, value: {pitch: string, octave: number}) {
+        this.duration = duration;
         this.pitch = value.pitch;
         this.octave = value.octave;
+        this.time = time;
     }
 
-    get pair() {
-        return [this.time + "/4m", this.pitch + this.octave.toString()];
+    get note() {
+        return {
+            time: this.time + "/4n",
+            pitch: this.pitch + this.octave.toString(),
+            duration: this.duration + "/4n"
+        }
     }
 }
 
-class MugicPlayer {
+export class MugicPlayer {
     private static instance: MugicPlayer;
-    synth: Synth;
+    private synth: Synth;
+    private part: Part;
+    private transport: Transport;
 
     // Singleton
     static getInstance() {
@@ -29,8 +37,9 @@ class MugicPlayer {
     }
 
     constructor() {
-        this.synth = new Synth().toMaster();
-        Transport.bpm.value = 100;
+        this.synth = new Synth().toDestination();
+        this.part = new Part();
+        Transport.bpm.value = 240;
     }
 
     /**
@@ -41,24 +50,28 @@ class MugicPlayer {
     // 2Eb 2F 2D   2G 2Bb 1A   3D
     //     up down up up  down up
     play(input: string) {
-        let tune: Note[];
+        Transport.stop();
+        this.part.dispose();
 
         try {
-            tune = parseTune(input);
+            const tune = parseTune(input);
+
+            this.part = new Part(
+                (time: number, note: any) => {
+                    // console.log(time, note);
+                    this.synth.triggerAttackRelease(note.pitch, note.duration, time);
+                },
+                tune.map((n) => n.note)
+            ).start();
+    
+            Transport.start();
         }
         catch (error) {
+            console.log(error);
             // TODO show user the error
             return;
         }
-        
-        new Part(
-            (time: any, pitch: any) => {
-                this.synth.triggerAttackRelease(pitch, "4n", time);
-            }, 
-            tune.map((note) => {return note.pair})
-        ).start(0);
 
-        Transport.start();
     }
 
 }
@@ -67,6 +80,7 @@ class MugicPlayer {
 // 2Eb => E flat for 2 quarter notes
 const parseTune = (input: string): Note[] => {
     let tune: Note[] = [];
+    let time = 0;
 
     input.split(" ").forEach((note) => {
 
@@ -76,7 +90,9 @@ const parseTune = (input: string): Note[] => {
         let dur = parseInt(match[0]);
         let pitch = note.split(/(?:[1-8]{1})/)[1];
 
-        tune.push(new Note(dur, parseNote(pitch, tune)));
+        tune.push(new Note(dur, time, parseNote(pitch, tune)));
+
+        time += dur;
     });
 
     return tune;
