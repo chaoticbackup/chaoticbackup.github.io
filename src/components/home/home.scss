@@ -4,18 +4,30 @@
   text-align: left;
   padding-left: 10%;
   padding-right: 10%;
-}
 
-.lore .title {
-	margin-top: 6px;
-	text-align: center;
-	font-weight: bold;
-	font-size: 18px;
-}
+    .block, .title {
+        margin-top: 6px;
+        text-align: center;
+        font-weight: bold;
+    }
 
-.lore div {
-	margin: 0 0 6px;
-	line-height: 22px !important;
+    .title {
+        font-size: 18px;
+    }
+
+    .block {
+        font-size: 24px;
+    }
+
+    div {
+        margin: 0 0 6px;
+        line-height: 22px !important;
+    }
+
+    .set {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
 }
 
 .donate {

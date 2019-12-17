@@ -19,6 +19,24 @@
           "The mysterious figure raised its arms as the ground began to shake. Then a deafening sound. And a blinding white light...",
           "Najarin awakes with a start - the early morning sun burning his eyes. Another night, the same dream. Or is it a prophecy? Before he can consider the imponderable, seven notes whisper their melody faintly in the wind, dancing in on morning's first light. The power of Mugic has no doubt been wielded in a faraway battle, the outcome of which could affect both the OverWorld and UnderWorld. But for now the Creatures of these realms rise once again to pursue their common cause, the Cothica, and to try to unravel the myster of the codes that weave their lives inextricably together.",
           "Thus a new day begins... its the Dawn of Perim."
+        ],
+        "sets": [
+            {
+                "title": "Secrets",
+                "text": [
+                    "With morning's first light, seven notes sound distantly in the wind. The power of Mugic has no doubt been cast in a faraway battle, the outcome of which could affect both the OverWorld and the UnderWorld.",
+                    "For now, the Creatures of these realms awaken to pursue their common cause, the Cothica, and to try to unravel the mystery of the codes that weave their lives inextricably together.",
+                    "Thus a new day begins... It is the Dawn of Perim."
+                ]
+            },
+            {
+                "title": "Zenith of the Hive",
+                "text": []
+            },
+            {
+                "title": "Silent Sands",
+                "text": []
+            }
         ]
     },
     {
@@ -46,6 +64,24 @@
             "The Danians saw their precious freshwater reservoir underneath Mount PIllar become tainted at the hands of the Chieftain of Fear, Neth'uar, who promised instant defeat for those who lacked courage. Even the brave Danians started to want for heart and valor.",
             "It may be true to say that phelphor, the undercover M'arrillian thawed by Khybon, has served his masters well. The ancient Doors are now open, and the hunt for the Cothica has a new contending Tribe armed with fearsome mental powers. Soon enough the mighty leader of the Oligarchy of the Deep will be ready to enter Perim to attempt to secure the Cothica for the M'arrillians.",
             "The OverWorlders, UnderWorlders, Danians and Mipedians will struggle to bring their individual strengths to bear against these intruders, but will this be enough to stop the M'arrillian Invasion?"
+        ],
+        "sets": [
+            {
+                "title": "Beyond the Doors",
+                "text": []
+            },
+            {
+                "title": "Rise of the Oligarch",
+                "text": []
+            },
+            {
+                "title": "Turn of the Tide",
+                "text": []
+            },
+            {
+                "title": "Forged Unity",
+                "text": []
+            }
         ]
     },
     {
@@ -53,6 +89,24 @@
         "text": [
             "...on a cloudless and starry night the culmination of more than a year of preparation occurred, as the four high muges of Perim convened on the deck of Captain Arrthoa's ship, the Ezoa, slowly sailing the moonlit surface of Lake Ken-I-Po.",
             "As Najarin, Enre-hep, Kopond, and Lore performed the hour-long Mugical ritual, tones of an unworldly beauty rang out over the lake. Ultimately, a thundering rumble accompanied the ascension of a levitating island that erupted from the waters of the lake. Atop it perched a magnificent citadel, sporting four towers - each attuned to one of the elements of Perim. The high Muges had succeded in raising the lost City of the Elements. They knew that the city held powerful secrets and treasures, possibly even the secret to the Cothica. But who would control this prize?"
+        ],
+        "sets": [
+            {
+                "title": "Alliance Unraveled",
+                "text": []
+            },
+            {
+                "title": "Fire and Stone",
+                "text": []
+            },
+            {
+                "title": "Storm and Sea",
+                "text": []
+            },
+            {
+                "title": "Elemental Emperors",
+                "text": []
+            }
         ]
     }
 ]

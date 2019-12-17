@@ -13,11 +13,19 @@ const GithubLink = () => (
   </a>
 );
 
-const LoreEntry = ({block, text}) => {
+const LoreEntry = ({block, text, sets}) => {
   return (
     <div className="lore">
-      <div className="title">{block}</div>
+      <div className="block">{block}</div>
       {text.map((entry, i) => <div key={i}>{entry}</div>)}
+      {sets.map((set, i) => {
+        if (set.text && set.text.length > 0) {
+          return <div className="set" key={i}>
+            <div className="title">{set.title}</div>
+            {set.text.map((entry, i) => <div key={i}>{entry}</div>)}
+          </div>;
+        }
+      })}
     </div>
   );
 }
