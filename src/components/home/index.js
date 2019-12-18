@@ -17,7 +17,7 @@ const LoreEntry = ({block, text, sets}) => {
   return (
     <div className="lore">
       <div className="block">{block}</div>
-      {text.map((entry, i) => <div key={i}>{entry}</div>)}
+      {text.map((entry, i) => <div key={i} dangerouslySetInnerHTML={{__html: entry}} />)}
       {sets.map((set, i) => {
         if (set.text && set.text.length > 0) {
           return <div className="set" key={i}>
