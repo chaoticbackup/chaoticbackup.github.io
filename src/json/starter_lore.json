@@ -2,7 +2,7 @@
     {
         "block": "Dawn of Perim",
         "text": [
-          "Maxxor quickly fired off three shots from his Liquilizer, sending the Danian scurrying for cover. He knew the inscet would be calling for help. Alone they're not much, but a swarm of Danians were formidable foes. They were the least of his worries right now.",
+          "Maxxor quickly fired off three shots from his Liquilizer, sending the Danian scurrying for cover. He knew the insect would be calling for help. Alone they're not much, but a swarm of Danians were formidable foes. They were the least of his worries right now.",
           "The Eye of the Maelstrom is not exactly Maxxor's favorite location in all the OverWorld, but reports that a Cothica artifact is being excavated here made this trip more than necessary. Maxxor's scouts told him that the expedition is being carried out by an UnderWorld force led by Chaor himself.",
           "To control the Cothica is to rule all of Perim... and beyond. That's what the legends say.. and Maxxor has little choice but to believe this to be true. No one knows exactly what the Cothica is or how to wield its power. All Maxxor Knows for sure is that the elusive object must never fall into the wrong hands. And the definition of \"wrong,\" as far as he's concerned, is any Creature from the UnderWorld... especially Chaor.",
           "Maxxor felt good about his team: Intress, Gespedan, Frafdo, Tangath Toborn, and Rellim. Huddled close to him, they awaited instructions on how to deploy for the battle about to ensue. Maxxor stepped forward to address his fellow OverWorlders just as the wind started picking up... a little too much.",
@@ -17,7 +17,7 @@
           "With the hard landing cam a harder realization. They both had been duped. The two warriors squared off once again for battle, then found themselves unable to move - victims of Paral-Eyes attack stronger than either had ever experience. A dark figure approached as they struggled to shift their eyes. A look of shock registered on their otherwise frozen faces.",
           "Maxxor struggled to eek out the words, \"It was...\" Chaor finished the thought they both shared. \"You!\"",
           "The mysterious figure raised its arms as the ground began to shake. Then a deafening sound. And a blinding white light...",
-          "Najarin awakes with a start - the early morning sun burning his eyes. Another night, the same dream. Or is it a prophecy? Before he can consider the imponderable, seven notes whisper their melody faintly in the wind, dancing in on morning's first light. The power of Mugic has no doubt been wielded in a faraway battle, the outcome of which could affect both the OverWorld and UnderWorld. But for now the Creatures of these realms rise once again to pursue their common cause, the Cothica, and to try to unravel the myster of the codes that weave their lives inextricably together.",
+          "Najarin awakes with a start - the early morning sun burning his eyes. Another night, the same dream. Or is it a prophecy? Before he can consider the imponderable, seven notes whisper their melody faintly in the wind, dancing in on morning's first light. The power of Mugic has no doubt been wielded in a faraway battle, the outcome of which could affect both the OverWorld and UnderWorld. But for now the Creatures of these realms rise once again to pursue their common cause, the Cothica, and to try to unravel the mystery of the codes that weave their lives inextricably together.",
           "Thus a new day begins... It is the Dawn of Perim."
         ],
         "sets": [
@@ -58,7 +58,7 @@
             "\"The trap is set,\" the voice of the Oligarch echoed in the minds of the council. \"Phelphor will succeed in getting the doors unlocked. Prepare the first wave of Chieftains to pass through the doors as they open, the Cothica will soon be ours.\" The Oligarch of the M'arrillians motioned at the members of the oligarchy before turning to leave.",
             "And, indeed, this menacing new Tribe's plan came to fruition not long after.",
             "The Doors of the Deepmines opened slowly at first, but the massive rush of water from the Deep soon forced the doors open wide. A torrent of tainted water poured into the UnderWorld, carrying within it a host of sinister Creatures. These strange entities seemed to be part aquatic, part pure energy and were unlike anything known in Perim. These were the Chieftains, and they embraced Perim with a greed and determination of frightening proportion. The Chieftains quickly established footholds at key points in the lands of the four Tribes.",
-            "Within the UnderWorld region near the Lava Pond, a Chieftain named Milla'iin established local supremacy. The UnderWorlders struggled to mount a resistance, but found themselves facing their own friends who were mentally ocntrolled by Milla'iin and turned against Chaor's defending hordes.",
+            "Within the UnderWorld region near the Lava Pond, a Chieftain named Milla'iin established local supremacy. The UnderWorlders struggled to mount a resistance, but found themselves facing their own friends who were mentally controlled by Milla'iin and turned against Chaor's defending hordes.",
             "After the Lava pond fell, the M'arrillian Chieftains spread their reach to other regions of Perim. Ihun'kalin, a powerful Chieftain able to alter others' perception of time and space, secured a lair in a desolate and dry region of the Mipedian Desert. He began to flood the area with the help of Brainwashed Mipedians.",
             "The OverWorlders equally struggled against M'arrillian Chieftain Erak'tabb, who established a dark foothold in the Riverlands by Brainwashing many of the locals.",
             "The Danians saw their precious freshwater reservoir underneath Mount PIllar become tainted at the hands of the Chieftain of Fear, Neth'uar, who promised instant defeat for those who lacked courage. Even the brave Danians started to want for heart and valor.",
@@ -68,7 +68,7 @@
         "sets": [
             {
                 "title": "Beyond the Doors",
-                "text": []
+                "text": ["The Oligarch of the deep watched with satisfaction as the Doors finally opened. The conquest of Perim and the seizing of the Cothica were now imminent. The Chieftains moved forward, mentally controlling many who dared to oppose them. Dominated UnderWorlders faced former friends as the Lava Pond become the first of many stable footholds for the M'arrillians in Perim. The four Tribes struggled to mount opposition, only to learn that the worst was yet to come. Thus began the M'arrillian Invasion... Beyond the Doors."]
             },
             {
                 "title": "Rise of the Oligarch",
