@@ -162,7 +162,7 @@ export default class PackSimulator extends React.Component {
           genrarity(randomRare(), 1);
         }
         // AU sets and after
-        elseif (weirdSets.indexOf(this.set) == -1) {
+        else if (weirdSets.indexOf(this.set) == -1) {
           genrarity('Common', 6);
           genrarity('Rare', 2);
           genrarity(randomRare(), 1);
