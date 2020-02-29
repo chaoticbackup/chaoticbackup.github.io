@@ -240,14 +240,14 @@ class API {
       "FUN": "Forged Unity",
       "AU": "Alliance Unraveled",
       "FAS": "Fire and Stone",
+      "OP1": "Organized Play 1",
+      "PE1": "Premium Edition 1",
       "SAS": "Storm and Sea",
       "EE": "Elemental Emperors",
       "BR": "Beyond Rare",
       "LR": "League Rewards",
-      "OP1": "Organized Play 1",
       "PROMO": "Promotional",
-      "PROTO": "Prototype",
-      "PE1": "Premium Edition 1"
+      "PROTO": "Prototype"
     };
   }
 
