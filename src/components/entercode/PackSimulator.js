@@ -167,7 +167,7 @@ export default class PackSimulator extends React.Component {
           genrarity('Rare', 2);
           genrarity(randomRare(), 1);
         }
-        elseif (this.set === "OP1") {
+        else if (this.set === "OP1") {
           genrarity("Common", 2);
           let randomWeird = Math.floor(Math.random() * 75) + 1;
           let weirdRarity = "";
@@ -181,7 +181,7 @@ export default class PackSimulator extends React.Component {
             weirdRarity = "Uncommon";
           genrarity(weirdRarity, 1);
         }
-        elseif (this.set === "PE1") {
+        else if (this.set === "PE1") {
           genrarity("Super Rare", 5);
           genrarity("Ultra Rare", 1);
         }
