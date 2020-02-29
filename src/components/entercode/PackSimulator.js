@@ -152,7 +152,6 @@ export default class PackSimulator extends React.Component {
     let newSets = ["AU", "FAS"];
     let weirdSets = ["OP1", "PE1"];
     
-    if (weirdsets.indexOf(this.set) == -1){
       for (let i = 0; i < this.packs; i++) {
         // Before AU sets
         if (newSets.indexOf(this.set) == -1 && weirdSets.indexOf(this.set) == -1) {
@@ -185,6 +184,7 @@ export default class PackSimulator extends React.Component {
           genrarity("Super Rare", 5);
           genrarity("Ultra Rare", 1);
         }
+        card_names = [];
     }
 
     this.filter.removeDynamicView('set');
