@@ -40,7 +40,7 @@ export default class PackSimulator extends React.Component {
     let i = 1;
     for (const set in API.sets) {
       setsInput.push(<option key={i++} value={set}>{API.sets[set]}</option>);
-      if (i>9) break;
+      if (i>11) break;
     }
 
     return (<div className="packsim">
