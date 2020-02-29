@@ -111,7 +111,7 @@ export default class PackSimulator extends React.Component {
         return;
       }
 
-      if (card_names.indexOf(card.gsx$name) > -1 && card.gsx$exclusive != "Starter") {
+      if (card_names.indexOf(card.gsx$name) > -1 && card.gsx$exclusive.includes("Starter")) {
         return gencard(results, i);
       }
       card_names.push(card.gsx$name);
