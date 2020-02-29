@@ -111,7 +111,7 @@ export default class PackSimulator extends React.Component {
         return;
       }
 
-      if (card_names.indexOf(card.gsx$name) > -1) {
+      if (card_names.indexOf(card.gsx$name) > -1 && card.gsx$exclusive.includes("Starter")) {
         return gencard(results, i);
       }
       card_names.push(card.gsx$name);
@@ -148,24 +148,43 @@ export default class PackSimulator extends React.Component {
 
     // AU sets have 6 common and 3 rare+
     // DOP to FUN had 4 common, 3 uncommon, 2 rare+
+    // OP1 had 3 cards per pack, Premium Packs had 6 cards per pack.
     let newSets = ["AU", "FAS"];
-
-    for (let i = 0; i < this.packs; i++) {
-      // Before AU sets
-      if (newSets.indexOf(this.set) == -1) {
-        genrarity('Common', 4);
-        genrarity('Uncommon', 3);
-        genrarity('Rare', 1);
-        genrarity(randomRare(), 1);
-      }
-      // AU sets and after
-      else {
-        genrarity('Common', 6);
-        genrarity('Rare', 2);
-        genrarity(randomRare(), 1);
-      }
-
-      card_names = [];
+    let weirdSets = ["OP1", "PE1"];
+    
+      for (let i = 0; i < this.packs; i++) {
+        // Before AU sets
+        if (newSets.indexOf(this.set) == -1 && weirdSets.indexOf(this.set) == -1) {
+          genrarity('Common', 4);
+          genrarity('Uncommon', 3);
+          genrarity('Rare', 1);
+          genrarity(randomRare(), 1);
+        }
+        // AU sets and after
+        else if (weirdSets.indexOf(this.set) == -1) {
+          genrarity('Common', 6);
+          genrarity('Rare', 2);
+          genrarity(randomRare(), 1);
+        }
+        else if (this.set === "OP1") {
+          genrarity("Common", 2);
+          let randomWeird = Math.floor(Math.random() * 75) + 1;
+          let weirdRarity = "";
+          if (randomWeird = 75)
+            weirdRarity = "Ultra Rare";
+          else if (randomWeird < 19)
+            weirdRarity = "Super Rare";
+          else if (randomWeird < 44)
+            weirdRarity = "Rare";
+          else
+            weirdRarity = "Uncommon";
+          genrarity(weirdRarity, 1);
+        }
+        else if (this.set === "PE1") {
+          genrarity("Super Rare", 5);
+          genrarity("Ultra Rare", 1);
+        }
+        card_names = [];
     }
 
     this.filter.removeDynamicView('set');
