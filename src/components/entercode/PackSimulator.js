@@ -170,7 +170,7 @@ export default class PackSimulator extends React.Component {
           genrarity("Common", 2);
           let randomWeird = Math.floor(Math.random() * 75) + 1;
           let weirdRarity = "";
-          if (randomWeird = 75)
+          if (randomWeird == 75)
             weirdRarity = "Ultra Rare";
           else if (randomWeird < 19)
             weirdRarity = "Super Rare";
