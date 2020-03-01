@@ -90,6 +90,14 @@ export default class PackSimulator extends React.Component {
       else if (randomNumber % 3 == 0) return "Super Rare";
       else return "Rare";
     };
+    
+    const randomWeird = () => {
+      let randomNumber = Math.floor(Math.random() * 75) + 1;
+      if (randomNumber == 75) return "Ultra Rare";
+      else if (randomNumber < 19) return "Super Rare";
+      else if (randomNumber < 44) return "Rare";
+      else return "Uncommon";
+    };
 
     const gendisp = (avg) => {
       let min = parseInt(avg) - 10;
@@ -168,21 +176,8 @@ export default class PackSimulator extends React.Component {
         }
         else if (this.set === "OP1") {
           genrarity("Common", 2);
-          let randomWeird = Math.floor(Math.random() * 75) + 1;
-          let weirdRarity = "";
-          if (randomWeird == 75) {
-            weirdRarity = "Ultra Rare";
-          }
-          else if (randomWeird < 19) {
-            weirdRarity = "Super Rare";
-          }
-          else if (randomWeird < 44) {
-            weirdRarity = "Rare";
-          }
-          else {
-            weirdRarity = "Uncommon";
-          }
-          genrarity(weirdRarity, 1);
+          
+          genrarity(randomWeird(), 1);
         }
         else if (this.set === "PE1") {
           genrarity("Super Rare", 5);
