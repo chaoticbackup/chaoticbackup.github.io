@@ -30,7 +30,7 @@ module.exports = {
     "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
     "no-plusplus": "off",
     "no-prototype-builtins": "off",
-    "object-curly-spacing": ["warn", "never", {"objectsInObjects": false, "arraysInObjects": false}],
+    "object-curly-spacing": ["warn", "always", {"objectsInObjects": false, "arraysInObjects": false}],
     "object-curly-newline": "off",
     "linebreak-style": "off",
     "eqeqeq": "off",
