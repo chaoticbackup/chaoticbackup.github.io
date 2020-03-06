@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
-import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
+import { observer, inject } from 'mobx-react';
+import { Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -31,7 +31,7 @@ export default class Creature extends React.Component {
 
     if (this.props.ext == false) return (
       <div className="card creature">
-        <img className="thumb" style={{float: 'left'}} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
+        <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
         <div className="left">
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
@@ -47,8 +47,13 @@ export default class Creature extends React.Component {
         <br />
         <div className="right" >
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
-          <Ability type="brainwashed" tribe={card.gsx$tribe} ability={card.gsx$brainwashed} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe}} />
+          { card.gsx$brainwashed && (
+            <>
+              <div className="text_brainwashed">Brainwashed</div>
+              <Ability type="brainwashed" tribe={card.gsx$tribe} ability={card.gsx$brainwashed} />
+            </>
+          )}
+          <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe }} />
           {/*chieftain*/
             card.gsx$types.includes("Chieftain") &&
             <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
@@ -69,7 +74,7 @@ export default class Creature extends React.Component {
               <div className="energy">
                   {card.gsx$speed}<Discipline discipline="speed" />
               </div>
-              <div className="energy" style={{fontWeight: 'bold'}}>{card.gsx$energy}
+              <div className="energy" style={{ fontWeight: 'bold' }}>{card.gsx$energy}
               </div>
           </div>
       </div>
@@ -83,11 +88,16 @@ export default class Creature extends React.Component {
           <span>{card.gsx$power}&nbsp;<Discipline discipline="power" /></span>&nbsp;
           <span>{card.gsx$wisdom}&nbsp;<Discipline discipline="wisdom" /></span>&nbsp;
           <span>{card.gsx$speed}&nbsp;<Discipline discipline="speed" /></span>&nbsp;
-          <span style={{fontWeight: 'bold'}}>{card.gsx$energy}</span>
+          <span style={{ fontWeight: 'bold' }}>{card.gsx$energy}</span>
           <br />
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
-          <Ability type="brainwashed" tribe={card.gsx$tribe} ability={card.gsx$brainwashed} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe}} />
+          { card.gsx$brainwashed && (
+            <>
+              <div className="text_brainwashed">Brainwashed</div>
+              <Ability type="brainwashed" tribe={card.gsx$tribe} ability={card.gsx$brainwashed} />
+            </>
+          )}
+          <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe }} />
           {/*chieftain*/
             card.gsx$types.includes("Chieftain") &&
             <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>

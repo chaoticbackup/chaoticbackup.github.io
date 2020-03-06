@@ -1,16 +1,25 @@
 @import '../base';
 
-@media only screen and (min-width: 975px) {
-  .collection {
+.collection {
+  @media only screen and (max-width: 975px) {
+    padding-left: 5px;
+
+    .card.creature {
+      .text_brainwashed {
+        font-weight: bold;
+      }
+
+      .right {
+        white-space: pre-line;
+      }
+    }
+  }
+
+  @media only screen and (min-width: 975px) {
+
     margin-top: 5px;
     margin-right: 5px;
     margin-left: 5px;
-  }
-}
-
-.collection {
-
-  @media only screen and (min-width: 975px) {
 
     > .left {
       font-family: Roboto, Arial, sans-serif;
@@ -169,6 +178,10 @@
       margin: 0 auto;
       width: 50%;
       text-align: right;
+    }
+
+    .text_brainwashed {
+      display: none;
     }
 
     .brainwashed {
