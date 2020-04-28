@@ -48,5 +48,9 @@ module.exports = {
     "react",
     "import",
     "react-hooks"
+  ],
+  "ignorePatterns": [
+    "node_modules",
+    "build"
   ]
 }

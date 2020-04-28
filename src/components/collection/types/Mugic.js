@@ -1,15 +1,15 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
-import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Mugic, Ability, Tribe} from '../../Snippets';
+import { observer, inject } from 'mobx-react';
+import { Rarity, Unique, Name, Mugic, Ability, Tribe } from '../../Snippets';
 import MugicPlay from '../../mugicplayer/playbutton.tsx';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 
 @inject((stores, props, context) => props) @observer
 class Attack extends React.Component {
 
   render() {
-    let {card, history} = this.props;
+    let { card, history } = this.props;
 
     let mugicCounters = [];
     if (card.gsx$cost == 0) {
@@ -31,18 +31,17 @@ class Attack extends React.Component {
 
     if (this.props.ext == false) return (
       <div className="card mugic">
-        <img className="thumb" style={{float: 'left'}} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
+        <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
         <div className="left">
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
           <Tribe size="icon16" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}<br />
-          <span>{mugicCounters}</span>{location.pathname.includes("/beta/") &&
-            <MugicPlay notes={card.gsx$notes}/>}<br />
+          <span>{mugicCounters}</span><MugicPlay notes={card.gsx$notes}/><br />
         </div>
         <br />
         <div className="right" >
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
+          <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
@@ -53,7 +52,7 @@ class Attack extends React.Component {
         <div className="right" >
           <Name name={card.gsx$name} /><br />
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
+          <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
           {card.gsx$flavortext && <React.Fragment>
             <span className="flavortext">{card.gsx$flavortext}</span><br />
           </React.Fragment>}

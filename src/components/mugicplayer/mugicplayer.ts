@@ -1,25 +1,34 @@
-import {Transport, Synth, Part} from 'tone';
+import {Transport, Synth, Part, Time, SynthOptions} from 'tone';
 
 // https://github.com/Tonejs/Tone.js/wiki/Time
 // https://github.com/Tonejs/Tone.js/wiki/Events
+interface note_value {
+    time: number
+    pitch: string,
+    duration: number,
+    velocity?: number
+}
 export class Note {
     pitch: string;
     octave: number;
-    duration: number;
     time: number;
+    duration: number;
+    velocity: number;
 
-    constructor(duration: number, time: number, value: {pitch: string, octave: number}) {
+    constructor(duration: number, time: number, value: {pitch: string, octave: number}, velocity?: number) {
         this.duration = duration;
+        this.time = time;
         this.pitch = value.pitch;
         this.octave = value.octave;
-        this.time = time;
+        if (velocity) this.velocity = velocity;
     }
 
-    get note() {
+    get value(): note_value {
         return {
-            time: this.time + "/4n",
+            time: Time(this.time).quantize("4n") / 4,
             pitch: this.pitch + this.octave.toString(),
-            duration: this.duration + "/4n"
+            duration: Time(this.duration).quantize("4n") / 4,
+            velocity: this.velocity,
         }
     }
 }
@@ -28,7 +37,6 @@ export class MugicPlayer {
     private static instance: MugicPlayer;
     private synth: Synth;
     private part: Part;
-    private transport: Transport;
 
     // Singleton
     static getInstance() {
@@ -37,9 +45,24 @@ export class MugicPlayer {
     }
 
     constructor() {
-        this.synth = new Synth().toDestination();
-        this.part = new Part();
-        Transport.bpm.value = 240;
+        const options = {
+            frequency: 440,
+            oscillator: {
+                // frequency: 440
+                type: "triangle" as any
+            },
+            envelope: {
+                attack: 0.40,
+                decay: 0.10,
+                release: 1,
+                sustain: 0.3,
+                attackCurve: "cosine" as any,
+                releaseCurve: "exponential" as any,
+                decayCurve: "exponential" as any
+            }
+        };
+        this.synth = new Synth(options).toDestination();
+        Transport.bpm.value = 140;
     }
 
     /**
@@ -51,17 +74,17 @@ export class MugicPlayer {
     //     up down up up  down up
     play(input: string) {
         Transport.stop();
-        this.part.dispose();
+        if (this.part) this.part.dispose();
 
         try {
             const tune = parseTune(input);
-
+            console.log(tune.map(n => n.value.pitch));
             this.part = new Part(
-                (time: number, note: any) => {
-                    // console.log(time, note);
-                    this.synth.triggerAttackRelease(note.pitch, note.duration, time);
+                (time, val: note_value) => {
+                    console.log(val);
+                    this.synth.triggerAttackRelease(val.pitch, val.duration, time, val.velocity);
                 },
-                tune.map((n) => n.note)
+                tune.map((n) => n.value)
             ).start();
     
             Transport.start();

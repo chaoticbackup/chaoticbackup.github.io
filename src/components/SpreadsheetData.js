@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import loki from 'lokijs';
-import {observable, observe, action} from "mobx";
+import { observable, observe, action } from "mobx";
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
@@ -42,11 +42,11 @@ class CollectionDB {
             if ((new Date(data[0].updated)) > (new Date(cookie))) {
               this[type].clear();
               this[type].insert(data);
-              cookies.set(`${this.format}_${type}`, data[0].updated, {path: '/'});
+              cookies.set(`${this.format}_${type}`, data[0].updated, { path: '/' });
             }
           }
           else {
-            cookies.set(`${this.format}_${type}`, data[0].updated, {path: '/'});
+            cookies.set(`${this.format}_${type}`, data[0].updated, { path: '/' });
           }
         });
         return resolve();

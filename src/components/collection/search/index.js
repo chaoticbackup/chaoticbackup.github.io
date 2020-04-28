@@ -1,9 +1,9 @@
 import React from 'react';
-import {observable} from "mobx";
-import {observer, inject} from 'mobx-react';
+import { observable } from "mobx";
+import { observer, inject } from 'mobx-react';
 import Collapsible from 'react-collapsible';
 import API from '../../SpreadsheetData';
-import {Loading} from '../../Snippets';
+import { Loading } from '../../Snippets';
 import search_api from './search';
 
 @inject((stores, props, context) => props) @observer
@@ -22,7 +22,7 @@ export default class SearchCollection extends React.Component {
     this.reset = this.reset.bind(this);
     this.handleTriggerClick = this.handleTriggerClick.bind(this);
 
-    this.props.handleContent([{'text': 'Loading...'}]);
+    this.props.handleContent([{ 'text': 'Loading...' }]);
 
     this.cleanInput();
     this.parseQuery();
@@ -59,15 +59,15 @@ export default class SearchCollection extends React.Component {
       subtypes: "",
       flavor: true,
       sets: {},
-      types: {attack: false, battlegear: false, creature: false, location: false, mugic: false},
-      rarity: {common: false, uncommon: false, rare: false, 'super rare': false, 'ultra rare': false, promo: false},
-      tribes: {danian: false, 'm\'arrillian': false, mipedian: false, overworld: false, underworld: false, generic: false},
-      elements: {fire: false, air: false, earth: false, water: false, none: false, and: false},
-      disciplines: {courage: '', power: '', wisdom: '', speed: ''},
-      energy: {min: '', max: ''},
-      mcbp: {min: '', max: ''},
-      mull: {unique: false, loyal: false, legendary: false, mixed: false},
-      gender: {ambiguous: false, female: false, male: false}
+      types: { attack: false, battlegear: false, creature: false, location: false, mugic: false },
+      rarity: { common: false, uncommon: false, rare: false, 'super rare': false, 'ultra rare': false, promo: false },
+      tribes: { danian: false, 'm\'arrillian': false, mipedian: false, overworld: false, underworld: false, generic: false },
+      elements: { fire: false, air: false, earth: false, water: false, none: false, and: false },
+      disciplines: { courage: '', power: '', wisdom: '', speed: '', max: false },
+      energy: { min: '', max: '' },
+      mcbp: { min: '', max: '' },
+      mull: { unique: false, loyal: false, legendary: false, mixed: false },
+      gender: { ambiguous: false, female: false, male: false }
     };
     for (const key in API.sets) input.sets[key.toLowerCase()] = false;
 
@@ -100,6 +100,7 @@ export default class SearchCollection extends React.Component {
     if (query.hasOwnProperty('power')) this.input.disciplines.power = query.power;
     if (query.hasOwnProperty('wisdom')) this.input.disciplines.wisdom = query.wisdom;
     if (query.hasOwnProperty('speed')) this.input.disciplines.speed = query.speed;
+    if (query.hasOwnProperty('disc_max')) this.input.disciplines.max = !!query.disc_max;
     if (query.hasOwnProperty('energy')) {
       let q = query.energy.split(',');
       if (q[0] >= 0) this.input.energy.min = q[0];
@@ -134,6 +135,7 @@ export default class SearchCollection extends React.Component {
     if (this.input.disciplines.power > 0) queryString += "power=" + this.input.disciplines.power + "&";
     if (this.input.disciplines.wisdom > 0) queryString += "wisdom=" + this.input.disciplines.wisdom + "&";
     if (this.input.disciplines.speed > 0) queryString += "speed=" + this.input.disciplines.speed + "&";
+    if (this.input.disciplines.max) queryString += "disc_max=true&";
     if (this.input.energy.min != "" || this.input.energy.max != "") {
       queryString += "energy=";
       if (this.input.energy.min != "" && this.input.energy.min >= 0) queryString += this.input.energy.min;
@@ -180,12 +182,12 @@ export default class SearchCollection extends React.Component {
     let results = search_api(this.input);
 
     if (results.length > 0) this.props.handleContent(results);
-    else this.props.handleContent([{'text': 'No Results Found'}]);
+    else this.props.handleContent([{ 'text': 'No Results Found' }]);
   }
 
   render() {
       if (this.loaded == false) {
-        API.LoadDB([{'cards': 'attacks'}, {'cards': 'battlegear'}, {'cards': 'creatures'}, {'cards': 'locations'}, {'cards': 'mugic'}])
+        API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
         .then(() => {
           this.loaded = true;
           this.search();
@@ -196,7 +198,7 @@ export default class SearchCollection extends React.Component {
     const gen = (d, display, text) => {
       let tmp = [];
       Object.keys(this.input[d]).forEach((item, i) => {
-        tmp.push(<label style={{display: display}} key={i}><input type="checkbox" name={item} checked={this.input[d][item]} onChange={e => this.handleChange(e, d)} />{text(item)}</label>
+        tmp.push(<label style={{ display: display }} key={i}><input type="checkbox" name={item} checked={this.input[d][item]} onChange={e => this.handleChange(e, d)} />{text(item)}</label>
         );
       });
       return tmp;
@@ -228,8 +230,9 @@ export default class SearchCollection extends React.Component {
 
     let disciplines = [];
     Object.keys(this.input.disciplines).forEach((item, i) => {
+      if (i == 4) return;
       disciplines.push(<label key={i} className="disciplines"><input type="text" name={item} value={this.input.disciplines[item]} onChange={e => this.handleChange(e, "disciplines")} />
-        &nbsp;<img className="icon20" style={{verticalAlign: 'bottom'}} src={"/src/img/icons/disciplines/"+item+".png"} />&nbsp;
+        <img className="icon20" style={{ verticalAlign: 'middle', padding: "0px 2px" }} src={"/src/img/icons/disciplines/"+item+".png"} />
       </label>);
     });
 
@@ -283,6 +286,14 @@ export default class SearchCollection extends React.Component {
           >
             <div className="disciplines">
               {disciplines}
+              <label>Max
+                <input 
+                  type="checkbox" name="max" 
+                  style={{ display: "inline", margin: "0px" }} 
+                  checked={this.input.disciplines.max} 
+                  onChange={e => this.handleChange(e, "disciplines")} 
+                />
+              </label>
             </div>
           </CollapsibleWrapper>
           <CollapsibleWrapper
@@ -356,13 +367,13 @@ class CollapsibleWrapper extends React.Component {
 
   constructor(props) {
     super(props);
-    const {collapsed, type} = props;
+    const { collapsed, type } = props;
     this.open = collapsed[type];
     this.trigger = props.title;
   }
 
   render() {
-    const {type, children, onClick} = this.props;
+    const { type, children, onClick } = this.props;
 
     return (
       <Collapsible
