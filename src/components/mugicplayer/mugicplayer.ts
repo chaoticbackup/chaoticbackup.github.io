@@ -1,4 +1,5 @@
-import {Transport, Synth, Part, Time, SynthOptions} from 'tone';
+import {Transport, Synth, Part, Time, EnvelopeCurve} from 'tone';
+type BasicEnvelopeCurve = "linear" | "exponential";
 
 // https://github.com/Tonejs/Tone.js/wiki/Time
 // https://github.com/Tonejs/Tone.js/wiki/Events
@@ -54,11 +55,11 @@ export class MugicPlayer {
             envelope: {
                 attack: 0.40,
                 decay: 0.10,
-                release: 1,
-                sustain: 0.3,
-                attackCurve: "cosine" as any,
-                releaseCurve: "exponential" as any,
-                decayCurve: "exponential" as any
+                release: 0.5,
+                sustain: 1,
+                attackCurve: "cosine" as EnvelopeCurve,
+                releaseCurve: "exponential" as EnvelopeCurve,
+                decayCurve: "exponential" as BasicEnvelopeCurve
             }
         };
         this.synth = new Synth(options).toDestination();
@@ -81,7 +82,7 @@ export class MugicPlayer {
             console.log(tune.map(n => n.value.pitch));
             this.part = new Part(
                 (time, val: note_value) => {
-                    console.log(val);
+                    // console.log(val);
                     this.synth.triggerAttackRelease(val.pitch, val.duration, time, val.velocity);
                 },
                 tune.map((n) => n.value)
@@ -102,7 +103,7 @@ export class MugicPlayer {
 // db notation uses duration (quarter notes) and pitch
 // 2Eb => E flat for 2 quarter notes
 const parseTune = (input: string): Note[] => {
-    let tune: Note[] = [];
+    let seq: Note[] = [];
     let time = 0;
 
     input.split(" ").forEach((note) => {
@@ -113,12 +114,22 @@ const parseTune = (input: string): Note[] => {
         let dur = parseInt(match[0]);
         let pitch = note.split(/(?:[1-8]{1})/)[1];
 
-        tune.push(new Note(dur, time, parseNote(pitch, tune)));
+        seq.push(new Note(dur, time, parseNote(pitch, seq)));
 
         time += dur;
     });
 
-    return tune;
+    // If a note is repeated at the same octave, look at trend of last two notes
+    for (let i = 2; i < seq.length; i++) {
+        const note = seq[i];
+        const comp = seq[i-2];
+        if (note.pitch === comp.pitch && note.octave === comp.octave) {
+            const pitch = letter_to_number(note.pitch);
+            seq[i].octave = trend(pitch, i, seq);
+        }
+    }
+
+    return seq;
 }
 
 /*
@@ -177,19 +188,20 @@ const parseNote = (note: string, seq: Note[]): {pitch: string, octave: number} =
  *  If so consider that to be a higher weight.
  *  If the pattern is going up, go up, if going down go down with repeated notes
  *  Example, a note 4 away but on a downward trend would be prioritized over a 3 away in the other direction.
- *  If there is no change. Pick the octive the previous notes used.
+ *  If there is no change. Pick the octave the previous notes used.
 */ 
 /**
  * Searches for a trend in previous notes to calculate the current octave to be used
  * For each iteration, the length is reduced so that an older set of notes is compared
  * @param current The note being calculated
- * @param length The length of the array to be compared
+ * @param l The index of the array to be compared
  */
 const trend = (current: number, l: number, seq: Note[]): number => {
     if (l < 2) return seq[l-1].octave;
 
-    let prev = letter_to_number(seq[l-1].pitch);
-    let prev2 = letter_to_number(seq[l-2].pitch);
+    current = pitchValue(current, seq[l-1].octave);
+    let prev = pitchValue(seq[l-1].pitch, seq[l-1].octave);
+    let prev2 = pitchValue(seq[l-2].pitch, seq[l-2].octave);
 
     // downward trend
     if (prev2 > prev) {
@@ -233,6 +245,13 @@ const compare = (one: number, two: number): number => {
     }
     
     return res;
+}
+
+function pitchValue(current: number, octave: number): number;
+function pitchValue(pitch: string, octave: number): number;
+function pitchValue(arg1: number | string, octave: number): number {
+    const pitch = (typeof arg1 === 'number') ? arg1 : letter_to_number(arg1);
+    return pitch + (octave - 1) * 8;
 }
 
 /**
