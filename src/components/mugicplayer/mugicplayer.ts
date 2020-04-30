@@ -1,4 +1,4 @@
-import {Transport, Synth, Part, Time, EnvelopeCurve} from 'tone';
+import {Transport, Synth, Part, Time, PolySynth, EnvelopeCurve} from 'tone';
 type BasicEnvelopeCurve = "linear" | "exponential";
 
 // https://github.com/Tonejs/Tone.js/wiki/Time
@@ -36,7 +36,7 @@ export class Note {
 
 export class MugicPlayer {
     private static instance: MugicPlayer;
-    private synth: Synth;
+    private synth: PolySynth;
     private part: Part;
 
     // Singleton
@@ -49,8 +49,7 @@ export class MugicPlayer {
         const options = {
             frequency: 440,
             oscillator: {
-                // frequency: 440
-                type: "triangle" as any
+                type: "sine" as any
             },
             envelope: {
                 attack: 0.40,
@@ -60,9 +59,11 @@ export class MugicPlayer {
                 attackCurve: "cosine" as EnvelopeCurve,
                 releaseCurve: "exponential" as EnvelopeCurve,
                 decayCurve: "exponential" as BasicEnvelopeCurve
-            }
+            },
+            pitchDecay: 0.05,
+            maxPolyphony: 1
         };
-        this.synth = new Synth(options).toDestination();
+        this.synth = new PolySynth(Synth, options).toDestination();
         Transport.bpm.value = 140;
     }
 
@@ -82,7 +83,6 @@ export class MugicPlayer {
             console.log(tune.map(n => n.value.pitch));
             this.part = new Part(
                 (time, val: note_value) => {
-                    // console.log(val);
                     this.synth.triggerAttackRelease(val.pitch, val.duration, time, val.velocity);
                 },
                 tune.map((n) => n.value)
@@ -120,14 +120,14 @@ const parseTune = (input: string): Note[] => {
     });
 
     // If a note is repeated at the same octave, look at trend of last two notes
-    for (let i = 2; i < seq.length; i++) {
-        const note = seq[i];
-        const comp = seq[i-2];
-        if (note.pitch === comp.pitch && note.octave === comp.octave) {
-            const pitch = letter_to_number(note.pitch);
-            seq[i].octave = trend(pitch, i, seq);
-        }
-    }
+    // for (let i = 2; i < seq.length; i++) {
+    //     const note = seq[i];
+    //     const comp = seq[i-2];
+    //     if (note.pitch === comp.pitch && note.octave === comp.octave) {
+    //         const pitch = letter_to_number(note.pitch);
+    //         seq[i].octave = trend(pitch, i, seq);
+    //     }
+    // }
 
     return seq;
 }
@@ -143,44 +143,52 @@ const parseTune = (input: string): Note[] => {
  * Tries to find the closer note to match of the previous notes octave
  * @note The note's 
  */
-const parseNote = (note: string, seq: Note[]): {pitch: string, octave: number} => {
+const parseNote = (pitch: string, seq: Note[]): {pitch: string, octave: number} => {
     let octave: number = (() => {
-        // If its the first note
+        // If its the first note its "middle octave"
         if (seq.length === 0) return 4;
 
-        const l = seq.length;
-        const current = letter_to_number(note);
-        const previous = letter_to_number(seq[l-1].pitch);
+        const l = seq.length - 1;
+        const current = pitchValue(pitch, seq[l].octave);
+        const previous = pitchValue(seq[l]);
         const distance = compare(previous, current);
 
         // If its less than 3 pitches of the previous note, use the closest pitch
         if (distance < 3) {
-            if (distance === 0) return seq[l-1].octave;
+            if (distance === 0) return seq[l].octave;
 
             if (previous > 5) {
                 if (current < 3) {
-                    return seq[l-1].octave + 1;
+                    return seq[l].octave + 1;
                 }
                 else {
-                    return seq[l-1].octave;
+                    return seq[l].octave;
                 }
             }
             else if (previous < 3) {
                 if (current > 5) {
-                    return seq[l-1].octave - 1;
+                    return seq[l].octave - 1;
                 }
                 else {
-                    return seq[l-1].octave;
+                    return seq[l].octave;
                 }
             }
-            return seq[l-1].octave;
+            return seq[l].octave;
+        } else if (l === 0) {
+            if (distance === 3) {
+                return seq[l].octave + 1;
+            }
+            else if (current > previous) {
+                return seq[l].octave; 
+            }
+            else if (current < previous) return seq[l].octave - 1;
         }
         
         // If its further away, look at the previous notes for a trend
         return trend(current, l, seq);
     })();
 
-    return {pitch: note, octave};
+    return {pitch: pitch, octave};
 }
 
 /*
@@ -197,29 +205,28 @@ const parseNote = (note: string, seq: Note[]): {pitch: string, octave: number} =
  * @param l The index of the array to be compared
  */
 const trend = (current: number, l: number, seq: Note[]): number => {
-    if (l < 2) return seq[l-1].octave;
+    if (l < 1) return seq[l].octave;
 
-    current = pitchValue(current, seq[l-1].octave);
-    let prev = pitchValue(seq[l-1].pitch, seq[l-1].octave);
-    let prev2 = pitchValue(seq[l-2].pitch, seq[l-2].octave);
+    let prev = pitchValue(seq[l].pitch, seq[l].octave);
+    let prev2 = pitchValue(seq[l-1].pitch, seq[l-1].octave);
 
     // downward trend
     if (prev2 > prev) {
         if (prev < current) {
-            return seq[l-1].octave;
+            return seq[l].octave;
         }
-        return seq[l-1].octave - 1;
+        return seq[l].octave - 1;
     }
     // upward trend
     else if (prev2 < prev) {
         if (prev < current) {
-            return seq[l-1].octave;
+            return seq[l].octave;
         }
-        return seq[l-1].octave + 1;
+        return seq[l].octave + 1;
     }
     // same notes
     else {
-        return trend(current, l-1, seq);
+        return trend(current, l, seq);
     }
 }
 
@@ -247,10 +254,18 @@ const compare = (one: number, two: number): number => {
     return res;
 }
 
+function pitchValue(note: Note): number;
 function pitchValue(current: number, octave: number): number;
 function pitchValue(pitch: string, octave: number): number;
-function pitchValue(arg1: number | string, octave: number): number {
-    const pitch = (typeof arg1 === 'number') ? arg1 : letter_to_number(arg1);
+function pitchValue(arg1: number | string | Note, octave?: number): number {
+    let pitch: number;
+    if (arg1 instanceof Note) {
+      pitch = letter_to_number(arg1.pitch);
+      octave = arg1.octave;  
+    } else {
+        pitch = (typeof arg1 === 'number') ? arg1 : letter_to_number(arg1);
+        octave = octave as number;
+    }
     return pitch + (octave - 1) * 8;
 }
 
