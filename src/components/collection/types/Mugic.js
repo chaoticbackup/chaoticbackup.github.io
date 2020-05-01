@@ -28,7 +28,7 @@ class Attack extends React.Component {
         }
       }
     }
-
+    
     if (this.props.ext == false) return (
       <div className="card mugic">
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(card.gsx$image)} />
@@ -36,7 +36,7 @@ class Attack extends React.Component {
           <Name name={card.gsx$name} /><br />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
           <Tribe size="icon16" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}<br />
-          <span>{mugicCounters}</span><MugicPlay notes={card.gsx$notes}/><br />
+          <span>{mugicCounters}</span><MugicPlay notes={card.gsx$shownotes?.length > 0 ? card.gsx$shownotes : card.gsx$notes}/><br />
         </div>
         <br />
         <div className="right" >

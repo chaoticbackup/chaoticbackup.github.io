@@ -41,10 +41,11 @@
     ]
   },
   "include": [
-    "src"
+    "./src"
   ],
   "exclude": [
-    "./build/*",
-    "./node_modules/*"
+    "./build",
+    "./node_modules/*",
+    "./source/**/*.spec.ts"
   ]
 }
