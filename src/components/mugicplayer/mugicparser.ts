@@ -127,7 +127,9 @@ const parseNote = (pitch: string, seq: Note[]): {pitch: string, octave: number} 
         return trend(current, l, seq);
     })();
 
-    return {pitch: pitch, octave};
+    if (octave > 5) octave = 5;
+    
+    return {pitch, octave};
 }
 
 /*
