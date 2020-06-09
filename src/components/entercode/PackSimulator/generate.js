@@ -65,29 +65,28 @@ class GenerateCard {
                 return;
             }
 
-            if (card_names.indexOf(card.gsx$name) > -1 || card.gsx$exclusive.includes("Starter")) {
-                return gencard(results);
+            if (card_names.indexOf(card.gsx$name) > -1 || card.gsx$exclusive.toLowerCase().includes("starter")) {
+                gencard(results);
+                return;
             }
+            
             card_names.push(card.gsx$name);
 
             if (card.gsx$type != "Creatures") {
                 cards.push(<div key={key++} className="card" style={{ backgroundImage: `url("${API.base_image + (card.gsx$image || API.card_back)}")` }}></div>);
             }
             else {
-                const courage = gendisp(card.gsx$courage);
-                const power = gendisp(card.gsx$power);
-                const wisdom = gendisp(card.gsx$wisdom);
-                const speed = gendisp(card.gsx$speed);
-                const energy = geneng(card.gsx$energy);
-                cards.push(<div key={key++} className="card" style={{ backgroundImage: `url("${API.base_image + (card.gsx$image || API.card_back)}")` }}>
-                    <div className="stats">
-                        <span key="courage">{courage}</span>
-                        <span key="power">{power}</span>
-                        <span key="wisdom">{wisdom}</span>
-                        <span key="speed">{speed}</span>
-                        <span key="energy">{energy}</span>
+                cards.push(
+                    <div key={key++} className="card" style={{ backgroundImage: `url("${API.base_image + (card.gsx$image || API.card_back)}")` }}>
+                        <div className="stats">
+                            <span key="courage">{gendisp(card.gsx$courage)}</span>
+                            <span key="power">{gendisp(card.gsx$power)}</span>
+                            <span key="wisdom">{gendisp(card.gsx$wisdom)}</span>
+                            <span key="speed">{gendisp(card.gsx$speed)}</span>
+                            <span key="energy">{geneng(card.gsx$energy)}</span>
+                        </div>
                     </div>
-                </div>);
+                );
             }
 
         }
