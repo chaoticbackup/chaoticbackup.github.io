@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../SpreadsheetData';
-import {observable, action} from "mobx";
-import {observer, inject} from 'mobx-react';
+import { observable, action } from "mobx";
+import { observer, inject } from 'mobx-react';
 import CardList from './List';
 import SearchForm from './search/index.js';
 import './collection.scss'

@@ -2,11 +2,13 @@ import loki from 'lokijs';
 import API from '../../SpreadsheetData';
 
 function cleanInputRegex(input) {
- input = input
-  .replace(/\\/g, '')
-  .replace(/\(|\)/g, (match) => {return ("\\"+match)})
-  .replace(/\‘|\’/g, "'");
- return new RegExp(input.trim(), 'i');
+  input = input
+    .replace(/\\/g, '')
+    .replace(/\‘|\’/g, "'")
+    .replace(/\(|\)/g, (match) => ("\\"+match));
+    // .replace(/~(\w+)/, (match) => (`\(?!${match}\)`));
+  
+  return new RegExp(input.trim(), 'i');
 }
 
 export default function search_api(input) {
@@ -69,32 +71,50 @@ export default function search_api(input) {
 
   // Card Text
   if (input.text.length > 0) {
-    // split text by comma
-    let textList = input.text.split(",").filter(Boolean).map((item) => {
-      return ({ '$regex': cleanInputRegex(item) });
-    });
-    // clean text
-    let inputtext = cleanInputRegex(input.text);
+    const negates = [];
+    let inputtext = input.text.replace(/(?:~)(\w+)/g, (_, p1) => { negates.push(p1); return ""; });
 
-    let parm = (() => {
-      let list = [
-        { 'gsx$tags': { "$or": textList }},
-        { 'gsx$ability': { '$regex': inputtext }}
-      ]
-      if (input.flavor) {
-        list.push({ 'gsx$flavortext': { "$or": textList }});
-        list.push({ 'gsx$artist': { "$or": textList }});
+    if (inputtext.length > 0) {
+      inputtext = cleanInputRegex(inputtext);
+
+      let parm = (() => {
+        let list = [
+          { 'gsx$tags': { "$or": inputtext }},
+          { 'gsx$ability': { '$regex': inputtext }}
+        ]
+        if (input.flavor) {
+          list.push({ 'gsx$flavortext': { "$or": inputtext }});
+          list.push({ 'gsx$artist': { "$or": inputtext }});
+        }
+        return list;
+      })();
+  
+      attackResults = attackResults.find({ '$or': parm })
+      battlegearResults = battlegearResults.find({ '$or': parm });
+      creatureResults = creatureResults.find({ '$or':
+        (parm.concat([{ 'gsx$brainwashed': { '$regex': inputtext }}]))
+      });
+      locationResults = locationResults.find({ '$or': parm });
+      mugicResults = mugicResults.find({ '$or': parm });
+    }
+
+    if (negates.length > 0) {
+      const ignoreText = (obj, creature=false) => {
+        let truth = false;
+        negates.forEach((word) => {
+          truth |= (obj.gsx$ability.toLowerCase().indexOf(word.toLowerCase()) > -1);
+          if (creature) truth |= (obj.gsx$flavortext.toLowerCase().indexOf(word.toLowerCase()) > -1);
+        })
+        return !truth;
       }
-      return list;
-    })();
 
-    attackResults = attackResults.find({ '$or': parm });
-    battlegearResults = battlegearResults.find({ '$or': parm });
-    creatureResults = creatureResults.find({ '$or':
-      (parm.concat([{ 'gsx$brainwashed': { '$regex': inputtext }}]))
-    });
-    locationResults = locationResults.find({ '$or': parm });
-    mugicResults = mugicResults.find({ '$or': parm });
+      attackResults = attackResults.where(ignoreText);
+      battlegearResults = battlegearResults.where(ignoreText);
+      creatureResults = creatureResults.where(ignoreText, true);
+      locationResults = locationResults.where(ignoreText);
+      mugicResults = mugicResults.where(ignoreText);
+    }
+
   }
 
   // Subtypes / Initiative
