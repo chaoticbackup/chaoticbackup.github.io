@@ -103,7 +103,8 @@ export default function search_api(input) {
         let truth = false;
         negates.forEach((word) => {
           truth |= (obj.gsx$ability.toLowerCase().indexOf(word.toLowerCase()) > -1);
-          if (creature) truth |= (obj.gsx$flavortext.toLowerCase().indexOf(word.toLowerCase()) > -1);
+          truth |= (obj.gsx$flavortext.toLowerCase().indexOf(word.toLowerCase()) > -1);
+          if (creature) truth |= (obj.gsx$brainwashed.toLowerCase().indexOf(word.toLowerCase()) > -1);
         })
         return !truth;
       }
