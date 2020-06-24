@@ -44,28 +44,50 @@ export default function search_api(input) {
 
   // Search by name
   if (input.name.length > 0) {
-    let inputname = cleanInputRegex(input.name);
+    const negates = [];
+    let inputname = input.name.replace(/(?:~)([\w,()]+)/g, (_, p1) => { negates.push(p1); return ""; });
 
-    attackResults = attackResults.find({ '$or': [
-      { 'gsx$name': { '$regex': inputname }},
-      { 'gsx$tags': { '$regex': inputname }},
-    ]});
-    battlegearResults = battlegearResults.find({ '$or': [
-      { 'gsx$name': { '$regex': inputname }},
-      { 'gsx$tags': { '$regex': inputname }},
-    ]});
-    creatureResults = creatureResults.find({ '$or': [
-      { 'gsx$name': { '$regex': inputname }},
-      { 'gsx$tags': { '$regex': inputname }},
-    ]});
-    locationResults = locationResults.find({ '$or': [
-      { 'gsx$name': { '$regex': inputname }},
-      { 'gsx$tags': { '$regex': inputname }}
-    ]});
-    mugicResults = mugicResults.find({ '$or': [
-      { 'gsx$name': { '$regex': inputname }},
-      { 'gsx$tags': { '$regex': inputname }},
-    ]});
+    if (inputname.length > 0) {
+      inputname = cleanInputRegex(inputname);
+
+      attackResults = attackResults.find({ '$or': [
+        { 'gsx$name': { '$regex': inputname }},
+        { 'gsx$tags': { '$regex': inputname }},
+      ]});
+      battlegearResults = battlegearResults.find({ '$or': [
+        { 'gsx$name': { '$regex': inputname }},
+        { 'gsx$tags': { '$regex': inputname }},
+      ]});
+      creatureResults = creatureResults.find({ '$or': [
+        { 'gsx$name': { '$regex': inputname }},
+        { 'gsx$tags': { '$regex': inputname }},
+      ]});
+      locationResults = locationResults.find({ '$or': [
+        { 'gsx$name': { '$regex': inputname }},
+        { 'gsx$tags': { '$regex': inputname }}
+      ]});
+      mugicResults = mugicResults.find({ '$or': [
+        { 'gsx$name': { '$regex': inputname }},
+        { 'gsx$tags': { '$regex': inputname }},
+      ]});
+    }
+
+    if (negates.length > 0) {
+      const ignoreText = (obj) => {
+        let truth = false;
+        negates.forEach((word) => {
+          truth |= (obj.gsx$name.toLowerCase().indexOf(word.toLowerCase().replace('_', ' ')) > -1);
+        });
+        return !truth;
+      }
+
+      attackResults = attackResults.where(ignoreText);
+      battlegearResults = battlegearResults.where(ignoreText);
+      creatureResults = creatureResults.where(ignoreText);
+      locationResults = locationResults.where(ignoreText);
+      mugicResults = mugicResults.where(ignoreText);
+    }
+
   }
 
 
@@ -111,7 +133,7 @@ export default function search_api(input) {
 
       attackResults = attackResults.where(ignoreText);
       battlegearResults = battlegearResults.where(ignoreText);
-      creatureResults = creatureResults.where(ignoreText, true);
+      creatureResults = creatureResults.where(obj => ignoreText(obj, true));
       locationResults = locationResults.where(ignoreText);
       mugicResults = mugicResults.where(ignoreText);
     }
