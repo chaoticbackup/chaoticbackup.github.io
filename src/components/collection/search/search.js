@@ -99,14 +99,14 @@ export default function search_api(input) {
     if (inputtext.length > 0) {
       inputtext = cleanInputRegex(inputtext);
 
-      let parm = (() => {
-        let list = [
-          { 'gsx$tags': { "$or": inputtext }},
+      const parm = (() => {
+        const list = [
+          { 'gsx$tags': { '$regex': inputtext }},
           { 'gsx$ability': { '$regex': inputtext }}
         ]
         if (input.flavor) {
-          list.push({ 'gsx$flavortext': { "$or": inputtext }});
-          list.push({ 'gsx$artist': { "$or": inputtext }});
+          list.push({ 'gsx$flavortext': { '$regex': inputtext }});
+          list.push({ 'gsx$artist': { '$regex': inputtext }});
         }
         return list;
       })();
