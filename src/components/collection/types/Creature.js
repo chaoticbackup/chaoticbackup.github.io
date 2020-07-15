@@ -81,7 +81,7 @@ export default class Creature extends React.Component {
     )
     else return (
       <div className="card creature">
-        <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />
+        <div className="fullcard"><img src={API.base_image + (card.gsx$image || API.card_back)} /></div>
         <div className="right" >
           <Name name={card.gsx$name} /><br />
           <span>{card.gsx$courage}&nbsp;<Discipline discipline="courage" /></span>&nbsp;

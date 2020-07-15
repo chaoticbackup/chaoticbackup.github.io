@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
-import {observer, inject} from 'mobx-react';
-import {Rarity, Unique, Name, Element, Ability, AttackIcon} from '../../Snippets';
+import { observer, inject } from 'mobx-react';
+import { Rarity, Unique, Name, Element, Ability, AttackIcon } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -27,18 +27,18 @@ export default class Attack extends React.Component {
         <br />
         <div className="right" >
           <Ability ability={card.gsx$ability} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
+          <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
     )
     else return (
       <div className="card attack">
-        <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />
+        <div className="fullcard"><img src={API.base_image + (card.gsx$image || API.card_back)} /></div>
         <div className="right">
           <Name name={card.gsx$name} /><br />
           <Ability ability={card.gsx$ability} />
-          <Unique data={{unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary}} />
+          <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
           {card.gsx$flavortext && <React.Fragment>
             <span className="flavortext">{card.gsx$flavortext}</span><br />
           </React.Fragment>}

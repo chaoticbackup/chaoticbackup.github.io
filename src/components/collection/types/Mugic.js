@@ -48,7 +48,7 @@ class Attack extends React.Component {
     )
     else return (
       <div className="card mugic">
-        <img className="fullcard" src={API.base_image + (card.gsx$image || API.card_back)} />
+        <div className="fullcard"><img src={API.base_image + (card.gsx$image || API.card_back)} /></div>
         <div className="right" >
           <Name name={card.gsx$name} /><br />
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
