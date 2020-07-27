@@ -224,6 +224,17 @@ class API {
     }));
   }
 
+  /* Wrappers for images */
+  cardImage(card) {
+    if (card.gsx$ic && card.gsx$ic !== '') {
+      return card.gsx$ic;
+    } else if (card.gsx$image && card.gsx$image !== '') {
+      return this.base_image + card.gsx$image;
+    } else {
+      return this.base_image + this.card_back;
+    }
+  }
+
   get tribes() {
     return ["Danian", "Generic", "Mipedian", "M'arrillian", "OverWorld", "UnderWorld"];
   }

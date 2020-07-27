@@ -350,8 +350,8 @@
     width: 250px;
     height: 350px;
     img {
-      max-height: 350px;
       max-width: 250px;
+      max-height: 350px;
     }
   }
 
@@ -359,10 +359,10 @@
     width: 350px;
     height: 250px;
     img {
-      transform-origin: 70% 50%;
-      transform: rotate(90deg);
-      max-height: 250px;
+      // transform-origin: 70% 50%;
+      // transform: rotate(90deg);
       max-width: 350px;
+      max-height: 250px;
     }
   }
 

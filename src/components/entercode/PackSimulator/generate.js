@@ -73,11 +73,11 @@ class GenerateCard {
             card_names.push(card.gsx$name);
 
             if (card.gsx$type != "Creatures") {
-                cards.push(<div key={key++} className="card" style={{ backgroundImage: `url("${API.base_image + (card.gsx$image || API.card_back)}")` }}></div>);
+                cards.push(<div key={key++} className="card" style={{ backgroundImage: `url("${API.cardImage(card)}")` }}></div>);
             }
             else {
                 cards.push(
-                    <div key={key++} className="card" style={{ backgroundImage: `url("${API.base_image + (card.gsx$image || API.card_back)}")` }}>
+                    <div key={key++} className="card" style={{ backgroundImage: `url("${API.cardImage(card)}")` }}>
                         <div className="stats">
                             <span key="courage">{gendisp(card.gsx$courage)}</span>
                             <span key="power">{gendisp(card.gsx$power)}</span>

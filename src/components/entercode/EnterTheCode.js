@@ -1,11 +1,11 @@
 import React from 'react';
-import {observable} from "mobx";
-import {observer, inject} from 'mobx-react';
-import {Link} from 'react-router-dom';
+import { observable } from "mobx";
+import { observer, inject } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import Interactive from 'react-interactive';
 import DigitInput from 'react-digit-input';
 import API from '../SpreadsheetData';
-import {Loading} from '../Snippets';
+import { Loading } from '../Snippets';
 import style from '../../styles/style';
 import './packs.scss';
 
@@ -35,7 +35,7 @@ s.hyphen = {
 @inject((stores, props, context) => props) @observer
 export default class EnterTheCode extends React.Component {
   @observable code = "";
-  message = observable({contents: null}, {contents: observable.ref});
+  message = observable({ contents: null }, { contents: observable.ref });
   @observable fan = null;
 
   render() {
@@ -59,7 +59,7 @@ export default class EnterTheCode extends React.Component {
 
       if (this.code.length < 12 || this.code.indexOf(" ") != -1) {
         this.message.contents = (
-          <p style={{'color': 'red'}}>Please enter a 12 digit code</p>
+          <p style={{ 'color': 'red' }}>Please enter a 12 digit code</p>
         );
       }
       else {
