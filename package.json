@@ -22,7 +22,7 @@
     "@material-ui/styles": "^4.10.0",
     "lokijs": "^1.5.9",
     "mobx": "^5.15.4",
-    "mobx-react": "^6.2.2",
+    "mobx-react": "^6.2.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-collapsible": "^2.8.0",
@@ -34,7 +34,7 @@
     "react-process-string": "^1.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "tone": "^14.7.33",
+    "tone": "^14.7.35",
     "universal-cookie": "^4.0.3",
     "whatwg-fetch": "^3.2.0"
   },
@@ -83,7 +83,7 @@
     "terser-webpack-plugin": "^2.3.7",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   },

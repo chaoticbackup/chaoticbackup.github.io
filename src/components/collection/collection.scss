@@ -349,15 +349,20 @@
   .fullcard {
     width: 250px;
     height: 350px;
+    img {
+      max-height: 350px;
+      max-width: 250px;
+    }
   }
 
   .location .fullcard {
     width: 350px;
-    min-width: 350px;
     height: 250px;
     img {
       transform-origin: 70% 50%;
       transform: rotate(90deg);
+      max-height: 250px;
+      max-width: 350px;
     }
   }
 
