@@ -23,7 +23,7 @@ export default function (props) {
 
         let cards = [];
         for (let i = 0; i < 9; i++) {
-            cards.push(<div key={i} className="card" style={{ backgroundImage: `url("${API.base_image + API.card_back}")` }}></div>);
+            cards.push(<div key={i} className="card" style={{ backgroundImage: `url("${API.card_back}")` }}></div>);
         }
         setCards(cards);
 

@@ -131,7 +131,7 @@ export default class Home extends React.Component {
       <div className={"collection " + (this.ext ? "extended" : "short")}>
         <div className="left">
           <div id="side-menu" style={fixedStyles.fixed}>
-            <ImagePreview url={API.base_image + this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
+            <ImagePreview url={this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
             <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
           </div>
         </div>

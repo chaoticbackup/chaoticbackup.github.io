@@ -61,7 +61,7 @@ class GenerateCard {
             let card = results[id];
 
             if (!card) {
-                cards.push(<div key={key++} className="card" style={{ backgroundImage: `url("${API.base_image + API.card_back}")` }}></div>);
+                cards.push(<div key={key++} className="card" style={{ backgroundImage: `url("${API.card_back}")` }}></div>);
                 return;
             }
 

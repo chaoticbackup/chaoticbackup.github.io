@@ -136,7 +136,7 @@ class API {
   // + "/od6/public/basic?alt=json"; // Alternate data format
   get base_image() { return "https://drive.google.com/uc?id="; }
   get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp"; }
-  get card_back() { return "1_MgWDPsPGf-gPBArn2v6ideJcqOPsSYC"; }
+  get card_back() { return "https://i.imgur.com/xbeDBRJ.png"; }
 
   // Singleton
   static getInstance() {
@@ -231,7 +231,7 @@ class API {
     } else if (card.gsx$image && card.gsx$image !== '') {
       return this.base_image + card.gsx$image;
     } else {
-      return this.base_image + this.card_back;
+      return this.card_back;
     }
   }
 
