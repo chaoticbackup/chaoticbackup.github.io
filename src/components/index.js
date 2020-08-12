@@ -1,32 +1,32 @@
 import React from 'react';
-import {render} from 'react-dom';
-import {BrowserRouter as Router, Link, Route, Switch, Redirect} from 'react-router-dom';
+import { render } from 'react-dom';
+import { BrowserRouter as Router, Link, Route, Switch, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 import s from '../styles/app.style';
 
 /* Components */
 import API from './SpreadsheetData';
-import {PageNotFound, UnderConstruction, Donate, Loading} from './Snippets';
+import { PageNotFound, UnderConstruction, Donate, Loading } from './Snippets';
 import Create from './create/index';
 
 const EnterTheCode = loadable(
   () => import('./entercode'), 
-  {fallback: <Loading />}
+  { fallback: <Loading /> }
 );
 
 const Home = loadable(
   () => import('./home'),
-  {fallback: <Loading />}
+  { fallback: <Loading /> }
 );
 
 const Portal = loadable(
   () => import('./portal'),
-  {fallback: <Loading />}
+  { fallback: <Loading /> }
 );
 
 const Collection = loadable(
   () => import('./collection'),
-  {fallback: <Loading />}
+  { fallback: <Loading /> }
 );
 
 /**
@@ -37,7 +37,7 @@ function BetaRoutingWrapper(props) {
     <Switch>
       <Route path="/beta/collection" component={Collection} />
       <Route path="/beta">
-        {({location}) => <Redirect to={location.pathname.replace("/beta", "")} /> }
+        {({ location }) => <Redirect to={location.pathname.replace("/beta", "")} /> }
       </Route>
       <Route component={Routing} />
     </Switch>
@@ -86,7 +86,7 @@ function Base(props) {
                       <li id="unity-nav5" className={language}><Link to={`/`}><span>Home</span></Link></li>
                       <li id="unity-nav6" className={language}><a href="http://chaoticbackup.forumotion.com"><span>Forums</span></a></li>
                       <li id="unity-nav7" className={language}><Link to={`/portal/`}><span>Portal</span></Link></li>
-                      <li id="unity-nav8" className={language}><a href="https://untap.in"><span>Play</span></a></li>
+                      <li id="unity-nav8" className={language}><a href="https://chaoticrecode.com"><span>Play</span></a></li>
                       <li id="unity-nav9" className={language}></li>
                     </ul>
                     <ul id="unityETC-sprite" className={language}>
@@ -100,7 +100,7 @@ function Base(props) {
             </div>
             <div className="legacy content">
               <div className="left-column">
-                <div className="full-width clear-line" style={{marginBottom: "5px"}}>
+                <div className="full-width clear-line" style={{ marginBottom: "5px" }}>
                 </div>
               </div>
               <div className="full-column">
@@ -141,7 +141,7 @@ function Base(props) {
                 </div>
               </div>
               <div className="right-column">
-                <div className="full-width clear-line" style={{marginBottom: "5px"}}>
+                <div className="full-width clear-line" style={{ marginBottom: "5px" }}>
                 </div>
               </div>
             </div>
