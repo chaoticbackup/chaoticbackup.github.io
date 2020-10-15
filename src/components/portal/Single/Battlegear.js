@@ -1,8 +1,8 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
-import {observer, inject} from 'mobx-react';
-import {PageNotFound} from '../../Snippets';
+import { observer, inject } from 'mobx-react';
+import { PageNotFound } from '../../Snippets';
 import Single from './_base';
 
 @inject((stores, props, context) => props) @observer
@@ -20,13 +20,13 @@ export default class SingleBattlegear extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    const battlegear = API.portal.battlegear.findOne({'gsx$name': name});
-    const card_data = API.cards.battlegear.findOne({'gsx$name': name});
+    const battlegear = API.portal.battlegear.findOne({ 'gsx$name': name });
+    const card_data = API.cards.battlegear.findOne({ 'gsx$name': name });
 
     if (battlegear) {
       return (<Single 
         card={card_data}
-        col2={<React.Fragment>
+        col2={<>
           <div>
             <strong>Attributes:</strong><br />
             {battlegear.gsx$attributes}
@@ -41,7 +41,7 @@ export default class SingleBattlegear extends React.Component {
             <strong>Details:</strong><br />
             {battlegear.gsx$details}
           </div>
-        </React.Fragment>}
+        </>}
       />);
     }
     else if (card_data) {

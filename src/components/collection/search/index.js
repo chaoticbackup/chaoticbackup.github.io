@@ -165,9 +165,9 @@ export default class SearchCollection extends React.Component {
   }
 
   handleChange = (event, obj) => {
-    const target = event.target;
+    const { target } = event;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const { name } = target;
     if (!obj) this.input[name] = value;
     else this.input[obj][name] = value;
   }
@@ -262,7 +262,7 @@ export default class SearchCollection extends React.Component {
             <label className="mull"><input type="checkbox" name="legendary" checked={this.input.mull.legendary} onChange={e => this.handleChange(e, "mull")} />Legendary</label>
           </div>
           <div className="centeredCheckBox">
-              <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
+            <label className="mull"><input type="checkbox" name="mixed" checked={this.input.mull.mixed} onChange={e => this.handleChange(e, "mull")} />Non-Loyal</label>
           </div>
           <hr />
           <div className="tribes">

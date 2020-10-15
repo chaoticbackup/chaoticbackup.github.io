@@ -203,7 +203,8 @@ class API {
         this.buildCollection(collection)
         .then(() => {
           resolve();
-        });
+        })
+        .catch(() => {});
       }
       else resolve();
     });

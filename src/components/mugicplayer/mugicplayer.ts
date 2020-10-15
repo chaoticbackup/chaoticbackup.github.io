@@ -1,4 +1,4 @@
-import {Time, Transport, Synth, Part, PolySynth, EnvelopeCurve} from 'tone';
+import { Time, Transport, Synth, Part, PolySynth, EnvelopeCurve } from 'tone';
 
 import { Note, parseTune } from './mugicparser';
 

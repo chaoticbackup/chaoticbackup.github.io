@@ -1,12 +1,12 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import {Link, Route} from 'react-router-dom';
-import {observable} from 'mobx';
-import {observer, inject} from 'mobx-react';
+import { Link, Route } from 'react-router-dom';
+import { observable } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import loki from 'lokijs';
 import s from '../../styles/app.style';
 import API from '../SpreadsheetData';
-import {Loading} from '../Snippets';
+import { Loading } from '../Snippets';
 import Creature from './Single/Creature';
 import Mugic from './Single/Mugic';
 
@@ -25,10 +25,11 @@ export default class Tribes extends React.Component {
   // -> /{Tribe}/Mugic || /{Tribe}/Creatures
   render() {
     if (this.loaded == false) {
-      API.LoadDB([{'cards': 'creatures'}, {'portal': 'creatures'}, {'cards': 'mugic'}, {'portal': 'mugic'}])
+      API.LoadDB([{ 'cards': 'creatures' }, { 'portal': 'creatures' }, { 'cards': 'mugic' }, { 'portal': 'mugic' }])
       .then(() => {
         this.loaded = true;
-      });
+      })
+      .catch(() => {});
       return (<Loading />);
     }
 
@@ -43,11 +44,11 @@ export default class Tribes extends React.Component {
 
     let temp;
 
-    temp = API.portal.creatures.find({'gsx$tribe': tribe});
+    temp = API.portal.creatures.find({ 'gsx$tribe': tribe });
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
 
-    temp = API.portal.mugic.find({'gsx$tribe': tribe});
+    temp = API.portal.mugic.find({ 'gsx$tribe': tribe });
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
 
@@ -58,12 +59,12 @@ export default class Tribes extends React.Component {
       let card_data, url;
 
       if (card.gsx$type == "Mugic") {
-        card_data = API.cards.mugic.findOne({'gsx$name': card.gsx$name});
+        card_data = API.cards.mugic.findOne({ 'gsx$name': card.gsx$name });
         url = "/portal/" + tribe + "/Mugic/" + encodeURIComponent(card.gsx$name);
       }
 
       if (card.gsx$type == "Creatures") {
-        card_data = API.cards.creatures.findOne({'gsx$name': card.gsx$name});
+        card_data = API.cards.creatures.findOne({ 'gsx$name': card.gsx$name });
         url = "/portal/" + tribe + "/Creatures/" + encodeURIComponent(card.gsx$name);
       }
 

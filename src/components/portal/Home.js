@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {observable} from "mobx";
+import React, { Fragment } from 'react';
+import { observable } from "mobx";
 import API from '../SpreadsheetData';
 
 export default class Home extends React.Component {

@@ -57,26 +57,26 @@ export default function (props) {
     }
 
     return (
-        <div className="packsim">
-            <Interactive as={Link} {...s.link} to={`/EnterTheCode/`}>Enter The Code</Interactive>
-            <br /><br />
-            <form onSubmit={handleSubmit}>
-                <label>Packs:
-                <input name="packs" type="number"
-                        value={packs}
-                        min="1" max="24"
-                        style={{ width: "32px", padding: '0px' }}
-                        onChange={onPacksChange} />
-                </label>
-                <select name="set" value={set} onChange={onSetChange}>
-                    <option defaultValue="selected" hidden style={{ fontStyle: 'italic' }}>Select a Set</option>
-                    {setsInput}
-                </select>
-                <br /><br />
-                <input disabled={!set} type="submit" value="Open Packs" />
-            </form>
-            <br /><br />
-            <div className="pack">{cards}</div>
-        </div>
+      <div className="packsim">
+        <Interactive as={Link} {...s.link} to={`/EnterTheCode/`}>Enter The Code</Interactive>
+        <br /><br />
+        <form onSubmit={handleSubmit}>
+          <label>Packs:
+            <input name="packs" type="number"
+              value={packs}
+              min="1" max="24"
+              style={{ width: "32px", padding: '0px' }}
+              onChange={onPacksChange} />
+          </label>
+          <select name="set" value={set} onChange={onSetChange}>
+            <option defaultValue="selected" hidden style={{ fontStyle: 'italic' }}>Select a Set</option>
+            {setsInput}
+          </select>
+          <br /><br />
+          <input disabled={!set} type="submit" value="Open Packs" />
+        </form>
+        <br /><br />
+        <div className="pack">{cards}</div>
+      </div>
     );
 }

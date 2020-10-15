@@ -79,7 +79,7 @@ export default class EnterTheCode extends React.Component {
     return(
       <div>
         <Interactive as={Link} {...s.link}
-         to={`/EnterTheCode/PackSimulator/`}>Pack Simulator</Interactive>
+          to={`/EnterTheCode/PackSimulator/`}>Pack Simulator</Interactive>
         <br /><br />
         <DigitInput
           acceptedCharacters={/^[0-9a-z]$/i}
@@ -87,23 +87,23 @@ export default class EnterTheCode extends React.Component {
           value={this.code}
           onChange={(value) => this.code = value}
         >
-        {props => (
-          <div style={s.inputGroup}>
-            <input type="text" style={s.input} {...props[0]} />
-            <input type="text" style={s.input} {...props[1]} />
-            <input type="text" style={s.input} {...props[2]} />
-            <input type="text" style={s.input} {...props[3]} />
-            <span style={s.hyphen} />
-            <input type="text" style={s.input} {...props[4]} />
-            <input type="text" style={s.input} {...props[5]} />
-            <input type="text" style={s.input} {...props[6]} />
-            <input type="text" style={s.input} {...props[7]} />
-            <span style={s.hyphen} />
-            <input type="text" style={s.input} {...props[8]} />
-            <input type="text" style={s.input} {...props[9]} />
-            <input type="text" style={s.input} {...props[10]} />
-            <input type="text" style={s.input} {...props[11]} />
-          </div>
+          {props => (
+            <div style={s.inputGroup}>
+              <input type="text" style={s.input} {...props[0]} />
+              <input type="text" style={s.input} {...props[1]} />
+              <input type="text" style={s.input} {...props[2]} />
+              <input type="text" style={s.input} {...props[3]} />
+              <span style={s.hyphen} />
+              <input type="text" style={s.input} {...props[4]} />
+              <input type="text" style={s.input} {...props[5]} />
+              <input type="text" style={s.input} {...props[6]} />
+              <input type="text" style={s.input} {...props[7]} />
+              <span style={s.hyphen} />
+              <input type="text" style={s.input} {...props[8]} />
+              <input type="text" style={s.input} {...props[9]} />
+              <input type="text" style={s.input} {...props[10]} />
+              <input type="text" style={s.input} {...props[11]} />
+            </div>
         )}
         </DigitInput>
         <br />

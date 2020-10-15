@@ -26,7 +26,7 @@ export function Loading(props) {
 }
 
 export function Splash(props) {
-  let image = props.image;
+  let { image } = props;
   return (
     <div style={{ position: 'absolute', top: '0', left: '0', right: '0', bottom: '0', backgroundImage: 'url(\'' + image + '\') no-repeat center', backgroundSize: 'cover' }} />
   );

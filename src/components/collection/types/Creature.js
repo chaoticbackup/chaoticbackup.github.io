@@ -7,7 +7,7 @@ import { Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe } from
 export default class Creature extends React.Component {
 
   render() {
-    let card = this.props.card;
+    let { card } = this.props;
 
     let mugic = [];
     for (let i = 0; i < card.gsx$mugicability; i++) {
@@ -56,27 +56,27 @@ export default class Creature extends React.Component {
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe }} />
           {/*chieftain*/
             card.gsx$types.includes("Chieftain") &&
-            <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
+              <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
           }
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
         <br />
-          <div className="stats">
-              <div className="energy">
-                  {card.gsx$courage}<Discipline discipline="courage" />
-              </div>
-              <div className="energy">
-                  {card.gsx$power}<Discipline discipline="power" />
-              </div>
-              <div className="energy">
-                  {card.gsx$wisdom}<Discipline discipline="wisdom" />
-              </div>
-              <div className="energy">
-                  {card.gsx$speed}<Discipline discipline="speed" />
-              </div>
-              <div className="energy" style={{ fontWeight: 'bold' }}>{card.gsx$energy}
-              </div>
+        <div className="stats">
+          <div className="energy">
+            {card.gsx$courage}<Discipline discipline="courage" />
           </div>
+          <div className="energy">
+            {card.gsx$power}<Discipline discipline="power" />
+          </div>
+          <div className="energy">
+            {card.gsx$wisdom}<Discipline discipline="wisdom" />
+          </div>
+          <div className="energy">
+            {card.gsx$speed}<Discipline discipline="speed" />
+          </div>
+          <div className="energy" style={{ fontWeight: 'bold' }}>{card.gsx$energy}
+          </div>
+        </div>
       </div>
     )
     else return (
@@ -100,11 +100,11 @@ export default class Creature extends React.Component {
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe }} />
           {/*chieftain*/
             card.gsx$types.includes("Chieftain") &&
-            <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
+              <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
           }
-          {card.gsx$flavortext && <React.Fragment>
+          {card.gsx$flavortext && <>
             <span className="flavortext">{card.gsx$flavortext}</span><br />
-          </React.Fragment>}
+          </>}
           <span>Art By: {card.gsx$artist}</span>
         </div>
       </div>

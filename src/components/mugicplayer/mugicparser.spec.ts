@@ -16,7 +16,7 @@ const cases = {
 
 Object.entries(cases).forEach(([key, value]) => {
     describe(key, () => {
-        it('should return ' + value.output, () => {
+        it(`should return ${value.output}`, () => {
             const tune = output(parseTune(value.input));
             expect(tune).to.deep.equal(value.output);
         });

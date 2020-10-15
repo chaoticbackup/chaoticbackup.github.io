@@ -1,12 +1,12 @@
 import React from 'react';
-import {observable} from "mobx";
-import {observer, inject} from 'mobx-react';
-import {Link, Route} from 'react-router-dom';
+import { observable } from "mobx";
+import { observer, inject } from 'mobx-react';
+import { Link, Route } from 'react-router-dom';
 
 import API from '../SpreadsheetData';
 import Home from './Home';
 import Search from './Search';
-import {SearchButton} from '../Snippets';
+import { SearchButton } from '../Snippets';
 
 import Category from './Category';
 import Tribes from './Tribes';
@@ -41,10 +41,10 @@ export default class Base extends React.Component {
 }
 
 function Routing(props) {
-  const url = props.match.url;
+  const { url } = props.match;
 
   return (
-    <React.Fragment>
+    <>
       <Route exact path={url} component={Home} />
       <Route path={`${url}/Attacks`} render={(props) => <Category {...props} type="Attacks" component={Attack} />} />
       <Route path={`${url}/Battlegear`} render={(props) => <Category {...props} type="Battlegear" component={Battlegear} />} />
@@ -52,10 +52,10 @@ function Routing(props) {
       <Route path={`${url}/Locations`} render={(props) => <Category {...props} type="Locations" component={Location} />} />
       <Route path={`${url}/Mugic`} render={(props) => <Category {...props} type="Mugic" component={Mugic} />} />
       {API.tribes.map((tribe, i) => (
-      <Route key={i} path={`${url}/${tribe}`} component={Tribes} />
+        <Route key={i} path={`${url}/${tribe}`} component={Tribes} />
       ))}
       <Route path={`${url}/Search`} component={Search} />
-    </React.Fragment> 
+    </> 
   );
 }
 

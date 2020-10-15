@@ -1,8 +1,8 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
-import {observer, inject} from 'mobx-react';
-import {PageNotFound} from '../../Snippets';
+import { observer, inject } from 'mobx-react';
+import { PageNotFound } from '../../Snippets';
 import Single from './_base';
 
 @inject((stores, props, context) => props) @observer
@@ -20,28 +20,28 @@ export default class SingleAttack extends React.Component {
 
     let name = decodeURIComponent(path[3]);
 
-    const attack = API.portal.attacks.findOne({'gsx$name': name});
-    const card_data = API.cards.attacks.findOne({'gsx$name': name});
+    const attack = API.portal.attacks.findOne({ 'gsx$name': name });
+    const card_data = API.cards.attacks.findOne({ 'gsx$name': name });
 
     if (attack) {
       return (<Single 
-          card={card_data}
-          col2={<React.Fragment>
-            <div>
-              <strong>Attributes:</strong><br />
-              {attack.gsx$attributes}
-            </div>
-            <hr />
-            <div>
-              <strong>Background:</strong><br />
-              {attack.gsx$background}
-            </div>
-            <hr />
-            <div>
-              <strong>Details:</strong><br />
-              {attack.gsx$details}
-            </div>
-          </React.Fragment>}
+        card={card_data}
+        col2={<>
+          <div>
+            <strong>Attributes:</strong><br />
+            {attack.gsx$attributes}
+          </div>
+          <hr />
+          <div>
+            <strong>Background:</strong><br />
+            {attack.gsx$background}
+          </div>
+          <hr />
+          <div>
+            <strong>Details:</strong><br />
+            {attack.gsx$details}
+          </div>
+        </>}
         />
       );
     }

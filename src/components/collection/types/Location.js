@@ -8,7 +8,7 @@ import API from '../../SpreadsheetData';
 export default class Location extends React.Component {
 
   render() {
-    let card = this.props.card;
+    let { card } = this.props;
 
     if (this.props.ext == false) return (
       <div className="card location">
@@ -34,9 +34,9 @@ export default class Location extends React.Component {
           <Initiative initiative={card.gsx$initiative} />
           <Ability ability={card.gsx$ability} />
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
-          {card.gsx$flavortext && <React.Fragment>
+          {card.gsx$flavortext && <>
             <span className="flavortext">{card.gsx$flavortext}</span><br />
-          </React.Fragment>}
+          </>}
           <span>Art By: {card.gsx$artist}</span>
         </div>
       </div>

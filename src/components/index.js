@@ -32,7 +32,7 @@ const Collection = loadable(
 /**
  * This function is to define beta routes
  */
-function BetaRoutingWrapper(props) {
+function BetaRoutingWrapper() {
   return (
     <Switch>
       <Route path="/beta/collection" component={Collection} />
@@ -44,7 +44,7 @@ function BetaRoutingWrapper(props) {
   );
 }
 
-function Routing(props) {
+function Routing() {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -67,7 +67,7 @@ function Base(props) {
   const children = <BetaRoutingWrapper />;
 
   return (
-    <React.Fragment>
+    <>
       <div className="fix-pgBkgrnd-repeat-x">
         <div className={"fix-img-bkgrnd fix-img-bkgrnd_"+bkgrnd}></div>
       </div>
@@ -179,7 +179,7 @@ function Base(props) {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

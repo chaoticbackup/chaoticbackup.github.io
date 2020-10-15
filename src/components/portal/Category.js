@@ -1,11 +1,11 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import {Link, Route} from 'react-router-dom';
-import {observable} from 'mobx';
-import {observer, inject} from 'mobx-react';
+import { Link, Route } from 'react-router-dom';
+import { observable } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import s from '../../styles/app.style';
 import API from '../SpreadsheetData';
-import {Loading} from '../Snippets';
+import { Loading } from '../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Category extends React.Component {
@@ -22,7 +22,7 @@ export default class Category extends React.Component {
 
   render() {
     if (this.loaded == false) {
-      API.LoadDB([{'cards': this.type}, {'portal': this.type}])
+      API.LoadDB([{ 'cards': this.type }, { 'portal': this.type }])
       .then(() => {
         this.loaded = true;
       });
@@ -34,13 +34,13 @@ export default class Category extends React.Component {
       if (!data) return (<div key={i}></div>);
 
       return (<div key={i} className="nav_item">
-          <Interactive as={Link}
-            to={url || `/portal/${this.props.type}/${card.gsx$name}`}
-            {...s.link}
+        <Interactive as={Link}
+          to={url || `/portal/${this.props.type}/${card.gsx$name}`}
+          {...s.link}
           >
-            <span>{card.gsx$name.split(",")[0]}</span><br />
-            <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
-          </Interactive>
+          <span>{card.gsx$name.split(",")[0]}</span><br />
+          <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
+        </Interactive>
       </div>);
     };
 
@@ -83,11 +83,11 @@ export default class Category extends React.Component {
       );
 
       bottom_nav = ((tribe) ?
-        API.portal[this.type].chain().find({'gsx$tribe': tribe}).simplesort('gsx$name').data()
+        API.portal[this.type].chain().find({ 'gsx$tribe': tribe }).simplesort('gsx$name').data()
         :
         API.portal[this.type].chain().simplesort('gsx$name').data()
       ).map((card_portal, i) => {
-        let card_data = API.cards[this.type].findOne({'gsx$name': card_portal.gsx$name});
+        let card_data = API.cards[this.type].findOne({ 'gsx$name': card_portal.gsx$name });
         let url = ((tribe) ?
           `/portal/${this.props.type}/${card_portal.gsx$tribe}/${encodeURIComponent(card_portal.gsx$name)}`
           :
@@ -107,26 +107,26 @@ export default class Category extends React.Component {
       bottom_nav = API.portal[this.type].data
       .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
       .map((card_portal, i) => {
-        let card_data = API.cards[this.type].findOne({'gsx$name': card_portal.gsx$name});
+        let card_data = API.cards[this.type].findOne({ 'gsx$name': card_portal.gsx$name });
         return create_link(card_portal, card_data, i);
       });
     }
 
     if (base_path) {
       return (
-      <div className={`entry ${this.type} base_path`}>
-        <div className="cat_title">{cat_title}</div>
-        <div className="entry_nav">{bottom_nav}</div>
-      </div>
+        <div className={`entry ${this.type} base_path`}>
+          <div className="cat_title">{cat_title}</div>
+          <div className="entry_nav">{bottom_nav}</div>
+        </div>
       );
     }
 
     return (
-    <div className={`entry ${this.type}`}>
-      <div className="entry_content">{top_content}</div>
-      <div className="cat_title">{cat_title}</div>
-      <div className="entry_nav">{bottom_nav}</div>
-    </div>
+      <div className={`entry ${this.type}`}>
+        <div className="entry_content">{top_content}</div>
+        <div className="cat_title">{cat_title}</div>
+        <div className="entry_nav">{bottom_nav}</div>
+      </div>
     );
   }
 }

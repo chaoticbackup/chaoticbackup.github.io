@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function Initiative(props) {
-    let initiative = props.initiative;
+    let { initiative } = props;
     let image = null;
     if (["Danian", "Generic", "Mipedian", "OverWorld", "UnderWorld", "M'arrillian"].indexOf(initiative) > -1) {
       image = <img className="icon16" style={{ verticalAlign: 'middle' }} src={("/src/img/icons/tribes/" + initiative + ".png").toLowerCase()} />

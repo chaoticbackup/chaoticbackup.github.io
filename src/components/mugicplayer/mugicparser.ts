@@ -22,7 +22,7 @@ export const output = (seq: Note[]) => {
 // db notation uses duration (quarter notes) and pitch
 // 2Eb => E flat for 2 quarter notes
 export const parseTune = (input: string): Note[] => {
-    let seq: Note[] = [];
+    const seq: Note[] = [];
     let time = 0;
     console.log(input.split(" "));
     input.split(" ").forEach((note) => {
@@ -79,7 +79,7 @@ const parseNote = (pitch: string, seq: Note[]): {pitch: string, octave: number} 
         if (seq.length === 0) return 4;
 
         const l = seq.length - 1;
-        const octave = seq[l].octave;
+        const { octave } = seq[l];
 
         const current = pitchValue(pitch, octave);
         const previous = pitchValue(seq[l]);
@@ -129,7 +129,7 @@ const parseNote = (pitch: string, seq: Note[]): {pitch: string, octave: number} 
 
     if (octave > 5) octave = 5;
     
-    return {pitch, octave};
+    return { pitch, octave };
 }
 
 /*
@@ -148,8 +148,8 @@ const parseNote = (pitch: string, seq: Note[]): {pitch: string, octave: number} 
 const trend = (current: number, l: number, seq: Note[]): number => {
     if (l < 1) return seq[l].octave;
 
-    let prev = pitchValue(seq[l]);
-    let prev2 = pitchValue(seq[l-1]);
+    const prev = pitchValue(seq[l]);
+    const prev2 = pitchValue(seq[l-1]);
     console.log(prev2, prev, current);
 
     // downward trend
@@ -176,7 +176,7 @@ const trend = (current: number, l: number, seq: Note[]): number => {
  * Takes two pitches and returns the distance between them
  */
 const compare = (one: number, two: number): number => {
-    let res = Math.abs(one - two);
+    const res = Math.abs(one - two);
     if (res < 4) {
         return res;
     }

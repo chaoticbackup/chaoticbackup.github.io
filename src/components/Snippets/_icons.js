@@ -19,7 +19,7 @@ export function Rarity(props) {
     return (
       <span>
         {set !== 'PE1' && <img className={props.size || "icon16"} style={{ verticalAlign: 'middle' }} src={("/src/img/icons/set/" + set + "/" + rarity + ".png").toLowerCase()} />}
-        {!props.notext && <React.Fragment>{API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}</React.Fragment>}
+        {!props.notext && <>{API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}</>}
       </span>
     );
 }

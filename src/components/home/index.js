@@ -1,8 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Donate} from '../Snippets';
+import { Link } from 'react-router-dom';
+import { Donate } from '../Snippets';
 import "./home.scss";
-import {observable} from 'mobx';
+import { observable } from 'mobx';
 
 const GithubLink = () => (
   <a 
@@ -13,11 +13,11 @@ const GithubLink = () => (
   </a>
 );
 
-const LoreEntry = ({block, text, sets}) => {
+const LoreEntry = ({ block, text, sets }) => {
   return (
     <div className="lore">
       <div className="block">{block}</div>
-      {text.map((entry, i) => <div key={i} dangerouslySetInnerHTML={{__html: entry}} />)}
+      {text.map((entry, i) => <div key={i} dangerouslySetInnerHTML={{ __html: entry }} />)}
       {sets.map((set, i) => {
         if (set.text && set.text.length > 0) {
           return <div className="set" key={i}>
@@ -31,7 +31,7 @@ const LoreEntry = ({block, text, sets}) => {
 }
 
 export default class Home extends React.Component {
-  state = {lore: []};
+  state = { lore: []};
 
   componentDidMount() {
     fetch("/src/json/starter_lore.json")
@@ -39,11 +39,11 @@ export default class Home extends React.Component {
       return response.json();
     })
     .then((lore) => {
-      this.setState({"lore": lore});
+      this.setState({ "lore": lore });
       return;
     })
     .catch(() => {
-      this.setState({"lore": [{"block": "Unable to load lore...", "text": []}]})
+      this.setState({ "lore": [{ "block": "Unable to load lore...", "text": []}]})
     });
   }
 

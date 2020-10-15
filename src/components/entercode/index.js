@@ -1,6 +1,6 @@
 import React from 'react';
-import {observer, inject} from 'mobx-react';
-import {Route} from 'react-router-dom';
+import { observer, inject } from 'mobx-react';
+import { Route } from 'react-router-dom';
 import EnterTheCode from './EnterTheCode';
 import PackSimulator from './PackSimulator';
 
@@ -14,7 +14,7 @@ export default class Base extends React.Component {
 }
 
 function Routing(props) {
-  const match = props.match;
+  const { match } = props;
   return (
     <div className="pack">
       <Route exact path={match.url} component={EnterTheCode} />

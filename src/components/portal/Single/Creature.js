@@ -1,11 +1,11 @@
 import React from 'react';
 import Interactive from 'react-interactive';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Single from './_base';
-import {PageNotFound, Element, Mugic, Discipline, Ability, Tribe} from '../../Snippets';
+import { PageNotFound, Element, Mugic, Discipline, Ability, Tribe } from '../../Snippets';
 
 function Artist(props) {
   let artists = [];
@@ -32,7 +32,7 @@ export default class SingleCreature extends React.Component {
       if (path.length == 4) return decodeURIComponent(path[3]);
     })();
 
-    const creature = API.portal.creatures.findOne({'gsx$name': name});
+    const creature = API.portal.creatures.findOne({ 'gsx$name': name });
 
     if (!creature) {
       return(<PageNotFound location={this.props.location}/>);
@@ -40,7 +40,7 @@ export default class SingleCreature extends React.Component {
 
     const tribe = creature.gsx$tribe;
 
-    const card_data = API.cards.creatures.findOne({'gsx$name': name});
+    const card_data = API.cards.creatures.findOne({ 'gsx$name': name });
 
     const locations = creature.gsx$location.split(/[;]+\s*/).map((item, i) => {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
@@ -59,15 +59,15 @@ export default class SingleCreature extends React.Component {
 
     return (<Single
       card={card_data}
-      text={<React.Fragment>
+      text={<>
         <hr />
-        {creature.gsx$appearance && <React.Fragment>
+        {creature.gsx$appearance && <>
           <div>
             <strong>Appearance:</strong><br />
             {creature.gsx$appearance}
           </div>
           <hr />
-        </React.Fragment>}
+        </>}
         <div>
           <strong>Background:</strong><br />
           {creature.gsx$background}
@@ -103,13 +103,13 @@ export default class SingleCreature extends React.Component {
           {creature.gsx$weight}
         </div>
         <hr />
-        {card_data.gsx$artist && <React.Fragment>
+        {card_data.gsx$artist && <>
           <div>
             <strong>Artist(s):</strong>
             <Artist artist={card_data.gsx$artist} />
           </div>
           <hr />
-        </React.Fragment>}
+        </>}
         <div>
           <strong>Card ID: </strong>
           {card_data.gsx$id}
@@ -183,7 +183,7 @@ export default class SingleCreature extends React.Component {
           <strong>Mugic Ability: </strong>
           {mugic}
         </div>
-      </React.Fragment>}
+      </>}
     />);
   }
 }

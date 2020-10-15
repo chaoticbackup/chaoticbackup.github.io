@@ -1,9 +1,9 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Single from './_base';
-import {PageNotFound, Mugic, Tribe} from '../../Snippets';
+import { PageNotFound, Mugic, Tribe } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleMugic extends React.Component {
@@ -22,8 +22,8 @@ export default class SingleMugic extends React.Component {
       if (path.length == 4) return decodeURIComponent(path[3]);
     })();
 
-    const mugic = API.portal.mugic.findOne({'gsx$name': name});
-    const card_data = API.cards.mugic.findOne({'gsx$name': name});
+    const mugic = API.portal.mugic.findOne({ 'gsx$name': name });
+    const card_data = API.cards.mugic.findOne({ 'gsx$name': name });
 
     const cost = () => {
       let cost = [];
@@ -44,7 +44,7 @@ export default class SingleMugic extends React.Component {
     if (mugic) {
       return (<Single 
         card={card_data}
-        col0={<React.Fragment>
+        col0={<>
           <div>
             <strong>Tribe: </strong>
             <Tribe tribe={mugic.gsx$tribe} />
@@ -54,8 +54,8 @@ export default class SingleMugic extends React.Component {
             <strong>Cost: </strong>
             {cost()}
           </div>
-        </React.Fragment>}
-        col2={<React.Fragment>
+        </>}
+        col2={<>
           <div>
             <strong>Background:</strong><br />
             {mugic.gsx$background}
@@ -65,14 +65,14 @@ export default class SingleMugic extends React.Component {
             <strong>Details:</strong><br />
             {mugic.gsx$details}
           </div>
-        </React.Fragment>}
+        </>}
       />);
     }
     else if (card_data) {
       if (card_data.gsx$splash) {
         return (<Single 
           card={card_data}
-          col0={<React.Fragment>
+          col0={<>
             <div>
               <strong>Tribe: </strong>
               <Tribe tribe={card_data.gsx$tribe} />
@@ -82,7 +82,7 @@ export default class SingleMugic extends React.Component {
               <strong>Cost: </strong>
               {cost()}
             </div>
-          </React.Fragment>}
+          </>}
         />);
       }
     }

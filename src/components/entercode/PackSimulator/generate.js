@@ -77,15 +77,15 @@ class GenerateCard {
             }
             else {
                 cards.push(
-                    <div key={key++} className="card" style={{ backgroundImage: `url("${API.cardImage(card)}")` }}>
-                        <div className="stats">
-                            <span key="courage">{gendisp(card.gsx$courage)}</span>
-                            <span key="power">{gendisp(card.gsx$power)}</span>
-                            <span key="wisdom">{gendisp(card.gsx$wisdom)}</span>
-                            <span key="speed">{gendisp(card.gsx$speed)}</span>
-                            <span key="energy">{geneng(card.gsx$energy)}</span>
-                        </div>
+                  <div key={key++} className="card" style={{ backgroundImage: `url("${API.cardImage(card)}")` }}>
+                    <div className="stats">
+                      <span key="courage">{gendisp(card.gsx$courage)}</span>
+                      <span key="power">{gendisp(card.gsx$power)}</span>
+                      <span key="wisdom">{gendisp(card.gsx$wisdom)}</span>
+                      <span key="speed">{gendisp(card.gsx$speed)}</span>
+                      <span key="energy">{geneng(card.gsx$energy)}</span>
                     </div>
+                  </div>
                 );
             }
 

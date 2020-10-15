@@ -7,7 +7,7 @@ import { Rarity, Unique, Name, Ability, BattlegearIcon } from '../../Snippets';
 export default class Battlegear extends React.Component {
 
   render() {
-    let card = this.props.card;
+    let { card } = this.props;
 
     if (this.props.ext == false) return (
       <div className="card battlegear">
@@ -31,9 +31,9 @@ export default class Battlegear extends React.Component {
           <Name name={card.gsx$name} /><br />
           <Ability ability={card.gsx$ability} />
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
-          {card.gsx$flavortext && <React.Fragment>
+          {card.gsx$flavortext && <>
             <span className="flavortext">{card.gsx$flavortext}</span><br />
-          </React.Fragment>}
+          </>}
           <span>Art By: {card.gsx$artist}</span>
         </div>
       </div>

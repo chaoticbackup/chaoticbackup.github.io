@@ -1,6 +1,6 @@
 import React from 'react';
-import {observable} from "mobx";
-import {observer, inject} from 'mobx-react';
+import { observable } from "mobx";
+import { observer, inject } from 'mobx-react';
 import Attack from './types/Attack';
 import Battlegear from './types/Battlegear';
 import Creature from './types/Creature';
@@ -16,11 +16,11 @@ export default class CardList extends React.Component {
   }
 
   render() {
-    let cards = this.props.cards;
+    let { cards } = this.props;
 
     if (cards.length == 1 && cards[0].text) {
       return (
-      <div style={{textAlign: 'left'}}>{cards[0].text}</div>
+        <div style={{ textAlign: 'left' }}>{cards[0].text}</div>
       );
     }
     return cards.map((card, i) => {
