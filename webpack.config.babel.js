@@ -22,6 +22,7 @@ module.exports = {
     port: 8000,
     publicPath: '/build/',
     contentBase: __dirname,
+    watchContentBase: true,
     historyApiFallback: {
       index: 'index.html',
     },

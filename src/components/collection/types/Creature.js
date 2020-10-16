@@ -7,15 +7,15 @@ import { Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe } from
 export default class Creature extends React.Component {
 
   render() {
-    let { card } = this.props;
+    const { card } = this.props;
 
-    let mugic = [];
+    const mugic = [];
     for (let i = 0; i < card.gsx$mugicability; i++) {
       mugic.push(<Mugic key={i} tribe={card.gsx$tribe} />);
     }
 
     const TribeLine = () => {
-      let tribe = card.gsx$tribe;
+      const tribe = card.gsx$tribe;
       let types = card.gsx$types;
       let past = false;
       if (types.toLowerCase().includes("past")) {
@@ -24,10 +24,10 @@ export default class Creature extends React.Component {
       }
 
       // <past> <tribe> <types>
-      let line = " " + (past ? "Past " : "") + (tribe == "Generic" ? "" : tribe + " ") + types;
+      const line = " " + (past ? "Past " : "") + (tribe == "Generic" ? "" : tribe + " ") + types;
 
-      return <span><Tribe tribe={tribe} />{line}</span>
-    }
+      return <span><Tribe tribe={tribe} />{line}</span>;
+    };
 
     if (this.props.ext == false) return (
       <div className="card creature">
@@ -78,7 +78,7 @@ export default class Creature extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
     else return (
       <div className="card creature">
         <div className="fullcard"><img src={API.cardImage(card)} /></div>

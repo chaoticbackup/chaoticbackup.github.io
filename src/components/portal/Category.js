@@ -25,11 +25,14 @@ export default class Category extends React.Component {
       API.LoadDB([{ 'cards': this.type }, { 'portal': this.type }])
       .then(() => {
         this.loaded = true;
-      });
+      })
+      .catch(() => {});
       return (<Loading />);
     }
 
-    const create_link = (card, data, i, url) => {
+    const create_link = (card, i, url) => {
+      const data = API.cards[this.type].findOne({ 'gsx$name': card.gsx$name });
+
       // Prevent site from crashing due to misspelled/missing data
       if (!data) return (<div key={i}></div>);
 
@@ -37,7 +40,7 @@ export default class Category extends React.Component {
         <Interactive as={Link}
           to={url || `/portal/${this.props.type}/${card.gsx$name}`}
           {...s.link}
-          >
+        >
           <span>{card.gsx$name.split(",")[0]}</span><br />
           <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
         </Interactive>
@@ -49,7 +52,7 @@ export default class Category extends React.Component {
     let top_content = (<div />);
     let bottom_nav = [];
 
-    let path = this.props.location.pathname.split("/");
+    const path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // ** Process the tribe ** //
@@ -87,13 +90,12 @@ export default class Category extends React.Component {
         :
         API.portal[this.type].chain().simplesort('gsx$name').data()
       ).map((card_portal, i) => {
-        let card_data = API.cards[this.type].findOne({ 'gsx$name': card_portal.gsx$name });
-        let url = ((tribe) ?
+        const url = ((tribe) ?
           `/portal/${this.props.type}/${card_portal.gsx$tribe}/${encodeURIComponent(card_portal.gsx$name)}`
           :
           `/portal/${this.props.type}/${encodeURIComponent(card_portal.gsx$name)}`
         );
-        return create_link(card_portal, card_data, i, url);
+        return create_link(card_portal, i, url);
       });
     }
     else {
@@ -107,8 +109,7 @@ export default class Category extends React.Component {
       bottom_nav = API.portal[this.type].data
       .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
       .map((card_portal, i) => {
-        let card_data = API.cards[this.type].findOne({ 'gsx$name': card_portal.gsx$name });
-        return create_link(card_portal, card_data, i);
+        return create_link(card_portal, i);
       });
     }
 

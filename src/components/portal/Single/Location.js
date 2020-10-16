@@ -9,15 +9,15 @@ export default class SingleLocation extends React.Component {
 
   render() {
 
-    let path = this.props.location.pathname.split("/");
+    const path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // Path too long
     if ( path.length !== 4 ) {
-      return(<PageNotFound location={this.props.location}/>);
+      return (<PageNotFound location={this.props.location}/>);
     }
 
-    let name = decodeURIComponent(path[3]);
+    const name = decodeURIComponent(path[3]);
 
     const location = API.portal.locations.findOne({ 'gsx$name': name });
     const card_data = API.cards.locations.findOne({ 'gsx$name': name });
@@ -63,6 +63,6 @@ export default class SingleLocation extends React.Component {
       }
     }
       
-    return(<PageNotFound location={this.props.location}/>);
+    return (<PageNotFound location={this.props.location}/>);
   }
 }

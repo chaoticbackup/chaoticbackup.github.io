@@ -7,7 +7,7 @@ import { Rarity, Unique, Name, Ability, BattlegearIcon } from '../../Snippets';
 export default class Battlegear extends React.Component {
 
   render() {
-    let { card } = this.props;
+    const { card } = this.props;
 
     if (this.props.ext == false) return (
       <div className="card battlegear">

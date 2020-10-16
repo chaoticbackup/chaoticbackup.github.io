@@ -8,7 +8,7 @@ import API from '../../SpreadsheetData';
 export default class Location extends React.Component {
 
   render() {
-    let { card } = this.props;
+    const { card } = this.props;
 
     if (this.props.ext == false) return (
       <div className="card location">
@@ -25,7 +25,7 @@ export default class Location extends React.Component {
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
-    )
+    );
     else return (
       <div className="card location">
         <div className="fullcard"><img src={API.cardImage(card)} /></div>

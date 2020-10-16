@@ -14,7 +14,7 @@ export default class SingleMugic extends React.Component {
   // The first / gets counted
   render() {
 
-    let path = this.props.location.pathname.split("/");
+    const path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     const name = (() => {
@@ -26,7 +26,7 @@ export default class SingleMugic extends React.Component {
     const card_data = API.cards.mugic.findOne({ 'gsx$name': name });
 
     const cost = () => {
-      let cost = [];
+      const cost = [];
       if (card_data.gsx$cost == 0) {
         cost.push(<span key={0}>0</span>);
       }
@@ -39,7 +39,7 @@ export default class SingleMugic extends React.Component {
         }
       }
       return cost;
-    }
+    };
 
     if (mugic) {
       return (<Single 
@@ -87,6 +87,6 @@ export default class SingleMugic extends React.Component {
       }
     }
     
-    return(<PageNotFound location={this.props.location}/>);
+    return (<PageNotFound location={this.props.location}/>);
   }
 }

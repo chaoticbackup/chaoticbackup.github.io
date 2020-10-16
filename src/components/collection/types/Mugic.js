@@ -9,9 +9,9 @@ import { withRouter } from 'react-router';
 class Attack extends React.Component {
 
   render() {
-    let { card, history } = this.props;
+    const { card, history } = this.props;
 
-    let mugicCounters = [];
+    const mugicCounters = [];
     if (card.gsx$cost == 0) {
       mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={0} amount={"0"}/>);
     }
@@ -45,7 +45,7 @@ class Attack extends React.Component {
           <span className="flavortext">{card.gsx$flavortext}</span>
         </div>
       </div>
-    )
+    );
     else return (
       <div className="card mugic">
         <div className="fullcard"><img src={API.cardImage(card)} /></div>

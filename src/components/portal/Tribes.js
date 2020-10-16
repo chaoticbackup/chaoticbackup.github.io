@@ -33,12 +33,12 @@ export default class Tribes extends React.Component {
       return (<Loading />);
     }
 
-    let path = this.props.location.pathname.split("/");
+    const path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
-    let tribe = path[2];
+    const tribe = path[2];
 
-    let filter = this.filter.addCollection('filter');
+    const filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');
     pview.applySimpleSort('gsx$name');
 
@@ -52,7 +52,7 @@ export default class Tribes extends React.Component {
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
 
-    let results = pview.data();
+    const results = pview.data();
     this.filter.removeCollection('filter');
 
     const bottom_nav = results.map((card, i) => {

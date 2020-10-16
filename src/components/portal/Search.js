@@ -20,13 +20,13 @@ export default class SearchPortal extends React.Component {
   }
 
   render() {
-  return (<div className="search">
-    <form onSubmit={this.search}>
-      <input type="text" value={this.query} autoFocus onChange={(e) => this.query = e.target.value} />
-      <button type="submit"><SearchButton /></button>
-    </form>
-    <DBSearch string={this.input}/>
-  </div>);
+    return (<div className="search">
+      <form onSubmit={this.search}>
+        <input type="text" value={this.query} autoFocus onChange={(e) => this.query = e.target.value} />
+        <button type="submit"><SearchButton /></button>
+      </form>
+      <DBSearch string={this.input}/>
+    </div>);
   }
 
   search = (event) => {
@@ -55,58 +55,56 @@ class DBSearch extends React.Component {
       ]).then(() => {
         this.loaded = true;
       })
-      .catch(() => {})
+      .catch(() => {});
       return (<span>Loading...</span>);
     }
 
-    let { string } = this.props;
+    const { string } = this.props;
 
     // No search
     if (string == "") {
       return (<div style={{ minHeight: '50px' }}></div>);
     }
 
-    const makeLink = (card, i) => {
-      let link = "/portal";
-      switch (card.gsx$type) {
-      case "Attacks":
-        link += '/Attacks/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Battlegear":
-        link += '/Battlegear/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Creatures":
-        link += '/Creatures/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Locations":
-        link += '/Locations/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Mugic":
-        link += '/Mugic/' + encodeURIComponent(card.gsx$name);
-        break;
+    const text_link = (card, i) => {
+      let url;
+      if (["Attacks", "Battlegear", "Creatures", "Locations", "Mugic"].includes(card.gsx$type)) {
+        url = `/portal/${card.gsx$type}/${card.gsx$name}`;
       }
+
+      if (!url) return (<span key={i}></span>);
+
       return (<div key={i}>
-        <Interactive as={Link} {...s.link} to={link}>{card.gsx$name}</Interactive>
+        <Interactive as={Link} {...s.link} to={url}>{card.gsx$name}</Interactive>
         <br />
       </div>);
     };
 
-    const create_link = (card, data, i, url) => {
+    const thumb_link = (card, i) => {
+      let url;
+      let data;
+      if (["Attacks", "Battlegear", "Creatures", "Locations", "Mugic"].includes(card.gsx$type)) {
+        url = `/portal/${card.gsx$type}/${card.gsx$name}`;
+        data = API.cards[card.gsx$type.toLowerCase()].findOne({ 'gsx$name': card.gsx$name });
+      }
+
       // Prevent site from crashing due to misspelled/missing data
-      if (!data) return (<div key={i}></div>);
+      if (!data || !url) return (<span key={i}></span>);
+
+      const name = card.gsx$name.split(",")[0].replace(/\(Unused\)/, "");
 
       return (<div key={i} className="nav_item">
         <Interactive as={Link}
-          to={url || `/portal/${this.props.type}/${card.gsx$name}`}
+          to={url}
           {...s.link}
-          >
-          <span>{card.gsx$name.split(",")[0]}</span><br />
-          <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
+        >
+          <span>{name}</span><br />
+          <img className="thumb" src={API.base_image + (data.gsx$thumb ? data.gsx$thumb : API.thumb_missing)}></img>
         </Interactive>
       </div>);
     };
 
-    let filter = this.filter.addCollection('filter');
+    const filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');
     pview.applySimpleSort('gsx$name');
 
@@ -170,13 +168,13 @@ class DBSearch extends React.Component {
     temp.forEach(function(v){ delete v.$loki });
     filter.insert(temp);
 
-    let content = pview.data().map(makeLink);
+    let content = pview.data().map(text_link);
     this.filter.removeCollection('filter');
 
     let header;
 
     // This prioritizes names in the results
-    let names = [].concat(
+    const names = [].concat(
       API.portal.attacks.find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }}),
       API.portal.battlegear.find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }}),
       API.portal.creatures.find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }}),
@@ -199,15 +197,16 @@ class DBSearch extends React.Component {
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
         .where((obj) => {return (obj.gsx$splash != ('') )}).data()
     ).sort((a, b) => {
-        a = a.gsx$name.toLowerCase();
-        b = b.gsx$name.toLowerCase();
-        if (a < b) return -1;
-        else if (a > b) return 1;
-        else return 0;
-      }).map(makeLink);
+      a = a.gsx$name.toLowerCase();
+      b = b.gsx$name.toLowerCase();
+      if (a < b) return -1;
+      else if (a > b) return 1;
+      else return 0;
+    }).map(thumb_link);
     
+    // Check Artists
     if (content.length == 0) {
-      let artists = [].concat(
+      const artists = [].concat(
         API.cards.attacks.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
           .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
@@ -229,7 +228,7 @@ class DBSearch extends React.Component {
         if (a < b) return -1;
         else if (a > b) return 1;
         else return 0;
-      }).map(makeLink);
+      }).map(text_link);
 
       if (artists.length > 0) {
         header = `Art contributed by ${string}:`;
@@ -247,7 +246,7 @@ class DBSearch extends React.Component {
       <hr />
       {names.length > 0 && <>
         <div>Entries</div>
-        {names}
+        <div className="entry_nav">{names}</div>
         <hr />
       </>}
       <div>{header}</div>

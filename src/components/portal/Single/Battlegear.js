@@ -10,19 +10,19 @@ export default class SingleBattlegear extends React.Component {
 
   render() {
 
-    let path = this.props.location.pathname.split("/");
+    const path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // Path too long
     if ( path.length !== 4 ) {
-      return(<PageNotFound location={this.props.location}/>);
+      return (<PageNotFound location={this.props.location}/>);
     }
 
-    let name = decodeURIComponent(path[3]);
+    const name = decodeURIComponent(path[3]);
 
     const battlegear = API.portal.battlegear.findOne({ 'gsx$name': name });
     const card_data = API.cards.battlegear.findOne({ 'gsx$name': name });
-
+    
     if (battlegear) {
       return (<Single 
         card={card_data}
@@ -50,6 +50,6 @@ export default class SingleBattlegear extends React.Component {
       }
     }
     
-    return(<PageNotFound location={this.props.location}/>);
+    return (<PageNotFound location={this.props.location}/>);
   }
 }

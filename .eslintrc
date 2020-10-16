@@ -41,6 +41,11 @@
     "dot-notation": "off",
     "eqeqeq": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": ["./webpack.config.babel.js"]}],
+    "indent": ["error", 2, {
+      "SwitchCase": 1,
+      "MemberExpression": "off"
+    }],
+    "keyword-spacing": ["error"],
     "linebreak-style": "off",
     "no-plusplus": "off",
     "no-prototype-builtins": "off",
@@ -56,6 +61,7 @@
     }, {
       "enforceForRenamedProperties": false
     }],
+    "prefer-const": "warn",
     "promise/always-return": "off",
     "promise/catch-or-return": ["warn", {
       "allowFinally": true
@@ -68,7 +74,8 @@
     "react/jsx-indent": ["warn", 2, { "indentLogicalExpressions": true }],
     "react/jsx-indent-props": ["warn", 2], 
     "react/no-unescaped-entities": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "semi": ["warn", "always", { "omitLastInOneLineBlock": true }]
   },
   "overrides": [
     {
