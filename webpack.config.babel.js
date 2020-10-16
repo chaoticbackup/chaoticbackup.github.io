@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 require('@babel/register');
 
 const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('-p') === -1);
@@ -11,12 +11,17 @@ const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('
 module.exports = {
   entry: ['@babel/polyfill', './src/components/index.js'],
 
+  devtool: 'inline-source-map',
+
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
 
   devServer: {
     host: '0.0.0.0',
+    port: 8000,
+    publicPath: '/build/',
+    contentBase: __dirname,
     historyApiFallback: {
       index: 'index.html',
     },
@@ -24,18 +29,16 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'main.js',
+    filename: '[name].js',
     chunkFilename: '[name].js',
     publicPath: '/build/',
   },
 
   optimization: {
+    minimize: true,
     minimizer: [
-      // https://www.stackery.io/blog/webpack-upgrade/
       new TerserWebpackPlugin({
-        cache: true,
         parallel: true,
-        sourceMap: true,
         extractComments: true,
         terserOptions: {
           parse: {
@@ -46,7 +49,7 @@ module.exports = {
           }
         }
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new CssMinimizerPlugin()
     ],
     splitChunks: {
       cacheGroups: {
@@ -57,7 +60,7 @@ module.exports = {
           // sync + async chunks
           chunks: 'all',
           // import file path containing node_modules
-          test: /node_modules/,
+          test: /[\\/]node_modules[\\/]/,
           priority: 20,
         },
         styles: {
@@ -110,10 +113,6 @@ module.exports = {
         ],
       },
     ],
-  },
-
-  node: {
-    fs: 'empty',
   },
 
   // First array is dev only, second is production
