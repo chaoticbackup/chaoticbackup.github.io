@@ -19,6 +19,7 @@
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": false,
+    "suppressImplicitAnyIndexErrors": true,
     // Disallow features that require cross-file information for emit.
     "isolatedModules": true,
     // Import non-ES modules as default imports.
@@ -30,15 +31,17 @@
     "resolveJsonModule": true,
     // Library files to be used in the project. 
     // Tells the compiler that "DOM-APIs" and new ECMAScript features are valid.
-    "lib": ["dom", "ES2019"],
+    "lib": ["dom", "esnext"],
     // Allows @decorators
     "experimentalDecorators": true,
-    // Skips checking libraries
-    "skipLibCheck": true,
     // List of folders to include type definitions from.
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    // Skips checking libraries
+    "skipLibCheck": true,
+    // Emite source map for Babel
+    "inlineSourceMap": true
   },
   "include": [
     "./src"
