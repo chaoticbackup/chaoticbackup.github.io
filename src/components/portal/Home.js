@@ -18,7 +18,7 @@ export default class Home extends React.Component {
     const ctx = canvas.getContext('2d');
 
     const Logo = new Image();
-    Logo.src = "/src/img/portal.png";
+    Logo.src = "/public/img/portal.png";
 
     const Creatures = (() => {
       const Chaor = new Image();

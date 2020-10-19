@@ -2,30 +2,29 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Link, Route, Switch, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
-import s from '../styles/app.style';
 
 /* Components */
-import API from './SpreadsheetData';
-import { PageNotFound, UnderConstruction, Donate, Loading } from './Snippets';
-import Create from './create/index';
+import API from './components/SpreadsheetData';
+import { PageNotFound, UnderConstruction, Donate, Loading } from './components/Snippets';
+import Create from './components/create/index';
 
 const EnterTheCode = loadable(
-  () => import('./entercode'), 
+  () => import('./components/entercode'), 
   { fallback: <Loading /> }
 );
 
 const Home = loadable(
-  () => import('./home'),
+  () => import('./components/home'),
   { fallback: <Loading /> }
 );
 
 const Portal = loadable(
-  () => import('./portal'),
+  () => import('./components/portal'),
   { fallback: <Loading /> }
 );
 
 const Collection = loadable(
-  () => import('./collection'),
+  () => import('./components/collection'),
   { fallback: <Loading /> }
 );
 
@@ -166,7 +165,7 @@ function Base(props) {
                         </div>
                         <div className="footer-language">
                           <a href='#' onClick={(e) => {e.stopPropagation(); e.preventDefault(); API.purgeDB()}} className="page-options" title="Change Language">
-                            <img src="/src/img/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
+                            <img src="/public/img/flag_usa_.gif" alt="English (Change Language)" width="40" height="27"/>
                             <br />English (Change Language)
                           </a>
                         </div>

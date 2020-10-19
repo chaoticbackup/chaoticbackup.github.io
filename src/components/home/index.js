@@ -34,7 +34,7 @@ export default class Home extends React.Component {
   state = { lore: []};
 
   componentDidMount() {
-    fetch("/src/json/starter_lore.json")
+    fetch("/public/json/starter_lore.json")
     .then((response) => {
       return response.json();
     })

@@ -9,7 +9,7 @@ require('@babel/register');
 const devMode = (process.env.NODE_ENV !== 'production' && process.argv.indexOf('-p') === -1);
 
 module.exports = {
-  entry: ['@babel/polyfill', './src/components/index.js'],
+  entry: ['@babel/polyfill', './src/index.js'],
 
   devtool: 'inline-source-map',
 
@@ -118,13 +118,13 @@ module.exports = {
 
   // First array is dev only, second is production
   plugins: devMode 
-  ? [
-  ] : [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css'
-    }),
-  ],
+    ? [
+    ] : [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
+      new MiniCssExtractPlugin({
+        filename: '[name].css'
+      }),
+    ],
 };
