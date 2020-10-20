@@ -15,23 +15,23 @@ export function Name(props) {
 
 export function Mugic(props) {
   const type = (props.tribe || "generic") + (props.amount != undefined ? `_${props.amount}` : "");
-  const src = ("/src/img/icons/mugic/" + type + ".png").toLowerCase();
+  const src = ("/public/img/icons/mugic/" + type + ".png").toLowerCase();
   return <img className={props.size || "icon20"} src={src} alt={"MC"} />;
 }
   
 export function Element(props) {
   if (props.value) {
-    return <img className={props.size || "icon20"} src={("/src/img/icons/elements/" + props.element + ".png").toLowerCase()} />;
+    return <img className={props.size || "icon20"} src={("/public/img/icons/elements/" + props.element + ".png").toLowerCase()} />;
   }
   else {
-    return <img className={props.size || "icon20"} src={("/src/img/icons/elements/" + props.element + "-inactive.png").toLowerCase()} />;
+    return <img className={props.size || "icon20"} src={("/public/img/icons/elements/" + props.element + "-inactive.png").toLowerCase()} />;
   }
 }
   
 export function Tribe(props) {
-  return <img className={props.size || "icon16"} src={("/src/img/icons/tribes/" + props.tribe + ".png").toLowerCase()} />;
+  return <img className={props.size || "icon16"} src={("/public/img/icons/tribes/" + props.tribe + ".png").toLowerCase()} />;
 }
   
 export function Discipline(props) {
-  return <img className={props.size || "icon16"} src={("/src/img/icons/disciplines/" + props.discipline + ".png").toLowerCase()} />;
+  return <img className={props.size || "icon16"} src={("/public/img/icons/disciplines/" + props.discipline + ".png").toLowerCase()} />;
 }

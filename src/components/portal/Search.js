@@ -1,12 +1,10 @@
 import React from 'react';
-import Interactive from 'react-interactive';
-import { Link } from 'react-router-dom';
 import API from '../SpreadsheetData';
 import { observable } from "mobx";
 import { observer, inject } from 'mobx-react';
 import loki from 'lokijs';
-import s from '../../styles/app.style';
 import { SearchButton } from '../Snippets';
+import { sortCardName, text_link, thumb_link } from './Category/common.tsx';
 
 @inject((stores, props, context) => props) @observer
 export default class SearchPortal extends React.Component {
@@ -65,44 +63,6 @@ class DBSearch extends React.Component {
     if (string == "") {
       return (<div style={{ minHeight: '50px' }}></div>);
     }
-
-    const text_link = (card, i) => {
-      let url;
-      if (["Attacks", "Battlegear", "Creatures", "Locations", "Mugic"].includes(card.gsx$type)) {
-        url = `/portal/${card.gsx$type}/${card.gsx$name}`;
-      }
-
-      if (!url) return (<span key={i}></span>);
-
-      return (<div key={i}>
-        <Interactive as={Link} {...s.link} to={url}>{card.gsx$name}</Interactive>
-        <br />
-      </div>);
-    };
-
-    const thumb_link = (card, i) => {
-      let url;
-      let data;
-      if (["Attacks", "Battlegear", "Creatures", "Locations", "Mugic"].includes(card.gsx$type)) {
-        url = `/portal/${card.gsx$type}/${card.gsx$name}`;
-        data = API.cards[card.gsx$type.toLowerCase()].findOne({ 'gsx$name': card.gsx$name });
-      }
-
-      // Prevent site from crashing due to misspelled/missing data
-      if (!data || !url) return (<span key={i}></span>);
-
-      const name = card.gsx$name.split(",")[0].replace(/\(Unused\)/, "");
-
-      return (<div key={i} className="nav_item">
-        <Interactive as={Link}
-          to={url}
-          {...s.link}
-        >
-          <span>{name}</span><br />
-          <img className="thumb" src={API.base_image + (data.gsx$thumb ? data.gsx$thumb : API.thumb_missing)}></img>
-        </Interactive>
-      </div>);
-    };
 
     const filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');
@@ -196,13 +156,9 @@ class DBSearch extends React.Component {
       API.cards.mugic.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
         .where((obj) => {return (obj.gsx$splash != ('') )}).data()
-    ).sort((a, b) => {
-      a = a.gsx$name.toLowerCase();
-      b = b.gsx$name.toLowerCase();
-      if (a < b) return -1;
-      else if (a > b) return 1;
-      else return 0;
-    }).map(thumb_link);
+    )
+    .sort(sortCardName)
+    .map(thumb_link);
     
     // Check Artists
     if (content.length == 0) {
@@ -222,13 +178,9 @@ class DBSearch extends React.Component {
         API.cards.mugic.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
           .where((obj) => {return (obj.gsx$splash != ('') )}).data()
-      ).sort((a, b) => {
-        a = a.gsx$name.toLowerCase();
-        b = b.gsx$name.toLowerCase();
-        if (a < b) return -1;
-        else if (a > b) return 1;
-        else return 0;
-      }).map(text_link);
+      )
+      .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
+      .map(text_link);
 
       if (artists.length > 0) {
         header = `Art contributed by ${string}:`;
@@ -245,7 +197,6 @@ class DBSearch extends React.Component {
     return (<div className="results">
       <hr />
       {names.length > 0 && <>
-        <div>Entries</div>
         <div className="entry_nav">{names}</div>
         <hr />
       </>}

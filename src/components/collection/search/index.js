@@ -222,18 +222,18 @@ export default class SearchCollection extends React.Component {
     // });
 
     const tribes = gen("tribes", "inline", (item) => {
-      return (<span><img className="icon16" src={"/src/img/icons/tribes/"+item+".png"} /></span>);
+      return (<span><img className="icon16" src={"/public/img/icons/tribes/"+item+".png"} /></span>);
     });
 
     const elements = gen("elements", "inline", (item) => {
-      return (<span><img className="icon20" src={"/src/img/icons/elements/"+item+".png"} />&nbsp;</span>);
+      return (<span><img className="icon20" src={"/public/img/icons/elements/"+item+".png"} />&nbsp;</span>);
     }).slice(0, -2);
 
     const disciplines = [];
     Object.keys(this.input.disciplines).forEach((item, i) => {
       if (i == 4) return;
       disciplines.push(<label key={i} className="disciplines"><input type="text" name={item} value={this.input.disciplines[item]} onChange={e => this.handleChange(e, "disciplines")} />
-        <img className="icon20" style={{ verticalAlign: 'middle', padding: "0px 2px" }} src={"/src/img/icons/disciplines/"+item+".png"} />
+        <img className="icon20" style={{ verticalAlign: 'middle', padding: "0px 2px" }} src={"/public/img/icons/disciplines/"+item+".png"} />
       </label>);
     });
 
