@@ -8,11 +8,11 @@ import Single from './_base';
 import { PageNotFound, Element, Mugic, Discipline, Ability, Tribe } from '../../Snippets';
 
 function Artist(props) {
-  let artists = [];
+  const artists = [];
   props.artist.split(/(?=, )/).forEach((artist, i) => {
     artists.push(<Link key={i} to={`/portal/Search/?${artist.replace(", ", "")}`}>{artist}</Link>);
   });
-  return (<div className="ability">{artists}</div>)
+  return (<div className="ability">{artists}</div>);
 }
 
 @inject((stores, props, context) => props) @observer
@@ -24,7 +24,7 @@ export default class SingleCreature extends React.Component {
   // The first / gets counted
   render() {
 
-    let path = this.props.location.pathname.split("/");
+    const path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     const name = (() => {
@@ -35,7 +35,7 @@ export default class SingleCreature extends React.Component {
     const creature = API.portal.creatures.findOne({ 'gsx$name': name });
 
     if (!creature) {
-      return(<PageNotFound location={this.props.location}/>);
+      return (<PageNotFound location={this.props.location}/>);
     }
 
     const tribe = creature.gsx$tribe;
@@ -50,12 +50,12 @@ export default class SingleCreature extends React.Component {
       return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
     });
 
-    let mugic = [];
+    const mugic = [];
     for (let i = 0; i < card_data.gsx$mugicability; i++) {
       mugic.push(<Mugic key={i} tribe={tribe} />);
     }
 
-      // TODO readd creature to Portal Search after rewrite
+    // TODO readd creature to Portal Search after rewrite
 
     return (<Single
       card={card_data}

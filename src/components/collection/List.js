@@ -16,7 +16,7 @@ export default class CardList extends React.Component {
   }
 
   render() {
-    let { cards } = this.props;
+    const { cards } = this.props;
 
     if (cards.length == 1 && cards[0].text) {
       return (
@@ -25,18 +25,18 @@ export default class CardList extends React.Component {
     }
     return cards.map((card, i) => {
       switch (card.gsx$type) {
-      case "Attacks":
-        return (<Attack card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
-      case "Battlegear":
-        return (<Battlegear card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
-      case "Creatures":
-        return (<Creature card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
-      case "Locations":
-        return (<Location card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
-      case "Mugic":
-        return (<Mugic card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
-      default:
-        return (<div key={i}>Invalid Card Type</div>);
+        case "Attacks":
+          return (<Attack card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
+        case "Battlegear":
+          return (<Battlegear card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
+        case "Creatures":
+          return (<Creature card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
+        case "Locations":
+          return (<Location card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
+        case "Mugic":
+          return (<Mugic card={card} key={i} ext={this.props.ext} setImage={this.setImage.bind(this)}/>);
+        default:
+          return (<div key={i}>Invalid Card Type</div>);
       }
     });
   }

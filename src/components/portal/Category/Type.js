@@ -1,11 +1,11 @@
 import React from 'react';
-import Interactive from 'react-interactive';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import s from '../../styles/app.style';
-import API from '../SpreadsheetData';
-import { Loading } from '../Snippets';
+
+import API from '../../SpreadsheetData';
+import { Loading } from '../../Snippets';
+import { sortCardName, thumb_link } from './common';
 
 @inject((stores, props, context) => props) @observer
 export default class Category extends React.Component {
@@ -25,31 +25,17 @@ export default class Category extends React.Component {
       API.LoadDB([{ 'cards': this.type }, { 'portal': this.type }])
       .then(() => {
         this.loaded = true;
-      });
+      })
+      .catch(() => {});
       return (<Loading />);
     }
-
-    const create_link = (card, data, i, url) => {
-      // Prevent site from crashing due to misspelled/missing data
-      if (!data) return (<div key={i}></div>);
-
-      return (<div key={i} className="nav_item">
-        <Interactive as={Link}
-          to={url || `/portal/${this.props.type}/${card.gsx$name}`}
-          {...s.link}
-          >
-          <span>{card.gsx$name.split(",")[0]}</span><br />
-          <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
-        </Interactive>
-      </div>);
-    };
 
     let base_path = true;
     let cat_title = "";
     let top_content = (<div />);
     let bottom_nav = [];
 
-    let path = this.props.location.pathname.split("/");
+    const path = this.props.location.pathname.split("/");
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // ** Process the tribe ** //
@@ -83,17 +69,18 @@ export default class Category extends React.Component {
       );
 
       bottom_nav = ((tribe) ?
-        API.portal[this.type].chain().find({ 'gsx$tribe': tribe }).simplesort('gsx$name').data()
+        API.portal[this.type].chain().find({ 'gsx$tribe': tribe }).data()
         :
-        API.portal[this.type].chain().simplesort('gsx$name').data()
-      ).map((card_portal, i) => {
-        let card_data = API.cards[this.type].findOne({ 'gsx$name': card_portal.gsx$name });
-        let url = ((tribe) ?
+        API.portal[this.type].chain().data()
+      )
+      .sort(sortCardName)
+      .map((card_portal, i) => {
+        const url = ((tribe) ?
           `/portal/${this.props.type}/${card_portal.gsx$tribe}/${encodeURIComponent(card_portal.gsx$name)}`
           :
           `/portal/${this.props.type}/${encodeURIComponent(card_portal.gsx$name)}`
         );
-        return create_link(card_portal, card_data, i, url);
+        return thumb_link(card_portal, i, url);
       });
     }
     else {
@@ -105,11 +92,8 @@ export default class Category extends React.Component {
       cat_title = this.props.type;
 
       bottom_nav = API.portal[this.type].data
-      .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
-      .map((card_portal, i) => {
-        let card_data = API.cards[this.type].findOne({ 'gsx$name': card_portal.gsx$name });
-        return create_link(card_portal, card_data, i);
-      });
+      .sort(sortCardName)
+      .map(thumb_link);
     }
 
     if (base_path) {

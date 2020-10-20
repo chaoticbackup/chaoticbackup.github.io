@@ -18,19 +18,19 @@ s.input = {
   margin: '0.05em',
   backgroundColor: "rgba(0,0,0,0)",
   color: "white",
-}
+};
 
 s.inputGroup = {
   // display: 'flex',
   alignItems: 'center',
-}
+};
 
 s.hyphen = {
   background: 'white',
   height: '0.1em',
   width: '.5em',
   display: 'inline-block',
-}
+};
 
 @inject((stores, props, context) => props) @observer
 export default class EnterTheCode extends React.Component {
@@ -46,14 +46,14 @@ export default class EnterTheCode extends React.Component {
       return (<Loading />);
     }
 
-    let getRandomInt = (min, max) => {
+    const getRandomInt = (min, max) => {
       min = Math.ceil(min);
       max = Math.floor(max);
       //The maximum is exclusive and the minimum is inclusive
       return Math.floor(Math.random() * (max - min)) + min;
-    }
+    };
 
-    let validate = (e) => {
+    const validate = (e) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -63,9 +63,9 @@ export default class EnterTheCode extends React.Component {
         );
       }
       else {
-        let card = this.fan[getRandomInt(0, this.fan.length)];
-        let rgx = /.*.png|.*.jpg/i;
-        let img = (rgx.test(card.gsx$image.$t) ? card.gsx$image.$t : API.base_image + card.gsx$image.$t);
+        const card = this.fan[getRandomInt(0, this.fan.length)];
+        const rgx = /.*.png|.*.jpg/i;
+        const img = (rgx.test(card.gsx$image.$t) ? card.gsx$image.$t : API.base_image + card.gsx$image.$t);
         this.message.contents = (
           <div key={0}>
             <p> Congrats on your scan! </p><br />
@@ -74,9 +74,9 @@ export default class EnterTheCode extends React.Component {
           </div>
         );
       }
-    }
+    };
 
-    return(
+    return (
       <div>
         <Interactive as={Link} {...s.link}
           to={`/EnterTheCode/PackSimulator/`}>Pack Simulator</Interactive>
@@ -104,7 +104,7 @@ export default class EnterTheCode extends React.Component {
               <input type="text" style={s.input} {...props[10]} />
               <input type="text" style={s.input} {...props[11]} />
             </div>
-        )}
+          )}
         </DigitInput>
         <br />
         <button onClick={validate}>Validate Code</button>

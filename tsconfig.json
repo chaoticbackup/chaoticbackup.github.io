@@ -44,11 +44,11 @@
     "inlineSourceMap": true
   },
   "include": [
-    "./src"
+    "./src/components"
   ],
   "exclude": [
     "./build",
-    "./node_modules/*",
-    "./source/**/*.spec.ts"
+    "./node_modules",
+    "./src/**/*.spec.ts"
   ]
 }

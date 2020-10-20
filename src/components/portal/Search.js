@@ -1,12 +1,10 @@
 import React from 'react';
-import Interactive from 'react-interactive';
-import { Link } from 'react-router-dom';
 import API from '../SpreadsheetData';
 import { observable } from "mobx";
 import { observer, inject } from 'mobx-react';
 import loki from 'lokijs';
-import s from '../../styles/app.style';
 import { SearchButton } from '../Snippets';
+import { sortCardName, text_link, thumb_link } from './Category/common.tsx';
 
 @inject((stores, props, context) => props) @observer
 export default class SearchPortal extends React.Component {
@@ -20,13 +18,13 @@ export default class SearchPortal extends React.Component {
   }
 
   render() {
-  return (<div className="search">
-    <form onSubmit={this.search}>
-      <input type="text" value={this.query} autoFocus onChange={(e) => this.query = e.target.value} />
-      <button type="submit"><SearchButton /></button>
-    </form>
-    <DBSearch string={this.input}/>
-  </div>);
+    return (<div className="search">
+      <form onSubmit={this.search}>
+        <input type="text" value={this.query} autoFocus onChange={(e) => this.query = e.target.value} />
+        <button type="submit"><SearchButton /></button>
+      </form>
+      <DBSearch string={this.input}/>
+    </div>);
   }
 
   search = (event) => {
@@ -55,58 +53,18 @@ class DBSearch extends React.Component {
       ]).then(() => {
         this.loaded = true;
       })
-      .catch(() => {})
+      .catch(() => {});
       return (<span>Loading...</span>);
     }
 
-    let { string } = this.props;
+    const { string } = this.props;
 
     // No search
     if (string == "") {
       return (<div style={{ minHeight: '50px' }}></div>);
     }
 
-    const makeLink = (card, i) => {
-      let link = "/portal";
-      switch (card.gsx$type) {
-      case "Attacks":
-        link += '/Attacks/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Battlegear":
-        link += '/Battlegear/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Creatures":
-        link += '/Creatures/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Locations":
-        link += '/Locations/' + encodeURIComponent(card.gsx$name);
-        break;
-      case "Mugic":
-        link += '/Mugic/' + encodeURIComponent(card.gsx$name);
-        break;
-      }
-      return (<div key={i}>
-        <Interactive as={Link} {...s.link} to={link}>{card.gsx$name}</Interactive>
-        <br />
-      </div>);
-    };
-
-    const create_link = (card, data, i, url) => {
-      // Prevent site from crashing due to misspelled/missing data
-      if (!data) return (<div key={i}></div>);
-
-      return (<div key={i} className="nav_item">
-        <Interactive as={Link}
-          to={url || `/portal/${this.props.type}/${card.gsx$name}`}
-          {...s.link}
-          >
-          <span>{card.gsx$name.split(",")[0]}</span><br />
-          <img className="thumb" src={API.base_image + data.gsx$thumb}></img>
-        </Interactive>
-      </div>);
-    };
-
-    let filter = this.filter.addCollection('filter');
+    const filter = this.filter.addCollection('filter');
     var pview = filter.addDynamicView('filter');
     pview.applySimpleSort('gsx$name');
 
@@ -170,13 +128,13 @@ class DBSearch extends React.Component {
     temp.forEach(function(v){ delete v.$loki });
     filter.insert(temp);
 
-    let content = pview.data().map(makeLink);
+    let content = pview.data().map(text_link);
     this.filter.removeCollection('filter');
 
     let header;
 
     // This prioritizes names in the results
-    let names = [].concat(
+    const names = [].concat(
       API.portal.attacks.find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }}),
       API.portal.battlegear.find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }}),
       API.portal.creatures.find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }}),
@@ -198,16 +156,13 @@ class DBSearch extends React.Component {
       API.cards.mugic.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
         .where((obj) => {return (obj.gsx$splash != ('') )}).data()
-    ).sort((a, b) => {
-        a = a.gsx$name.toLowerCase();
-        b = b.gsx$name.toLowerCase();
-        if (a < b) return -1;
-        else if (a > b) return 1;
-        else return 0;
-      }).map(makeLink);
+    )
+    .sort(sortCardName)
+    .map(thumb_link);
     
+    // Check Artists
     if (content.length == 0) {
-      let artists = [].concat(
+      const artists = [].concat(
         API.cards.attacks.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
           .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
@@ -223,13 +178,9 @@ class DBSearch extends React.Component {
         API.cards.mugic.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
           .where((obj) => {return (obj.gsx$splash != ('') )}).data()
-      ).sort((a, b) => {
-        a = a.gsx$name.toLowerCase();
-        b = b.gsx$name.toLowerCase();
-        if (a < b) return -1;
-        else if (a > b) return 1;
-        else return 0;
-      }).map(makeLink);
+      )
+      .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
+      .map(text_link);
 
       if (artists.length > 0) {
         header = `Art contributed by ${string}:`;
@@ -246,8 +197,7 @@ class DBSearch extends React.Component {
     return (<div className="results">
       <hr />
       {names.length > 0 && <>
-        <div>Entries</div>
-        {names}
+        <div className="entry_nav">{names}</div>
         <hr />
       </>}
       <div>{header}</div>

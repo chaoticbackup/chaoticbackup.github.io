@@ -4,7 +4,7 @@ import { observable, action } from "mobx";
 import { observer, inject } from 'mobx-react';
 import CardList from './List';
 import SearchForm from './search/index.js';
-import './collection.scss'
+import './collection.scss';
 
 // https://mobx.js.org/refguide/object.html
 const fixedStyles = observable({
@@ -13,8 +13,8 @@ const fixedStyles = observable({
   get isFixed() {return (Object.entries(this.style).length !== 0)},
   setFixed(height) {
     if (!window.matchMedia("(min-width: 975px)").matches) return;
-    let left = document.getElementById('player').getBoundingClientRect().left + 4;
-    let width = document.querySelector('.collection > .left').getBoundingClientRect().width + 2;
+    const left = document.getElementById('player').getBoundingClientRect().left + 4;
+    const width = document.querySelector('.collection > .left').getBoundingClientRect().width + 2;
     this.style = {
       position: "fixed",
       top: 0,
@@ -22,7 +22,7 @@ const fixedStyles = observable({
       overflowY: "auto",
       height: `${height}px`,
       width: `${width}px`,
-    }
+    };
   },
   removeFixed() {this.style = {}}
 }, {
@@ -45,7 +45,7 @@ export default class Home extends React.Component {
 
   constructor() {
     super();
-    let ext = localStorage.getItem("extended");
+    const ext = localStorage.getItem("extended");
     if (ext == null) this.ext = false;
     this.ext = (/true/i).test(ext);
   }
@@ -81,11 +81,11 @@ export default class Home extends React.Component {
     // Fix the side menu in place when scrolling down
     if (window.pageYOffset >= 235) {
       const 
-      h = document.documentElement, 
-      // b = document.body,
-      st = 'scrollTop',
-      sh = 'scrollHeight',
-      ch = 'clientHeight';
+        h = document.documentElement, 
+        // b = document.body,
+        st = 'scrollTop',
+        sh = 'scrollHeight',
+        ch = 'clientHeight';
       // const percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h[ch]) * 100;
       // let exp = h[ch] - (h[ch] * (percent - 85) / 100);
       const sm = document.getElementById("side-menu");
@@ -100,13 +100,13 @@ export default class Home extends React.Component {
         else if (list.style.minHeight) {
           list.style.minHeight = null;
         }
-      }
+      };
 
       // When nearing the end of the screen
       // (if element height offset is higher then height of screen)
       // reduce height by difference so that it doesn't leak past body
       if (scrollBottom <= 90) {
-        let exp = h[ch] - (90 - scrollBottom);
+        const exp = h[ch] - (90 - scrollBottom);
         fixedStyles.setFixed(exp);
       }
       // Fix with height of side menu to height of viewport
@@ -131,7 +131,7 @@ export default class Home extends React.Component {
       <div className={"collection " + (this.ext ? "extended" : "short")}>
         <div className="left">
           <div id="side-menu" style={fixedStyles.fixed}>
-            <ImagePreview url={this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage}} />
+            <ImagePreview url={this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage;}} />
             <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
           </div>
         </div>
@@ -153,23 +153,23 @@ export default class Home extends React.Component {
     return (
       <div className="ext-button">
         <button id="buttons" onClick={this.setExt.bind(this)}
-          >{this.ext ? "Short Format" : "Extended Format"}</button>
+        >{this.ext ? "Short Format" : "Extended Format"}</button>
       </div>
     );
   }
 
   navigation() {
-    let numpages = Math.ceil(this.content.length / this.n);
+    const numpages = Math.ceil(this.content.length / this.n);
 
-    let next = () => {
-      if (this.p < numpages) return(<button id="buttons" onClick={ () => {this.p++; window.scrollTo(0, 0);} }>next</button>);
-      else return(<button id="buttons" disabled>next</button>);
-    }
+    const next = () => {
+      if (this.p < numpages) return (<button id="buttons" onClick={ () => {this.p++; window.scrollTo(0, 0)} }>next</button>);
+      else return (<button id="buttons" disabled>next</button>);
+    };
 
-    let prev = () => {
-      if (this.p > 1) return(<button id="buttons" onClick={ () => {this.p--; window.scrollTo(0, 0);} }>prev</button>);
-      else return(<button id="buttons" disabled>prev</button>);
-    }
+    const prev = () => {
+      if (this.p > 1) return (<button id="buttons" onClick={ () => {this.p--; window.scrollTo(0, 0)} }>prev</button>);
+      else return (<button id="buttons" disabled>prev</button>);
+    };
 
     return (
       <div className="entries">
@@ -201,7 +201,7 @@ class imgbase extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <div className="card_img">
         <img className={(this.display?"":"hidden")} src={this.props.url} />
       </div>

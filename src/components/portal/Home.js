@@ -17,28 +17,28 @@ export default class Home extends React.Component {
 
     const ctx = canvas.getContext('2d');
 
-    let Logo = new Image();
-    Logo.src = "/src/img/portal.png";
+    const Logo = new Image();
+    Logo.src = "/public/img/portal.png";
 
-    let Creatures = (() => {
-      let Chaor = new Image();
+    const Creatures = (() => {
+      const Chaor = new Image();
       Chaor.src = API.base_image + "0B6oyUfwoM3u1LWtvNUZ2NVdjTGc";
-      Chaor.onload = (() => { ctx.drawImage(Chaor, 50, 350); });
+      Chaor.onload = (() => { ctx.drawImage(Chaor, 50, 350) });
 
-      let Iflar = new Image();
+      const Iflar = new Image();
       Iflar.src = API.base_image + "0B6oyUfwoM3u1bFVIclZscHlHTVE";
-      Iflar.onload = (() => { ctx.drawImage(Iflar, canvas.width - 300, 350); });
+      Iflar.onload = (() => { ctx.drawImage(Iflar, canvas.width - 300, 350) });
 
-      let Illexia = new Image();
+      const Illexia = new Image();
       Illexia.src = API.base_image + "0B6oyUfwoM3u1YzNhLUdSMHlmdFE";
-      Illexia.onload = (() => { ctx.drawImage(Illexia, canvas.width - 350, Logo.height + 10); });
+      Illexia.onload = (() => { ctx.drawImage(Illexia, canvas.width - 350, Logo.height + 10) });
 
-      let Maxxor = new Image();
+      const Maxxor = new Image();
       Maxxor.src =  API.base_image + "0B6oyUfwoM3u1MVVqQlpqYldsVDQ";
-      Maxxor.onload = (() => { ctx.drawImage(Maxxor, 50, Logo.height + 10); });
+      Maxxor.onload = (() => { ctx.drawImage(Maxxor, 50, Logo.height + 10) });
     });
 
-    let background = new Image();
+    const background = new Image();
     // background.src = API.base_image + "0B6oyUfwoM3u1VXZOdV9QUXlCclU"; // lighter
     background.src = API.base_image + "1iu0GFaJQ0UsSN8yYWi77VY1cXsQpM4o7"; //darker
     background.onload = (() => {
@@ -96,10 +96,10 @@ export default class Home extends React.Component {
       };
 
       that.render = function () {
-        let s_width = that.width / w_frames;
-        let s_height = that.height / h_frames;
-        let c_width = canvas.width/2 - s_width/2;
-        let c_height = canvas.height/2 - s_height/2;
+        const s_width = that.width / w_frames;
+        const s_height = that.height / h_frames;
+        const c_width = canvas.width/2 - s_width/2;
+        const c_height = canvas.height/2 - s_height/2;
 
         // Clear the canvas
         that.context.clearRect(c_width, c_height, s_width, s_height);
@@ -127,7 +127,7 @@ export default class Home extends React.Component {
         this.coin.update();
         this.coin.render();
       }
-    }
+    };
 
     // Create sprite sheet
     const coinImage = new Image();

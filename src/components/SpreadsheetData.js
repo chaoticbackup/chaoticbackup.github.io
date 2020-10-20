@@ -17,7 +17,7 @@ class CollectionDB {
   async getSpreadsheetData(spreadsheet, type, callback) {
     this.api.getSpreadsheet(spreadsheet, (data) => {
       callback(data.map((item) => {
-        let temp = {};
+        const temp = {};
         delete item.content;
         for (const key of Object.keys(item)) {
           temp[key] = item[key].$t;
@@ -33,11 +33,11 @@ class CollectionDB {
   @action
   async setupType(type, resolve) {
     if (this.building.hasOwnProperty(type)) {
-      let uc_type = type.charAt(0).toUpperCase() + type.slice(1);
+      const uc_type = type.charAt(0).toUpperCase() + type.slice(1);
       if (this.building[type].get() == "built") {
         // Check if data has been updated
         this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, (data) => {
-          let cookie = cookies.get(`${this.format}_${type}`);
+          const cookie = cookies.get(`${this.format}_${type}`);
           if (cookie) {
             if ((new Date(data[0].updated)) > (new Date(cookie))) {
               this[type].clear();
@@ -87,7 +87,7 @@ class CollectionDB {
 
   @action
   setupDB(format) {
-    let db = new loki(`chaotic_${format}.db`, {
+    const db = new loki(`chaotic_${format}.db`, {
       autosave: true,
       autoload: true,
       autoloadCallback: databaseInitialize.bind(this),
@@ -101,7 +101,7 @@ class CollectionDB {
       ["attacks","battlegear", "creatures", "locations", "mugic"]
         .forEach((type) => {
           // check if the db already exists in memory
-          let entries = db.getCollection(type);
+          const entries = db.getCollection(type);
           if (entries === null || entries.data.length === 0) {
             this[type] = db.addCollection(type);
             if (this.building[type])
@@ -116,7 +116,7 @@ class CollectionDB {
             else
               this.building[type] = observable.box("built");
           }
-      });
+        });
     }
   }
 
@@ -134,13 +134,13 @@ class API {
   static base_url = "https://spreadsheets.google.com/feeds/list/";
   static data_format = "/od6/public/values?alt=json";
   // + "/od6/public/basic?alt=json"; // Alternate data format
-  get base_image() { return "https://drive.google.com/uc?id="; }
-  get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp"; }
-  get card_back() { return "https://i.imgur.com/xbeDBRJ.png"; }
+  get base_image() { return "https://drive.google.com/uc?id=" }
+  get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp" }
+  get card_back() { return "https://i.imgur.com/xbeDBRJ.png" }
 
   // Singleton
   static getInstance() {
-    if (!this.instance) { this.instance = new API(); }
+    if (!this.instance) { this.instance = new API() }
     return this.instance;
   }
 
@@ -173,8 +173,8 @@ class API {
   setupDB() {
     // let base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
     try {
-      let urls = {};
-      let data = require('./meta_spreadsheet.json');
+      const urls = {};
+      const data = require('./meta_spreadsheet.json');
       // this.getSpreadsheet(API.path(API.base_spreadsheet), (data) => {
       //   if (data == null) throw "no data from base_spreadsheet";
       data.forEach((d) => {

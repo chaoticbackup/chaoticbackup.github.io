@@ -31,7 +31,7 @@ export default class SearchCollection extends React.Component {
   }
 
   fetchCollapsed = () => {
-    let collapsed = localStorage.getItem("collapsed")
+    let collapsed = localStorage.getItem("collapsed");
 
     if (collapsed) collapsed = JSON.parse(collapsed);
     else collapsed = {
@@ -41,19 +41,19 @@ export default class SearchCollection extends React.Component {
       types: true,
       rarity: false,
       sets: false
-    }
+    };
 
     this.collapsed = collapsed;
   }
 
   handleTriggerClick = (type) => {
-    let stored_collapse = this.collapsed;
+    const stored_collapse = this.collapsed;
     stored_collapse[type] = !this.collapsed[type];
     localStorage.setItem("collapsed", JSON.stringify(stored_collapse));
   }
 
   cleanInput = () => {
-    let input = {
+    const input = {
       name: "",
       text: "",
       subtypes: "",
@@ -77,10 +77,10 @@ export default class SearchCollection extends React.Component {
   parseQuery = () => {
     const queryString = this.props.location.search.toLowerCase();
 
-    let query = {};
-    let pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+    const query = {};
+    const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
     for (let i = 0; i < pairs.length; i++) {
-      let pair = pairs[i].split('=');
+      const pair = pairs[i].split('=');
       query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
     }
 
@@ -102,12 +102,12 @@ export default class SearchCollection extends React.Component {
     if (query.hasOwnProperty('speed')) this.input.disciplines.speed = query.speed;
     if (query.hasOwnProperty('disc_max')) this.input.disciplines.max = !!query.disc_max;
     if (query.hasOwnProperty('energy')) {
-      let q = query.energy.split(',');
+      const q = query.energy.split(',');
       if (q[0] >= 0) this.input.energy.min = q[0];
       if (q[1] >= 0) this.input.energy.max = q[1];
     }
     if (query.hasOwnProperty('mcbp')) {
-      let q = query.mcbp.split(',');
+      const q = query.mcbp.split(',');
       if (q[0] >= 0) this.input.mcbp.min = q[0];
       if (q[1] >= 0) this.input.mcbp.max = q[1];
     }
@@ -117,14 +117,14 @@ export default class SearchCollection extends React.Component {
   async updateQuery() {
     let queryString = "";
 
-    let update = (query) => {
+    const update = (query) => {
       let temp = "";
       Object.keys(this.input[query]).forEach((item) => {
         if (this.input[query][item] == true) temp += item + ",";
       });
       if (temp.length > 0) return query + "=" + temp.replace(/\,$/, '&');
       else return "";
-    }
+    };
 
     this.list.forEach(item => queryString += update(item));
 
@@ -179,30 +179,31 @@ export default class SearchCollection extends React.Component {
       this.updateQuery();
     }
 
-    let results = search_api(this.input);
+    const results = search_api(this.input);
 
     if (results.length > 0) this.props.handleContent(results);
     else this.props.handleContent([{ 'text': 'No Results Found' }]);
   }
 
   render() {
-      if (this.loaded == false) {
-        API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
+    if (this.loaded == false) {
+      API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
         .then(() => {
           this.loaded = true;
           this.search();
-        });
-        return (<Loading />);
-      }
+        })
+        .catch(() => {});
+      return (<Loading />);
+    }
 
     const gen = (d, display, text) => {
-      let tmp = [];
+      const tmp = [];
       Object.keys(this.input[d]).forEach((item, i) => {
         tmp.push(<label style={{ display: display }} key={i}><input type="checkbox" name={item} checked={this.input[d][item]} onChange={e => this.handleChange(e, d)} />{text(item)}</label>
         );
       });
       return tmp;
-    }
+    };
 
     const sets = gen("sets", "block", (item) => {
       return API.sets[item.toUpperCase()];
@@ -221,18 +222,18 @@ export default class SearchCollection extends React.Component {
     // });
 
     const tribes = gen("tribes", "inline", (item) => {
-      return (<span><img className="icon16" src={"/src/img/icons/tribes/"+item+".png"} /></span>);
+      return (<span><img className="icon16" src={"/public/img/icons/tribes/"+item+".png"} /></span>);
     });
 
     const elements = gen("elements", "inline", (item) => {
-      return (<span><img className="icon20" src={"/src/img/icons/elements/"+item+".png"} />&nbsp;</span>);
+      return (<span><img className="icon20" src={"/public/img/icons/elements/"+item+".png"} />&nbsp;</span>);
     }).slice(0, -2);
 
-    let disciplines = [];
+    const disciplines = [];
     Object.keys(this.input.disciplines).forEach((item, i) => {
       if (i == 4) return;
       disciplines.push(<label key={i} className="disciplines"><input type="text" name={item} value={this.input.disciplines[item]} onChange={e => this.handleChange(e, "disciplines")} />
-        <img className="icon20" style={{ verticalAlign: 'middle', padding: "0px 2px" }} src={"/src/img/icons/disciplines/"+item+".png"} />
+        <img className="icon20" style={{ verticalAlign: 'middle', padding: "0px 2px" }} src={"/public/img/icons/disciplines/"+item+".png"} />
       </label>);
     });
 
@@ -274,8 +275,8 @@ export default class SearchCollection extends React.Component {
             <label className="none"><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} /><span>None</span></label>
           </div>
           <div className="centeredButtons">
-            <input type="button" value={this.input.elements.none ? "none" : "or"} className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false;}} />
-            <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true;}} />
+            <input type="button" value={this.input.elements.none ? "none" : "or"} className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false}} />
+            <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true}} />
           </div>
           <hr />
           <CollapsibleWrapper

@@ -6,7 +6,7 @@ function cleanInputRegex(input) {
     .replace(/\\/g, '')
     .replace(/\‘|\’/g, "'")
     .replace(/\(|\)/g, (match) => ("\\"+match));
-    // .replace(/~(\w+)/, (match) => (`\(?!${match}\)`));
+  // .replace(/~(\w+)/, (match) => (`\(?!${match}\)`));
   
   return new RegExp(input.trim(), 'i');
 }
@@ -14,7 +14,7 @@ function cleanInputRegex(input) {
 export default function search_api(input) {
 
   // Sort data descending alphabetically
-  let filter = (new loki("filter.db")).addCollection('filter');
+  const filter = (new loki("filter.db")).addCollection('filter');
   var pview = filter.addDynamicView('filter');
   pview.applySimpleSort('gsx$name');
 
@@ -31,21 +31,21 @@ export default function search_api(input) {
   });
   battlegearResults = battlegearResults.where((obj) => {
     return obj.gsx$set != ('');
-	});
+  });
   creatureResults = creatureResults.where((obj) => {
     return obj.gsx$set != ('');
-	});
+  });
   locationResults = locationResults.where((obj) => {
     return obj.gsx$set != ('');
-	});
+  });
   mugicResults = mugicResults.where((obj) => {
     return obj.gsx$set != ('');
-	});
+  });
 
   // Search by name
   if (input.name.length > 0) {
     const negates = [];
-    let inputname = input.name.replace(/(?:~)([\w,()]+)/g, (_, p1) => { negates.push(p1); return ""; });
+    let inputname = input.name.replace(/(?:~)([\w,()]+)/g, (_, p1) => { negates.push(p1); return "" });
 
     if (inputname.length > 0) {
       inputname = cleanInputRegex(inputname);
@@ -79,7 +79,7 @@ export default function search_api(input) {
           truth |= (obj.gsx$name.toLowerCase().indexOf(word.toLowerCase().replace('_', ' ')) > -1);
         });
         return !truth;
-      }
+      };
 
       attackResults = attackResults.where(ignoreText);
       battlegearResults = battlegearResults.where(ignoreText);
@@ -94,7 +94,7 @@ export default function search_api(input) {
   // Card Text
   if (input.text.length > 0) {
     const negates = [];
-    let inputtext = input.text.replace(/(?:~)(\w+)/g, (_, p1) => { negates.push(p1); return ""; });
+    let inputtext = input.text.replace(/(?:~)(\w+)/g, (_, p1) => { negates.push(p1); return "" });
 
     if (inputtext.length > 0) {
       inputtext = cleanInputRegex(inputtext);
@@ -103,7 +103,7 @@ export default function search_api(input) {
         const list = [
           { 'gsx$tags': { '$regex': inputtext }},
           { 'gsx$ability': { '$regex': inputtext }}
-        ]
+        ];
         if (input.flavor) {
           list.push({ 'gsx$flavortext': { '$regex': inputtext }});
           list.push({ 'gsx$artist': { '$regex': inputtext }});
@@ -111,7 +111,7 @@ export default function search_api(input) {
         return list;
       })();
   
-      attackResults = attackResults.find({ '$or': parm })
+      attackResults = attackResults.find({ '$or': parm });
       battlegearResults = battlegearResults.find({ '$or': parm });
       creatureResults = creatureResults.find({ '$or':
         (parm.concat([{ 'gsx$brainwashed': { '$regex': inputtext }}]))
@@ -127,9 +127,9 @@ export default function search_api(input) {
           truth |= (obj.gsx$ability.toLowerCase().indexOf(word.toLowerCase()) > -1);
           truth |= (obj.gsx$flavortext.toLowerCase().indexOf(word.toLowerCase()) > -1);
           if (creature) truth |= (obj.gsx$brainwashed.toLowerCase().indexOf(word.toLowerCase()) > -1);
-        })
+        });
         return !truth;
-      }
+      };
 
       attackResults = attackResults.where(ignoreText);
       battlegearResults = battlegearResults.where(ignoreText);
@@ -142,7 +142,7 @@ export default function search_api(input) {
 
   // Subtypes / Initiative
   if (input.subtypes.length > 0) {
-    let subtypesList = input.subtypes.split(",").filter(Boolean).map((item) => {
+    const subtypesList = input.subtypes.split(",").filter(Boolean).map((item) => {
       return ({ '$regex': cleanInputRegex(item) });
     });
 
@@ -154,7 +154,7 @@ export default function search_api(input) {
   }
 
   // Search by tribe
-  let tribesList = [];
+  const tribesList = [];
   for (const tribe in input.tribes) {
     if (input.tribes[tribe])
       tribesList.push({ '$regex': new RegExp(tribe, 'i') });
@@ -181,13 +181,13 @@ export default function search_api(input) {
     }
     else {
       attackResults = attackResults.where(
-        (obj) => {return (input.elements.fire ? obj.gsx$fire != ('') : obj.gsx$fire == (''));}
+        (obj) => {return (input.elements.fire ? obj.gsx$fire != ('') : obj.gsx$fire == (''))}
       ).where(
-        (obj) => {return (input.elements.air ? obj.gsx$air != ('') : obj.gsx$air == (''));}
+        (obj) => {return (input.elements.air ? obj.gsx$air != ('') : obj.gsx$air == (''))}
       ).where(
-        (obj) => {return (input.elements.earth ? obj.gsx$earth != ('') : obj.gsx$earth == (''));}
+        (obj) => {return (input.elements.earth ? obj.gsx$earth != ('') : obj.gsx$earth == (''))}
       ).where(
-        (obj) => {return (input.elements.water ? obj.gsx$water != ('') : obj.gsx$water == (''));}
+        (obj) => {return (input.elements.water ? obj.gsx$water != ('') : obj.gsx$water == (''))}
       );
 
       let el = "";
@@ -208,19 +208,19 @@ export default function search_api(input) {
     mugicResults = mugicResults.limit(0);
   }
   else {
-    let elementsList = [];
-    let elementsList2 = [];
+    const elementsList = [];
+    const elementsList2 = [];
     for (const element in input.elements) {
       if (element === "none" || element === "and") continue;
       if (input.elements[element]) {
         elementsList.push({ '$regex': new RegExp(element, 'i') });
-        elementsList2.push({ ['gsx$'+element]: { '$gte': 0 }})
+        elementsList2.push({ ['gsx$'+element]: { '$gte': 0 }});
       }
     }
     if (elementsList.length > 0) {
       if (input.elements.and) {
-       creatureResults = creatureResults.find({ 'gsx$elements': { '$and': elementsList }});
-       attackResults = attackResults.find({ '$and': elementsList2 });
+        creatureResults = creatureResults.find({ 'gsx$elements': { '$and': elementsList }});
+        attackResults = attackResults.find({ '$and': elementsList2 });
       }
       else {
         creatureResults = creatureResults.find({ 'gsx$elements': { '$or': elementsList }});
@@ -316,17 +316,17 @@ export default function search_api(input) {
   }
 
   // Sets
-  let setsList = [];
+  const setsList = [];
 
-  for (let key in input.sets) {
+  for (const key in input.sets) {
     if (input.sets[key])
       setsList.push({ '$eq': key.toUpperCase() });
   }
   if (setsList.length === 0) {
     // Only show prototype cards when explicitly selected
-    let keys = Object.keys(input.sets);
+    const keys = Object.keys(input.sets);
     if (!input.sets.proto) keys.splice(keys.indexOf("proto"));
-    for (let i in keys) {
+    for (const i in keys) {
       setsList.push({ '$eq': keys[i].toUpperCase() });
     }
   }
@@ -339,7 +339,7 @@ export default function search_api(input) {
   }
 
   // Rarity
-  let rarityList = [];
+  const rarityList = [];
   for (const key in input.rarity) {
     if (input.rarity[key])
       rarityList.push({ '$eq': key.split(" ").map(st => {return st.charAt(0).toUpperCase()+st.slice(1)}).join(" ") });
@@ -367,30 +367,30 @@ export default function search_api(input) {
   // }
 
   // Merge data
-  let types = !(input.types.attack | input.types.battlegear | input.types.creature | input.types.location | input.types.mugic);
+  const types = !(input.types.attack | input.types.battlegear | input.types.creature | input.types.location | input.types.mugic);
 
   if (types || input.types.attack) {
-    let temp = attackResults.data();
+    const temp = attackResults.data();
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.battlegear) {
-    let temp = battlegearResults.data();
+    const temp = battlegearResults.data();
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.creature) {
-    let temp = creatureResults.data()
+    const temp = creatureResults.data();
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.location) {
-    let temp = locationResults.data()
+    const temp = locationResults.data();
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
   if (types || input.types.mugic) {
-    let temp = mugicResults.data()
+    const temp = mugicResults.data();
     temp.forEach((v) => { delete v.$loki });
     filter.insert(temp);
   }
