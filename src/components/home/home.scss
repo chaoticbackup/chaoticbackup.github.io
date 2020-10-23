@@ -51,9 +51,10 @@
     to { transform: scale(1.1); }
 }
 
+@media only screen and (min-width: 975px) {
 .with-love {
     color: #333;
-    /*display: inline-block;*/
+}
 }
 
 .with-love span,

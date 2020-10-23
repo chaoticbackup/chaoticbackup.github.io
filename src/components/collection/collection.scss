@@ -13,6 +13,15 @@
         white-space: pre-line;
       }
     }
+
+    .Collapsible__trigger {
+      color: #fff;
+      background-color: #333;
+    }
+
+    .card .name {
+      color: #fff;
+    }
   }
 
   @media only screen and (min-width: 975px) {

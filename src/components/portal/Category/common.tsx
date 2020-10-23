@@ -21,7 +21,7 @@ export function text_link (card: Card, i: number) {
     url = `/portal/${card.gsx$type}/${card.gsx$name}`;
   }
 
-  if (!url) return (<div key={i} style={{display: "none"}}></div>);
+  if (!url) return (<div key={i} style={{ display: "none" }}></div>);
 
   return (<div key={i}>
     <Interactive as={Link} {...s.link} to={url}>{card.gsx$name}</Interactive>
@@ -38,8 +38,8 @@ export function thumb_link (portalCard: Card, i: number, url?: string) {
 
   // Prevent site from crashing due to misspelled/missing data
   if (!collectionCard || !url) {
-    console.warn("missing: " + portalCard.gsx$name);
-    return (<div key={i} style={{display: "none"}} className="nav_item"></div>);
+    console.warn(`missing: ${portalCard.gsx$name}`);
+    return (<div key={i} style={{ display: "none" }} className="nav_item"></div>);
   }
 
   return (<div key={i} className="nav_item">

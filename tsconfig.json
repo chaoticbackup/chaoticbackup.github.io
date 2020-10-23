@@ -36,7 +36,8 @@
     "experimentalDecorators": true,
     // List of folders to include type definitions from.
     "typeRoots": [
-      "./node_modules/@types"
+      "./node_modules/@types",
+      "./src/components/modules.d.ts"
     ],
     // Skips checking libraries
     "skipLibCheck": true,
