@@ -93,7 +93,7 @@ export default class Category extends React.Component {
 
       bottom_nav = API.portal[this.type].data
       .sort(sortCardName)
-      .map(thumb_link);
+      .map((val, i) => thumb_link(val, i));
     }
 
     if (base_path) {

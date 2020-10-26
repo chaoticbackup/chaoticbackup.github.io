@@ -128,7 +128,7 @@ class DBSearch extends React.Component {
     temp.forEach(function(v){ delete v.$loki });
     filter.insert(temp);
 
-    let content = pview.data().map(text_link);
+    let content = pview.data().map((val, i) => text_link(val, i));
     this.filter.removeCollection('filter');
 
     let header;
@@ -158,8 +158,8 @@ class DBSearch extends React.Component {
         .where((obj) => {return (obj.gsx$splash != ('') )}).data()
     )
     .sort(sortCardName)
-    .map(thumb_link);
-    
+    .map((val, i) => thumb_link(val, i));
+
     // Check Artists
     if (content.length == 0) {
       const artists = [].concat(
@@ -180,7 +180,7 @@ class DBSearch extends React.Component {
           .where((obj) => {return (obj.gsx$splash != ('') )}).data()
       )
       .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
-      .map(text_link);
+      .map((val, i) => text_link(val, i));
 
       if (artists.length > 0) {
         header = `Art contributed by ${string}:`;

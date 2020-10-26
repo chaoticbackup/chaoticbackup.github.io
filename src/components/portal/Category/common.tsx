@@ -31,6 +31,7 @@ export function text_link (card: Card, i: number) {
 
 export function thumb_link (portalCard: Card, i: number, url?: string) {
   let collectionCard: Card | null = null;
+  console.log(portalCard, i, url);
   if (["Attacks", "Battlegear", "Creatures", "Locations", "Mugic"].includes(portalCard.gsx$type)) {
     if (!url) url = `/portal/${portalCard.gsx$type}/${portalCard.gsx$name}`;
     collectionCard = API.cards[portalCard.gsx$type.toLowerCase()].findOne({ 'gsx$name': portalCard.gsx$name });
