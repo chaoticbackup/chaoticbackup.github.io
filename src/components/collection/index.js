@@ -39,6 +39,7 @@ export default class Home extends React.Component {
   @observable n = 10;
   @observable p = 1;
   @observable ext = false;
+  @observable stats = "avg";
   @observable content = [];
   @observable card_img = API.card_back;
   @observable fixedStyles;
@@ -46,8 +47,13 @@ export default class Home extends React.Component {
   constructor() {
     super();
     const ext = localStorage.getItem("extended");
-    if (ext == null) this.ext = false;
-    this.ext = (/true/i).test(ext);
+    if (ext != null) this.ext = (/true/i).test(ext);
+
+    const stats = localStorage.getItem("stats");
+    if (stats != null) {
+      if (stats == "min") this.stats = "min";
+      if (stats == "max") this.stats = "max";
+    }
   }
 
   componentDidMount() {
@@ -73,6 +79,13 @@ export default class Home extends React.Component {
   setExt() {
     this.ext = !this.ext;
     localStorage.setItem("extended", this.ext);
+  }
+
+  setStats() {
+    if (this.stats == "min") this.stats = "avg";
+    else if (this.stats == "avg") this.stats = "max";
+    else if (this.stats == "max") this.stats = "min";
+    localStorage.setItem("stats", this.stats);
   }
 
   handleScroll = (event) => {
@@ -138,22 +151,20 @@ export default class Home extends React.Component {
         <div className="right">
           <div className="list-nav-top">
             {this.navigation()}
-            {this.extended()}
+            <button className="stats-button" onClick={this.setStats.bind(this)}>
+              {this.stats == "min" && "Min Stats"}
+              {this.stats == "avg" && "Average Stats"}
+              {this.stats == "max" && "Max Stats"}
+            </button>
+            <button className="ext-button" onClick={this.setExt.bind(this)}>
+              {this.ext ? "Extended Format" : "Short Format"}
+            </button>
           </div>
           <br />
-          <CardList ext={this.ext} cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
+          <CardList ext={this.ext} stats={this.stats} cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
           <br />
           {this.navigation()}
         </div>
-      </div>
-    );
-  }
-
-  extended() {
-    return (
-      <div className="ext-button">
-        <button id="buttons" onClick={this.setExt.bind(this)}
-        >{this.ext ? "Short Format" : "Extended Format"}</button>
       </div>
     );
   }
@@ -162,13 +173,13 @@ export default class Home extends React.Component {
     const numpages = Math.ceil(this.content.length / this.n);
 
     const next = () => {
-      if (this.p < numpages) return (<button id="buttons" onClick={ () => {this.p++; window.scrollTo(0, 0)} }>next</button>);
-      else return (<button id="buttons" disabled>next</button>);
+      if (this.p < numpages) return (<button className="next-button" onClick={ () => {this.p++; window.scrollTo(0, 0)} }>next</button>);
+      else return (<button className="next-button" disabled>next</button>);
     };
 
     const prev = () => {
-      if (this.p > 1) return (<button id="buttons" onClick={ () => {this.p--; window.scrollTo(0, 0)} }>prev</button>);
-      else return (<button id="buttons" disabled>prev</button>);
+      if (this.p > 1) return (<button className="prev-button" onClick={ () => {this.p--; window.scrollTo(0, 0)} }>prev</button>);
+      else return (<button className="prev-button" disabled>prev</button>);
     };
 
     return (

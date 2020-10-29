@@ -7,7 +7,7 @@ import { Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe } from
 export default class Creature extends React.Component {
 
   render() {
-    const { card } = this.props;
+    const { card, stats } = this.props;
 
     const mugic = [];
     for (let i = 0; i < card.gsx$mugicability; i++) {
@@ -27,6 +27,18 @@ export default class Creature extends React.Component {
       const line = " " + (past ? "Past " : "") + (tribe == "Generic" ? "" : tribe + " ") + types;
 
       return <span><Tribe tribe={tribe} />{line}</span>;
+    };
+
+    const stat_range = (stat) => {
+      if (stats == "min") return Number(stat) - 10;
+      if (stats == "max") return Number(stat) + 10;
+      return Number(stat);
+    };
+
+    const energy_range = (energy) => {
+      if (stats == "min") return Number(energy) - 5;
+      if (stats == "max") return Number(energy) + 5;
+      return Number(energy);
     };
 
     if (this.props.ext == false) return (
@@ -63,32 +75,44 @@ export default class Creature extends React.Component {
         <br />
         <div className="stats">
           <div className="energy">
-            {card.gsx$courage}<Discipline discipline="courage" />
+            {stat_range(card.gsx$courage)}<Discipline discipline="courage" />
           </div>
           <div className="energy">
-            {card.gsx$power}<Discipline discipline="power" />
+            {stat_range(card.gsx$power)}<Discipline discipline="power" />
           </div>
           <div className="energy">
-            {card.gsx$wisdom}<Discipline discipline="wisdom" />
+            {stat_range(card.gsx$wisdom)}<Discipline discipline="wisdom" />
           </div>
           <div className="energy">
-            {card.gsx$speed}<Discipline discipline="speed" />
+            {stat_range(card.gsx$speed)}<Discipline discipline="speed" />
           </div>
-          <div className="energy" style={{ fontWeight: 'bold' }}>{card.gsx$energy}
+          <div className="energy" style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy)}
           </div>
         </div>
       </div>
     );
     else return (
       <div className="card creature">
-        <div className="fullcard"><img src={API.cardImage(card)} /></div>
+        <div className="fullcard">
+          {/* style={{ backgroundImage: `url("${API.cardImage(card)}")` }} */}
+          <img src={API.cardImage(card)} />
+          <div className="image-cover" >
+            <div>
+              <span key="courage" {...(stat_range(card.gsx$courage) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$courage)}</span>
+              <span key="power" {...(stat_range(card.gsx$power) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$power)}</span>
+              <span key="wisdom" {...(stat_range(card.gsx$wisdom) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$wisdom)}</span>
+              <span key="speed" {...(stat_range(card.gsx$speed) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$speed)}</span>
+              <span key="energy" {...(stat_range(card.gsx$energy) >= 100 ? { className: "long" } : null)}>{energy_range(card.gsx$energy)}</span>
+            </div>
+          </div>
+        </div>
         <div className="right" >
           <Name name={card.gsx$name} /><br />
-          <span>{card.gsx$courage}&nbsp;<Discipline discipline="courage" /></span>&nbsp;
-          <span>{card.gsx$power}&nbsp;<Discipline discipline="power" /></span>&nbsp;
-          <span>{card.gsx$wisdom}&nbsp;<Discipline discipline="wisdom" /></span>&nbsp;
-          <span>{card.gsx$speed}&nbsp;<Discipline discipline="speed" /></span>&nbsp;
-          <span style={{ fontWeight: 'bold' }}>{card.gsx$energy}</span>
+          <span>{stat_range(card.gsx$courage)}&nbsp;<Discipline discipline="courage" /></span>&nbsp;
+          <span>{stat_range(card.gsx$power)}&nbsp;<Discipline discipline="power" /></span>&nbsp;
+          <span>{stat_range(card.gsx$wisdom)}&nbsp;<Discipline discipline="wisdom" /></span>&nbsp;
+          <span>{stat_range(card.gsx$speed)}&nbsp;<Discipline discipline="speed" /></span>&nbsp;
+          <span style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy)}</span>
           <br />
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
           { card.gsx$brainwashed && (
