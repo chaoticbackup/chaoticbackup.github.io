@@ -46,7 +46,10 @@
       position: relative;
     }
 
-    #buttons {
+    .ext-button,
+    .next-button,
+    .prev-button,
+    .stats-button {
       border-radius: 5px;
       border-color: transparent;
       text-align: center;
@@ -361,6 +364,64 @@
     img {
       max-width: 250px;
       max-height: 350px;
+    }
+  }
+
+  .creature .fullcard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .image-cover {
+      width: 250px;
+      height: 350px;
+      background-size: cover;
+      box-sizing: content-box;
+      position: relative;
+      top: -350px;
+
+      & > div {
+        height: 100%;
+        width: 100%;
+        text-align: left;
+
+        span {
+          position: relative;
+          color: black;
+          display: block;
+          left: 28px;
+          font-size: 12px;
+          font-weight: bold;
+
+          &.long {
+            left: 22px;
+          }
+        }
+
+        span:nth-of-type(1) {
+          top: 220px;
+        }
+        span:nth-of-type(2) {
+          top: 229px;
+        }
+        span:nth-of-type(3) {
+          top: 237px;
+        }
+        span:nth-of-type(4) {
+          top: 245px;
+        }
+        span:nth-of-type(5) {
+          text-align: right;
+          top: 256px;
+          left: -17px;
+          font-size: 21px;
+
+          &.long {
+            left: -14px;
+          }
+        }
+      }
     }
   }
 
