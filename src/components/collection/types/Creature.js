@@ -29,13 +29,15 @@ export default class Creature extends React.Component {
       return <span><Tribe tribe={tribe} />{line}</span>;
     };
 
-    const stat_range = (stat) => {
+    const stat_range = (stat, name) => {
+      if (name && name == "Aa'une the Oligarch, Avatar") return Number(stat);
       if (stats == "min") return Number(stat) - 10;
       if (stats == "max") return Number(stat) + 10;
       return Number(stat);
     };
 
-    const energy_range = (energy) => {
+    const energy_range = (energy, name) => {
+      if (name && name == "Aa'une the Oligarch, Avatar") return Number(energy);
       if (stats == "min") return Number(energy) - 5;
       if (stats == "max") return Number(energy) + 5;
       return Number(energy);
@@ -75,18 +77,18 @@ export default class Creature extends React.Component {
         <br />
         <div className="stats">
           <div className="energy">
-            {stat_range(card.gsx$courage)}<Discipline discipline="courage" />
+            {stat_range(card.gsx$courage, card.gsx$name)}<Discipline discipline="courage" />
           </div>
           <div className="energy">
-            {stat_range(card.gsx$power)}<Discipline discipline="power" />
+            {stat_range(card.gsx$power, card.gsx$name)}<Discipline discipline="power" />
           </div>
           <div className="energy">
-            {stat_range(card.gsx$wisdom)}<Discipline discipline="wisdom" />
+            {stat_range(card.gsx$wisdom, card.gsx$name)}<Discipline discipline="wisdom" />
           </div>
           <div className="energy">
-            {stat_range(card.gsx$speed)}<Discipline discipline="speed" />
+            {stat_range(card.gsx$speed, card.gsx$name)}<Discipline discipline="speed" />
           </div>
-          <div className="energy" style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy)}
+          <div className="energy" style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy, card.gsx$name)}
           </div>
         </div>
       </div>
@@ -98,21 +100,21 @@ export default class Creature extends React.Component {
           <img src={API.cardImage(card)} />
           <div className="image-cover" >
             <div>
-              <span key="courage" {...(stat_range(card.gsx$courage) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$courage)}</span>
-              <span key="power" {...(stat_range(card.gsx$power) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$power)}</span>
-              <span key="wisdom" {...(stat_range(card.gsx$wisdom) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$wisdom)}</span>
-              <span key="speed" {...(stat_range(card.gsx$speed) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$speed)}</span>
-              <span key="energy" {...(stat_range(card.gsx$energy) >= 100 ? { className: "long" } : null)}>{energy_range(card.gsx$energy)}</span>
+              <span key="courage" {...(stat_range(card.gsx$courage, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$courage, card.gsx$name)}</span>
+              <span key="power" {...(stat_range(card.gsx$power, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$power, card.gsx$name)}</span>
+              <span key="wisdom" {...(stat_range(card.gsx$wisdom, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$wisdom, card.gsx$name)}</span>
+              <span key="speed" {...(stat_range(card.gsx$speed, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$speed, card.gsx$name)}</span>
+              <span key="energy" {...(energy_range(card.gsx$energy, card.gsx$name) >= 100 ? { className: "long" } : null)}>{energy_range(card.gsx$energy, card.gsx$name)}</span>
             </div>
           </div>
         </div>
         <div className="right" >
           <Name name={card.gsx$name} /><br />
-          <span>{stat_range(card.gsx$courage)}&nbsp;<Discipline discipline="courage" /></span>&nbsp;
-          <span>{stat_range(card.gsx$power)}&nbsp;<Discipline discipline="power" /></span>&nbsp;
-          <span>{stat_range(card.gsx$wisdom)}&nbsp;<Discipline discipline="wisdom" /></span>&nbsp;
-          <span>{stat_range(card.gsx$speed)}&nbsp;<Discipline discipline="speed" /></span>&nbsp;
-          <span style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy)}</span>
+          <span>{stat_range(card.gsx$courage, card.gsx$name)}&nbsp;<Discipline discipline="courage" /></span>&nbsp;
+          <span>{stat_range(card.gsx$power, card.gsx$name)}&nbsp;<Discipline discipline="power" /></span>&nbsp;
+          <span>{stat_range(card.gsx$wisdom, card.gsx$name)}&nbsp;<Discipline discipline="wisdom" /></span>&nbsp;
+          <span>{stat_range(card.gsx$speed, card.gsx$name)}&nbsp;<Discipline discipline="speed" /></span>&nbsp;
+          <span style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy, card.gsx$name)}</span>
           <br />
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
           { card.gsx$brainwashed && (

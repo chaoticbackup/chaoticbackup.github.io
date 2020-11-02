@@ -53,6 +53,7 @@ module.exports = (env, argv) => {
         }),
         new CssMinimizerPlugin()
       ],
+      moduleIds: "deterministic",
       splitChunks: {
         cacheGroups: {
           default: false,
