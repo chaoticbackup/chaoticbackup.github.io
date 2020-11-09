@@ -80,10 +80,10 @@ function Base(props) {
                     <ul id="unity-sprite" className={language}>
                       <li id="unity-nav1" className={language}></li>
                       <li id="unity-nav2" className={language}><Link to={`/collection/`}><span>Collect</span></Link></li>
-                      <li id="unity-nav3" className={language}><a href="/create/"><span>Build</span></a></li>
-                      <li id="unity-nav4" className={language}><a href="http://chaoticbackup.forumotion.com/f16-trading-buying-and-selling"><span>Trade</span></a></li>
+                      <li id="unity-nav3" className={language}><a href="https://chaoticbackup.forumotion.com/f11-deck-building"><span>Build</span></a></li>
+                      <li id="unity-nav4" className={language}><a href="https://chaoticbackup.forumotion.com/f16-trading-buying-and-selling"><span>Trade</span></a></li>
                       <li id="unity-nav5" className={language}><Link to={`/`}><span>Home</span></Link></li>
-                      <li id="unity-nav6" className={language}><a href="http://chaoticbackup.forumotion.com"><span>Forums</span></a></li>
+                      <li id="unity-nav6" className={language}><a href="https://chaoticbackup.forumotion.com"><span>Forums</span></a></li>
                       <li id="unity-nav7" className={language}><Link to={`/portal/`}><span>Portal</span></Link></li>
                       <li id="unity-nav8" className={language}><a href="https://chaoticrecode.com"><span>Play</span></a></li>
                       <li id="unity-nav9" className={language}></li>
