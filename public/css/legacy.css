@@ -1,3 +1,9 @@
+@media only screen and (max-width: 975px) {
+  .legacy.content {
+    margin-top: 36px;
+  }
+}
+
 @media only screen and (min-width: 975px) {
 
 #player {
