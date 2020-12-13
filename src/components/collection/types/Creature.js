@@ -24,7 +24,7 @@ export default class Creature extends React.Component {
       }
 
       // <past> <tribe> <types>
-      const line = " " + (past ? "Past " : "") + (tribe == "Generic" ? "" : tribe + " ") + types;
+      const line = " " + (past ? "Past " : "") + types;
 
       return <span><Tribe tribe={tribe} />{line}</span>;
     };

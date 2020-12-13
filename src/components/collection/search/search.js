@@ -1,14 +1,30 @@
 import loki from 'lokijs';
 import API from '../../SpreadsheetData';
 
-function cleanInputRegex(input) {
+function cleanInputRegex(input, check=true) {
+  input = input.replace(/\‘|\’/g, "'");
+  if (check === true) {
+    const testRegex = /[\^$+*\[\]|]/g;
+    if (testRegex.test(input)) {
+      try {
+        const returnRegex = new RegExp(input, 'i');
+        console.log(returnRegex);
+        return returnRegex;
+      } catch (e) {/* */}
+    } 
+  }
+
   input = input
-    .replace(/\\/g, '')
-    .replace(/\‘|\’/g, "'")
-    .replace(/\(|\)/g, (match) => ("\\"+match));
+    .replace(/[\^$+*\[\]\\]/g, '')
+    .replace(/[\(\)]/g, (match) => {
+      console.log(match);
+      return ("\\"+match);
+    });
   // .replace(/~(\w+)/, (match) => (`\(?!${match}\)`));
-  
-  return new RegExp(input.trim(), 'i');
+
+  const returnRegex = new RegExp(input, 'i');
+  console.log(returnRegex);
+  return returnRegex;
 }
 
 export default function search_api(input) {
@@ -143,7 +159,7 @@ export default function search_api(input) {
   // Subtypes / Initiative
   if (input.subtypes.length > 0) {
     const subtypesList = input.subtypes.split(",").filter(Boolean).map((item) => {
-      return ({ '$regex': cleanInputRegex(item) });
+      return ({ '$regex': cleanInputRegex(item, false) });
     });
 
     creatureResults = creatureResults.find({ 'gsx$types': { '$or': subtypesList }});
