@@ -24,24 +24,30 @@ export default class SingleAttack extends React.Component {
     const card_data = API.cards.attacks.findOne({ 'gsx$name': name });
 
     if (attack) {
+      const sections = [];
+      if (attack.gsx$attributes) {
+        sections.push(["Attributes", attack.gsx$attributes]);
+      }
+      if (attack.gsx$background) {
+        sections.push(["Background", attack.gsx$background]);
+      }
+      if (attack.gsx$details) {
+        sections.push(["Details", attack.gsx$details]);
+      }
+
       return (<Single 
         card={card_data}
-        col2={<>
-          <div>
-            <strong>Attributes:</strong><br />
-            {attack.gsx$attributes}
-          </div>
-          <hr />
-          <div>
-            <strong>Background:</strong><br />
-            {attack.gsx$background}
-          </div>
-          <hr />
-          <div>
-            <strong>Details:</strong><br />
-            {attack.gsx$details}
-          </div>
-        </>}
+        col2={
+          sections.map((val, i) => {
+            return (<React.Fragment key={i} >
+              <div>
+                <strong>{val[0]}:</strong><br />
+                {val[1]}
+              </div>
+              {i !== sections.length - 1 && <hr />}
+            </React.Fragment>);
+          }) 
+        }
       />
       );
     }

@@ -5,7 +5,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import { observer, inject } from 'mobx-react';
 import Single from './_base';
-import { PageNotFound, Element, Mugic, Discipline, Ability, Tribe } from '../../Snippets';
+import { PageNotFound, Element, Mugic, Discipline, Tribe } from '../../Snippets';
 
 function Artist(props) {
   const artists = [];
@@ -33,157 +33,150 @@ export default class SingleCreature extends React.Component {
     })();
 
     const creature = API.portal.creatures.findOne({ 'gsx$name': name });
-
-    if (!creature) {
-      return (<PageNotFound location={this.props.location}/>);
-    }
-
-    const tribe = creature.gsx$tribe;
-
     const card_data = API.cards.creatures.findOne({ 'gsx$name': name });
 
-    const locations = creature.gsx$location.split(/[;]+\s*/).map((item, i) => {
-      return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>;
-    });
+    if (creature) {
+      const tribe = creature.gsx$tribe;
 
-    const battlegear = creature.gsx$battlegear.split(/[;]+\s*/).map((item, i) => {
-      return <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>;
-    });
+      const mugic = [];
+      for (let i = 0; i < parseInt(card_data.gsx$mugicability || 0); i++) {
+        mugic.push(<Mugic key={i} tribe={tribe} />);
+      }
 
-    const mugic = [];
-    for (let i = 0; i < card_data.gsx$mugicability; i++) {
-      mugic.push(<Mugic key={i} tribe={tribe} />);
-    }
+      const col2 = [];
+      if (creature.gsx$attributes) {
+        col2.push(["Appearance", creature.gsx$attributes]);
+      }
+      if (creature.gsx$background) {
+        col2.push(["Background", creature.gsx$background]);
+      }
+      if (creature.gsx$details) {
+        col2.push(["Details", creature.gsx$details]);
+      }
+      if (creature.gsx$battlegear) {
+        col2.push(["Favorite Battlegear(s)", creature.gsx$battlegear.split(/[;]+\s*/).map((item, i) =>
+          <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Battlegear/"+item}><span>{item}</span></Interactive></p>
+        )]);
+      }
+      if (creature.gsx$location) {
+        col2.push(["Favorite Location(s)", creature.gsx$location.split(/[;]+\s*/).map((item, i) =>
+          <p key={i}><Interactive as={Link} {...s.link} to={"/portal/Locations/"+item}><span>{item}</span></Interactive></p>
+        )]);
+      }
+      if (creature.gsx$height) {
+        col2.push(["Height (ft)", creature.gsx$height]);
+      }
+      if (creature.gsx$specialabilities) {
+        col2.push(["Special Abilities", creature.gsx$specialabilities]);
+      }
+      if (creature.gsx$weight) {
+        col2.push(["Weight (lb)", creature.gsx$weight]);
+      }
 
-    // TODO readd creature to Portal Search after rewrite
-
-    return (<Single
-      card={card_data}
-      text={<>
-        <hr />
-        {creature.gsx$appearance && <>
+      return (<Single
+        card={card_data}
+        col0={<>
           <div>
-            <strong>Appearance:</strong><br />
-            {creature.gsx$appearance}
+            <strong>Tribe: </strong>
+            <Tribe tribe={tribe} />&nbsp;
+            {tribe}
           </div>
           <hr />
-        </>}
-        <div>
-          <strong>Background:</strong><br />
-          {creature.gsx$background}
-        </div>
-        <hr />
-        <div>
-          <strong>Details:</strong><br />
-          {creature.gsx$details}
-        </div>
-        <hr />
-        <div>
-          <strong>Favorite Battlegear(s):</strong><br />
-          {battlegear}
-        </div>
-        <hr />
-        <div>
-          <strong>Favorite Location(s):</strong><br />
-          {locations}
-        </div>
-        <hr />
-        <div>
-          <strong>Height (ft):</strong><br />
-          {creature.gsx$height}
-        </div>
-        <hr />
-        <div>
-          <strong>Special Abilities:</strong><br />
-          {creature.gsx$specialabilities}
-        </div>
-        <hr />
-        <div>
-          <strong>Weight (lb):</strong><br />
-          {creature.gsx$weight}
-        </div>
-        <hr />
-        {card_data.gsx$artist && <>
           <div>
-            <strong>Artist(s):</strong>
-            <Artist artist={card_data.gsx$artist} />
+            <strong>Disciplines: </strong>
+            {card_data.gsx$courage}
+            <Discipline discipline="courage" />&nbsp;
+            {card_data.gsx$power}
+            <Discipline discipline="power" />&nbsp;
+            {card_data.gsx$speed}
+            <Discipline discipline="speed" />&nbsp;
+            {card_data.gsx$wisdom}
+            <Discipline discipline="wisdom" />
           </div>
           <hr />
-        </>}
-        <div>
-          <strong>Card ID: </strong>
-          {card_data.gsx$id}
-        </div>
-        <hr />
-        <div>
-          <strong>Set: </strong>
-          {card_data.gsx$set}
-        </div>
-        <hr />
-        <div>
-          <strong>Rarity: </strong>
-          {card_data.gsx$rarity}
-        </div>
-        <hr />
-        <div>
-          <strong>Tribe: </strong>
-          <Tribe tribe={tribe} />
-        </div>
-        <hr />
-        <div>
-          <strong>Ability:</strong><br />
-          <Ability ability={card_data.gsx$ability} tribe={card_data.gsx$tribe} />
-        </div>
-        <hr />
-        <div>
-          <strong>Courage: </strong>
-          {card_data.gsx$courage}
-          <Discipline discipline="courage" />
-        </div>
-        <hr />
-        <div>
-          <strong>Power: </strong>
-          {card_data.gsx$power}
-          <Discipline discipline="power" />
-        </div>
-        <hr />
-        <div>
-          <strong>Speed: </strong>
-          {card_data.gsx$speed}
-          <Discipline discipline="speed" />
-        </div>
-        <hr />
-        <div>
-          <strong>Wisdom: </strong>
-          {card_data.gsx$wisdom}
-          <Discipline discipline="wisdom" />
-        </div>
-        <hr />
-        <div>
-          <strong>Energy: </strong>
-          {card_data.gsx$energy}
-        </div>
-        <hr />
-        <div>
-          <strong>Elements: </strong>
           <div>
+            <strong>Energy: </strong>
+            {card_data.gsx$energy}
+          </div>
+          <hr />
+          <div>
+            <strong>Elements: </strong>
             <Element element="fire" value={card_data.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
             <Element element="air" value={card_data.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
             <Element element="earth" value={card_data.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
             <Element element="water" value={card_data.gsx$elements.toLowerCase().indexOf("water") >=0} />
           </div>
-        </div>
-        <hr />
-        <div>
-          <strong>Flavortext:</strong><br />
-          {card_data.gsx$flavortext}
-        </div>
-        <hr />
-        <div>
-          <strong>Mugic Ability: </strong>
-          {mugic}
-        </div>
-      </>}
-    />);
+          <hr />
+          <div>
+            <strong>Mugic Ability: </strong>
+            {mugic}
+          </div>
+        </>}
+        col2={
+          col2.map((val, i) => {
+            return (<React.Fragment key={i} >
+              <div>
+                <strong>{val[0]}:</strong><br />
+                {val[1]}
+              </div>
+              {i !== col2.length - 1 && <hr />}
+            </React.Fragment>);
+          }) 
+        }
+      />);
+    }
+    else if (card_data) {
+      if (card_data.gsx$splash) {
+        const tribe = card_data.gsx$tribe;
+
+        const mugic = [];
+        for (let i = 0; i < parseInt(card_data.gsx$mugicability || 0); i++) {
+          mugic.push(<Mugic key={i} tribe={tribe} />);
+        }
+
+        return (<Single
+          card={card_data}
+          col0={<>
+            <div>
+              <strong>Tribe: </strong>
+              <Tribe tribe={tribe} />&nbsp;
+              {tribe}
+            </div>
+            <hr />
+            <div>
+              <strong>Disciplines: </strong>
+              {card_data.gsx$courage}
+              <Discipline discipline="courage" />&nbsp;
+              {card_data.gsx$power}
+              <Discipline discipline="power" />&nbsp;
+              {card_data.gsx$speed}
+              <Discipline discipline="speed" />&nbsp;
+              {card_data.gsx$wisdom}
+              <Discipline discipline="wisdom" />
+            </div>
+            <hr />
+            <div>
+              <strong>Energy: </strong>
+              {card_data.gsx$energy}
+            </div>
+            <hr />
+            <div>
+              <strong>Elements: </strong>
+              <Element element="fire" value={card_data.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
+              <Element element="air" value={card_data.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
+              <Element element="earth" value={card_data.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
+              <Element element="water" value={card_data.gsx$elements.toLowerCase().indexOf("water") >=0} />
+            </div>
+            <hr />
+            <div>
+              <strong>Mugic Ability: </strong>
+              {mugic}
+            </div>
+          </>}
+        />);
+      }
+    }
+    
+    return (<PageNotFound location={this.props.location}/>);
   }
 }

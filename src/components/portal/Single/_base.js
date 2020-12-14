@@ -58,68 +58,61 @@ export default class Single extends React.Component {
             <Name name={card.gsx$name} />
             <hr />
           </div>
-          {this.props.text && (
-            <div className="nocolumn">{this.props.text}</div>
-          )}
-          {!this.props.text &&
-            <div className="column">
-              {card.gsx$artist && (<>
-                <div>
-                  <strong>Artist(s):</strong>
-                  <Artist artist={card.gsx$artist} />
-                </div>
-                <hr />
-              </>)}
-              {card.gsx$set && (<>
-                <div>
-                  <strong>Set: </strong>
-                  {`${API.sets[card.gsx$set]} (${card.gsx$set})`}
-                </div>
-                <hr />
-              </>)}
-              {card.gsx$rarity && (<>
-                <div>
-                  <strong>Rarity: </strong>
-                  <Rarity set={card.gsx$set} rarity={card.gsx$rarity} notext="true" />
-                  {card.gsx$rarity}
-                </div>
-                <hr />
-              </>)}
-              {card.gsx$id && (<>
-                <div>
-                  <strong>Card ID: </strong>
-                  {card.gsx$id}
-                </div>
-              </>)}
-              {this.props.col0 && (<>
-                <hr />
-                {this.props.col0}
-              </>)}
-              {card.gsx$ability && (<>
-                <hr />
-                <div>
-                  <strong>Ability:</strong>
-                  <Ability ability={card.gsx$ability} />
-                </div>
-              </>)}
-              {card.gsx$flavortext && (<>
-                <hr />
-                <div>
-                  <strong>Card Flavor:</strong><br />
-                  {card.gsx$flavortext}
-                </div>
-              </>)}
-              {this.props.col1 && (<>
-                <hr />
-                this.props.col1
-              </>)}
-            </div>
-          }
-          {!this.props.text &&
-            <div className="column">
-              {this.props.col2}
-            </div>
-          }
+          <div className="column">
+            {card.gsx$artist && (<>
+              <div>
+                <strong>Artist(s):</strong>
+                <Artist artist={card.gsx$artist} />
+              </div>
+              <hr />
+            </>)}
+            {card.gsx$set && (<>
+              <div>
+                <strong>Set: </strong>
+                {`${API.sets[card.gsx$set]} (${card.gsx$set})`}
+              </div>
+              <hr />
+            </>)}
+            {card.gsx$rarity && (<>
+              <div>
+                <strong>Rarity: </strong>
+                <Rarity set={card.gsx$set} rarity={card.gsx$rarity} iconOnly />&nbsp;
+                {card.gsx$rarity}
+              </div>
+              <hr />
+            </>)}
+            {card.gsx$id && (<>
+              <div>
+                <strong>Card ID: </strong>
+                {card.gsx$id}
+              </div>
+              <hr />
+            </>)}
+            {this.props.col0 && (<>
+              {this.props.col0}
+            </>)}
+            {card.gsx$ability && (<>
+              <hr />
+              <div>
+                <strong>Ability:</strong>
+                <Ability ability={card.gsx$ability} />
+              </div>
+            </>)}
+            {card.gsx$flavortext && (<>
+              <hr />
+              <div>
+                <strong>Card Flavor:</strong><br />
+                {card.gsx$flavortext}
+              </div>
+            </>)}
+            {this.props.col1 && (<>
+              <hr />
+              this.props.col1
+            </>)}
+          </div>
+          <div className="column">
+            {this.props.col2}
+          </div>
         </div>
       </>);
     }

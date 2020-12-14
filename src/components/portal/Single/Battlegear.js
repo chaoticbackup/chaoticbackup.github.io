@@ -24,24 +24,30 @@ export default class SingleBattlegear extends React.Component {
     const card_data = API.cards.battlegear.findOne({ 'gsx$name': name });
     
     if (battlegear) {
+      const sections = [];
+      if (battlegear.gsx$attributes) {
+        sections.push(["Attributes", battlegear.gsx$attributes]);
+      }
+      if (battlegear.gsx$background) {
+        sections.push(["Background", battlegear.gsx$background]);
+      }
+      if (battlegear.gsx$details) {
+        sections.push(["Details", battlegear.gsx$details]);
+      }
+
       return (<Single 
         card={card_data}
-        col2={<>
-          <div>
-            <strong>Attributes:</strong><br />
-            {battlegear.gsx$attributes}
-          </div>
-          <hr />
-          <div>
-            <strong>Background:</strong><br />
-            {battlegear.gsx$background}
-          </div>
-          <hr />
-          <div>
-            <strong>Details:</strong><br />
-            {battlegear.gsx$details}
-          </div>
-        </>}
+        col2={
+          sections.map((val, i) => {
+            return (<React.Fragment key={i} >
+              <div>
+                <strong>{val[0]}:</strong><br />
+                {val[1]}
+              </div>
+              {i !== sections.length - 1 && <hr />}
+            </React.Fragment>);
+          })
+        }
       />);
     }
     else if (card_data) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
@@ -108,7 +108,7 @@ export default class Category extends React.Component {
     return (
       <div className={`entry ${this.type}`}>
         <div className="entry_content">{top_content}</div>
-        <div className="cat_title">{cat_title}</div>
+        <div className="cat_title"><Link to={`/portal/${this.props.type}`}>{cat_title}</Link></div>
         <div className="entry_nav">{bottom_nav}</div>
       </div>
     );

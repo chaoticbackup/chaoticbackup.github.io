@@ -25,7 +25,7 @@ export default class SingleMugic extends React.Component {
     const mugic = API.portal.mugic.findOne({ 'gsx$name': name });
     const card_data = API.cards.mugic.findOne({ 'gsx$name': name });
 
-    const cost = () => {
+    const cost = (tribe) => {
       const cost = [];
       if (card_data.gsx$cost == 0) {
         cost.push(<span key={0}>0</span>);
@@ -34,54 +34,68 @@ export default class SingleMugic extends React.Component {
         cost.push(<span key={0}>X</span>);
       }
       else {
-        for (let i = 0; i < card_data.gsx$cost; i++) {
-          cost.push(<Mugic tribe={card_data.gsx$tribe} key={i} />);
+        for (let i = 0; i < parseInt(card_data.gsx$cost); i++) {
+          cost.push(<Mugic tribe={tribe} key={i} />);
         }
       }
       return cost;
     };
 
     if (mugic) {
+      const tribe = mugic.gsx$tribe;
+
       return (<Single 
         card={card_data}
         col0={<>
           <div>
             <strong>Tribe: </strong>
-            <Tribe tribe={mugic.gsx$tribe} />
+            <Tribe tribe={tribe} />&nbsp;
+            {tribe}
           </div>
-          <hr />
-          <div>
-            <strong>Cost: </strong>
-            {cost()}
-          </div>
+          {card_data.gsx$cost !== "" && (<>
+            <hr />
+            <div>
+              <strong>Cost: </strong>
+              {cost(tribe)}
+            </div>
+          </>)}
         </>}
         col2={<>
-          <div>
-            <strong>Background:</strong><br />
-            {mugic.gsx$background}
-          </div>
-          <hr />
-          <div>
-            <strong>Details:</strong><br />
-            {mugic.gsx$details}
-          </div>
+          {mugic.gsx$background && (
+            <div>
+              <strong>Background:</strong><br />
+              {mugic.gsx$background}
+            </div>
+          )}
+          {(mugic.gsx$background && mugic.gsx$details) && <hr />}
+          {mugic.gsx$details && (
+            <div>
+              <strong>Details:</strong><br />
+              {mugic.gsx$details}
+            </div>
+          )}
         </>}
       />);
     }
     else if (card_data) {
       if (card_data.gsx$splash) {
+        const tribe = card_data.gsx$tribe;
+
         return (<Single 
           card={card_data}
           col0={<>
             <div>
               <strong>Tribe: </strong>
-              <Tribe tribe={card_data.gsx$tribe} />
+              <Tribe tribe={tribe} />&nbsp;
+              {tribe}
             </div>
-            <hr />
-            <div>
-              <strong>Cost: </strong>
-              {cost()}
-            </div>
+            {card_data.gsx$cost !== "" && (<>
+              <hr />
+              <div>
+                <strong>Cost: </strong>
+                {cost(tribe)}
+              </div>
+            </>)}
           </>}
         />);
       }

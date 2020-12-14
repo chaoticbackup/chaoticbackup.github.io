@@ -15,11 +15,11 @@ export function LocationIcon(props) {
 }
   
 export function Rarity(props) {
-  const { set, rarity } = props;
+  const { set, rarity, iconOnly=false } = props;
   return (
     <span>
       {set !== 'PE1' && <img className={props.size || "icon16"} style={{ verticalAlign: 'middle' }} src={("/public/img/icons/set/" + set + "/" + rarity + ".png").toLowerCase()} />}
-      {!props.notext && <>{API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}</>}
+      {!iconOnly && <>{API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}</>}
     </span>
   );
 }

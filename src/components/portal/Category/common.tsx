@@ -8,11 +8,11 @@ import { Card } from "../../common/definitions";
 import API from '../../SpreadsheetData';
 
 export function cleanCardName (card: Card) {
-  return card.gsx$name.split(",")[0].replace(/\(Unused\)/, "");
+  return card.gsx$name.split(",")[0].replace(/\(Unused\)[ ]/, "");
 }
 
 export function sortCardName (a: Card, b: Card) {
-  return (a.gsx$name.toLowerCase().replace(/\(unused\)/, "") > b.gsx$name.toLowerCase().replace(/\(unused\)/, "") ? 1 : -1);
+  return (a.gsx$name.toLowerCase().replace(/\(unused\)[ ]/, "") > b.gsx$name.toLowerCase().replace(/\(unused\)[ ]/, "") ? 1 : -1);
 }
 
 export function text_link (card: Card, i: number) {
@@ -31,7 +31,6 @@ export function text_link (card: Card, i: number) {
 
 export function thumb_link (portalCard: Card, i: number, url?: string) {
   let collectionCard: Card | null = null;
-  console.log(portalCard, i, url);
   if (["Attacks", "Battlegear", "Creatures", "Locations", "Mugic"].includes(portalCard.gsx$type)) {
     if (!url) url = `/portal/${portalCard.gsx$type}/${portalCard.gsx$name}`;
     collectionCard = API.cards[portalCard.gsx$type.toLowerCase()].findOne({ 'gsx$name': portalCard.gsx$name });

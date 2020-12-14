@@ -1,6 +1,6 @@
-export const Tribes = ['Danian', 'Mipedian', "M'arrillian", 'OverWorld', 'UnderWorld', 'Frozen'] as const;
-export const CreatureTribes = ['Danian', 'Mipedian', "M'arrillian", 'OverWorld', 'UnderWorld', 'Frozen', 'Tribeless'] as const;
-export const MugicTribes = ['Danian', 'Mipedian', "M'arrillian", 'OverWorld', 'UnderWorld', 'Frozen', 'Generic'] as const;
+export const Tribes = ['Danian', 'Mipedian', "M'arrillian", 'OverWorld', 'UnderWorld'] as const;
+export const CreatureTribes = ['Danian', 'Mipedian', "M'arrillian", 'OverWorld', 'UnderWorld', 'Tribeless'] as const;
+export const MugicTribes = ['Danian', 'Mipedian', "M'arrillian", 'OverWorld', 'UnderWorld', 'Generic'] as const;
 
 export type Tribe = typeof Tribes[number];
 export type CreatureTribe = typeof CreatureTribes[number];

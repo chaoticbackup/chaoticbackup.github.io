@@ -23,30 +23,38 @@ export default class SingleLocation extends React.Component {
     const card_data = API.cards.locations.findOne({ 'gsx$name': name });
 
     if (location) {
+      const sections = [];
+      if (location.gsx$localfeatures) {
+        sections.push(["Local Features", location.gsx$localfeatures]);
+      }
+      if (location.gsx$background) {
+        sections.push(["Background", location.gsx$background]);
+      }
+      if (location.gsx$details) {
+        sections.push(["Details", location.gsx$details]);
+      }
+
       return (<Single
         card={card_data}
         col0={<>
-          <div>
-            <strong>Initiative: </strong>
-            <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
-          </div>
+          {card_data.gsx$initiative && (
+            <div>
+              <strong>Initiative: </strong>
+              <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
+            </div>
+          )}
         </>}
-        col2={<>
-          <div>
-            <strong>Local Features:</strong><br />
-            {location.gsx$localfeatures}
-          </div>
-          <hr />
-          <div>
-            <strong>Background:</strong><br />
-            {location.gsx$background}
-          </div>
-          <hr />
-          <div>
-            <strong>Details:</strong><br />
-            {location.gsx$details}
-          </div>
-        </>}
+        col2={
+          sections.map((val, i) => {
+            return (<React.Fragment key={i} >
+              <div>
+                <strong>{val[0]}:</strong><br />
+                {val[1]}
+              </div>
+              {i !== sections.length - 1 && <hr />}
+            </React.Fragment>);
+          }) 
+        }
       />);
     }
     else if (card_data) {
@@ -54,10 +62,12 @@ export default class SingleLocation extends React.Component {
         return (<Single 
           card={card_data}
           col0={<>
-            <div>
-              <strong>Initiative: </strong>
-              <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
-            </div>
+            {card_data.gsx$initiative && (
+              <div>
+                <strong>Initiative: </strong>
+                <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
+              </div>
+            )}
           </>}
         />);
       }

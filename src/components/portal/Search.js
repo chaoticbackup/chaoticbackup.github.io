@@ -146,10 +146,9 @@ class DBSearch extends React.Component {
       API.cards.battlegear.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
         .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
-      // TODO after rewriting Single Creature
-      // API.cards.creatures.chain()
-      //   .find({'gsx$name': {'$regex': new RegExp(string, 'i')}})
-      //   .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+      API.cards.creatures.chain()
+        .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
+        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
       API.cards.locations.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
         .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
@@ -158,6 +157,8 @@ class DBSearch extends React.Component {
         .where((obj) => {return (obj.gsx$splash != ('') )}).data()
     )
     .sort(sortCardName)
+    // dedupe fullart results
+    .filter((val, i, arr) => (i == 0 || val.gsx$name != arr[i - 1].gsx$name))
     .map((val, i) => thumb_link(val, i));
 
     // Check Artists

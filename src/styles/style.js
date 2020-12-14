@@ -2,16 +2,16 @@ import React from 'react';
 
 const link = {
   normal: {
-    borderBottom: '1px dotted rgb(0, 168, 0)',
+    borderBottom: '1px dotted rgb(66, 140, 195)',
   },
   hover: {
-    borderBottom: '1px solid rgb(0, 168, 0)',
-    color: 'black',
+    borderBottom: '1px solid rgb(66, 140, 195)',
+    color: 'rgb(66, 140, 195)',
   },
   active: 'hover',
   touchActive: {
-    borderBottom: '1px dashed rgb(0, 168, 0)',
-    color: 'black',
+    borderBottom: '1px dashed rgb(66, 140, 195)',
+    color: 'rgb(66, 140, 195)',
   },
   focusFromTab: {
     outline: '2px solid rgb(0, 152, 0)',
