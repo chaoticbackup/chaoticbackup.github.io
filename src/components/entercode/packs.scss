@@ -1,13 +1,33 @@
 @media only screen and (min-width: 975px) {
 .pack {
     max-width: 90%;
+
+    .card {
+        width: 20%;
+    }
 }
 } /* Desktop */
+
+@media only screen and (max-width: 975px) {
+    .pack {
+        max-width: 90%;
+    
+        .card {
+            width: 40%;
+        }
+    }
+    } /* Desktop */
 
 .packsim {
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
        opacity: 1;
+    }
+}
+.enterthecode {
+    .card {
+        width: 250px;
+        height: 350px;
     }
 }
 
@@ -19,11 +39,19 @@
     margin: auto;
 
     .card {
+        margin: 5px;
+    }
+    
+    .card:hover {
+        width: 250px;
+        height: 350px;
+    }
+
+    .card > div {
         width: 150px;
         height: 210px;
         background-size: cover;
         box-sizing: content-box;
-        margin: 5px;
         -webkit-transition: -webkit-transform 1s,opacity 1s,background 1s,width 1s,height 1s,font-size 1s,top 1s,left 1s;
         -webkit-border-radius: 5px;
         -o-transition-property: width,height,-o-transform,background,font-size,opacity,top,left;
@@ -34,9 +62,32 @@
         transition-duration: 1s,1s,1s,1s,1s,1s,1s,1s;
     }
 
-    .card:hover {
+    .card > div:hover {
         width: 250px;
         height: 350px;
+    }
+
+    .card.locations {
+        width: 150px;
+        height: 210px;
+    }
+
+    .card.locations:hover {
+        width: 250px;
+        height: 350px;
+    }
+
+    .card.locations div {
+        width: 210px;
+        height: 150px;
+        
+        transform-origin: 50% 70%;
+        transform: rotate(270deg);
+    }
+
+    .card.locations div:hover {
+        width: 350px;
+        height: 250px;
     }
 
     .stats {

@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
     },
 
     optimization: {
-      minimize: true,
+      minimize: (devMode) ? false : true,
       minimizer: [
         new TerserWebpackPlugin({
           parallel: true,

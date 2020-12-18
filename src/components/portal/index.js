@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable } from "mobx";
 import { observer, inject } from 'mobx-react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import API from '../SpreadsheetData';
 
@@ -33,10 +33,12 @@ export default class Base extends React.Component {
   render() {
     const { url } = this.props.match;
 
+    const tribes = API.tribes.map((tribe, i) => (<Route key={i} path={`${url}/${tribe}`} component={Tribes} />));
+
     return (
       <div className="portal">
         <Header />
-        <>
+        <Switch>
           <Route exact path={url} component={Home} />
           <Route path={`${url}/Search`} component={Search} />
           <Route path={`${url}/Attacks`} render={(props) => <Category {...props} type="Attacks" component={Attack} />} />
@@ -44,8 +46,8 @@ export default class Base extends React.Component {
           <Route path={`${url}/Creatures`} render={(props) => <Category {...props} type="Creatures" component={Creature} />} />
           <Route path={`${url}/Locations`} render={(props) => <Category {...props} type="Locations" component={Location} />} />
           <Route path={`${url}/Mugic`} render={(props) => <Category {...props} type="Mugic" component={Mugic} />} />
-          {API.tribes.map((tribe, i) => (<Route key={i} path={`${url}/${tribe}`} component={Tribes} />))}
-        </> 
+          {tribes}
+        </Switch> 
       </div>
     );
   }

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Interactive from 'react-interactive';
-import { setupDB, generate } from "./generate";
-import API from '../../SpreadsheetData';
-import { Loading } from '../../Snippets';
-import s from '../../../styles/style';
-import '../packs.scss';
+import { setupDB, generate, blankCard } from "./generate";
+import API from '../SpreadsheetData';
+import { Loading } from '../Snippets';
+import s from '../../styles/style';
 
-export default function (props) {
+export default function PackSimulator () {
   const [loaded, setLoaded] = useState(false);
   const [set, setSet] = useState("");
-  const [setsInput, setSetsInput] = useState([]);
-  const [cards, setCards] = useState([]);
+  const [setsInput, setSetsInput] = useState<JSX.Element[]>([]);
+  const [cards, setCards] = useState<JSX.Element[]>([]);
   const [packs, setPacks] = useState(1);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function (props) {
 
     const cards = [];
     for (let i = 0; i < 9; i++) {
-      cards.push(<div key={i} className="card" style={{ backgroundImage: `url("${API.card_back}")` }}></div>);
+      cards.push(blankCard(i));
     }
     setCards(cards);
 
@@ -41,16 +40,16 @@ export default function (props) {
     return (<Loading />);
   }
 
-  const onPacksChange = (e) => {
-    if (e.target.value > 24) e.target.value = 24;
-    setPacks(e.target.value);
+  const onPacksChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (parseInt(e.target.value) > 24) e.target.value = "24";
+    setPacks(parseInt(e.target.value));
   };
 
-  const onSetChange = (e) => {
+  const onSetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSet(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
