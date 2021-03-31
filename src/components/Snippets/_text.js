@@ -2,15 +2,17 @@ import React from 'react';
 
 export function Name(props) {
   const name = props.name.split(",");
-  return (<span className="name">
-    <span className="bigger">{name[0]}</span>
-    {name.length > 1 &&
-      <>
-        <span style={{ opacity: "0" }}>,</span>
-        <span className="subname">{name[1]}</span>
-      </>
-    }
-  </span>);
+  return (<div>
+    <span className="name">
+      <span className="bigger">{name[0]}</span>
+      {name.length > 1 &&
+        <>
+          <span style={{ opacity: "0" }}>,</span>
+          <span className="subname">{name[1]}</span>
+        </>
+      }
+    </span>
+  </div>);
 }
 
 export function Mugic(props) {
@@ -34,4 +36,8 @@ export function Tribe(props) {
   
 export function Discipline(props) {
   return <img className={props.size || "icon16"} src={("/public/img/icons/disciplines/" + props.discipline + ".png").toLowerCase()} />;
+}
+
+export function FlavorText({ flavortext }) {
+  return (flavortext) ? <div className="flavortext">{flavortext}</div> : <></>;
 }

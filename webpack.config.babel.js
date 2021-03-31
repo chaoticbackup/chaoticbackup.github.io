@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 require('@babel/register');
 
 module.exports = (env, argv) => {
@@ -126,6 +127,7 @@ module.exports = (env, argv) => {
     plugins: devMode 
       ? [
       ] : [
+        new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('production'),
         }),

@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { Rarity, Unique, Name, Mugic, Ability, Tribe } from '../../Snippets';
+import { FlavorText, Rarity, Unique, Name, Mugic, Ability, Tribe } from '../../Snippets';
 import MugicPlay from '../../mugicplayer/playbutton.tsx';
 import { withRouter } from 'react-router';
 
@@ -28,12 +28,12 @@ class Attack extends React.Component {
         }
       }
     }
-    
+  
     if (this.props.ext == false) return (
       <div className="card mugic">
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
-          <Name name={card.gsx$name} /><br />
+          <Name name={card.gsx$name} />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
           <Tribe size="icon16" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}<br />
           <span>{mugicCounters}</span><MugicPlay notes={card.gsx$shownotes?.length > 0 ? card.gsx$shownotes : card.gsx$notes}/><br />
@@ -42,7 +42,7 @@ class Attack extends React.Component {
         <div className="right" >
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
-          <span className="flavortext">{card.gsx$flavortext}</span>
+          <FlavorText flavortext={card.gsx$flavortext} />
         </div>
       </div>
     );
@@ -50,13 +50,13 @@ class Attack extends React.Component {
       <div className="card mugic">
         <div className="fullcard"><img src={API.cardImage(card)} /></div>
         <div className="right" >
-          <Name name={card.gsx$name} /><br />
+          <Name name={card.gsx$name} />
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
-          {card.gsx$flavortext && <>
-            <span className="flavortext">{card.gsx$flavortext}</span><br />
-          </>}
-          <span>Art By: {card.gsx$artist}</span>
+          <FlavorText flavortext={card.gsx$flavortext} />
+          <div>Art By: {card.gsx$artist}</div>
+          <div>Notes: {card.gsx$notes}</div>
+          <MugicPlay notes={card.gsx$shownotes?.length > 0 ? card.gsx$shownotes : card.gsx$notes}/>
         </div>
       </div>
     );

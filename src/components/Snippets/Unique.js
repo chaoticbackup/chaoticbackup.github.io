@@ -19,7 +19,9 @@ export function Unique(props) {
     string = (string) ? ("Legendary, " + string) : "Legendary";
   }
   string = string.replace(/,\s+$/, "");
-  return (
-    <span style={{ fontWeight: "Bold" }}>{string}{string && <br />}</span>
+
+  if (string === "") return <></>;
+  else return (
+    <div style={{ fontWeight: "Bold" }}>{string}</div>
   );
 }

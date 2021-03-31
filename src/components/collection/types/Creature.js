@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe } from '../../Snippets';
+import { FlavorText, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -47,7 +47,7 @@ export default class Creature extends React.Component {
       <div className="card creature">
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
-          <Name name={card.gsx$name} /><br />
+          <Name name={card.gsx$name} />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
           <TribeLine /><br />
           <div>
@@ -70,9 +70,9 @@ export default class Creature extends React.Component {
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe }} />
           {/*chieftain*/
             card.gsx$types.includes("Chieftain") &&
-              <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
+              <div className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)</div>
           }
-          <span className="flavortext">{card.gsx$flavortext}</span>
+          <FlavorText flavortext={card.gsx$flavortext} />
         </div>
         <br />
         <div className="stats">
@@ -109,7 +109,7 @@ export default class Creature extends React.Component {
           </div>
         </div>
         <div className="right" >
-          <Name name={card.gsx$name} /><br />
+          <Name name={card.gsx$name} />
           <span>{stat_range(card.gsx$courage, card.gsx$name)}&nbsp;<Discipline discipline="courage" /></span>&nbsp;
           <span>{stat_range(card.gsx$power, card.gsx$name)}&nbsp;<Discipline discipline="power" /></span>&nbsp;
           <span>{stat_range(card.gsx$wisdom, card.gsx$name)}&nbsp;<Discipline discipline="wisdom" /></span>&nbsp;
@@ -126,12 +126,10 @@ export default class Creature extends React.Component {
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary, tribe: card.gsx$tribe }} />
           {/*chieftain*/
             card.gsx$types.includes("Chieftain") &&
-              <span className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)<br /></span>
+              <div className="chieftain">(Minions use Brainwashed text. Minions may only play Generic Mugic.)</div>
           }
-          {card.gsx$flavortext && <>
-            <span className="flavortext">{card.gsx$flavortext}</span><br />
-          </>}
-          <span>Art By: {card.gsx$artist}</span>
+          <FlavorText flavortext={card.gsx$flavortext} />
+          <div>Art By: {card.gsx$artist}</div>
         </div>
       </div>
     );

@@ -125,6 +125,10 @@
         padding-bottom: 6px;
         white-space: pre-line;
       }
+
+      .right > *:not(:last-child) {
+        margin-bottom: 4px;
+      }
     }
 
     .creature .right {
