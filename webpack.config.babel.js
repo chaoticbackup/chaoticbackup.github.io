@@ -11,10 +11,15 @@ module.exports = (env, argv) => {
   const devMode = argv.mode === 'development';
 
   const config = {
+    target: 'web',
+
     entry: ['@babel/polyfill', './src/index.js'],
 
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      fallback: {
+        fs: false
+      }
     },
 
     devServer: {
