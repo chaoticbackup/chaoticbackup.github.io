@@ -11,25 +11,22 @@ import { sortCardName, thumb_link } from './common';
 export default class Category extends React.Component {
   @observable loaded = false;
 
-  constructor(props) {
-    super(props);
-    this.type = props.type.toLowerCase();
-  }
-
   scrollLeft(amount) {
     document.getElementsByClassName('bottom_nav')[0].scrollLeft = (amount);
   }
 
   render() {
+    const type = this.props.type.toLowerCase();
+
     if (this.loaded == false) {
-      API.LoadDB([{ 'cards': this.type }, { 'portal': this.type }])
+      API.LoadDB([{ 'cards': type }, { 'portal': type }])
       .then(() => {
         this.loaded = true;
       })
       .catch(() => {});
       return (<Loading />);
     }
-
+    
     let base_path = true;
     let cat_title = "";
     let top_content = (<div />);
@@ -39,7 +36,7 @@ export default class Category extends React.Component {
     if (path[path.length-1] == "") path.pop(); // Remove trailing backslash
 
     // ** Process the tribe ** //
-    if (this.type == "creatures" || this.type == "mugic") {
+    if (type == "creatures" || type == "mugic") {
       // /portal/Creatures/
       // /portal/Creatures/{Tribe}
       // The first / gets counted
@@ -69,9 +66,9 @@ export default class Category extends React.Component {
       );
 
       bottom_nav = ((tribe) ?
-        API.portal[this.type].chain().find({ 'gsx$tribe': tribe }).data()
+        API.portal[type].chain().find({ 'gsx$tribe': tribe }).data()
         :
-        API.portal[this.type].chain().data()
+        API.portal[type].chain().data()
       )
       .sort(sortCardName)
       .map((card_portal, i) => {
@@ -91,14 +88,14 @@ export default class Category extends React.Component {
 
       cat_title = this.props.type;
 
-      bottom_nav = API.portal[this.type].data
+      bottom_nav = API.portal[type].data
       .sort(sortCardName)
       .map((val, i) => thumb_link(val, i));
     }
 
     if (base_path) {
       return (
-        <div className={`entry ${this.type} base_path`}>
+        <div className={`entry ${type} base_path`}>
           <div className="cat_title">{cat_title}</div>
           <div className="entry_nav">{bottom_nav}</div>
         </div>
@@ -106,7 +103,7 @@ export default class Category extends React.Component {
     }
 
     return (
-      <div className={`entry ${this.type}`}>
+      <div className={`entry ${type}`}>
         <div className="entry_content">{top_content}</div>
         <div className="cat_title"><Link to={`/portal/${this.props.type}`}>{cat_title}</Link></div>
         <div className="entry_nav">{bottom_nav}</div>
