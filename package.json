@@ -82,7 +82,7 @@
     "jsdom-global": "^3.0.2",
     "mini-css-extract-plugin": "^1.4.0",
     "mocha": "^8.3.2",
-    "postcss": "^8.2.9",
+    "postcss": "^8.2.10",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
