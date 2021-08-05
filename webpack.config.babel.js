@@ -99,7 +99,7 @@ module.exports = (env, argv) => {
           options: {
             presets: [
               '@babel/typescript',
-              '@babel/preset-env',
+              ['@babel/preset-env', { loose: true }],
               '@babel/preset-react',
             ],
             plugins: [
