@@ -10,6 +10,7 @@ import { sortCardName, thumb_link } from './common';
 @inject((stores, props, context) => props) @observer
 export default class Category extends React.Component {
   @observable loaded = false;
+  @observable loading = false;
 
   scrollLeft(amount) {
     document.getElementsByClassName('bottom_nav')[0].scrollLeft = (amount);
@@ -19,11 +20,15 @@ export default class Category extends React.Component {
     const type = this.props.type.toLowerCase();
 
     if (this.loaded == false) {
-      API.LoadDB([{ 'cards': type }, { 'portal': type }])
-      .then(() => {
-        this.loaded = true;
-      })
-      .catch(() => {});
+      if (this.loading == false) {
+        this.loading = true;
+        API.LoadDB([{ 'cards': type }, { 'portal': type }])
+        .then(() => {
+          this.loaded = true;
+          this.loading = false;
+        })
+        .catch(() => {});
+      }
       return (<Loading />);
     }
     

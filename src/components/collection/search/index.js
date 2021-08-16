@@ -9,6 +9,7 @@ import search_api from './search';
 @inject((stores, props, context) => props) @observer
 export default class SearchCollection extends React.Component {
   @observable loaded = false;
+  @observable loading = false;
   @observable input;
   @observable collapsed;
   list = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
@@ -187,12 +188,16 @@ export default class SearchCollection extends React.Component {
 
   render() {
     if (this.loaded == false) {
-      API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
+      if (this.loading == false) {
+        this.loading = true;
+        API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
         .then(() => {
           this.loaded = true;
+          this.loading = false;
           this.search();
         })
         .catch(() => {});
+      }
       return (<Loading />);
     }
 

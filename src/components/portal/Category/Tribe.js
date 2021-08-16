@@ -13,6 +13,7 @@ import { sortCardName, thumb_link } from './common';
 @inject((stores, props, context) => props) @observer
 export default class Tribes extends React.Component {
   @observable loaded = false;
+  @observable loading = false;
 
   constructor() {
     super();
@@ -25,11 +26,15 @@ export default class Tribes extends React.Component {
   // -> /{Tribe}/Mugic || /{Tribe}/Creatures
   render() {
     if (this.loaded == false) {
-      API.LoadDB([{ 'cards': 'creatures' }, { 'portal': 'creatures' }, { 'cards': 'mugic' }, { 'portal': 'mugic' }])
-      .then(() => {
-        this.loaded = true;
-      })
-      .catch(() => {});
+      if (this.loading == false) {
+        this.loading = true;
+        API.LoadDB([{ 'cards': 'creatures' }, { 'portal': 'creatures' }, { 'cards': 'mugic' }, { 'portal': 'mugic' }])
+        .then(() => {
+          this.loaded = true;
+          this.loading = false;
+        })
+        .catch(() => {});
+      }
       return (<Loading />);
     }
 

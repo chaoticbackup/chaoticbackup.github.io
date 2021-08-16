@@ -41,7 +41,7 @@ const EnterTheCode = () => {
   });
 
   useEffect(() => {
-    API.getSpreadsheet(API.path("1hzSojB76Me-P1qppxYR0oiHSU56jyK59x3DKm660ntc"), (data: any) => {
+    API.getSpreadsheet(API.path("1hzSojB76Me-P1qppxYR0oiHSU56jyK59x3DKm660ntc"), false, (data: any) => {
       setFanData(data);
     });
   }, []);

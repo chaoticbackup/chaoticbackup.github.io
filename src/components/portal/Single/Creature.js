@@ -84,14 +84,10 @@ export default class SingleCreature extends React.Component {
           <hr />
           <div>
             <strong>Disciplines: </strong>
-            {card_data.gsx$courage}
-            <Discipline discipline="courage" />&nbsp;
-            {card_data.gsx$power}
-            <Discipline discipline="power" />&nbsp;
-            {card_data.gsx$speed}
-            <Discipline discipline="speed" />&nbsp;
-            {card_data.gsx$wisdom}
-            <Discipline discipline="wisdom" />
+            {card_data.gsx$courage}<Discipline discipline="courage" />&nbsp;
+            {card_data.gsx$power}<Discipline discipline="power" />&nbsp;
+            {card_data.gsx$wisdom}<Discipline discipline="wisdom" />&nbsp;
+            {card_data.gsx$speed}<Discipline discipline="speed" />
           </div>
           <hr />
           <div>

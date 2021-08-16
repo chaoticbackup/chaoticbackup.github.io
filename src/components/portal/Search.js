@@ -1,5 +1,6 @@
 import React from 'react';
 import API from '../SpreadsheetData';
+import { Loading } from '../Snippets';
 import { observable } from "mobx";
 import { observer, inject } from 'mobx-react';
 import loki from 'lokijs';
@@ -39,6 +40,7 @@ export default class SearchPortal extends React.Component {
 @inject((stores, props, context) => props) @observer
 class DBSearch extends React.Component {
   @observable loaded = false;
+  @observable loading = false;
 
   constructor() {
     super();
@@ -47,14 +49,18 @@ class DBSearch extends React.Component {
 
   render() {
     if (this.loaded == false) {
-      API.LoadDB([
-        { 'portal': 'attacks' }, { 'portal': 'battlegear' }, { 'portal': 'creatures' }, { 'portal': 'locations' }, { 'portal': 'mugic' },
-        { 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }
-      ]).then(() => {
-        this.loaded = true;
-      })
-      .catch(() => {});
-      return (<span>Loading...</span>);
+      if (this.loading == false) {
+        this.loading = true;
+        API.LoadDB([
+          { 'portal': 'attacks' }, { 'portal': 'battlegear' }, { 'portal': 'creatures' }, { 'portal': 'locations' }, { 'portal': 'mugic' },
+          { 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }
+        ]).then(() => {
+          this.loaded = true;
+          this.loading = false;
+        })
+        .catch(() => {});
+      }
+      return (<Loading />);
     }
 
     const { string } = this.props;
