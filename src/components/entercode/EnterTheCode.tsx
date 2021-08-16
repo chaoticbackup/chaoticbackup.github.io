@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Interactive from 'react-interactive';
+import { Interactive } from 'react-interactive';
 import API from '../SpreadsheetData';
 import { Loading } from '../Snippets';
 import style from '../../styles/style';

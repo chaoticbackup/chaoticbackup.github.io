@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Interactive from 'react-interactive';
+import { Interactive } from 'react-interactive';
 import { setupDB, generate, blankCard } from "./generate";
 import API from '../SpreadsheetData';
 import { Loading } from '../Snippets';

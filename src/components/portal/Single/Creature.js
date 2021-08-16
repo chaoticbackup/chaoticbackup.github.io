@@ -1,5 +1,5 @@
 import React from 'react';
-import Interactive from 'react-interactive';
+import { Interactive } from 'react-interactive';
 import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
