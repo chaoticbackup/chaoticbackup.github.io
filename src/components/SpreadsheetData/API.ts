@@ -1,6 +1,5 @@
 import 'whatwg-fetch';
 import { observable } from "mobx";
-import pRetry from 'p-retry';
 import CollectionDB from './CollectionDB';
 import spreadsheet_data from './meta_spreadsheet.json';
 import { Card } from '../common/definitions';
@@ -9,32 +8,38 @@ type card_type = 'attacks' | 'battlegear' | 'creatures' | 'locations' | 'mugic';
 
 type data_type = 'cards' | 'portal';
 
+function retry (fn: () => any, retries=0, err=null) {
+  if (retries < 0) {
+    return Promise.reject(err);
+  }
+  return fn().catch((err: any) => {
+    return retry(fn, (retries - 1), err);
+  });
+}
+
 class API {
     @observable portal;
     @observable cards;
     @observable urls;
     private static instance: API;
   
-    static base_url = "https://spreadsheets.google.com/feeds/list/";
-    static data_format = "/od6/public/values?alt=json";
-    // + "/od6/public/basic?alt=json"; // Alternate data format
     get base_image() { return "https://drive.google.com/uc?id=" }
     get thumb_missing() { return "1JYjPzkv74IhzlHTyVh2niTDyui73HSfp" }
     get card_back() { return "https://i.imgur.com/xbeDBRJ.png" }
+    // such secure, much wow
+    get key() { 
+      return ["AIz", "aSy", "Bfq", "09-", "tBi", "78b", "nH6", "6f1", "Lkn", "zGD", "XM9", "Zu9", "JG0"].join("");
+    }
   
     private constructor () {
       // This sets up urls and kicks off db
-      // let base_spreadsheet = "1cUNmwV693zl2zqbH_IG4Wz8o9Va_sOHe7pAZF6M59Es";
       try {
         const urls = {};
-        // this.getSpreadsheet(API.path(API.base_spreadsheet), (data) => {
-        //   if (data == null) throw "no data from base_spreadsheet";
-        spreadsheet_data.forEach((d) => {
-          if (!urls[d.gsx$type.$t]) urls[d.gsx$type.$t] = {};
-          urls[d.gsx$type.$t][d.gsx$subtype.$t] = this.path(d.gsx$url.$t);
+        spreadsheet_data.forEach(({ type, subtype, url }) => {
+          if (!urls[type]) urls[type] = {};
+          urls[type][subtype] = url;
         });
         this.urls = urls;
-        // });
       
         this.portal = new CollectionDB(this, 'portal');
         this.cards = new CollectionDB(this, 'cards');
@@ -53,25 +58,63 @@ class API {
       return API.instance;
     }
     
-    // Wrapper
     path(spreadsheetID: string) {
-      return API.base_url + spreadsheetID + API.data_format;
+      return `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/Sheet1?key=${this.key}`;
+    }
+    
+    async getSpreadsheetTime(spreadsheetId: string) {
+      const url = `https://content.googleapis.com/drive/v3/files/${spreadsheetId}?fields=modifiedTime&key=${this.key}`;
+      const response = await fetch(url);
+
+      if (response.status === 200) {
+        const json = await response.json();
+        if ("modifiedTime" in json) {
+          return Promise.resolve(json.modifiedTime); 
+        }
+      } 
+      return Promise.reject();
+    }
+
+    async getSpreadsheetData(spreadsheetId: string, doRetry: boolean = false) {
+      const url = this.path(spreadsheetId);
+
+      const cmd = async () => {
+        const response = await fetch(url);
+
+        if (response.status === 404) {
+          throw new Error("Can't Open File");
+        }
+
+        try {
+          const json = await response.json();
+          return json.values;
+        } catch (err) {
+          throw new Error(err);
+        }
+      };
+
+      return retry(cmd, doRetry ? 3 : 0);
     }
   
-    async getSpreadsheet(spreadsheet: string, retry: boolean, callback: (data: any) => any) {
-      await pRetry(async () => {
-        return fetch(spreadsheet)
-        .then((response) => {
-          if (response.status === 404) throw new Error("Can't Open File");
-          return response.json();
-        })
-        .then((json) => {
-          callback(json.feed.entry);
-        })
-        .catch((err) => {
-          throw new pRetry.AbortError(err);
+    // Wrapper that transforms spreadsheet data into expected object
+    async parseSpreadsheetData(spreadsheetId: string, cardType: string, doRetry: boolean = false) {
+      return this.getSpreadsheetData(spreadsheetId, doRetry)
+      .then((data: Array<Array<string>>) => {
+        if (data.length < 2) return [];
+
+        const header = data.shift()!.map((h: string) => h.toLowerCase().replace(" ", ""));
+        const cards = data.map((card: string[]) => {
+          const obj = { "gsx$type": cardType };
+  
+          for (let i = 0; i < header.length; i++) {
+            obj[`gsx$${header[i]}`] = card[i];
+          }
+  
+          return obj;
         });
-      }, { retries: retry ? 3 : 0 });
+
+        return cards;
+      });
     }
     
     // Input format
@@ -81,10 +124,10 @@ class API {
         return Promise.all(input.map((item) => {
           return new Promise((resolve, reject) => {
             if ('cards' in item) {
-              return this.cards!.setupType(item.cards, resolve);
+              return this.cards!.setupType(item.cards, resolve, reject);
             }
             else if ('portal' in item) {
-              return this.portal!.setupType(item.portal, resolve);
+              return this.portal!.setupType(item.portal, resolve, reject);
             }
             else {
               console.error('key must be cards or portal');
@@ -137,7 +180,9 @@ class API {
     purgeDB() {
       if (this.cards) this.cards.purgeDB();
       if (this.portal) this.portal.purgeDB();
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     }
   
 }

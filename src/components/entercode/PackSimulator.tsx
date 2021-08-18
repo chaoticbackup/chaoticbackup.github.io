@@ -15,11 +15,11 @@ export default function PackSimulator () {
 
   useEffect(() => {
     API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
-        .then(() => {
-          setupDB();
-          setLoaded(true);
-        })
-        .catch(() => {});
+    .then(() => {
+      setupDB();
+      setLoaded(true);
+    })
+    .catch(() => {});
 
     const cards = [];
     for (let i = 0; i < 9; i++) {

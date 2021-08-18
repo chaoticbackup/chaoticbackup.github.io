@@ -7,9 +7,7 @@ function cleanInputRegex(input, check=true) {
     const testRegex = /[\^$+*\[\]|]/g;
     if (testRegex.test(input)) {
       try {
-        const returnRegex = new RegExp(input, 'i');
-        console.log(returnRegex);
-        return returnRegex;
+        return new RegExp(input, 'i');
       } catch (e) {/* */}
     } 
   }
@@ -22,9 +20,7 @@ function cleanInputRegex(input, check=true) {
     });
   // .replace(/~(\w+)/, (match) => (`\(?!${match}\)`));
 
-  const returnRegex = new RegExp(input, 'i');
-  console.log(returnRegex);
-  return returnRegex;
+  return new RegExp(input, 'i');
 }
 
 export default function search_api(input) {

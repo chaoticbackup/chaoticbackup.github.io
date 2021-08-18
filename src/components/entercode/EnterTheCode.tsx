@@ -41,9 +41,11 @@ const EnterTheCode = () => {
   });
 
   useEffect(() => {
-    API.getSpreadsheet(API.path("1hzSojB76Me-P1qppxYR0oiHSU56jyK59x3DKm660ntc"), false, (data: any) => {
-      setFanData(data);
-    });
+    API.parseSpreadsheetData("1hzSojB76Me-P1qppxYR0oiHSU56jyK59x3DKm660ntc", "fan")
+    .then(cards => {
+      setFanData(cards);
+    })
+    .catch(() => {});
   }, []);
 
   if (fanData === null) {
@@ -69,11 +71,11 @@ const EnterTheCode = () => {
     else {
       const card = fanData[getRandomInt(0, fanData.length)];
       const rgx = /.*.png|.*.jpg/i;
-      const img = (rgx.test(card.gsx$image.$t) ? card.gsx$image.$t : API.base_image + card.gsx$image.$t);
+      const img = (rgx.test(card.gsx$image) ? card.gsx$image : API.base_image + card.gsx$image);
       setMessage(
         <>
           <p> Congrats on your scan! </p><br />
-          <p className="bigger"> {card.gsx$name.$t} </p><br />
+          <p className="bigger"> {card.gsx$name} </p><br />
           <img className="card" src={img} />
         </>
       );

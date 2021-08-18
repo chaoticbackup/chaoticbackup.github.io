@@ -1,4 +1,4 @@
-import loki from 'lokijs';
+import Loki from 'lokijs';
 import { observable, observe, action } from "mobx";
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -12,60 +12,64 @@ class CollectionDB {
       this.format = format;
       this.setupDB(format);
     }
-  
-    // Wrapper that transforms spreadsheet data into expected object
-    async getSpreadsheetData(spreadsheet, type, retry, callback) {
-      this.api.getSpreadsheet(spreadsheet, retry, (data) => {
-        callback(data.map((item) => {
-          const temp = {};
-          delete item.content;
-          for (const key of Object.keys(item)) {
-            temp[key] = item[key].$t;
-          }
-          temp["gsx$type"] = type;
-          return temp;
-        }));
-      });
-    }
-  
+    
     // example format
     // this.setup(this.api.urls.Attacks["portal"], "Attack", (data) => {});
     @action
-    async setupType(type, resolve) {
+    async setupType(type, resolve, reject) {
       if (this.building.hasOwnProperty(type)) {
         const uc_type = type.charAt(0).toUpperCase() + type.slice(1);
-        if (this.building[type].get() == "built") {
+        const building = this.building[type].get();
+
+        if (building == "built") {
           // Check if data has been updated
-          this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, false, (data) => {
+          return this.api.getSpreadsheetTime(this.api.urls[uc_type][this.format])
+          .then((modifiedTime) => {
             const cookie = cookies.get(`${this.format}_${type}`);
             if (cookie) {
-              if ((new Date(data[0].updated)) > (new Date(cookie))) {
+              if ((new Date(modifiedTime)) > (new Date(cookie))) {
                 this[type].clear();
-                this[type].insert(data);
-                cookies.set(`${this.format}_${type}`, data[0].updated, { path: '/' });
+                this.building[type].set("setup");
+                return this.setupType(type, resolve, reject);
+              }
+              else {
+                return resolve();
               }
             }
             else {
-              cookies.set(`${this.format}_${type}`, data[0].updated, { path: '/' });
+              cookies.set(`${this.format}_${type}`, modifiedTime, { path: '/' });
+              return resolve();
             }
+          })
+          .catch(() => {
+            return resolve();
           });
-          return resolve();
         }
-        if (this.building[type].get() == "building") {
+        else if (building == "building") {
           const disposer = observe(this.building[type], (change) => {
             disposer();
             resolve();
           });
           return disposer;
         }
-        if (this.building[type].get() == "setup") {
-          this.building[type].set("building");
+        else if (building == "setup") {
           // check if the collection already exists in memory
           if (this[type].data.length == 0) {
-            return this.getSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, true, (data) => {
+            this.building[type].set("building");
+            return this.api.parseSpreadsheetData(this.api.urls[uc_type][this.format], uc_type, true)
+            .then(async (data) => {
               this[type].insert(data);
               this.building[type].set("built");
+
+              try {
+                const modifiedTime = await this.api.getSpreadsheetTime(this.api.urls[uc_type][this.format]);
+                cookies.set(`${this.format}_${type}`, modifiedTime, { path: '/' });
+              } catch (err) {/* */}
+              
               return resolve();
+            })
+            .catch(() => {
+              return reject();
             });
           }
           else {
@@ -87,7 +91,28 @@ class CollectionDB {
   
     @action
     setupDB(format) {
-      const db = new loki(`chaotic_${format}.db`, {
+      function databaseInitialize() {
+        ["attacks", "battlegear", "creatures", "locations", "mugic"].forEach((type) => {
+          // check if the db already exists in memory
+          const entries = db.getCollection(type);
+          if (entries === null || entries.data.length === 0) {
+            this[type] = db.addCollection(type);
+            if (this.building[type])
+              this.building[type].set("setup");
+            else
+              this.building[type] = observable.box("setup");
+          }
+          else {
+            this[type] = entries;
+            if (this.building[type])
+              this.building[type].set("built");
+            else
+              this.building[type] = observable.box("built");
+          }
+        });
+      }
+
+      const db = new Loki(`chaotic_${format}.db`, {
         autosave: true,
         autoload: true,
         autoloadCallback: databaseInitialize.bind(this),
@@ -96,32 +121,13 @@ class CollectionDB {
       });
   
       this.db = db;
-  
-      function databaseInitialize() {
-        ["attacks","battlegear", "creatures", "locations", "mugic"]
-          .forEach((type) => {
-            // check if the db already exists in memory
-            const entries = db.getCollection(type);
-            if (entries === null || entries.data.length === 0) {
-              this[type] = db.addCollection(type);
-              if (this.building[type])
-                this.building[type].set("setup");
-              else
-                this.building[type] = observable.box("setup");
-            }
-            else {
-              this[type] = entries;
-              if (this.building[type])
-                this.building[type].set("built");
-              else
-                this.building[type] = observable.box("built");
-            }
-          });
-      }
     }
   
     purgeDB = () => {
-      this.db.deleteDatabase();
+      ["attacks", "battlegear", "creatures", "locations", "mugic"].forEach((type) => {
+        this.db.removeCollection(type);
+      });
+      this.db.saveDatabase();
     }
 }
 
