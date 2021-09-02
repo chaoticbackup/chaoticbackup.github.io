@@ -54,6 +54,7 @@ export default class Home extends React.Component {
       if (stats == "min") this.stats = "min";
       if (stats == "max") this.stats = "max";
     }
+    this.formRef = React.createRef();
   }
 
   componentDidMount() {
@@ -66,22 +67,22 @@ export default class Home extends React.Component {
     window.removeEventListener('resize', this.handleScroll);
   }
 
-  handleContent(content) {
+  handleContent = (content) => {
     this.content = content;
     this.p = 1;
   }
 
-  setImage(img) {
+  setImage = (img) => {
     this.card_img = (img || API.card_back);
     this.changeImage();
   }
 
-  setExt() {
+  setExt = () => {
     this.ext = !this.ext;
     localStorage.setItem("extended", this.ext);
   }
 
-  setStats() {
+  setStats = () => {
     if (this.stats == "min") this.stats = "avg";
     else if (this.stats == "avg") this.stats = "max";
     else if (this.stats == "max") this.stats = "min";
@@ -139,29 +140,34 @@ export default class Home extends React.Component {
     }
   };
 
+  // This is a workaround to allow people interacting with the card list (copy and pasting) to still have focus on the form
+  handleOutOfForm = () => {
+    this.formRef.current.focus();
+  }
+
   render() {
     return (
       <div className={"collection " + (this.ext ? "extended" : "short")}>
         <div className="left">
           <div id="side-menu" style={fixedStyles.fixed}>
             <ImagePreview url={this.card_img} ref={n => {if (n) this.changeImage = n.getInstance().changeImage;}} />
-            <SearchForm handleContent={this.handleContent.bind(this)} {...this.props} />
+            <SearchForm formRef={this.formRef} handleContent={this.handleContent} {...this.props} />
           </div>
         </div>
-        <div className="right">
+        <div className="right" onClick={this.handleOutOfForm}>
           <div className="list-nav-top">
             {this.navigation()}
-            <button className="stats-button" onClick={this.setStats.bind(this)}>
+            <button className="stats-button" onClick={this.setStats}>
               {this.stats == "min" && "Min Stats"}
               {this.stats == "avg" && "Average Stats"}
               {this.stats == "max" && "Max Stats"}
             </button>
-            <button className="ext-button" onClick={this.setExt.bind(this)}>
+            <button className="ext-button" onClick={this.setExt}>
               {this.ext ? "Extended Format" : "Short Format"}
             </button>
           </div>
           <br />
-          <CardList ext={this.ext} stats={this.stats} cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage.bind(this)}/>
+          <CardList ext={this.ext} stats={this.stats} cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage}/>
           <br />
           {this.navigation()}
         </div>

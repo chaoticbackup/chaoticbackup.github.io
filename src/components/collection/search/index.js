@@ -17,6 +17,8 @@ export default class SearchCollection extends React.Component {
   constructor(props) {
     super(props);
 
+    this.formRef = props.formRef;
+
     // Binding for keeping scope with dom functions
     this.search = this.search.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -246,7 +248,7 @@ export default class SearchCollection extends React.Component {
       <div className="SearchForm">
         <form onSubmit={this.search}>
           <div className="centeredButtons">
-            <input id="search" type="submit" value="Search" />
+            <input id="search" type="submit" value="Search" ref={this.formRef} />
             <input id="search" type="button" value="Reset" onClick={this.reset} />
           </div>
           <div className="text-entry">
