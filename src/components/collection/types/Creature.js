@@ -15,18 +15,17 @@ export default class Creature extends React.Component {
     }
 
     const TribeLine = () => {
-      const tribe = card.gsx$tribe;
       let types = card.gsx$types;
+
+      // Moves "Past" in front of tribe due to db entry order
       let past = false;
       if (types.toLowerCase().includes("past")) {
         past = true;
         types = types.replace(/past /i, '');
       }
-
-      // <past> <tribe> <types>
       const line = " " + (past ? "Past " : "") + types;
 
-      return <span><Tribe tribe={tribe} />{line}</span>;
+      return <span><Tribe tribe={card.gsx$tribe} />{line}</span>;
     };
 
     const stat_range = (stat, name) => {
