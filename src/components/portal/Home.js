@@ -22,19 +22,19 @@ export default class Home extends React.Component {
 
     const Creatures = (() => {
       const Chaor = new Image();
-      Chaor.src = API.base_image + "0B6oyUfwoM3u1LWtvNUZ2NVdjTGc";
+      Chaor.src = "https://i.imgur.com/fFzt0nB.png";
       Chaor.onload = (() => { ctx.drawImage(Chaor, 50, 350) });
 
       const Iflar = new Image();
-      Iflar.src = API.base_image + "0B6oyUfwoM3u1bFVIclZscHlHTVE";
+      Iflar.src = "https://i.imgur.com/fZL9k8R.png";
       Iflar.onload = (() => { ctx.drawImage(Iflar, canvas.width - 300, 350) });
 
       const Illexia = new Image();
-      Illexia.src = API.base_image + "0B6oyUfwoM3u1YzNhLUdSMHlmdFE";
+      Illexia.src = "https://i.imgur.com/n76pxSC.png";
       Illexia.onload = (() => { ctx.drawImage(Illexia, canvas.width - 350, Logo.height + 10) });
 
       const Maxxor = new Image();
-      Maxxor.src =  API.base_image + "0B6oyUfwoM3u1MVVqQlpqYldsVDQ";
+      Maxxor.src =  "https://i.imgur.com/roH9mqQ.png";
       Maxxor.onload = (() => { ctx.drawImage(Maxxor, 50, Logo.height + 10) });
     });
 
