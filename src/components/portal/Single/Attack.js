@@ -52,7 +52,7 @@ export default class SingleAttack extends React.Component {
       );
     }
     else if (card_data) {
-      if (card_data.gsx$splash) {
+      if (API.hasFullart(card_data)) {
         return (<Single card={card_data}/>);
       }
     }

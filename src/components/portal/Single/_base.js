@@ -43,14 +43,12 @@ export default class Single extends React.Component {
       return (<>
         <div className={"modal" + (this.fullscreen?"":" hidden")}>
           <span className="close" onClick={this.close}>&times;</span>
-          <img className="modal-content" src={API.base_image + card.gsx$splash} />
+          <img className="modal-content" src={API.cardFullart(card)} />
         </div>
-        {card.gsx$splash && (
+        {API.hasFullart(card) && (
           <div className="entry_splash">
             {/*<span className="arrow">&#8681;</span>*/}
-            {card.gsx$splash && (
-              <img onClick={this.expand} src={API.base_image + card.gsx$splash} />
-            )}
+            <img onClick={this.expand} src={API.cardFullart(card)} />
           </div>
         )}
         <div className="entry_body">

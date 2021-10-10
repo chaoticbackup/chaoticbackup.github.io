@@ -148,19 +148,19 @@ class DBSearch extends React.Component {
       API.portal.mugic.find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }}),
       API.cards.attacks.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
-        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        .where(API.hasFullart).data(),
       API.cards.battlegear.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
-        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        .where(API.hasFullart).data(),
       API.cards.creatures.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
-        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        .where(API.hasFullart).data(),
       API.cards.locations.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
-        .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+        .where(API.hasFullart).data(),
       API.cards.mugic.chain()
         .find({ 'gsx$name': { '$regex': new RegExp(string, 'i') }})
-        .where((obj) => {return (obj.gsx$splash != ('') )}).data()
+        .where(API.hasFullart).data()
     )
     .sort(sortCardName)
     // dedupe fullart results
@@ -172,19 +172,19 @@ class DBSearch extends React.Component {
       const artists = [].concat(
         API.cards.attacks.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
-          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+          .where(API.hasFullart).data(),
         API.cards.battlegear.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
-          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+          .where(API.hasFullart).data(),
         API.cards.creatures.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
-          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+          .where(API.hasFullart).data(),
         API.cards.locations.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
-          .where((obj) => {return (obj.gsx$splash != ('') )}).data(),
+          .where(API.hasFullart).data(),
         API.cards.mugic.chain()
           .find({ 'gsx$artist': { '$regex': new RegExp(string, 'i') }})
-          .where((obj) => {return (obj.gsx$splash != ('') )}).data()
+          .where(API.hasFullart).data()
       )
       .sort((a, b) => (a.gsx$name > b.gsx$name) ? 1 : -1)
       .map((val, i) => text_link(val, i));

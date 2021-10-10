@@ -149,6 +149,25 @@ class API {
         return this.card_back;
       }
     }
+
+    hasFullart = (card: Card) => (
+      Boolean(card.gsx$if !== undefined && card.gsx$if !== '') ||
+      Boolean(card.gsx$splash !== undefined && card.gsx$splash !== '') ||
+      Boolean(card.gsx$alt !== undefined && card.gsx$alt !== '')
+    );
+
+    /* Wrapper for full art */
+    cardFullart = (card: Card) => {
+      if (card.gsx$if && card.gsx$if !== '') {
+        return card.gsx$if;
+      } else if (card.gsx$splash && card.gsx$splash !== '') {
+        return this.base_image + card.gsx$splash;
+      } else if (card.gsx$alt) { 
+        return card.gsx$alt;
+      } else {
+        return this.card_back;
+      }
+    };
   
     get tribes() {
       return ["Danian", "Generic", "Mipedian", "M'arrillian", "OverWorld", "UnderWorld"];

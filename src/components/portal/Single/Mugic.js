@@ -78,7 +78,7 @@ export default class SingleMugic extends React.Component {
       />);
     }
     else if (card_data) {
-      if (card_data.gsx$splash) {
+      if (API.hasFullart(card_data)) {
         const tribe = card_data.gsx$tribe;
 
         return (<Single 
