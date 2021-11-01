@@ -1,30 +1,29 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { FlavorText, Rarity, Unique, Name, Mugic, Ability, Tribe } from '../../Snippets';
+import { FlavorText, Rarity, Unique, Name, Mugic as MugicCounter, Ability, Tribe } from '../../Snippets';
 import MugicPlay from '../../mugicplayer/playbutton.tsx';
-import { withRouter } from 'react-router';
 
 @inject((stores, props, context) => props) @observer
-class Attack extends React.Component {
+export default class Mugic extends React.Component {
 
   render() {
     const { card, history } = this.props;
 
     const mugicCounters = [];
     if (card.gsx$cost == 0) {
-      mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={0} amount={"0"}/>);
+      mugicCounters.push(<MugicCounter tribe={card.gsx$tribe} key={0} amount={"0"}/>);
     }
     else if (card.gsx$cost.toLowerCase() == 'x') {
-      mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={0} amount={"x"}/>);
+      mugicCounters.push(<MugicCounter tribe={card.gsx$tribe} key={0} amount={"x"}/>);
     }
     else {
       if (card.gsx$cost > 5) {
-        mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={0} amount={card.gsx$cost} />);
+        mugicCounters.push(<MugicCounter tribe={card.gsx$tribe} key={0} amount={card.gsx$cost} />);
       }
       else {
         for (let i = 0; i < card.gsx$cost; i++) {
-          mugicCounters.push(<Mugic tribe={card.gsx$tribe} key={i} />);
+          mugicCounters.push(<MugicCounter tribe={card.gsx$tribe} key={i} />);
         }
       }
     }
@@ -63,5 +62,3 @@ class Attack extends React.Component {
   }
 
 }
-
-export default withRouter(Attack);

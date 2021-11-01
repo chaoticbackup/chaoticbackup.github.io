@@ -7,7 +7,7 @@ import { FlavorText, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, 
 export default class Creature extends React.Component {
 
   render() {
-    const { card, stats } = this.props;
+    const { card, stats, hideStats } = this.props;
 
     const mugic = [];
     for (let i = 0; i < card.gsx$mugicability; i++) {
@@ -41,6 +41,8 @@ export default class Creature extends React.Component {
       if (stats == "max") return Number(energy) + 5;
       return Number(energy);
     };
+
+    console.log(this.props);
 
     if (this.props.ext == false) return (
       <div className="card creature">
@@ -97,15 +99,17 @@ export default class Creature extends React.Component {
         <div className="fullcard">
           {/* style={{ backgroundImage: `url("${API.cardImage(card)}")` }} */}
           <img src={API.cardImage(card)} />
-          <div className="image-cover" >
-            <div>
-              <span key="courage" {...(stat_range(card.gsx$courage, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$courage, card.gsx$name)}</span>
-              <span key="power" {...(stat_range(card.gsx$power, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$power, card.gsx$name)}</span>
-              <span key="wisdom" {...(stat_range(card.gsx$wisdom, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$wisdom, card.gsx$name)}</span>
-              <span key="speed" {...(stat_range(card.gsx$speed, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$speed, card.gsx$name)}</span>
-              <span key="energy" {...(energy_range(card.gsx$energy, card.gsx$name) >= 100 ? { className: "long" } : null)}>{energy_range(card.gsx$energy, card.gsx$name)}</span>
+          {!hideStats && (
+            <div className="image-cover" >
+              <div>
+                <span key="courage" {...(stat_range(card.gsx$courage, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$courage, card.gsx$name)}</span>
+                <span key="power" {...(stat_range(card.gsx$power, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$power, card.gsx$name)}</span>
+                <span key="wisdom" {...(stat_range(card.gsx$wisdom, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$wisdom, card.gsx$name)}</span>
+                <span key="speed" {...(stat_range(card.gsx$speed, card.gsx$name) >= 100 ? { className: "long" } : null)}>{stat_range(card.gsx$speed, card.gsx$name)}</span>
+                <span key="energy" {...(energy_range(card.gsx$energy, card.gsx$name) >= 100 ? { className: "long" } : null)}>{energy_range(card.gsx$energy, card.gsx$name)}</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="right" >
           <Name name={card.gsx$name} />

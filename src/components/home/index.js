@@ -56,8 +56,8 @@ export default class Home extends React.Component {
           <br /><br />
           <div>Made with <span className="heart">♥</span> by
             <br />Danude Sandstorm (Project Lead)
-            <br />Chiodosin1 (Database Contributions)
-            <br />Afjak and Blitser (Art and Knowledge)
+            <br />Chiodosin1 and IvanArial98 (Data Contributions)
+            <br />Blitser, Afjak, and Chiodosin1 (Art and Knowledge)
           </div>
           <div>Do you like the site? You can donate to support it!</div>
           <div className="donate"><Donate /></div>

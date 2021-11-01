@@ -2,8 +2,8 @@ import React from 'react';
 import API from '../SpreadsheetData';
 import { observable, action } from "mobx";
 import { observer, inject } from 'mobx-react';
-import CardList from './List';
 import SearchForm from './search/index.js';
+import { Attack, Battlegear, Creature, Location, Mugic } from './types';
 import './collection.scss';
 
 // https://mobx.js.org/refguide/object.html
@@ -40,6 +40,7 @@ export default class Home extends React.Component {
   @observable p = 1;
   @observable ext = false;
   @observable stats = "avg";
+  @observable hideStats = false;
   @observable content = [];
   @observable card_img = API.card_back;
   @observable fixedStyles;
@@ -54,6 +55,10 @@ export default class Home extends React.Component {
       if (stats == "min") this.stats = "min";
       if (stats == "max") this.stats = "max";
     }
+
+    const hideStats = localStorage.getItem('hideStats');
+    this.hideStats = (!!hideStats && hideStats !== "false");
+
     this.formRef = React.createRef();
   }
 
@@ -87,6 +92,11 @@ export default class Home extends React.Component {
     else if (this.stats == "avg") this.stats = "max";
     else if (this.stats == "max") this.stats = "min";
     localStorage.setItem("stats", this.stats);
+  }
+
+  setHideStats = () => {
+    this.hideStats = !this.hideStats;
+    localStorage.setItem("hideStats", this.hideStats);
   }
 
   handleScroll = (event) => {
@@ -157,6 +167,10 @@ export default class Home extends React.Component {
         <div className="right" onClick={this.handleOutOfForm}>
           <div className="list-nav-top">
             {this.navigation()}
+            <div>
+              <label htmlFor="hide-stats">Hide Stats</label><br />
+              <input type="checkbox" id="hide-stats" checked={this.hideStats} onChange={this.setHideStats}></input>
+            </div>
             <button className="stats-button" onClick={this.setStats}>
               {this.stats == "min" && "Min Stats"}
               {this.stats == "avg" && "Average Stats"}
@@ -167,7 +181,13 @@ export default class Home extends React.Component {
             </button>
           </div>
           <br />
-          <CardList ext={this.ext} stats={this.stats} cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} setImage={this.setImage}/>
+          <CardList 
+            cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} 
+            setImage={this.setImage}
+            ext={this.ext} 
+            stats={this.stats}
+            hideStats={this.hideStats}           
+          />
           <br />
           {this.navigation()}
         </div>
@@ -203,6 +223,30 @@ export default class Home extends React.Component {
     );
   }
 }
+
+const CardList = ({ cards, ...props }) => {
+  if (cards.length == 1 && cards[0].text) {
+    return (
+      <div style={{ textAlign: 'left' }}>{cards[0].text}</div>
+    );
+  }
+  return cards.map((card, i) => {
+    switch (card.gsx$type) {
+      case "Attacks":
+        return (<Attack card={card} key={i} {...props}/>);
+      case "Battlegear":
+        return (<Battlegear card={card} key={i} {...props}/>);
+      case "Creatures":
+        return (<Creature card={card} key={i} {...props}/>);
+      case "Locations":
+        return (<Location card={card} key={i} {...props}/>);
+      case "Mugic":
+        return (<Mugic card={card} key={i} {...props}/>);
+      default:
+        return (<div key={i}>Invalid Card Type</div>);
+    }
+  });
+};
 
 @observer
 class imgbase extends React.Component {
