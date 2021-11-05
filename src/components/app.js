@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 
@@ -34,6 +34,15 @@ const MobileCollection = loadable(
 
 export default function App() {
   const isMobile = useCheckMobileScreen();
+
+  useEffect(() => {
+    console.log(document.styleSheets);
+    if (isMobile) {
+      document.styleSheets[0].disabled = true;
+    } else {
+      document.styleSheets[0].disabled = false;
+    }
+  }, [isMobile]);
 
   return (
     <Router>
