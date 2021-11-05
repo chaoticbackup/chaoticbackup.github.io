@@ -1,4 +1,7 @@
 import React from 'react';
+import { abilityText } from './abilityText';
+import { uniqueText } from './uniqueText';
+import { InitiativeIcon } from './_icons';
 
 export function Name(props) {
   const name = props.name.split(",");
@@ -15,29 +18,23 @@ export function Name(props) {
   </div>);
 }
 
-export function Mugic(props) {
-  const type = (props.tribe || "generic") + (props.amount != undefined ? `_${props.amount}` : "");
-  const src = ("/public/img/icons/mugic/" + type + ".png").toLowerCase();
-  return <img className={props.size || "icon20"} src={src} alt={"MC"} />;
-}
-  
-export function Element(props) {
-  if (props.value) {
-    return <img className={props.size || "icon20"} src={("/public/img/icons/elements/" + props.element + ".png").toLowerCase()} />;
-  }
-  else {
-    return <img className={props.size || "icon20"} src={("/public/img/icons/elements/" + props.element + "-inactive.png").toLowerCase()} />;
-  }
-}
-  
-export function Tribe(props) {
-  return <img className={props.size || "icon16"} src={("/public/img/icons/tribes/" + props.tribe + ".png").toLowerCase()} />;
-}
-  
-export function Discipline(props) {
-  return <img className={props.size || "icon16"} src={("/public/img/icons/disciplines/" + props.discipline + ".png").toLowerCase()} />;
-}
-
 export function FlavorText({ flavortext }) {
   return (flavortext) ? <div className="flavortext">{flavortext}</div> : <></>;
+}
+
+export function Ability(props) {
+  return <div className={props.type || "ability"}>{abilityText(props)}</div>;
+}
+
+export function Unique(props) {
+  const string = uniqueText(props);
+
+  if (string === "") return <></>;
+  else return (
+    <div style={{ fontWeight: "Bold" }}>{string}</div>
+  );
+}
+
+export function Initiative(props) {
+  return (<span>{!props.notitle && ("Initiative: ")}{InitiativeIcon(props)}&nbsp;{props.initiative}</span>);
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { FlavorText, Rarity, Unique, Name, Element, Ability, AttackIcon } from '../../Snippets';
+import { FlavorText, RarityIcon, Unique, Name, ElementIcon, Ability, AttackIcon } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Attack extends React.Component {
@@ -14,14 +14,14 @@ export default class Attack extends React.Component {
         <img className="thumb" src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
           <Name name={card.gsx$name} />
-          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} /><br />
           <span><AttackIcon bp={card.gsx$bp} /> Attack - {card.gsx$bp}</span><br />
           <div>
             <span className="bp bigger" >{card.gsx$base}</span> |&nbsp;
-            <Element element="fire" value={card.gsx$fire} />{card.gsx$fire}&nbsp;
-            <Element element="air" value={card.gsx$air} />{card.gsx$air}&nbsp;
-            <Element element="earth" value={card.gsx$earth} />{card.gsx$earth}&nbsp;
-            <Element element="water" value={card.gsx$water} />{card.gsx$water}
+            <ElementIcon element="fire" value={card.gsx$fire} />{card.gsx$fire}&nbsp;
+            <ElementIcon element="air" value={card.gsx$air} />{card.gsx$air}&nbsp;
+            <ElementIcon element="earth" value={card.gsx$earth} />{card.gsx$earth}&nbsp;
+            <ElementIcon element="water" value={card.gsx$water} />{card.gsx$water}
           </div>
         </div>
         <br />

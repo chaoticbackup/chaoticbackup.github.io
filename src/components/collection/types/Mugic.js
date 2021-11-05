@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { FlavorText, Rarity, Unique, Name, Mugic as MugicCounter, Ability, Tribe } from '../../Snippets';
+import { FlavorText, RarityIcon, Unique, Name, MugicIcon as MugicCounter, Ability, TribeIcon } from '../../Snippets';
 import MugicPlay from '../../mugicplayer/playbutton.tsx';
 
 @inject((stores, props, context) => props) @observer
@@ -33,8 +33,8 @@ export default class Mugic extends React.Component {
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
           <Name name={card.gsx$name} />
-          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
-          <Tribe size="icon16" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}<br />
+          <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} /> <br />
+          <TribeIcon size="icon16" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}<br />
           <span>{mugicCounters}</span><MugicPlay notes={card.gsx$shownotes?.length > 0 ? card.gsx$shownotes : card.gsx$notes}/><br />
         </div>
         <br />

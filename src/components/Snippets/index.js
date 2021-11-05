@@ -1,9 +1,6 @@
 import React from 'react';
 import s from '../../styles/app.style';
 
-export { Unique } from './Unique';
-export { Initiative } from './Initiative';
-export { Ability } from './Ability';
 export * from './_icons';
 export * from './_text';
 

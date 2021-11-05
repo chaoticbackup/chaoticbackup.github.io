@@ -19,6 +19,7 @@ export interface BaseCard {
   gsx$alt2?: string
   gsx$ic?: string // imgur card
   gsx$if?: string // imgur fullart
+  gsx$artist?: string
 }
 
 export interface Attack extends BaseCard {

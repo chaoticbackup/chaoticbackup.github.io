@@ -21,13 +21,13 @@ export default function PackSimulator () {
     })
     .catch(() => {});
 
-    const cards = [];
+    const cards: JSX.Element[] = [];
     for (let i = 0; i < 9; i++) {
       cards.push(blankCard(i));
     }
     setCards(cards);
 
-    const setsInput = [];
+    const setsInput: JSX.Element[] = [];
     let i = 1;
     for (const set in API.sets) {
       setsInput.push(<option key={i++} value={set}>{API.sets[set]}</option>);

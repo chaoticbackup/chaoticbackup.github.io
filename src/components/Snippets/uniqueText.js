@@ -1,6 +1,4 @@
-import React from 'react';
-
-export function Unique(props) {
+export function uniqueText(props) {
   let string = "";
   if (props.data.unique) {
     string += "Unique, ";
@@ -20,8 +18,5 @@ export function Unique(props) {
   }
   string = string.replace(/,\s+$/, "");
 
-  if (string === "") return <></>;
-  else return (
-    <div style={{ fontWeight: "Bold" }}>{string}</div>
-  );
+  return string;
 }

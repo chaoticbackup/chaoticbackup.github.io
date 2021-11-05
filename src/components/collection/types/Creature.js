@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { FlavorText, Rarity, Unique, Name, Element, Mugic, Discipline, Ability, Tribe } from '../../Snippets';
+import { FlavorText, RarityIcon, Unique, Name, ElementIcon, MugicIcon, DisciplineIcon, Ability, TribeIcon } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -11,7 +11,7 @@ export default class Creature extends React.Component {
 
     const mugic = [];
     for (let i = 0; i < card.gsx$mugicability; i++) {
-      mugic.push(<Mugic key={i} tribe={card.gsx$tribe} />);
+      mugic.push(<MugicIcon key={i} tribe={card.gsx$tribe} />);
     }
 
     const TribeLine = () => {
@@ -25,7 +25,7 @@ export default class Creature extends React.Component {
       }
       const line = " " + (past ? "Past " : "") + types;
 
-      return <span><Tribe tribe={card.gsx$tribe} />{line}</span>;
+      return <span><TribeIcon tribe={card.gsx$tribe} />{line}</span>;
     };
 
     const stat_range = (stat, name) => {
@@ -42,20 +42,18 @@ export default class Creature extends React.Component {
       return Number(energy);
     };
 
-    console.log(this.props);
-
     if (this.props.ext == false) return (
       <div className="card creature">
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
           <Name name={card.gsx$name} />
-          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} /><br />
           <TribeLine /><br />
           <div>
-            <Element element="fire" value={card.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
-            <Element element="air" value={card.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
-            <Element element="earth" value={card.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
-            <Element element="water" value={card.gsx$elements.toLowerCase().indexOf("water") >=0} />
+            <ElementIcon element="fire" value={card.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
+            <ElementIcon element="air" value={card.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
+            <ElementIcon element="earth" value={card.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
+            <ElementIcon element="water" value={card.gsx$elements.toLowerCase().indexOf("water") >=0} />
           </div>
           <span>{mugic}</span>
         </div>
@@ -78,16 +76,16 @@ export default class Creature extends React.Component {
         <br />
         <div className="stats">
           <div className="energy">
-            {stat_range(card.gsx$courage, card.gsx$name)}<Discipline discipline="courage" />
+            {stat_range(card.gsx$courage, card.gsx$name)}<DisciplineIcon discipline="courage" />
           </div>
           <div className="energy">
-            {stat_range(card.gsx$power, card.gsx$name)}<Discipline discipline="power" />
+            {stat_range(card.gsx$power, card.gsx$name)}<DisciplineIcon discipline="power" />
           </div>
           <div className="energy">
-            {stat_range(card.gsx$wisdom, card.gsx$name)}<Discipline discipline="wisdom" />
+            {stat_range(card.gsx$wisdom, card.gsx$name)}<DisciplineIcon discipline="wisdom" />
           </div>
           <div className="energy">
-            {stat_range(card.gsx$speed, card.gsx$name)}<Discipline discipline="speed" />
+            {stat_range(card.gsx$speed, card.gsx$name)}<DisciplineIcon discipline="speed" />
           </div>
           <div className="energy" style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy, card.gsx$name)}
           </div>
@@ -113,10 +111,10 @@ export default class Creature extends React.Component {
         </div>
         <div className="right" >
           <Name name={card.gsx$name} />
-          <span>{stat_range(card.gsx$courage, card.gsx$name)}&nbsp;<Discipline discipline="courage" /></span>&nbsp;
-          <span>{stat_range(card.gsx$power, card.gsx$name)}&nbsp;<Discipline discipline="power" /></span>&nbsp;
-          <span>{stat_range(card.gsx$wisdom, card.gsx$name)}&nbsp;<Discipline discipline="wisdom" /></span>&nbsp;
-          <span>{stat_range(card.gsx$speed, card.gsx$name)}&nbsp;<Discipline discipline="speed" /></span>&nbsp;
+          <span>{stat_range(card.gsx$courage, card.gsx$name)}&nbsp;<DisciplineIcon discipline="courage" /></span>&nbsp;
+          <span>{stat_range(card.gsx$power, card.gsx$name)}&nbsp;<DisciplineIcon discipline="power" /></span>&nbsp;
+          <span>{stat_range(card.gsx$wisdom, card.gsx$name)}&nbsp;<DisciplineIcon discipline="wisdom" /></span>&nbsp;
+          <span>{stat_range(card.gsx$speed, card.gsx$name)}&nbsp;<DisciplineIcon discipline="speed" /></span>&nbsp;
           <span style={{ fontWeight: 'bold' }}>{energy_range(card.gsx$energy, card.gsx$name)}</span>
           <br />
           <Ability ability={card.gsx$ability} tribe={card.gsx$tribe} />

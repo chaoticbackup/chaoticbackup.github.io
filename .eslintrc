@@ -75,6 +75,7 @@
     "react/jsx-indent-props": ["warn", 2], 
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
+    "react-hooks/exhaustive-deps": "warn",
     "semi": ["warn", "always", { "omitLastInOneLineBlock": true }]
   },
   "overrides": [
@@ -90,7 +91,7 @@
         "ecmaFeatures": { "jsx": true },
         "ecmaVersion": 2019,
         "sourceType": "module",
-        "project": "./tsconfig.json"
+        "project": ["./tsconfig.json"]
       },
       "plugins": [
         "@typescript-eslint"

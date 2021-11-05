@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { FlavorText, Rarity, Unique, Name, Ability, BattlegearIcon } from '../../Snippets';
+import { FlavorText, RarityIcon, Unique, Name, Ability, BattlegearIcon } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Battlegear extends React.Component {
@@ -14,7 +14,7 @@ export default class Battlegear extends React.Component {
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
           <Name name={card.gsx$name} />
-          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} /><br />
           <span><BattlegearIcon /> Battlegear{card.gsx$types.length > 0 ? " - " + card.gsx$types : null}</span>
         </div>
         <div className="right" >
