@@ -36,7 +36,6 @@ export default function App() {
   const isMobile = useCheckMobileScreen();
 
   useEffect(() => {
-    console.log(document.styleSheets);
     if (isMobile) {
       document.styleSheets[0].disabled = true;
     } else {

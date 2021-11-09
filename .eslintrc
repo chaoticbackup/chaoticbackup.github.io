@@ -47,6 +47,7 @@
     }],
     "keyword-spacing": ["error"],
     "linebreak-style": "off",
+    "no-console": ["warn", { "allow": [ "info", "warn", "error" ] }],
     "no-plusplus": "off",
     "no-prototype-builtins": "off",
     "no-undef": "error",

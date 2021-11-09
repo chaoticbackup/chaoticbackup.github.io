@@ -14,3 +14,21 @@
 .icon24 {
     height: 24px;
 }
+
+.name {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}
+
+.name .subname::before {
+    content: "\a  ";
+    white-space: pre;
+}
+
+.name .subname {
+    font-size: 13px;
+    padding-bottom: 4px;
+    display: inherit;
+}

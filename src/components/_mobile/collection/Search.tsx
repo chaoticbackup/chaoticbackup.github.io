@@ -1,8 +1,10 @@
-import React, { ChangeEventHandler, FormEvent, useEffect, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import API, { sets } from '../../SpreadsheetData/API';
 import search_api from '../../collection/search/search';
-import { Loading, UnderConstruction } from '../../Snippets';
+import { Loading } from '../../Snippets';
+import { Modal, Fab, Zoom, useTheme } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 const initInput = () => {
   /* @ts-ignore */
@@ -115,11 +117,13 @@ const updateQuery = (input, history) => {
 };
 
 export default function Search ({ setContent, setInfo }) {
+  const theme = useTheme();
   const history = useHistory();
   const location = useLocation();
   const prevLocation = useRef<any>(undefined);
   const [input, setInput] = useState(initInput());
   const [loaded, setLoaded] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setInfo({ 'text': 'Loading..' });
@@ -176,5 +180,45 @@ export default function Search ({ setContent, setInfo }) {
     return (<Loading />);
   }
 
-  return <UnderConstruction />;
+  const form = (<>
+
+  </>);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const transitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen,
+  };
+
+  return (<>
+    <Modal
+      open={open}
+      onClose={handleClose}
+    >
+      {form}
+    </Modal>
+    {!open && form}
+    <Zoom
+      in={!open}
+      timeout={transitionDuration}
+      style={{
+        transitionDelay: `${!open ? transitionDuration.exit : 0}ms`,
+      }}
+      unmountOnExit
+    >
+      <Fab aria-label="search" 
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        onClick={handleOpen}
+      >
+        <SearchIcon />
+      </Fab>
+    </Zoom>
+  </>);
 }
