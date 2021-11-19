@@ -1,10 +1,11 @@
 import { 
   Box, Card, Checkbox, createTheme, FormControl, FormControlLabel, InputLabel, MenuItem, Pagination, Paper, Select, SelectChangeEvent, styled, ThemeProvider, Typography
 } from '@mui/material';
-import React, { useState } from 'react';
-import { Attack as AttackCard, Card as ChaoticCard } from '../../common/definitions';
-import Attack from './Attack';
-import { chaoticCardProps, statsType } from './ChaoticCard';
+import React, { useEffect, useState } from 'react';
+import { Attack, Battlegear, Card as ChaoticCard } from '../../common/definitions';
+import AttackCard from './Attack';
+import BattlegearCard from './Battlegear';
+import { chaoticCardProps, statsType } from './CardBase';
 import Search from './Search';
 
 import './collection.scss';
@@ -42,14 +43,47 @@ const CustomSelect = styled(Select)(() => ({
   }
 }));
 
+interface storage {
+  extended?: string
+  stats?: statsType
+  hideStats?: string
+}
+
 export default function Collection (_props) {
   const [p, sp] = useState(1);
   const [n, sn] = useState(10);
-  const [ext, setExt] = useState(false);
+  const [ext, setExtended] = useState(false);
   const [stats, setStats] = useState<statsType>("avg");
   const [hideStats, setHideStats] = useState(false);
   const [content, setContent] = useState<ChaoticCard[]>([]);
   const [info, setInfo] = useState<{text?: string}>({});
+  const [selected, setSelected] = useState("");
+
+  useEffect(() => {
+    const load = localStorage.getItem("collection");
+
+    if (load) {
+      const { extended, stats, hideStats } = JSON.parse(load) as storage;
+      if (extended !== undefined) setExtended((/true/i).test(extended)); 
+      if (stats !== undefined) {
+        if (stats == "min") setStats("min");
+        if (stats == "max") setStats("max");
+      }
+      if (hideStats !== undefined) setHideStats(hideStats !== "false");
+    }
+  }, []);
+
+  const saveSettings = (setting: Partial<storage>) => {
+    const load = localStorage.getItem("collection");
+    let save: storage = {};
+    if (load) {
+      const rest = JSON.parse(load) as storage;
+      save = { ...rest, ...setting };
+    } else {
+      save = setting;
+    }
+    localStorage.setItem("collection", JSON.stringify(save));
+  };
 
   const handlePerPage = (event: SelectChangeEvent<number>) => {
     sn(event.target.value as number);
@@ -59,17 +93,29 @@ export default function Collection (_props) {
     sp(value);
   };
 
-  const hanldeStats = (event: SelectChangeEvent<string>) => {
-    setStats(event.target.value as statsType);
+  const handleExt = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setExtended(event.target.checked);
+    saveSettings({ extended: event.target.checked.toString() });
   };
 
-  const handleExt = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setExt(event.target.checked);
+  const hanldeStats = (event: SelectChangeEvent<statsType>) => {
+    setStats(event.target.value as statsType);
+    saveSettings({ stats: event.target.value as statsType });
   };
 
   const handleHideStats = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHideStats(event.target.checked);
+    saveSettings({ hideStats: event.target.checked.toString() });
   };
+
+  const handleExtendSingle = (name: string) => {
+    setSelected(name);
+  };
+
+  useEffect(() => {
+    console.log("refresh list");
+    setSelected("");
+  }, [content]);
   
   return (<ThemeProvider theme={theme}>
     <Paper square sx={{ minHeight: "100vh", height: "100%", paddingLeft: theme.spacing(1), paddingRight: theme.spacing(1) }}>
@@ -147,7 +193,8 @@ export default function Collection (_props) {
       ) : (
         <CardList
           cards={content.slice(n * (p-1), n * p)}
-          {...({ ext, stats, hideStats })}
+          extend={handleExtendSingle}
+          {...({ selected, ext, stats, hideStats })}
         />
       )}
     </Paper>
@@ -156,15 +203,25 @@ export default function Collection (_props) {
 
 type listProps = Omit<chaoticCardProps<ChaoticCard>, "card"> & {
   cards: ChaoticCard[]
+  selected: string
 }
 
-const CardList = ({ cards, ...props }: listProps) => {
+const CardList = ({ cards, selected, ext, ...props }: listProps) => {
+
   const list = cards.map((card, i) => {
     switch (card.gsx$type) {
       case "Attacks":
-        return (<Attack card={card as AttackCard} key={card.gsx$name+card.gsx$set} {...props}/>);
-      // case "Battlegear":
-      //   return (<Battlegear card={card} key={i} {...props}/>);
+        return (<AttackCard key={card.gsx$name+card.gsx$set}
+          card={card as Attack}  
+          ext={(card.gsx$name === selected || ext)}
+          {...props}
+        />);
+      case "Battlegear":
+        return (<BattlegearCard key={card.gsx$name+card.gsx$set}
+          card={card as Battlegear}
+          ext={(card.gsx$name === selected || ext)}
+          {...props}
+        />);
       // case "Creatures":
       //   return (<Creature card={card} key={i} {...props}/>);
       // case "Locations":

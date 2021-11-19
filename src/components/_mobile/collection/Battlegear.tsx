@@ -1,36 +1,28 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import { Attack } from "../../common/definitions";
-import { AttackIcon, ElementIcon, Name, RarityIcon } from '../../Snippets';
+import { BattlegearIcon, Name, RarityIcon } from '../../Snippets';
+import { Battlegear } from '../../common/definitions';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
 import { CardBase, CardComponent } from './CardBase';
 
-const AttackCard: CardBase<Attack> = (props) => {
+const BattlegearCard: CardBase<Battlegear> = (props) => {
   const { card } = props;
-
   const ability = abilityText({ ability: card.gsx$ability });
   const unique = uniqueText({ data: { unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }});
   const flavor = card.gsx$flavortext;
 
   return (
     <CardComponent {...props}
+      left={<>
+        <Name name={card.gsx$name} />
+        <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Typography><BattlegearIcon /> Battlegear{card.gsx$types.length > 0 ? ` - ${card.gsx$types}` : null}</Typography>
+      </>}
       right={<>
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>
         {unique && <Typography>{unique}</Typography>}
         {flavor && <Typography>{flavor}</Typography>}
-      </>}
-      left={<>
-        <Name name={card.gsx$name} />
-        <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} />
-        <Typography><AttackIcon bp={card.gsx$bp} /> Attack - {card.gsx$bp}</Typography>
-        <Typography>
-          {`${card.gsx$base} | `}
-          <ElementIcon element="fire" value={card.gsx$fire} />{`${card.gsx$fire} `}
-          <ElementIcon element="air" value={card.gsx$air} />{`${card.gsx$air} `}
-          <ElementIcon element="earth" value={card.gsx$earth} />{`${card.gsx$earth} `}
-          <ElementIcon element="water" value={card.gsx$water} />{`${card.gsx$water}`}
-        </Typography>
       </>}
       content={<>
         <Name name={card.gsx$name} />
@@ -41,6 +33,7 @@ const AttackCard: CardBase<Attack> = (props) => {
       </>}
     />
   );
+
 };
 
-export default AttackCard;
+export default BattlegearCard;
