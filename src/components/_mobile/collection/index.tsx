@@ -2,9 +2,10 @@ import {
   Box, Card, Checkbox, createTheme, FormControl, FormControlLabel, InputLabel, MenuItem, Pagination, Paper, Select, SelectChangeEvent, styled, ThemeProvider, Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Attack, Battlegear, Card as ChaoticCard } from '../../common/definitions';
+import { Attack, Battlegear, Location, Card as ChaoticCard } from '../../common/definitions';
 import AttackCard from './Attack';
 import BattlegearCard from './Battlegear';
+import LocationCard from './Location';
 import { chaoticCardProps, statsType } from './CardBase';
 import Search from './Search';
 
@@ -224,8 +225,12 @@ const CardList = ({ cards, selected, ext, ...props }: listProps) => {
         />);
       // case "Creatures":
       //   return (<Creature card={card} key={i} {...props}/>);
-      // case "Locations":
-      //   return (<Location card={card} key={i} {...props}/>);
+      case "Locations":
+        return (<LocationCard key={card.gsx$name+card.gsx$set}
+          card={card as Location}
+          ext={(card.gsx$name === selected || ext)}
+          {...props}
+        />);
       // case "Mugic":
       //   return (<Mugic card={card} key={i} {...props}/>);
       default:

@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
 import Single from './_base';
-import { PageNotFound, InitiativeIcon } from '../../Snippets';
+import { PageNotFound, Initiative } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleLocation extends React.Component {
@@ -40,7 +40,7 @@ export default class SingleLocation extends React.Component {
           {card_data.gsx$initiative && (
             <div>
               <strong>Initiative: </strong>
-              <InitiativeIcon initiative={card_data.gsx$initiative} notitle="true"/>
+              <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
             </div>
           )}
         </>}
@@ -65,7 +65,7 @@ export default class SingleLocation extends React.Component {
             {card_data.gsx$initiative && (
               <div>
                 <strong>Initiative: </strong>
-                <InitiativeIcon initiative={card_data.gsx$initiative} notitle="true"/>
+                <Initiative initiative={card_data.gsx$initiative} notitle="true"/>
               </div>
             )}
           </>}

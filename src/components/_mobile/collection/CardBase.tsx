@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, CardContent } from '@mui/material';
+import { Box, Card, CardMedia, CardContent, Typography, styled } from '@mui/material';
 import React from 'react';
 
 import { Card as ChaoticCard } from "../../common/definitions";
@@ -28,6 +28,8 @@ type componentProps = chaoticCardProps<ChaoticCard> & {
 export const CardComponent = (
   { card, ext, extend, left, right, content }: componentProps
 ) => {
+  const loc = card.gsx$type === "Locations";
+
   return (ext === false)
     ? (
       <Card sx={{ display: 'flex' }}>
@@ -41,7 +43,7 @@ export const CardComponent = (
         <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: 1, width: "30%" }}>
           {left}
         </Box>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'block' }}>
           {right}
         </Box>
       </Card>
@@ -50,16 +52,27 @@ export const CardComponent = (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: "flex-start" }}>
           <CardMedia
             component="img"
-            sx={{ width: "250px" }}
-            height="350"
+            sx={{ width: (loc ? "350px" : "250px") }}
+            height={loc ? "250" : "350"}
             image={API.cardImage(card)}
             alt={`${card.gsx$name} card`}
             onClick={() => extend("")}
           />
-          <CardContent sx={{ flex: '1 0', minWidth: "310px", width: "calc(100% - 250px)" }}>
+          <CardContent sx={{ 
+            flex: '1 0', minWidth: "310px", 
+            width: `calc(100% - ${loc ? " 350px" : "250px"})`
+          }}>
             {content}
           </CardContent>
         </Box>
       </Card>
     );
 };
+
+export const Unique = styled(Typography)(() => ({
+  fontWeight: "bold"
+}));
+
+export const Flavor = styled(Typography)(() => ({
+  fontStyle: "italic"
+}));

@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import React from 'react';
 
-import { Ability, FlavorText, InitiativeIcon, LocationIcon, Name, RarityIcon, Unique } from '../../Snippets';
+import { Ability, FlavorText, Initiative, LocationIcon, Name, RarityIcon, Unique } from '../../Snippets';
 import API from '../../SpreadsheetData';
 
 @inject((stores, props, context) => props) @observer
@@ -17,7 +17,7 @@ export default class Location extends React.Component {
           <Name name={card.gsx$name} />
           <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} /><br />
           <span><LocationIcon /> Location{card.gsx$types.length > 0 ? " - " + card.gsx$types : null}</span><br />
-          <InitiativeIcon initiative={card.gsx$initiative} />
+          <Initiative initiative={card.gsx$initiative} />
         </div>
         <div className="right">
           <Ability ability={card.gsx$ability} />
@@ -31,7 +31,7 @@ export default class Location extends React.Component {
         <div className="fullcard"><img src={API.cardImage(card)} /></div>
         <div className="right">
           <Name name={card.gsx$name} />
-          <InitiativeIcon initiative={card.gsx$initiative} />
+          <Initiative initiative={card.gsx$initiative} />
           <Ability ability={card.gsx$ability} />
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
           <FlavorText flavortext={card.gsx$flavortext} />

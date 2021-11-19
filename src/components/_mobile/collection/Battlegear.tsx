@@ -4,7 +4,7 @@ import { BattlegearIcon, Name, RarityIcon } from '../../Snippets';
 import { Battlegear } from '../../common/definitions';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent } from './CardBase';
+import { CardBase, CardComponent, Unique, Flavor } from './CardBase';
 
 const BattlegearCard: CardBase<Battlegear> = (props) => {
   const { card } = props;
@@ -21,19 +21,18 @@ const BattlegearCard: CardBase<Battlegear> = (props) => {
       </>}
       right={<>
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>
-        {unique && <Typography>{unique}</Typography>}
-        {flavor && <Typography>{flavor}</Typography>}
+        {unique && <Unique>{unique}</Unique>}
+        {flavor && <Flavor>{flavor}</Flavor>}
       </>}
       content={<>
         <Name name={card.gsx$name} />
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>
-        {unique && <Typography>{unique}</Typography>}
-        {flavor && <Typography>{flavor}</Typography>}
+        {unique && <Unique>{unique}</Unique>}
+        {flavor && <Flavor>{flavor}</Flavor>}
         <Typography>Art By: {card.gsx$artist}</Typography>
       </>}
     />
   );
-
 };
 
 export default BattlegearCard;
