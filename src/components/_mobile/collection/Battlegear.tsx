@@ -8,7 +8,7 @@ import { CardBase, CardComponent, Unique, Flavor } from './CardBase';
 
 const BattlegearCard: CardBase<Battlegear> = (props) => {
   const { card } = props;
-  const ability = abilityText({ ability: card.gsx$ability });
+  const ability = abilityText({ ability: card.gsx$ability, size: "icon16" });
   const unique = uniqueText({ data: { unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }});
   const flavor = card.gsx$flavortext;
 
@@ -16,8 +16,8 @@ const BattlegearCard: CardBase<Battlegear> = (props) => {
     <CardComponent {...props}
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} />
-        <Typography><BattlegearIcon /> Battlegear{card.gsx$types.length > 0 ? ` - ${card.gsx$types}` : null}</Typography>
+        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Typography><BattlegearIcon size="icon20"/> Battlegear{card.gsx$types.length > 0 ? ` - ${card.gsx$types}` : null}</Typography>
       </>}
       right={<>
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>

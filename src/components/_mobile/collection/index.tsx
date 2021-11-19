@@ -88,6 +88,7 @@ export default function Collection (_props) {
 
   const handlePerPage = (event: SelectChangeEvent<number>) => {
     sn(event.target.value as number);
+    sp(1);
   };
 
   const handlePage = (event: React.ChangeEvent<unknown>, value: number) => {

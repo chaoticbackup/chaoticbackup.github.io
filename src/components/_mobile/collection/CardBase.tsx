@@ -40,10 +40,10 @@ export const CardComponent = (
           alt={`${card.gsx$name} thumb`}
           onClick={() => extend(card.gsx$name)}
         />
-        <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: 1, width: "30%" }}>
+        <Box sx={{ marginLeft: .5, marginRight: .5, minWidth: "242px" }}>
           {left}
         </Box>
-        <Box sx={{ display: 'block' }}>
+        <Box>
           {right}
         </Box>
       </Card>

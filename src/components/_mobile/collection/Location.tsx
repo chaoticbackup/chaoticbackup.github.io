@@ -8,7 +8,7 @@ import { CardBase, CardComponent, Unique, Flavor } from './CardBase';
 
 const LocationCard: CardBase<Location> = (props) => {
   const { card } = props;
-  const ability = abilityText({ ability: card.gsx$ability });
+  const ability = abilityText({ ability: card.gsx$ability, size: "icon16" });
   const unique = uniqueText({ data: { unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }});
   const flavor = card.gsx$flavortext;
 
@@ -16,8 +16,8 @@ const LocationCard: CardBase<Location> = (props) => {
     <CardComponent {...props}
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} />
-        <Typography><LocationIcon /> Location{card.gsx$types.length > 0 ? ` - ${card.gsx$types}` : null}</Typography>
+        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Typography><LocationIcon size="icon20" /> Location{card.gsx$types.length > 0 ? ` - ${card.gsx$types}` : null}</Typography>
         <Typography>{`Initiative: `}<InitiativeIcon initiative={card.gsx$initiative} />{` ${card.gsx$initiative}`}</Typography>
       </>}
       right={<>

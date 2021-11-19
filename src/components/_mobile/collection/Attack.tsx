@@ -9,7 +9,7 @@ import { CardBase, CardComponent, Flavor, Unique } from './CardBase';
 const AttackCard: CardBase<Attack> = (props) => {
   const { card } = props;
 
-  const ability = abilityText({ ability: card.gsx$ability });
+  const ability = abilityText({ ability: card.gsx$ability, size: "icon16" });
   const unique = uniqueText({ data: { unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }});
   const flavor = card.gsx$flavortext;
 
@@ -22,8 +22,8 @@ const AttackCard: CardBase<Attack> = (props) => {
       </>}
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} />
-        <Typography><AttackIcon bp={card.gsx$bp} /> Attack - {card.gsx$bp}</Typography>
+        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Typography><AttackIcon size="icon20" bp={card.gsx$bp} /> Attack - {card.gsx$bp}</Typography>
         <Typography>
           {`${card.gsx$base} | `}
           <ElementIcon element="fire" value={card.gsx$fire} />{`${card.gsx$fire} `}
