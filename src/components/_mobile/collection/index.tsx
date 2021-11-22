@@ -2,10 +2,11 @@ import {
   Box, Card, Checkbox, createTheme, FormControl, FormControlLabel, InputLabel, MenuItem, Pagination, Paper, Select, SelectChangeEvent, styled, ThemeProvider, Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Attack, Battlegear, Location, Card as ChaoticCard } from '../../common/definitions';
+import { Attack, Battlegear, Location, Card as ChaoticCard, Mugic } from '../../common/definitions';
 import AttackCard from './Attack';
 import BattlegearCard from './Battlegear';
 import LocationCard from './Location';
+import MugicCard from './Mugic';
 import { chaoticCardProps, statsType } from './CardBase';
 import Search from './Search';
 
@@ -58,7 +59,7 @@ export default function Collection (_props) {
   const [hideStats, setHideStats] = useState(false);
   const [content, setContent] = useState<ChaoticCard[]>([]);
   const [info, setInfo] = useState<{text?: string}>({});
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState<ChaoticCard | null>(null);
 
   useEffect(() => {
     const load = localStorage.getItem("collection");
@@ -110,13 +111,12 @@ export default function Collection (_props) {
     saveSettings({ hideStats: event.target.checked.toString() });
   };
 
-  const handleExtendSingle = (name: string) => {
-    setSelected(name);
+  const handleExtendSingle = (card: ChaoticCard | null) => {
+    setSelected(card);
   };
 
   useEffect(() => {
-    console.log("refresh list");
-    setSelected("");
+    setSelected(null);
   }, [content]);
   
   return (<ThemeProvider theme={theme}>
@@ -205,23 +205,26 @@ export default function Collection (_props) {
 
 type listProps = Omit<chaoticCardProps<ChaoticCard>, "card"> & {
   cards: ChaoticCard[]
-  selected: string
+  selected: ChaoticCard | null
 }
 
 const CardList = ({ cards, selected, ext, ...props }: listProps) => {
+  const isSelected = (card: ChaoticCard) => {
+    return (selected && card.gsx$name === selected.gsx$name && card.gsx$set === selected.gsx$set);
+  };
 
   const list = cards.map((card, i) => {
     switch (card.gsx$type) {
       case "Attacks":
         return (<AttackCard key={card.gsx$name+card.gsx$set}
           card={card as Attack}  
-          ext={(card.gsx$name === selected || ext)}
+          ext={(isSelected(card) || ext)}
           {...props}
         />);
       case "Battlegear":
         return (<BattlegearCard key={card.gsx$name+card.gsx$set}
           card={card as Battlegear}
-          ext={(card.gsx$name === selected || ext)}
+          ext={(isSelected(card) || ext)}
           {...props}
         />);
       // case "Creatures":
@@ -229,11 +232,15 @@ const CardList = ({ cards, selected, ext, ...props }: listProps) => {
       case "Locations":
         return (<LocationCard key={card.gsx$name+card.gsx$set}
           card={card as Location}
-          ext={(card.gsx$name === selected || ext)}
+          ext={(isSelected(card) || ext)}
           {...props}
         />);
-      // case "Mugic":
-      //   return (<Mugic card={card} key={i} {...props}/>);
+      case "Mugic":
+        return (<MugicCard key={card.gsx$name+card.gsx$set}
+          card={card as Mugic}
+          ext={(isSelected(card) || ext)}
+          {...props}
+        />);
       default:
         return (<Card key={i}><Typography>Invalid Card Type</Typography></Card>);
     }

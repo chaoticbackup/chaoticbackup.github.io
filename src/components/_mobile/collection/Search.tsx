@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import API, { sets } from '../../SpreadsheetData/API';
 import search_api from '../../collection/search/search';
@@ -6,10 +6,10 @@ import { Loading } from '../../Snippets';
 import { Modal, Fab, Zoom, useTheme } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const initInput = () => {
+const initInput = (() => {
   /* @ts-ignore */
   const cardSets: {[key in keyof typeof sets]: boolean} = {};
-  for (const key in sets) sets[key.toLowerCase()] = false;
+  for (const key in sets) cardSets[key.toLowerCase()] = false;
 
   return {
     name: "",
@@ -27,11 +27,11 @@ const initInput = () => {
     mull: { unique: false, loyal: false, legendary: false, mixed: false },
     gender: { ambiguous: false, female: false, male: false }
   };
-};
+})();
 
 const queryList = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
 
-const parseQuery = (input, location) => {
+const parseQuery = (input: typeof initInput, location) => {
   const queryString = location.search.toLowerCase();
 
   const query = {} as any;
@@ -75,7 +75,6 @@ const parseQuery = (input, location) => {
 const updateQuery = (input, history) => {
   let queryString = "";
 
-
   queryList.forEach(query => {
     let temp = "";
     Object.keys(input[query]).forEach((item) => {
@@ -116,12 +115,17 @@ const updateQuery = (input, history) => {
   history.push(`/collection/?${queryString}`);
 };
 
+const inputReducer = (state: typeof initInput, newState: Partial<typeof initInput>) => {
+  return { ...state, ...newState };
+};
+
 export default function Search ({ setContent, setInfo }) {
   const theme = useTheme();
   const history = useHistory();
   const location = useLocation();
   const prevLocation = useRef<any>(undefined);
-  const [input, setInput] = useState(initInput());
+  const [input, dispatchInput] = useReducer(inputReducer, initInput);
+  // const [input, setInput] = useState(() => initInput());
   const [loaded, setLoaded] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -135,17 +139,17 @@ export default function Search ({ setContent, setInfo }) {
     .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+    
   useEffect(() => {
     if (location != prevLocation.current) {
       prevLocation.current = location;
-      setInput(parseQuery(input, location));
+      dispatchInput(parseQuery(input, location));
     }
   }, [input, location]);
 
 
   const cleanInput = () => {
-    setInput(initInput());
+    dispatchInput(initInput);
   };
 
   const handleSearch = (event?: FormEvent) => {
@@ -170,14 +174,13 @@ export default function Search ({ setContent, setInfo }) {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const { name } = target;
 
-    setInput({
-      ...input,
+    dispatchInput({
       ...((!obj) ? { [input[name]]: value } : { [input[obj][name]]: value })
     });
   };
 
   if (loaded == false) {
-    return (<Loading />);
+    return (<></>);
   }
 
   const form = (<>

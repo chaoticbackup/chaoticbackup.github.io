@@ -12,9 +12,9 @@ export interface BaseCard {
   gsx$flavortext: string
   gsx$splash: string
   gsx$types: string
-  gsx$unique: number | string
-  gsx$legendary: number | string
-  gsx$loyal: number | string
+  gsx$unique: string
+  gsx$legendary: string
+  gsx$loyal: string
   gsx$alt?: string
   gsx$alt2?: string
   gsx$ic?: string // imgur card
@@ -23,12 +23,12 @@ export interface BaseCard {
 }
 
 export interface Attack extends BaseCard {
-  gsx$fire: number | string
-  gsx$air: number | string
-  gsx$earth: number | string
-  gsx$water: number | string
-  gsx$base: number | string
-  gsx$bp: number | string
+  gsx$fire: string
+  gsx$air: string
+  gsx$earth: string
+  gsx$water: string
+  gsx$base: string
+  gsx$bp: string
 }
 
 export interface Battlegear extends BaseCard {
@@ -37,14 +37,14 @@ export interface Battlegear extends BaseCard {
 
 export interface Creature extends BaseCard {
   gsx$tribe: string
-  gsx$courage: string | number
-  gsx$power: string | number
-  gsx$wisdom: string | number
-  gsx$speed: string | number
-  gsx$energy: string | number
+  gsx$courage: string
+  gsx$power: string
+  gsx$wisdom: string
+  gsx$speed: string
+  gsx$energy: string
   gsx$elements: string
   gsx$brainwashed: string
-  gsx$mugicability: string | number
+  gsx$mugicability: string
   gsx$avatar?: string
   gsx$subtype: string
   gsx$ia?: string // imgur avatar
@@ -57,7 +57,9 @@ export interface Location extends BaseCard {
 
 export interface Mugic extends BaseCard {
   gsx$tribe: string
-  gsx$cost: number | string
+  gsx$cost: string
+  gsx$notes: string
+  gsx$shownotes: string
 }
 
 export type Card = Attack | Battlegear | Creature | Location | Mugic;

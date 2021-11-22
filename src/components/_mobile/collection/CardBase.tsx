@@ -11,7 +11,7 @@ export interface chaoticCardProps<T extends ChaoticCard> {
   ext: boolean
   stats: statsType
   hideStats: boolean
-  extend: (name: string) => void
+  extend: (card: ChaoticCard | null) => void
 }
 
 export interface CardBase<T extends ChaoticCard> {
@@ -38,7 +38,7 @@ export const CardComponent = (
           sx={{ height: "100px", width: "96px" }}
           image={API.base_image + (card.gsx$thumb||API.thumb_missing)}
           alt={`${card.gsx$name} thumb`}
-          onClick={() => extend(card.gsx$name)}
+          onClick={() => extend(card)}
         />
         <Box sx={{ marginLeft: .5, marginRight: .5, minWidth: "242px" }}>
           {left}
@@ -56,7 +56,7 @@ export const CardComponent = (
             height={loc ? "250" : "350"}
             image={API.cardImage(card)}
             alt={`${card.gsx$name} card`}
-            onClick={() => extend("")}
+            onClick={() => extend(null)}
           />
           <CardContent sx={{ 
             flex: '1 0', minWidth: "310px", 
