@@ -139,7 +139,7 @@ export default function Search ({ setContent, setInfo }) {
     .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-    
+
   useEffect(() => {
     if (location != prevLocation.current) {
       prevLocation.current = location;
@@ -179,11 +179,7 @@ export default function Search ({ setContent, setInfo }) {
     });
   };
 
-  if (loaded == false) {
-    return (<></>);
-  }
-
-  const form = (<>
+  const form = ((loaded == false) ? <></> : <>
 
   </>);
 
@@ -207,7 +203,6 @@ export default function Search ({ setContent, setInfo }) {
     >
       {form}
     </Modal>
-    {!open && form}
     <Zoom
       in={!open}
       timeout={transitionDuration}

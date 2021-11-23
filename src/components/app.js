@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 
 import useCheckMobileScreen from './_hooks/useCheckMobileScreen';
@@ -43,26 +43,28 @@ export default function App() {
     }
   }, [isMobile]);
 
+  useEffect(() => {
+    console.log("render");
+  }, []);
+
   return (
-    <Router>
-      <Switch>
-        <Route path="/beta/collection" component={Collection} />
-        <Route path="/beta">
-          {({ location }) => <Redirect to={location.pathname.replace("/beta", "")} /> }
-        </Route>
-        {isMobile && <Route path="/collection" component={MobileCollection} />}
-        {/* Normal Routes */}
-        <Base>
-          <Route exact path="/" component={Home} />
-          <Route path="/PageNotFound" component={PageNotFound} />
-          <Route path="/UnderConstruction" component={UnderConstruction} />
-          <Route path="/EnterTheCode" component={EnterTheCode} />
-          <Route path="/create" component={Create} />
-          <Route path="/collection" component={Collection} />
-          <Route path="/portal" component={Portal} />
-        </Base>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route path="/beta/collection" component={Collection} />
+      <Route path="/beta">
+        {({ location }) => <Redirect to={location.pathname.replace("/beta", "")} /> }
+      </Route>
+      {isMobile && <Route path="/collection" component={MobileCollection} />}
+      {/* Normal Routes */}
+      <Base>
+        <Route exact path="/" component={Home} />
+        <Route path="/PageNotFound" component={PageNotFound} />
+        <Route path="/UnderConstruction" component={UnderConstruction} />
+        <Route path="/EnterTheCode" component={EnterTheCode} />
+        <Route path="/create" component={Create} />
+        <Route path="/collection" component={Collection} />
+        <Route path="/portal" component={Portal} />
+      </Base>
+    </Switch>
   );
 }
 

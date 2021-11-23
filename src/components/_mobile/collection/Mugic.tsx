@@ -7,7 +7,7 @@ import { uniqueText } from "../../Snippets/uniqueText";
 import { CardBase, CardComponent, Unique, Flavor } from "./CardBase";
 
 
-const MugicCounter = ({ card }: {card:Mugic}) => {
+const MugicCounter = ({ card }: { card: Mugic }) => {
   const mugicCounters = [] as JSX.Element[];
   if (Number(card.gsx$cost) === 0) {
     mugicCounters.push(<MugicIcon tribe={card.gsx$tribe} key={0} amount={"0"}/>);
@@ -31,7 +31,7 @@ const MugicCounter = ({ card }: {card:Mugic}) => {
 
 const MugicCard: CardBase<Mugic> = (props) => {
   const { card } = props;
-  const ability = abilityText({ ability: card.gsx$ability, size: "icon16" });
+  const ability = abilityText({ ability: card.gsx$ability, tribe: card.gsx$tribe, size: "icon16" });
   const unique = uniqueText({ data: { unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }});
   const flavor = card.gsx$flavortext;
 

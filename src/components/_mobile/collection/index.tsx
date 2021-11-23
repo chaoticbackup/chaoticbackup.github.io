@@ -1,13 +1,15 @@
-import { 
-  Box, Card, Checkbox, createTheme, FormControl, FormControlLabel, InputLabel, MenuItem, Pagination, Paper, Select, SelectChangeEvent, styled, ThemeProvider, Typography
+import {
+  AppBar, Box, Card, Checkbox, createTheme, FormControl, FormControlLabel, InputLabel, MenuItem, 
+  Pagination, Paper, Select, SelectChangeEvent, styled, ThemeProvider, Toolbar, Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Attack, Battlegear, Location, Card as ChaoticCard, Mugic } from '../../common/definitions';
+import { Attack, Battlegear, Card as ChaoticCard, Location, Mugic, Creature } from '../../common/definitions';
 import AttackCard from './Attack';
 import BattlegearCard from './Battlegear';
+import { chaoticCardProps, statsType } from './CardBase';
+import CreatureCard from './Creature';
 import LocationCard from './Location';
 import MugicCard from './Mugic';
-import { chaoticCardProps, statsType } from './CardBase';
 import Search from './Search';
 
 import './collection.scss';
@@ -122,74 +124,76 @@ export default function Collection (_props) {
   return (<ThemeProvider theme={theme}>
     <Paper square sx={{ minHeight: "100vh", height: "100%", paddingLeft: theme.spacing(1), paddingRight: theme.spacing(1) }}>
       <Search {...({ setContent, setInfo })} />
-      <Box sx={{
-        display: 'flex', 
-        width: 'fit-content', 
-        flexWrap: 'wrap', 
-        alignItems: "flex-start", 
-        rowGap: theme.spacing(1),
-        columnGap: theme.spacing(1),
-        paddingTop: theme.spacing(2), 
-        paddingBottom: theme.spacing(1)
-      }}>
-        <Typography>{content.length} results</Typography>
-        <FormControl>
-          <InputLabel htmlFor="per-page">Per Page</InputLabel>
-          <CustomSelect
-            id="per-page"
-            value={n}
-            /* @ts-ignore */
-            onChange={handlePerPage}
-            sx={{ marginLeft: "2px", width: "70px" }}
-          >
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={25}>25</MenuItem>
-            <MenuItem value={50}>50</MenuItem>
-          </CustomSelect>
-        </FormControl>
-        <Pagination variant="outlined" shape="rounded"
-          count={Math.ceil(content.length / n)} 
-          page={p} 
-          onChange={handlePage}
-        />
-        <FormControl>
-          <InputLabel htmlFor="stats-drop">Stats</InputLabel>
-          <CustomSelect
-            id="stats-drop"
-            value={stats}
-            /* @ts-ignore */
-            onChange={hanldeStats}
-            sx={{ width: "106px" }}
-          >
-            <MenuItem value="min">Min</MenuItem>
-            <MenuItem value="avg">Average</MenuItem>
-            <MenuItem value="max">Max</MenuItem>
-          </CustomSelect>
-        </FormControl>
-        <FormControlLabel label="Extended"
-          labelPlacement="start"
-          control={<Checkbox checked={ext} onChange={handleExt} />} 
-          sx={{
-            marginLeft: 0,
-            marginRight: 0,
-            '& > .MuiCheckbox-root': {
-              padding: 0
-            }
-          }}
-        />
-        <FormControlLabel label="Hide Stats"
-          labelPlacement="start"
-          control={<Checkbox checked={hideStats} onChange={handleHideStats} />} 
-          sx={{
-            marginLeft: 0,
-            marginRight: 0,
-            '& > .MuiCheckbox-root': {
-              padding: 0
-            }
-          }}
-        />
-      </Box>
+      <AppBar color="inherit" sx={{ paddingLeft: theme.spacing(1) }} >
+        <Box sx={{
+          display: 'flex', 
+          width: 'fit-content', 
+          flexWrap: 'wrap', 
+          alignItems: "flex-start", 
+          rowGap: theme.spacing(1),
+          columnGap: theme.spacing(1),
+          paddingTop: theme.spacing(2), 
+          paddingBottom: theme.spacing(1),
+        }}>
+          <Typography>{content.length} results</Typography>
+          <FormControl>
+            <InputLabel htmlFor="per-page">Per Page</InputLabel>
+            <CustomSelect
+              id="per-page"
+              value={n}
+              /* @ts-ignore */
+              onChange={handlePerPage}
+              sx={{ marginLeft: "2px", width: "70px" }}
+            >
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={25}>25</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+            </CustomSelect>
+          </FormControl>
+          <Pagination variant="outlined" shape="rounded"
+            count={Math.ceil(content.length / n)} 
+            page={p} 
+            onChange={handlePage}
+          />
+          <FormControl>
+            <InputLabel htmlFor="stats-drop">Stats</InputLabel>
+            <CustomSelect
+              id="stats-drop"
+              value={stats}
+              /* @ts-ignore */
+              onChange={hanldeStats}
+              sx={{ width: "106px" }}
+            >
+              <MenuItem value="min">Min</MenuItem>
+              <MenuItem value="avg">Average</MenuItem>
+              <MenuItem value="max">Max</MenuItem>
+            </CustomSelect>
+          </FormControl>
+          <FormControlLabel 
+            label="Extended"
+            labelPlacement="start"
+            control={<Checkbox checked={ext} onChange={handleExt} />} 
+            sx={{
+              margin: "auto 0",
+              '& > .MuiCheckbox-root': {
+                padding: 0
+              }
+            }}
+          />
+          <FormControlLabel label="Hide Stats"
+            labelPlacement="start"
+            control={<Checkbox checked={hideStats} onChange={handleHideStats} />} 
+            sx={{
+              margin: "auto 0",
+              '& > .MuiCheckbox-root': {
+                padding: 0
+              }
+            }}
+          />
+        </Box>
+      </AppBar>
+      <Toolbar />
       {info.text ? (
         <Typography style={{ textAlign: 'left' }}>{info.text}</Typography>
       ) : (
@@ -227,8 +231,12 @@ const CardList = ({ cards, selected, ext, ...props }: listProps) => {
           ext={(isSelected(card) || ext)}
           {...props}
         />);
-      // case "Creatures":
-      //   return (<Creature card={card} key={i} {...props}/>);
+      case "Creatures":
+        return (<CreatureCard key={card.gsx$name+card.gsx$set}
+          card={card as Creature}
+          ext={(isSelected(card) || ext)}
+          {...props}
+        />);
       case "Locations":
         return (<LocationCard key={card.gsx$name+card.gsx$set}
           card={card as Location}

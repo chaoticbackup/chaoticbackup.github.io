@@ -23,10 +23,12 @@ type componentProps = chaoticCardProps<ChaoticCard> & {
   left: JSX.Element
   right: JSX.Element
   content: JSX.Element
+  right2?: JSX.Element
+  imageCover?: JSX.Element
 }
 
 export const CardComponent = (
-  { card, ext, extend, left, right, content }: componentProps
+  { card, ext, extend, imageCover, left, right, content, right2 }: componentProps
 ) => {
   const loc = card.gsx$type === "Locations";
 
@@ -46,6 +48,9 @@ export const CardComponent = (
         <Box>
           {right}
         </Box>
+        {right2 && <Box>
+          {right2}
+        </Box>}
       </Card>
     ) : (
       <Card>
@@ -58,6 +63,9 @@ export const CardComponent = (
             alt={`${card.gsx$name} card`}
             onClick={() => extend(null)}
           />
+          {imageCover && 
+            <div className="image-cover" onClick={() => extend(null)}>{imageCover}</div>
+          }
           <CardContent sx={{ 
             flex: '1 0', minWidth: "310px", 
             width: `calc(100% - ${loc ? " 350px" : "250px"})`

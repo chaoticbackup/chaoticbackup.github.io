@@ -14,7 +14,7 @@ export function abilityText(props) {
   };
   
   const elements = {
-    regex: new RegExp(/(\b((fire)|(air)|(earth)|(water)))/i),
+    regex: new RegExp(/(\b((fire)|(air)|(earth)|(water))\b)/i),
     fn: (key, result) => {
       return (<span key={key}><ElementIcon element={result[0].replace(/\b/, '')} value="true" size={props.size || "icon14"} />{result[0]}</span>);
     }
