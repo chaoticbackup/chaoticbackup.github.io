@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import { Attack } from "../../common/definitions";
-import { AttackIcon, ElementIcon, Name, RarityIcon } from '../../Snippets';
+import { AttackIcon, ElementIcon, Name } from '../../Snippets';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Flavor, Unique } from './CardBase';
+import { CardBase, CardComponent, Flavor, Unique, Rarity } from './CardBase';
 
 const AttackCard: CardBase<Attack> = (props) => {
   const { card } = props;
@@ -22,7 +22,7 @@ const AttackCard: CardBase<Attack> = (props) => {
       </>}
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Rarity {...props} />
         <Typography><AttackIcon size="icon20" bp={card.gsx$bp} /> Attack - {card.gsx$bp}</Typography>
         <Typography>
           {`${card.gsx$base} | `}
@@ -34,6 +34,7 @@ const AttackCard: CardBase<Attack> = (props) => {
       </>}
       content={<>
         <Name name={card.gsx$name} />
+        <Rarity {...props} />
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>
         {unique && <Unique>{unique}</Unique>}
         {flavor && <Flavor>{flavor}</Flavor>}

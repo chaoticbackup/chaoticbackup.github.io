@@ -33,7 +33,7 @@ theme = createTheme(theme, createTheme({
         root: {
           backgroundColor: "#1F1F1F",
           color: "gray",
-          paddingLeft: theme.spacing(.5)
+          marginBottom: "4px"
         }
       }
     }
@@ -122,7 +122,11 @@ export default function Collection (_props) {
   }, [content]);
   
   return (<ThemeProvider theme={theme}>
-    <Paper square sx={{ minHeight: "100vh", height: "100%", paddingLeft: theme.spacing(1), paddingRight: theme.spacing(1) }}>
+    <Paper square sx={{ 
+      minHeight: "100vh", height: "100%", 
+      padding: theme.spacing(1),
+      // backgroundColor: "hsl(0deg 0% 97%)"
+    }}>
       <Search {...({ setContent, setInfo })} />
       <AppBar color="inherit" sx={{ paddingLeft: theme.spacing(1) }} >
         <Box sx={{

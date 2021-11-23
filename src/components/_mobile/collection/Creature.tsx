@@ -1,10 +1,10 @@
 import { Typography, styled } from '@mui/material';
 import React from 'react';
 import { Creature } from "../../common/definitions";
-import { Name, RarityIcon, TribeIcon, MugicIcon, ElementIcon, DisciplineIcon } from '../../Snippets';
+import { Name, TribeIcon, MugicIcon, ElementIcon, DisciplineIcon } from '../../Snippets';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Unique, Flavor } from "./CardBase";
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from "./CardBase";
 
 const TribeLine = ({ card }: {card: Creature}) => {
   let types = card.gsx$types;
@@ -36,8 +36,9 @@ const Brainwashed = styled(Typography)(() => ({
 }));
 
 const Stat = styled(Typography)(() => ({
-  width: "40px",
-  lineHeight: "normal"
+  width: "44px",
+  lineHeight: "normal",
+  textAlign: "right"
 }));
 
 const CreatureCard: CardBase<Creature> = (props) => {
@@ -73,7 +74,7 @@ const CreatureCard: CardBase<Creature> = (props) => {
     <CardComponent {...props} 
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Rarity {...props} />
         <TribeLine card={card} />
         <Typography>
           <ElementIcon element="fire" value={card.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
@@ -97,7 +98,7 @@ const CreatureCard: CardBase<Creature> = (props) => {
         <Stat>{power}<DisciplineIcon discipline="power" /></Stat>
         <Stat>{wisdom}<DisciplineIcon discipline="wisdom" /></Stat>
         <Stat>{speed}<DisciplineIcon discipline="speed" /></Stat>
-        <Stat sx={{ fontWeight: "bold" }}>{energy}</Stat>
+        <Stat sx={{ fontWeight: "bold" }}>{energy}<span style={{ display: "inline-block", width: "16px" }}></span></Stat>
       </>}
       {...((!hideStats) ? { imageCover: (
         <div>
@@ -111,6 +112,7 @@ const CreatureCard: CardBase<Creature> = (props) => {
         : undefined)}
       content={<>
         <Name name={card.gsx$name} />
+        <Rarity {...props} />
         <span>{stat_range(card.gsx$courage)}&nbsp;<DisciplineIcon discipline="courage" /></span>&nbsp;
         <span>{stat_range(card.gsx$power)}&nbsp;<DisciplineIcon discipline="power" /></span>&nbsp;
         <span>{stat_range(card.gsx$wisdom)}&nbsp;<DisciplineIcon discipline="wisdom" /></span>&nbsp;

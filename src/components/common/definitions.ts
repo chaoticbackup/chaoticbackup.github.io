@@ -6,6 +6,7 @@ export interface BaseCard {
   gsx$type: CardType
   gsx$set: string
   gsx$rarity: string
+  gsx$id: string
   gsx$image: string
   gsx$thumb: string
   gsx$ability: string

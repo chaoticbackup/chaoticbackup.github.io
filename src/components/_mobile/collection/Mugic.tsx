@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import { Mugic } from "../../common/definitions";
-import { Name, RarityIcon, TribeIcon, MugicIcon } from "../../Snippets";
+import { Name, TribeIcon, MugicIcon } from "../../Snippets";
 import { abilityText } from "../../Snippets/abilityText";
 import { uniqueText } from "../../Snippets/uniqueText";
-import { CardBase, CardComponent, Unique, Flavor } from "./CardBase";
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from "./CardBase";
 
 
 const MugicCounter = ({ card }: { card: Mugic }) => {
@@ -39,7 +39,7 @@ const MugicCard: CardBase<Mugic> = (props) => {
     <CardComponent {...props}
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Rarity {...props} />
         <Typography><TribeIcon size="icon20" tribe={card.gsx$tribe} /> Mugic - {card.gsx$tribe}</Typography>
         <Typography><MugicCounter card={card}/></Typography>
       </>
@@ -51,6 +51,7 @@ const MugicCard: CardBase<Mugic> = (props) => {
       </>}
       content={<>
         <Name name={card.gsx$name} />
+        <Rarity {...props} />
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>
         {unique && <Unique>{unique}</Unique>}
         {flavor && <Flavor>{flavor}</Flavor>}

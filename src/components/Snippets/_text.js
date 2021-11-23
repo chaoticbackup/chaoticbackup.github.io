@@ -1,7 +1,8 @@
 import React from 'react';
+import API from '../SpreadsheetData';
 import { abilityText } from './abilityText';
 import { uniqueText } from './uniqueText';
-import { InitiativeIcon } from './_icons';
+import { InitiativeIcon, RarityIcon } from './_icons';
 
 export function Name(props) {
   const name = props.name.split(",");
@@ -16,6 +17,20 @@ export function Name(props) {
       }
     </span>
   </div>);
+}
+
+export function Rarity(props) {
+  const { set, rarity, id = -1 } = props;
+
+  return (
+    <div>
+      <RarityIcon {...props} />
+      {(id === -1)
+        ? (<>{API.sets[props.set]}&nbsp;|&nbsp;{props.rarity}</>)
+        : (<>{` ${API.sets[set]} `}<span style={{ fontWeight: 'bold' }}>{`# ${id}`}</span>{` | ${rarity}`}</>)
+      }
+    </div>
+  );
 }
 
 export function FlavorText({ flavortext }) {

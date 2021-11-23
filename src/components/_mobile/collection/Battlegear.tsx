@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import { BattlegearIcon, Name, RarityIcon } from '../../Snippets';
+import { BattlegearIcon, Name } from '../../Snippets';
 import { Battlegear } from '../../common/definitions';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Unique, Flavor } from './CardBase';
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from './CardBase';
 
 const BattlegearCard: CardBase<Battlegear> = (props) => {
   const { card } = props;
@@ -16,7 +16,7 @@ const BattlegearCard: CardBase<Battlegear> = (props) => {
     <CardComponent {...props}
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Rarity {...props} />
         <Typography><BattlegearIcon size="icon20"/> Battlegear{card.gsx$types.length > 0 ? ` - ${card.gsx$types}` : null}</Typography>
       </>}
       right={<>
@@ -26,6 +26,7 @@ const BattlegearCard: CardBase<Battlegear> = (props) => {
       </>}
       content={<>
         <Name name={card.gsx$name} />
+        <Rarity {...props} />
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>
         {unique && <Unique>{unique}</Unique>}
         {flavor && <Flavor>{flavor}</Flavor>}

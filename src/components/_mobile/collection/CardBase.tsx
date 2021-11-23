@@ -2,6 +2,7 @@ import { Box, Card, CardMedia, CardContent, Typography, styled } from '@mui/mate
 import React from 'react';
 
 import { Card as ChaoticCard } from "../../common/definitions";
+import { RarityIcon } from '../../Snippets';
 import API from '../../SpreadsheetData';
 
 export type statsType = "avg" | "min" | "max";
@@ -34,10 +35,11 @@ export const CardComponent = (
 
   return (ext === false)
     ? (
-      <Card sx={{ display: 'flex' }}>
+      <Card sx={{ display: 'flex' }} raised>
         <CardMedia
           component="img"
-          sx={{ height: "100px", width: "96px" }}
+          sx={{ width: "96px" }}
+          height="100px"
           image={API.base_image + (card.gsx$thumb||API.thumb_missing)}
           alt={`${card.gsx$name} thumb`}
           onClick={() => extend(card)}
@@ -45,7 +47,7 @@ export const CardComponent = (
         <Box sx={{ marginLeft: .5, marginRight: .5, minWidth: "242px" }}>
           {left}
         </Box>
-        <Box>
+        <Box sx={{ marginRight: "auto" }}>
           {right}
         </Box>
         {right2 && <Box>
@@ -53,7 +55,7 @@ export const CardComponent = (
         </Box>}
       </Card>
     ) : (
-      <Card>
+      <Card raised>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: "flex-start" }}>
           <CardMedia
             component="img"
@@ -68,7 +70,9 @@ export const CardComponent = (
           }
           <CardContent sx={{ 
             flex: '1 0', minWidth: "310px", 
-            width: `calc(100% - ${loc ? " 350px" : "250px"})`
+            width: `calc(100% - ${loc ? " 350px" : "250px"})`,
+            paddingTop: "8px",
+            paddingBottom: 0,
           }}>
             {content}
           </CardContent>
@@ -84,3 +88,20 @@ export const Unique = styled(Typography)(() => ({
 export const Flavor = styled(Typography)(() => ({
   fontStyle: "italic"
 }));
+
+export const Rarity = (props: {card: ChaoticCard, ext: boolean}) => {
+  const { card, ext } = props;
+
+  return (!ext) ? (
+    <Typography>
+      <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+      {` ${API.sets[card.gsx$set]} | ${card.gsx$rarity}`}
+    </Typography>
+  ) : (
+    <Typography>
+      <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+      {` ${API.sets[card.gsx$set]} `}<span style={{ fontWeight: 'bold' }}>{`# ${card.gsx$id}`}</span>{` | ${card.gsx$rarity}`}
+    </Typography>
+  );
+};
+

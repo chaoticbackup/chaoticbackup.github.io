@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import { Location } from '../../common/definitions';
-import { InitiativeIcon, LocationIcon, Name, RarityIcon } from '../../Snippets';
+import { InitiativeIcon, LocationIcon, Name } from '../../Snippets';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Unique, Flavor } from './CardBase';
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from './CardBase';
 
 const LocationCard: CardBase<Location> = (props) => {
   const { card } = props;
@@ -16,7 +16,7 @@ const LocationCard: CardBase<Location> = (props) => {
     <CardComponent {...props}
       left={<>
         <Name name={card.gsx$name} />
-        <RarityIcon size="icon20" set={card.gsx$set} rarity={card.gsx$rarity} />
+        <Rarity {...props} />
         <Typography><LocationIcon size="icon20" /> Location{card.gsx$types.length > 0 ? ` - ${card.gsx$types}` : null}</Typography>
         <Typography>{`Initiative: `}<InitiativeIcon initiative={card.gsx$initiative} />{` ${card.gsx$initiative}`}</Typography>
       </>}
@@ -27,6 +27,7 @@ const LocationCard: CardBase<Location> = (props) => {
       </>}
       content={<>
         <Name name={card.gsx$name} />
+        <Rarity {...props} />
         <Typography>{`Initiative: `}<InitiativeIcon initiative={card.gsx$initiative} />{` ${card.gsx$initiative}`}</Typography>
         <Typography sx={{ whiteSpace: "pre-line" }}>{ability}</Typography>
         {unique && <Unique>{unique}</Unique>}

@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../SpreadsheetData';
 import { observer, inject } from 'mobx-react';
-import { FlavorText, RarityIcon, Unique, Name, ElementIcon, MugicIcon, DisciplineIcon, Ability, TribeIcon } from '../../Snippets';
+import { FlavorText, Rarity, Unique, Name, ElementIcon, MugicIcon, DisciplineIcon, Ability, TribeIcon } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class Creature extends React.Component {
@@ -47,7 +47,7 @@ export default class Creature extends React.Component {
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
           <Name name={card.gsx$name} />
-          <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} />
           <TribeLine /><br />
           <div>
             <ElementIcon element="fire" value={card.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
@@ -111,6 +111,7 @@ export default class Creature extends React.Component {
         </div>
         <div className="right" >
           <Name name={card.gsx$name} />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} id={card.gsx$id} />
           <span>{stat_range(card.gsx$courage, card.gsx$name)}&nbsp;<DisciplineIcon discipline="courage" /></span>&nbsp;
           <span>{stat_range(card.gsx$power, card.gsx$name)}&nbsp;<DisciplineIcon discipline="power" /></span>&nbsp;
           <span>{stat_range(card.gsx$wisdom, card.gsx$name)}&nbsp;<DisciplineIcon discipline="wisdom" /></span>&nbsp;
