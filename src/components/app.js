@@ -28,8 +28,7 @@ const Collection = loadable(
 );
 
 const MobileCollection = loadable(
-  () => import('./_mobile/collection'),
-  { fallback: <Loading /> }
+  () => import('./_mobile/collection')
 );
 
 export default function App() {
@@ -42,10 +41,6 @@ export default function App() {
       document.styleSheets[0].disabled = false;
     }
   }, [isMobile]);
-
-  useEffect(() => {
-    console.log("render");
-  }, []);
 
   return (
     <Switch>
