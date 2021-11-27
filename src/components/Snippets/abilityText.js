@@ -3,6 +3,8 @@ import processString from 'react-process-string';
 import { MugicIcon, ElementIcon, DisciplineIcon, TribeIcon } from "./_icons";
 
 export function abilityText(props) {
+  if (!props.ability || props.ability.length === 0) return "";
+
   const mugic_counters = {
     regex: /([0-9x]*){{mc}}/i,
     fn: (key, result) => {

@@ -1,9 +1,8 @@
-import React, { FormEvent, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useReducer, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import API, { sets } from '../../SpreadsheetData/API';
 import search_api from '../../collection/search/search';
-import { Loading } from '../../Snippets';
-import { Modal, Fab, Zoom, useTheme } from '@mui/material';
+import { Modal, Fab, Zoom, useTheme, Box, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const initInput = (() => {
@@ -169,19 +168,15 @@ export default function Search ({ setContent, setInfo }) {
     }
   };
 
-  const handleChange = (event: {target: HTMLInputElement}, obj?: string) => {
+  const handleChange = (event: {target: HTMLInputElement | HTMLTextAreaElement}, obj?: string) => {
     const { target } = event;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value;
     const { name } = target;
 
     dispatchInput({
       ...((!obj) ? { [input[name]]: value } : { [input[obj][name]]: value })
     });
   };
-
-  const form = ((loaded == false) ? <></> : <>
-
-  </>);
 
   const handleOpen = () => {
     setOpen(true);
@@ -195,6 +190,25 @@ export default function Search ({ setContent, setInfo }) {
     enter: theme.transitions.duration.enteringScreen,
     exit: theme.transitions.duration.leavingScreen,
   };
+
+  const form = ((loaded == false) ? <></> : <Box sx={{
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  }}>
+    <TextField 
+      id="name"
+      label="Name"
+      value={input.name}
+      onChange={(e) => handleChange(e)}
+    />
+  </Box>);
 
   return (<>
     <Modal

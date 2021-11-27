@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, CardContent, Typography, styled } from '@mui/material';
+import { Box, Card, CardMedia, CardContent, Typography, styled, useTheme } from '@mui/material';
 import React from 'react';
 
 import { Card as ChaoticCard } from "../../common/definitions";
@@ -31,11 +31,15 @@ type componentProps = chaoticCardProps<ChaoticCard> & {
 export const CardComponent = (
   { card, ext, extend, imageCover, left, right, content, right2 }: componentProps
 ) => {
+  const theme = useTheme();
+
   const loc = card.gsx$type === "Locations";
 
   return (ext === false)
     ? (
-      <Card sx={{ display: 'flex' }} raised>
+      <Card sx={{ display: 'flex',
+        [theme.breakpoints.down('sm')]: { flexWrap: 'wrap', alignItems: "flex-start" }
+      }} raised>
         <CardMedia
           component="img"
           sx={{ width: "96px" }}
@@ -47,12 +51,14 @@ export const CardComponent = (
         <Box sx={{ marginLeft: .5, marginRight: .5, minWidth: "242px" }}>
           {left}
         </Box>
-        <Box sx={{ marginRight: "auto" }}>
-          {right}
+        <Box sx={{ display: "flex", justifyContent: 'space-between' }}>
+          <Box sx={{ marginRight: "auto", flexGrow: 1 }}>
+            {right}
+          </Box>
+          {right2 && <Box sx={{ float: "right" }}>
+            {right2}
+          </Box>}
         </Box>
-        {right2 && <Box>
-          {right2}
-        </Box>}
       </Card>
     ) : (
       <Card raised>
