@@ -38,7 +38,7 @@ export const CardComponent = (
   return (ext === false)
     ? (
       <Card sx={{ display: 'flex',
-        [theme.breakpoints.down('sm')]: { flexWrap: 'wrap', alignItems: "flex-start" }
+        [theme.breakpoints.down('md')]: { flexWrap: 'wrap', alignItems: "flex-start" }
       }} raised>
         <CardMedia
           component="img"
@@ -51,7 +51,7 @@ export const CardComponent = (
         <Box sx={{ marginLeft: .5, marginRight: .5, minWidth: "242px" }}>
           {left}
         </Box>
-        <Box sx={{ display: "flex", justifyContent: 'space-between' }}>
+        <Box sx={{ display: "flex", flexGrow: 1 }}>
           <Box sx={{ marginRight: "auto", flexGrow: 1 }}>
             {right}
           </Box>

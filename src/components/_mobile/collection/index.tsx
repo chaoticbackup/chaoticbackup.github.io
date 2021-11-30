@@ -1,6 +1,6 @@
 import {
   AppBar, Box, Card, Checkbox, createTheme, FormControl, FormControlLabel, InputLabel, MenuItem, 
-  Pagination, Paper, Select, SelectChangeEvent, Stack, styled, ThemeProvider, Typography
+  Pagination, Paper, Select, SelectChangeEvent, Stack, styled, ThemeProvider, Typography, useMediaQuery
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Attack, Battlegear, Card as ChaoticCard, Location, Mugic, Creature } from '../../common/definitions';
@@ -19,8 +19,8 @@ let theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 650,
-      md: 900,
+      sm: 430,
+      md: 650,
       lg: 1200,
       xl: 1536,
     }
@@ -63,6 +63,7 @@ export default function Collection (_props) {
   const [content, setContent] = useState<ChaoticCard[]>([]);
   const [info, setInfo] = useState<{text?: string}>({});
   const [selected, setSelected] = useState<ChaoticCard | null>(null);
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const load = localStorage.getItem("collection");
@@ -122,6 +123,65 @@ export default function Collection (_props) {
     setSelected(null);
   }, [content]);
   
+  const TopMenu = () => (<>
+    <Typography>{content.length} results</Typography>
+    <FormControl>
+      <InputLabel htmlFor="per-page">Per Page</InputLabel>
+      <CustomSelect
+        id="per-page"
+        value={n}
+        /* @ts-ignore */
+        onChange={handlePerPage}
+        sx={{ marginLeft: "2px", width: "70px" }}
+      >
+        <MenuItem value={5}>5</MenuItem>
+        <MenuItem value={10}>10</MenuItem>
+        <MenuItem value={25}>25</MenuItem>
+        <MenuItem value={50}>50</MenuItem>
+      </CustomSelect>
+    </FormControl>
+    <Pagination variant="outlined" shape="rounded"
+      count={Math.ceil(content.length / n)} 
+      page={p} 
+      onChange={handlePage}
+    />
+    <FormControl>
+      <InputLabel htmlFor="stats-drop">Stats</InputLabel>
+      <CustomSelect
+        id="stats-drop"
+        value={stats}
+        /* @ts-ignore */
+        onChange={hanldeStats}
+        sx={{ width: "106px" }}
+      >
+        <MenuItem value="min">Min</MenuItem>
+        <MenuItem value="avg">Average</MenuItem>
+        <MenuItem value="max">Max</MenuItem>
+      </CustomSelect>
+    </FormControl>
+    <FormControlLabel 
+      label="Extended"
+      labelPlacement="start"
+      control={<Checkbox checked={ext} onChange={handleExt} />} 
+      sx={{
+        margin: "auto 0",
+        '& > .MuiCheckbox-root': {
+          padding: 0
+        }
+      }}
+    />
+    <FormControlLabel label="Hide Stats"
+      labelPlacement="start"
+      control={<Checkbox checked={hideStats} onChange={handleHideStats} />} 
+      sx={{
+        margin: "auto 0",
+        '& > .MuiCheckbox-root': {
+          padding: 0
+        }
+      }}
+    />
+  </>); 
+
   return (<ThemeProvider theme={theme}>
     <Paper square sx={{ 
       minHeight: "100vh", height: "100%", 
@@ -129,82 +189,47 @@ export default function Collection (_props) {
       // backgroundColor: "hsl(0deg 0% 97%)"
     }}>
       <Search {...({ setContent, setInfo })} />
-      <AppBar color="inherit" sx={{ paddingLeft: theme.spacing(1) }} >
-        <Stack 
-          direction="row"
-          justifyContent="flex-start"
-        >
-          <NavMenu />
+      <AppBar color="inherit" sx={{ paddingLeft: 0 }} >
+        {isSmall ? (<>
           <Box sx={{
             display: 'flex', 
             width: 'fit-content', 
             flexWrap: 'wrap', 
-            alignItems: "flex-start", 
             rowGap: theme.spacing(1),
             columnGap: theme.spacing(1),
-            paddingTop: theme.spacing(2),
             paddingBottom: theme.spacing(1),
+            alignItems: "center"
           }}>
-            <Typography>{content.length} results</Typography>
-            <FormControl>
-              <InputLabel htmlFor="per-page">Per Page</InputLabel>
-              <CustomSelect
-                id="per-page"
-                value={n}
-                /* @ts-ignore */
-                onChange={handlePerPage}
-                sx={{ marginLeft: "2px", width: "70px" }}
-              >
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={25}>25</MenuItem>
-                <MenuItem value={50}>50</MenuItem>
-              </CustomSelect>
-            </FormControl>
-            <Pagination variant="outlined" shape="rounded"
-              count={Math.ceil(content.length / n)} 
-              page={p} 
-              onChange={handlePage}
-            />
-            <FormControl>
-              <InputLabel htmlFor="stats-drop">Stats</InputLabel>
-              <CustomSelect
-                id="stats-drop"
-                value={stats}
-                /* @ts-ignore */
-                onChange={hanldeStats}
-                sx={{ width: "106px" }}
-              >
-                <MenuItem value="min">Min</MenuItem>
-                <MenuItem value="avg">Average</MenuItem>
-                <MenuItem value="max">Max</MenuItem>
-              </CustomSelect>
-            </FormControl>
-            <FormControlLabel 
-              label="Extended"
-              labelPlacement="start"
-              control={<Checkbox checked={ext} onChange={handleExt} />} 
-              sx={{
-                margin: "auto 0",
-                '& > .MuiCheckbox-root': {
-                  padding: 0
-                }
-              }}
-            />
-            <FormControlLabel label="Hide Stats"
-              labelPlacement="start"
-              control={<Checkbox checked={hideStats} onChange={handleHideStats} />} 
-              sx={{
-                margin: "auto 0",
-                '& > .MuiCheckbox-root': {
-                  padding: 0
-                }
-              }}
-            />
+            <NavMenu />
+            <TopMenu />
           </Box>
-        </Stack>
+        </>): (<>
+          <Stack 
+            direction="row"
+            justifyContent="flex-start"
+          >
+            <NavMenu />
+            <Box sx={{
+              display: 'flex', 
+              width: 'fit-content', 
+              flexWrap: 'wrap', 
+              alignItems: "center", 
+              rowGap: theme.spacing(1),
+              columnGap: theme.spacing(1),
+              paddingTop: theme.spacing(2),
+              paddingBottom: theme.spacing(1),
+            }}>
+              <TopMenu />
+            </Box>
+          </Stack>
+        </>)}
       </AppBar>
-      <Box sx={{ height: "90px" }}/>
+      <Box sx={{ 
+        ["@media (min-width:917px)"]: { height: "58px" },
+        ["@media (max-width:917px)"]: { height: "98px" },
+        ["@media (max-width:612px)"]: { height: "132px" },
+        ["@media (max-width:600px)"]: { height: "152px" }
+      }}/>
       {info.text ? (
         <Typography style={{ textAlign: 'left' }}>{info.text}</Typography>
       ) : (
