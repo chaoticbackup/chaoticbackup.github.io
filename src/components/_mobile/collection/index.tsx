@@ -144,6 +144,7 @@ export default function Collection (_props) {
       count={Math.ceil(content.length / n)} 
       page={p} 
       onChange={handlePage}
+      sx={{ width: "350px " }}
     />
     <FormControl>
       <InputLabel htmlFor="stats-drop">Stats</InputLabel>

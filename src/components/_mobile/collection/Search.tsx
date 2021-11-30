@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useReducer, useRef, useState } from 'react
 import { useHistory, useLocation } from 'react-router-dom';
 import API, { sets } from '../../SpreadsheetData/API';
 import search_api from '../../collection/search/search';
-import { Modal, Fab, Zoom, useTheme, Box, TextField } from '@mui/material';
+import { Modal, Fab, Zoom, useTheme, Box, TextField, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const initInput = (() => {
@@ -30,7 +30,149 @@ const initInput = (() => {
 
 const queryList = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
 
-const parseQuery = (input: typeof initInput, location) => {
+const inputReducer = (state: typeof initInput, newState: Partial<typeof initInput>) => {
+  return { ...state, ...newState };
+};
+
+function Search ({ setContent, setInfo }) {
+  const theme = useTheme();
+  const history = useHistory();
+  const location = useLocation();
+  const prevLocation = useRef<any>(location);
+  const [input, dispatchInput] = useReducer(inputReducer, initInput, (input) => parseQuery(input, location));
+  const [loaded, setLoaded] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setInfo({ 'text': 'Loading..' });
+    API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
+    .then(() => {
+      setLoaded(true);
+      handleSearch();
+    })
+    .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (location != prevLocation.current) {
+      prevLocation.current = location;
+      dispatchInput(parseQuery(initInput, location));
+    }
+  }, [input, location]);
+
+
+  const cleanInput = () => {
+    dispatchInput({ ...initInput });
+  };
+
+  const handleSearch = (event?: FormEvent) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      updateQuery(input, history);
+      setOpen(false);
+    }
+
+    const results = search_api(input);
+
+    setContent(results);
+    if (results.length === 0) {
+      setInfo({ 'text': 'No Results Found' });
+    } else {
+      setInfo({});
+    }
+  };
+
+  const handleChange = (event: {target: HTMLInputElement | HTMLTextAreaElement}, obj?: string) => {
+    const { target } = event;
+    const value = target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value;
+    const { name, id } = target;
+    const i = (name || id);
+    dispatchInput({
+      ...((!obj) ? { [i]: value } : { [[obj][i]]: value })
+    });
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const transitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen,
+  };
+
+  const form = ((loaded == false) ? <></> : ( 
+    <Box component="form" 
+      onSubmit={handleSearch}
+      sx={{
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+      }}>
+      <TextField 
+        id="name"
+        label="Name"
+        value={input.name}
+        onChange={(e) => handleChange(e)}
+      />
+      <TextField
+        id="text"
+        label="Text"
+        value={input.text}
+        onChange={(e) => handleChange(e)}
+      />
+      <TextField
+        id="subtypes"
+        label="Subtypes | Initiative"
+        value={input.subtypes}
+        onChange={(e) => handleChange(e)}
+      />
+      <Box>
+        <Button type="submit" variant="outlined">Submit</Button>
+        <Button variant="outlined" onClick={() => cleanInput()}>Reset</Button>
+      </Box>
+    </Box>
+  ));
+
+  return (<>
+    <Modal
+      open={open}
+      onClose={handleClose}
+    >
+      {form}
+    </Modal>
+    <Zoom
+      in={!open}
+      timeout={transitionDuration}
+      style={{
+        transitionDelay: `${!open ? transitionDuration.exit : 0}ms`,
+      }}
+      unmountOnExit
+    >
+      <Fab aria-label="search" 
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        onClick={handleOpen}
+      >
+        <SearchIcon />
+      </Fab>
+    </Zoom>
+  </>);
+}
+
+const parseQuery = (init: typeof initInput, location) => {
+  const input = Object.assign({}, init);
   const queryString = location.search.toLowerCase();
 
   const query = {} as any;
@@ -114,123 +256,4 @@ const updateQuery = (input, history) => {
   history.push(`/collection/?${queryString}`);
 };
 
-const inputReducer = (state: typeof initInput, newState: Partial<typeof initInput>) => {
-  return { ...state, ...newState };
-};
-
-export default function Search ({ setContent, setInfo }) {
-  const theme = useTheme();
-  const history = useHistory();
-  const location = useLocation();
-  const prevLocation = useRef<any>(undefined);
-  const [input, dispatchInput] = useReducer(inputReducer, initInput);
-  // const [input, setInput] = useState(() => initInput());
-  const [loaded, setLoaded] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setInfo({ 'text': 'Loading..' });
-    API.LoadDB([{ 'cards': 'attacks' }, { 'cards': 'battlegear' }, { 'cards': 'creatures' }, { 'cards': 'locations' }, { 'cards': 'mugic' }])
-    .then(() => {
-      setLoaded(true);
-      handleSearch();
-    })
-    .catch(() => {});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (location != prevLocation.current) {
-      prevLocation.current = location;
-      dispatchInput(parseQuery(input, location));
-    }
-  }, [input, location]);
-
-
-  const cleanInput = () => {
-    dispatchInput(initInput);
-  };
-
-  const handleSearch = (event?: FormEvent) => {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      updateQuery(input, history);
-    }
-
-    const results = search_api(input);
-
-    setContent(results);
-    if (results.length === 0) {
-      setInfo({ 'text': 'No Results Found' });
-    } else {
-      setInfo({});
-    }
-  };
-
-  const handleChange = (event: {target: HTMLInputElement | HTMLTextAreaElement}, obj?: string) => {
-    const { target } = event;
-    const value = target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value;
-    const { name } = target;
-
-    dispatchInput({
-      ...((!obj) ? { [input[name]]: value } : { [input[obj][name]]: value })
-    });
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const transitionDuration = {
-    enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen,
-  };
-
-  const form = ((loaded == false) ? <></> : <Box sx={{
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  }}>
-    <TextField 
-      id="name"
-      label="Name"
-      value={input.name}
-      onChange={(e) => handleChange(e)}
-    />
-  </Box>);
-
-  return (<>
-    <Modal
-      open={open}
-      onClose={handleClose}
-    >
-      {form}
-    </Modal>
-    <Zoom
-      in={!open}
-      timeout={transitionDuration}
-      style={{
-        transitionDelay: `${!open ? transitionDuration.exit : 0}ms`,
-      }}
-      unmountOnExit
-    >
-      <Fab aria-label="search" 
-        sx={{ position: 'fixed', bottom: 16, right: 16 }}
-        onClick={handleOpen}
-      >
-        <SearchIcon />
-      </Fab>
-    </Zoom>
-  </>);
-}
+export default Search;
