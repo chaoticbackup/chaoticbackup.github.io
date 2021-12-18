@@ -1,9 +1,22 @@
-import React, { FormEvent, useEffect, useReducer, useRef, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import API, { sets } from '../../SpreadsheetData/API';
-import search_api from '../../collection/search/search';
-import { Modal, Fab, Zoom, useTheme, Box, TextField, Button } from '@mui/material';
+/* eslint-disable react-hooks/exhaustive-deps */
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
+import { 
+  Accordion as MUIAccordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Dialog, DialogActions, DialogContent, 
+  Fab, FormControlLabel, FormGroup, InputAdornment, Modal, styled, TextField, ToggleButton, ToggleButtonGroup, 
+  Typography, useTheme, Zoom 
+} from '@mui/material';
+import React, { FormEvent, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import search_api from '../../collection/search/search';
+import { ElementIcon, TribeIcon } from '../../Snippets';
+import API, { sets } from '../../SpreadsheetData/API';
+
+const Accordion = styled(MUIAccordion)(() => ({
+  "&.Mui-expanded": {
+    margin: 0
+  }
+}));
 
 const initInput = (() => {
   /* @ts-ignore */
@@ -28,9 +41,23 @@ const initInput = (() => {
   };
 })();
 
+const initExpand = ({
+  disciplines: true,
+  energy: true,
+  bpmc: true,
+  types: true,
+  rarity: false,
+  sets: false
+});
+
 const queryList = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
 
 const inputReducer = (state: typeof initInput, newState: Partial<typeof initInput>) => {
+  console.log(state, newState);
+  return { ...state, ...newState };
+};
+
+const expandReducer = (state: typeof initExpand, newState: Partial<typeof initExpand>) => {
   return { ...state, ...newState };
 };
 
@@ -40,6 +67,7 @@ function Search ({ setContent, setInfo }) {
   const location = useLocation();
   const prevLocation = useRef<any>(location);
   const [input, dispatchInput] = useReducer(inputReducer, initInput, (input) => parseQuery(input, location));
+  const [expand, dispatchExpand] = useReducer(expandReducer, initExpand, parseExpand);
   const [loaded, setLoaded] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -84,14 +112,17 @@ function Search ({ setContent, setInfo }) {
     }
   };
 
-  const handleChange = (event: {target: HTMLInputElement | HTMLTextAreaElement}, obj?: string) => {
+  const handleChange = (name: string, obj?: string) => (event: {target: HTMLInputElement | HTMLTextAreaElement}) => {
     const { target } = event;
     const value = target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value;
-    const { name, id } = target;
-    const i = (name || id);
     dispatchInput({
-      ...((!obj) ? { [i]: value } : { [[obj][i]]: value })
+      ...((!obj) ? { [name]: value } : { [obj]: { ...input[obj], [name]: value }})
     });
+  };
+
+  const handleExpand = (field: keyof typeof initExpand) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    dispatchExpand({ [field]: isExpanded });
+    localStorage.setItem("collapsed", JSON.stringify({ ...expand, [field]: isExpanded }));
   };
 
   const handleOpen = () => {
@@ -107,51 +138,175 @@ function Search ({ setContent, setInfo }) {
     exit: theme.transitions.duration.leavingScreen,
   };
 
-  const form = ((loaded == false) ? <></> : ( 
-    <Box component="form" 
-      onSubmit={handleSearch}
-      sx={{
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-      }}>
-      <TextField 
-        id="name"
-        label="Name"
-        value={input.name}
-        onChange={(e) => handleChange(e)}
+  const generate = (type: string, row: boolean, label: (item: string) => React.ReactNode) => {
+    console.log(type, input[type]);
+    return Object.keys(input[type]).map((item, i) => (
+      <FormControlLabel style={{ display: "inline" }} key={i} control={
+        <Checkbox checked={input[type][item]} onChange={handleChange(item, type)} />
+      } label={label(item)} />
+    ));
+  };
+
+  const tribes = useMemo(() => (
+    generate("tribes", true, (item) =>
+      <TribeIcon tribe={item} />
+    )
+  ), [input.tribes]);
+
+  const elements = useMemo(() => (
+    generate("elements", true, (item) =>
+      <ElementIcon element={item} value="5" />
+    ).slice(0, -2)
+  ), [input.elements]);
+
+  const sets = useMemo(() => (
+    generate("sets", false, (set) => 
+      API.sets[set.toUpperCase()]
+    )
+  ), [input.sets]);
+
+  const types = useMemo(() => (
+    generate("types", false, (type) => 
+      `${type.charAt(0).toUpperCase()}${type.slice(1)}`
+    )
+  ), [input.types]);
+
+  const rarity = useMemo(() => (
+    generate("rarity", false, (item) => 
+      item.split(" ").map((st) => `${st.charAt(0).toUpperCase()}${st.slice(1)}`).join(" ")
+    )
+  ), [input.rarity]);
+
+  const disciplines = useMemo(() => (
+    Object.keys(input.disciplines).slice(0, 4).map((item) => (
+      <TextField key={item}
+        value={input.disciplines[item]}
+        onChange={handleChange(item, "disciplines")}
+        sx={{ width: "25%", "& .MuiInputBase-input": { pt: 1, pb: 1 }}}
+        InputProps={{
+          inputProps: { min: 0 },
+          startAdornment: (
+            <InputAdornment position="start">
+              <img className="icon20" style={{ verticalAlign: 'middle', padding: "0px 2px" }} src={`/public/img/icons/disciplines/${item}.png`} />
+            </InputAdornment>
+          ),
+        }}
       />
-      <TextField
-        id="text"
-        label="Text"
-        value={input.text}
-        onChange={(e) => handleChange(e)}
-      />
-      <TextField
-        id="subtypes"
-        label="Subtypes | Initiative"
-        value={input.subtypes}
-        onChange={(e) => handleChange(e)}
-      />
-      <Box>
-        <Button type="submit" variant="outlined">Submit</Button>
-        <Button variant="outlined" onClick={() => cleanInput()}>Reset</Button>
-      </Box>
-    </Box>
-  ));
+    ))
+  ), [input.disciplines]);
 
   return (<>
     <Modal
-      open={open}
+      open={true} // todo
       onClose={handleClose}
+      sx={{ overflow: "scroll" }}
     >
-      {form}
+      {((loaded == false) ? <></> : (
+        <Box component="form" 
+          onSubmit={handleSearch}
+          sx={{
+            position: 'absolute' as 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+          }}>
+          <FormGroup>
+            <TextField 
+              label="Name"
+              value={input.name}
+              onChange={handleChange("name")}
+            />
+            <TextField
+              label="Text"
+              value={input.text}
+              onChange={handleChange("text")}
+            />
+            <TextField
+              label="Subtypes | Initiative"
+              value={input.subtypes}    
+              onChange={handleChange("subtypes")}
+            />
+            <FormControlLabel control={
+              <Checkbox checked={!input.flavor} onChange={(e) => {dispatchInput({ flavor: !e.target.checked })}} />
+            } label="Ignore Flavortext & Artist" />
+          </FormGroup>
+          <FormGroup row>
+            <FormControlLabel control={
+              <Checkbox checked={input.mull.unique} onChange={handleChange("unique", "mull")} />
+            } label="Unique" />
+            <FormControlLabel control={
+              <Checkbox checked={input.mull.loyal} onChange={handleChange("loyal", "mull")} />
+            } label="Loyal" />
+            <FormControlLabel control={
+              <Checkbox checked={input.mull.legendary} onChange={handleChange("legendary", "mull")} />
+            } label="Legendary" />
+          </FormGroup>
+          <FormControlLabel control={
+            <Checkbox checked={input.mull.mixed} onChange={handleChange("mixed", "mull")} />
+          } label="Non-Loyal" />
+          <FormGroup row>
+            {tribes}
+          </FormGroup>
+          <FormGroup row>
+            {elements}
+            <FormControlLabel control={
+              <Checkbox checked={input.elements.none} onChange={handleChange("none", "elements")} />
+            } label="None" />
+          </FormGroup>
+          <ToggleButtonGroup
+            value={input.elements.and}
+            exclusive
+            sx={{ mb: 1 }}
+            onChange={(e, value) => {dispatchInput({ "elements": { ...input.elements, "and": value }})} }
+          >
+            <ToggleButton value={false} sx={{ paddingTop: 0, paddingBottom: 0 }}>{(input.elements.none) ? "none" : "or"}</ToggleButton>
+            <ToggleButton value={true} sx={{ paddingTop: 0, paddingBottom: 0 }}>{(input.elements.none) ? "only" : "and"}</ToggleButton>
+          </ToggleButtonGroup>
+          <FormGroup row>{disciplines}</FormGroup>
+          <Accordion
+            expanded={expand.types}
+            onChange={handleExpand("types")}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Card Type</Typography> 
+            </AccordionSummary>
+            <AccordionDetails>
+              <FormGroup>{types}</FormGroup>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expand.rarity}
+            onChange={handleExpand("rarity")}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Rarity</Typography> 
+            </AccordionSummary>
+            <AccordionDetails>
+              <FormGroup>{rarity}</FormGroup>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expand.sets}
+            onChange={handleExpand("sets")}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Sets</Typography> 
+            </AccordionSummary>
+            <AccordionDetails>
+              <FormGroup>{sets}</FormGroup>
+            </AccordionDetails>
+          </Accordion>
+          <Box>
+            <Button type="submit" variant="outlined">Submit</Button>
+            <Button variant="outlined" onClick={() => cleanInput()}>Reset</Button>
+          </Box>
+        </Box>
+      ))}
     </Modal>
     <Zoom
       in={!open}
@@ -254,6 +409,17 @@ const updateQuery = (input, history) => {
 
   // Push to URL
   history.push(`/collection/?${queryString}`);
+};
+
+const parseExpand = (init: typeof initExpand) => {
+  let input = Object.assign({}, init);
+
+  const collapsed = localStorage.getItem("collapsed");
+  if (collapsed) {
+    input = { ...input, ...JSON.parse(collapsed) };
+  }
+
+  return input;
 };
 
 export default Search;
