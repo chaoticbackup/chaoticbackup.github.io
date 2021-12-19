@@ -29,6 +29,11 @@ let theme = createTheme({
 
 theme = createTheme(theme, createTheme({
   components: {
+    MuiUseMediaQuery: {
+      defaultProps: {
+        noSsr: true,
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
@@ -63,7 +68,7 @@ export default function Collection (_props) {
   const [content, setContent] = useState<ChaoticCard[]>([]);
   const [info, setInfo] = useState<{text?: string}>({});
   const [selected, setSelected] = useState<ChaoticCard | null>(null);
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"), { noSsr: true });
 
   useEffect(() => {
     const load = localStorage.getItem("collection");
