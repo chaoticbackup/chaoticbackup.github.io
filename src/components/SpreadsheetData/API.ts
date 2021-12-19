@@ -17,6 +17,27 @@ function retry (fn: () => any, retries=0, err=null) {
   });
 }
 
+// For the conversion of shorthand in database
+export const sets = {
+  "DOP": "Dawn of Perim",
+  "ZOTH": "Zenith of the Hive",
+  "SS": "Silent Sands",
+  "MI": "Beyond the Doors",
+  "ROTO": "Rise of the Oligarch",
+  "TOTT": "Turn of the Tide",
+  "FUN": "Forged Unity",
+  "AU": "Alliance Unraveled",
+  "FAS": "Fire and Stone",
+  "OP1": "Organized Play 1",
+  "PE1": "Premium Edition 1",
+  "SAS": "Storm and Sea",
+  "EE": "Elemental Emperors",
+  "BR": "Beyond Rare",
+  "LR": "League Rewards",
+  "PROMO": "Promotional",
+  "PROTO": "Prototype"
+};
+
 class API {
     @observable portal;
     @observable cards;
@@ -173,27 +194,8 @@ class API {
       return ["Danian", "Generic", "Mipedian", "M'arrillian", "OverWorld", "UnderWorld"];
     }
   
-    // For the conversion of shorthand in database
     get sets() {
-      return {
-        "DOP": "Dawn of Perim",
-        "ZOTH": "Zenith of the Hive",
-        "SS": "Silent Sands",
-        "MI": "Beyond the Doors",
-        "ROTO": "Rise of the Oligarch",
-        "TOTT": "Turn of the Tide",
-        "FUN": "Forged Unity",
-        "AU": "Alliance Unraveled",
-        "FAS": "Fire and Stone",
-        "OP1": "Organized Play 1",
-        "PE1": "Premium Edition 1",
-        "SAS": "Storm and Sea",
-        "EE": "Elemental Emperors",
-        "BR": "Beyond Rare",
-        "LR": "League Rewards",
-        "PROMO": "Promotional",
-        "PROTO": "Prototype"
-      };
+      return sets;
     }
   
     purgeDB() {
@@ -206,4 +208,4 @@ class API {
   
 }
 
-export default API;
+export default API.getInstance();

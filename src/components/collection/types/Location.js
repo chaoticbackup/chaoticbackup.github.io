@@ -15,7 +15,7 @@ export default class Location extends React.Component {
         <img className="thumb" style={{ float: 'left', width: '100px', height: '98px' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
           <Name name={card.gsx$name} />
-          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} />
           <span><LocationIcon /> Location{card.gsx$types.length > 0 ? " - " + card.gsx$types : null}</span><br />
           <Initiative initiative={card.gsx$initiative} />
         </div>
@@ -31,6 +31,7 @@ export default class Location extends React.Component {
         <div className="fullcard"><img src={API.cardImage(card)} /></div>
         <div className="right">
           <Name name={card.gsx$name} />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} id={card.gsx$id} />
           <Initiative initiative={card.gsx$initiative} />
           <Ability ability={card.gsx$ability} />
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />

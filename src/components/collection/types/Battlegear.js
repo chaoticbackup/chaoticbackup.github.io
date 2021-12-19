@@ -14,7 +14,7 @@ export default class Battlegear extends React.Component {
         <img className="thumb" style={{ float: 'left' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
         <div className="left">
           <Name name={card.gsx$name} />
-          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} /><br />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} />
           <span><BattlegearIcon /> Battlegear{card.gsx$types.length > 0 ? " - " + card.gsx$types : null}</span>
         </div>
         <div className="right" >
@@ -29,6 +29,7 @@ export default class Battlegear extends React.Component {
         <div className="fullcard"><img src={API.cardImage(card)} /></div>
         <div className="right" >
           <Name name={card.gsx$name} />
+          <Rarity set={card.gsx$set} rarity={card.gsx$rarity} id={card.gsx$id} />
           <Ability ability={card.gsx$ability} />
           <Unique data={{ unique: card.gsx$unique, loyal: card.gsx$loyal, legendary: card.gsx$legendary }} />
           <FlavorText flavortext={card.gsx$flavortext} />

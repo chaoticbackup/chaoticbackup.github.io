@@ -3,7 +3,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import { observer, inject } from 'mobx-react';
 import Single from './_base';
-import { PageNotFound, Mugic, Tribe } from '../../Snippets';
+import { PageNotFound, MugicIcon, TribeIcon } from '../../Snippets';
 
 @inject((stores, props, context) => props) @observer
 export default class SingleMugic extends React.Component {
@@ -35,7 +35,7 @@ export default class SingleMugic extends React.Component {
       }
       else {
         for (let i = 0; i < parseInt(card_data.gsx$cost); i++) {
-          cost.push(<Mugic tribe={tribe} key={i} />);
+          cost.push(<MugicIcon tribe={tribe} key={i} />);
         }
       }
       return cost;
@@ -49,7 +49,7 @@ export default class SingleMugic extends React.Component {
         col0={<>
           <div>
             <strong>Tribe: </strong>
-            <Tribe tribe={tribe} />&nbsp;
+            <TribeIcon tribe={tribe} />&nbsp;
             {tribe}
           </div>
           {card_data.gsx$cost !== "" && (<>
@@ -86,7 +86,7 @@ export default class SingleMugic extends React.Component {
           col0={<>
             <div>
               <strong>Tribe: </strong>
-              <Tribe tribe={tribe} />&nbsp;
+              <TribeIcon tribe={tribe} />&nbsp;
               {tribe}
             </div>
             {card_data.gsx$cost !== "" && (<>

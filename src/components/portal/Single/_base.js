@@ -3,7 +3,7 @@ import { observable } from "mobx";
 import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import API from '../../SpreadsheetData';
-import { Rarity, Ability } from '../../Snippets';
+import { RarityIcon, Ability } from '../../Snippets';
 import s from '../../../styles/app.style';
 
 // own "name" display function
@@ -74,7 +74,7 @@ export default class Single extends React.Component {
             {card.gsx$rarity && (<>
               <div>
                 <strong>Rarity: </strong>
-                <Rarity set={card.gsx$set} rarity={card.gsx$rarity} iconOnly />&nbsp;
+                <RarityIcon set={card.gsx$set} rarity={card.gsx$rarity} iconOnly />&nbsp;
                 {card.gsx$rarity}
               </div>
               <hr />

@@ -5,7 +5,7 @@ import API from '../../SpreadsheetData';
 import s from '../../../styles/app.style';
 import { observer, inject } from 'mobx-react';
 import Single from './_base';
-import { PageNotFound, Element, Mugic, Discipline, Tribe } from '../../Snippets';
+import { PageNotFound, ElementIcon, MugicIcon, DisciplineIcon, TribeIcon } from '../../Snippets';
 
 function Artist(props) {
   const artists = [];
@@ -40,7 +40,7 @@ export default class SingleCreature extends React.Component {
 
       const mugic = [];
       for (let i = 0; i < parseInt(card_data.gsx$mugicability || 0); i++) {
-        mugic.push(<Mugic key={i} tribe={tribe} />);
+        mugic.push(<MugicIcon key={i} tribe={tribe} />);
       }
 
       const col2 = [];
@@ -78,16 +78,16 @@ export default class SingleCreature extends React.Component {
         col0={<>
           <div>
             <strong>Tribe: </strong>
-            <Tribe tribe={tribe} />&nbsp;
+            <TribeIcon tribe={tribe} />&nbsp;
             {tribe}
           </div>
           <hr />
           <div>
             <strong>Disciplines: </strong>
-            {card_data.gsx$courage}<Discipline discipline="courage" />&nbsp;
-            {card_data.gsx$power}<Discipline discipline="power" />&nbsp;
-            {card_data.gsx$wisdom}<Discipline discipline="wisdom" />&nbsp;
-            {card_data.gsx$speed}<Discipline discipline="speed" />
+            {card_data.gsx$courage}<DisciplineIcon discipline="courage" />&nbsp;
+            {card_data.gsx$power}<DisciplineIcon discipline="power" />&nbsp;
+            {card_data.gsx$wisdom}<DisciplineIcon discipline="wisdom" />&nbsp;
+            {card_data.gsx$speed}<DisciplineIcon discipline="speed" />
           </div>
           <hr />
           <div>
@@ -97,10 +97,10 @@ export default class SingleCreature extends React.Component {
           <hr />
           <div>
             <strong>Elements: </strong>
-            <Element element="fire" value={card_data.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
-            <Element element="air" value={card_data.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
-            <Element element="earth" value={card_data.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
-            <Element element="water" value={card_data.gsx$elements.toLowerCase().indexOf("water") >=0} />
+            <ElementIcon element="fire" value={card_data.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
+            <ElementIcon element="air" value={card_data.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
+            <ElementIcon element="earth" value={card_data.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
+            <ElementIcon element="water" value={card_data.gsx$elements.toLowerCase().indexOf("water") >=0} />
           </div>
           <hr />
           <div>
@@ -127,7 +127,7 @@ export default class SingleCreature extends React.Component {
 
         const mugic = [];
         for (let i = 0; i < parseInt(card_data.gsx$mugicability || 0); i++) {
-          mugic.push(<Mugic key={i} tribe={tribe} />);
+          mugic.push(<MugicIcon key={i} tribe={tribe} />);
         }
 
         return (<Single
@@ -135,20 +135,20 @@ export default class SingleCreature extends React.Component {
           col0={<>
             <div>
               <strong>Tribe: </strong>
-              <Tribe tribe={tribe} />&nbsp;
+              <TribeIcon tribe={tribe} />&nbsp;
               {tribe}
             </div>
             <hr />
             <div>
               <strong>Disciplines: </strong>
               {card_data.gsx$courage}
-              <Discipline discipline="courage" />&nbsp;
+              <DisciplineIcon discipline="courage" />&nbsp;
               {card_data.gsx$power}
-              <Discipline discipline="power" />&nbsp;
+              <DisciplineIcon discipline="power" />&nbsp;
               {card_data.gsx$speed}
-              <Discipline discipline="speed" />&nbsp;
+              <DisciplineIcon discipline="speed" />&nbsp;
               {card_data.gsx$wisdom}
-              <Discipline discipline="wisdom" />
+              <DisciplineIcon discipline="wisdom" />
             </div>
             <hr />
             <div>
@@ -158,10 +158,10 @@ export default class SingleCreature extends React.Component {
             <hr />
             <div>
               <strong>Elements: </strong>
-              <Element element="fire" value={card_data.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
-              <Element element="air" value={card_data.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
-              <Element element="earth" value={card_data.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
-              <Element element="water" value={card_data.gsx$elements.toLowerCase().indexOf("water") >=0} />
+              <ElementIcon element="fire" value={card_data.gsx$elements.toLowerCase().indexOf("fire") >=0} />&nbsp;
+              <ElementIcon element="air" value={card_data.gsx$elements.toLowerCase().indexOf("air") >=0} />&nbsp;
+              <ElementIcon element="earth" value={card_data.gsx$elements.toLowerCase().indexOf("earth") >=0} />&nbsp;
+              <ElementIcon element="water" value={card_data.gsx$elements.toLowerCase().indexOf("water") >=0} />
             </div>
             <hr />
             <div>

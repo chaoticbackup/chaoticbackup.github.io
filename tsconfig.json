@@ -7,12 +7,14 @@
     // Process & infer types from .js files.
     "allowJs": true,
     // Support jsx in .tsx files (https://www.typescriptlang.org/docs/handbook/jsx.html)
-    "jsx": "preserve",
+    "jsx": "react",
+    // Specifies module code generation
+    "module": "esnext",
     // Don't emit; allow Babel to transform files.
     "noEmit": true,
     // Enable strictest settings like strictNullChecks & noImplicitAny.
     // "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
     "alwaysStrict": false,
@@ -31,7 +33,7 @@
     "resolveJsonModule": true,
     // Library files to be used in the project. 
     // Tells the compiler that "DOM-APIs" and new ECMAScript features are valid.
-    "lib": ["dom", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     // Allows @decorators
     "experimentalDecorators": true,
     // List of folders to include type definitions from.
@@ -45,11 +47,11 @@
     "inlineSourceMap": true
   },
   "include": [
-    "src/components"
+    "src/components",
+    ".eslintrc.js"
   ],
   "exclude": [
     "build",
-    "node_modules",
     "**/*.spec.ts"
   ]
 }
