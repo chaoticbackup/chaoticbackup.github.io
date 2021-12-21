@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import API from './SpreadsheetData';
 import { Donate } from './Snippets';
 
-export default function Base({ children }) {
+export default function Base() {
   // Configuration for the language and background
   // Images managed in css file
   const language = "ENG";
@@ -64,7 +64,7 @@ export default function Base({ children }) {
                         <div className="content-area-right-repeat-y">
                           <div className="content-area-inner-space">
                             <div id="player">
-                              {children}
+                              <Outlet />
                             </div>
                           </div>
                         </div>

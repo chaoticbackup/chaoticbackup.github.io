@@ -158,7 +158,7 @@ export default class SearchCollection extends React.Component {
     queryString = queryString.replace(/\&$/, '');
 
     // Push to URL
-    this.props.history.push('/collection/?'+(queryString));
+    this.props.navigate('/collection/?'+(queryString));
   }
 
   reset = (event) => {

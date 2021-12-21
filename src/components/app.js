@@ -1,35 +1,25 @@
-import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import loadable from '@loadable/component';
+import React, { useEffect, lazy, Suspense } from 'react';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
+import RouteElement from './RouteElement';
 import useCheckMobileScreen from './_hooks/useCheckMobileScreen';
 import { PageNotFound, UnderConstruction, Loading } from './Snippets';
 import Create from './create';
+import Home from './home';
 import Base from './BaseStylesWrapper';
 
-const EnterTheCode = loadable(
-  () => import('./entercode'), 
-  { fallback: <Loading /> }
-);
-  
-const Home = loadable(
-  () => import('./home'),
-  { fallback: <Loading /> }
-);
-  
-const Portal = loadable(
-  () => import('./portal'),
-  { fallback: <Loading /> }
-);
-  
-const Collection = loadable(
-  () => import('./collection'),
-  { fallback: <Loading /> }
-);
+const EnterTheCode = lazy(() => import('./entercode'));
 
-const MobileCollection = loadable(
-  () => import('./_mobile/collection')
-);
+const Portal = lazy(() => import('./portal'));
+
+const Collection = lazy(() => import('./collection'));
+
+const MobileCollection = lazy(() => import('./_mobile/collection'));
+  
+const RedirectBeta = () => {
+  const { pathname } = useLocation();
+  return <Navigate to={pathname.replace("/beta", "")} replace />;
+};
 
 export default function App() {
   const isMobile = useCheckMobileScreen();
@@ -43,23 +33,31 @@ export default function App() {
   }, [isMobile]);
 
   return (
-    <Switch>
-      <Route path="/beta/collection" component={Collection} />
-      <Route path="/beta">
-        {({ location }) => <Redirect to={location.pathname.replace("/beta", "")} /> }
-      </Route>
-      {isMobile && <Route path="/collection" component={MobileCollection} />}
+    <Routes>
+      <Route path="/beta/collection" element={
+        <Suspense fallback={<Loading />}><Collection /></Suspense>
+      } />
+      <Route path="/beta/*" element={<RedirectBeta />} />
+      {isMobile && <Route path="/collection" element={
+        <Suspense fallback={<Loading />}><MobileCollection /></Suspense>
+      } />}
       {/* Normal Routes */}
-      <Base>
-        <Route exact path="/" component={Home} />
-        <Route path="/PageNotFound" component={PageNotFound} />
-        <Route path="/UnderConstruction" component={UnderConstruction} />
-        <Route path="/EnterTheCode" component={EnterTheCode} />
-        <Route path="/create" component={Create} />
-        <Route path="/collection" component={Collection} />
-        <Route path="/portal" component={Portal} />
-      </Base>
-    </Switch>
+      <Route path="/" element={<Base />} >
+        <Route index element={<Home />} />
+        <Route path="PageNotFound" element={<PageNotFound />} />
+        <Route path="UnderConstruction" element={<UnderConstruction />} />
+        <Route path="EnterTheCode/*" element={
+          <Suspense fallback={<Loading />}><EnterTheCode /></Suspense>
+        } />
+        <Route path="create/*" element={<Create />} />
+        <Route path="collection/*" element={
+          <Suspense fallback={<Loading />}><RouteElement component={Collection} /></Suspense>
+        } />
+        <Route path="portal/*" element={
+          <Suspense fallback={<Loading />}><Portal /></Suspense>
+        } />
+      </Route>
+    </Routes>
   );
 }
 

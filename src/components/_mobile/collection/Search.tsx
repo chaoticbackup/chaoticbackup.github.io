@@ -7,7 +7,7 @@ import {
   Typography, useMediaQuery, useTheme, Zoom 
 } from '@mui/material';
 import React, { FormEvent, useEffect, useMemo, useReducer, useRef, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import search_api from '../../collection/search/search';
 import { ElementIcon, TribeIcon } from '../../Snippets';
 import API, { sets } from '../../SpreadsheetData/API';
@@ -71,9 +71,9 @@ const expandReducer = (state: typeof initExpand, newState: Partial<typeof initEx
 
 function Search ({ setContent, setInfo }) {
   const theme = useTheme();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const prevLocation = useRef<any>(location);
+  const prevSearch = useRef(location.search);
   const [input, dispatchInput] = useReducer(inputReducer, initInput, (input) => parseQuery(input, location));
   const [expand, dispatchExpand] = useReducer(expandReducer, initExpand, parseExpand);
   const [loaded, setLoaded] = useState(false);
@@ -92,12 +92,11 @@ function Search ({ setContent, setInfo }) {
   }, []);
 
   useEffect(() => {
-    if (location != prevLocation.current) {
-      prevLocation.current = location;
+    if (location.search != prevSearch.current) {
+      prevSearch.current = location.search;
       dispatchInput(parseQuery(initInput, location));
     }
-  }, [input, location]);
-
+  }, [location.search]);
 
   const cleanInput = () => {
     dispatchInput({ ...initInput });
@@ -107,7 +106,10 @@ function Search ({ setContent, setInfo }) {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
-      updateQuery(input, history);
+      
+      const queryString = updateQuery(input);
+      prevSearch.current = `?${queryString}`;
+      navigate(`/collection/?${queryString}`);
       setOpen(false);
     }
 
@@ -138,7 +140,7 @@ function Search ({ setContent, setInfo }) {
 
   const handleClose = () => {setOpen(false)};
 
-  const generate = (type: string, row: boolean, label: (item: string) => React.ReactNode) => {
+  const generate = (type: string, row: boolean, label: (item: string) => string | number | React.ReactElement) => {
     return Object.keys(input[type]).map((item, i) => (
       <FormControlLabel style={{ display: "inline" }} key={i} control={
         <Checkbox checked={input[type][item]} onChange={handleChange(item, type)} />
@@ -398,7 +400,7 @@ const parseQuery = (init: typeof initInput, location) => {
   return input;
 };
 
-const updateQuery = (input, history) => {
+const updateQuery = (input) => {
   let queryString = "";
 
   queryList.forEach(query => {
@@ -437,8 +439,7 @@ const updateQuery = (input, history) => {
   // Strip trailing &
   queryString = queryString.replace(/\&$/, '');
 
-  // Push to URL
-  history.push(`/collection/?${queryString}`);
+  return queryString;
 };
 
 const parseExpand = (init: typeof initExpand) => {

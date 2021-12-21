@@ -32,7 +32,7 @@ export default class SearchPortal extends React.Component {
     event.preventDefault();
     event.stopPropagation();
 
-    this.props.history.push('/portal/Search/?'+encodeURIComponent(this.query));
+    this.props.navigate('/portal/Search/?'+encodeURIComponent(this.query));
     this.input = this.query;
   }
 }

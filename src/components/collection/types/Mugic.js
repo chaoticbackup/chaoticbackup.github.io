@@ -8,7 +8,7 @@ import MugicPlay from '../../mugicplayer/playbutton.tsx';
 export default class Mugic extends React.Component {
 
   render() {
-    const { card, history } = this.props;
+    const { card } = this.props;
 
     const mugicCounters = [];
     if (card.gsx$cost == 0) {

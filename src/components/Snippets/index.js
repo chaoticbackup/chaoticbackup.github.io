@@ -1,35 +1,36 @@
 import React from 'react';
+import { useLocation } from 'react-router';
 import s from '../../styles/app.style';
 
 export * from './_icons';
 export * from './_text';
 
-export function UnderConstruction(props) {
+export function UnderConstruction() {
   return (
     <p style={s.p}>This page is currently under construction</p>
   );
 }
 
-export function PageNotFound(props) {
+export function PageNotFound() {
+  const { pathname } = useLocation();
   return (
     <p style={s.p}>
-      404 route not found - {s.code(props.location.pathname)}
+      404 route not found - {s.code(pathname)}
     </p>
   );
 }
 
-export function Loading(props) {
+export function Loading() {
   return (<span>Loading...</span>);
 }
 
-export function Splash(props) {
-  const { image } = props;
+export function Splash({ image }) {
   return (
     <div style={{ position: 'absolute', top: '0', left: '0', right: '0', bottom: '0', backgroundImage: 'url(\'' + image + '\') no-repeat center', backgroundSize: 'cover' }} />
   );
 }
 
-export function Donate(props) {
+export function Donate() {
   return (
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
       <input type="hidden" name="cmd" value="_s-xclick" />
@@ -40,7 +41,7 @@ export function Donate(props) {
   );
 }
 
-export function SearchButton(props) {
+export function SearchButton() {
   return (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="magnifying-glass"><g fillRule="evenodd"><path d="M21.747 20.524l-4.872-4.871a.864.864 0 1 0-1.222 1.222l4.871 4.872a.864.864 0 1 0 1.223-1.223z"></path><path d="M3.848 10.763a6.915 6.915 0 0 1 6.915-6.915 6.915 6.915 0 0 1 6.915 6.915 6.915 6.915 0 0 1-6.915 6.915 6.915 6.915 0 0 1-6.915-6.915zm-1.729 0a8.643 8.643 0 0 0 8.644 8.644 8.643 8.643 0 0 0 8.644-8.644 8.643 8.643 0 0 0-8.644-8.644 8.643 8.643 0 0 0-8.644 8.644z"></path></g>
   </svg>);
 }

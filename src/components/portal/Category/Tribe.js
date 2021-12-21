@@ -2,7 +2,7 @@ import loki from 'lokijs';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 import { Loading } from '../../Snippets';
 import API from '../../SpreadsheetData';
@@ -82,8 +82,10 @@ export default class Tribes extends React.Component {
 
     return (<div className="entry tribe">
       <div className="entry_content">
-        <Route path={`${this.props.match.url}/Creatures/:card`} component={Creature} />
-        <Route path={`${this.props.match.url}/Mugic/:card`} component={Mugic} />
+        <Routes>
+          <Route path={`Creatures/:card`} element={<Creature {...this.props} />} />
+          <Route path={`Mugic/:card`} element={<Mugic {...this.props} />} />
+        </Routes>
       </div>
       <div className="cat_title"><Link to={`/portal/${tribe}`}>{tribe}</Link></div>
       <div className="entry_nav">{bottom_nav}</div>

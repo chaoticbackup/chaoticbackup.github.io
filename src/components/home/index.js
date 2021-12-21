@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Donate } from '../Snippets';
 import "./home.scss";
-import { observable } from 'mobx';
 
 const GithubLink = () => (
   <a 

@@ -1,9 +1,8 @@
-import React from 'react';
-import { observable } from "mobx";
-import { observer, inject } from 'mobx-react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import API from '../SpreadsheetData';
+import RouteElement from '../RouteElement';
 
 import Header from './Header';
 import Home from './Home';
@@ -19,36 +18,52 @@ import Mugic from './Single/Mugic';
 
 import './portal.scss';
 
-@inject((stores, props, context) => props) @observer
-export default class Base extends React.Component {
+export default function Base () {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  componentDidUpdate() {
+  useEffect(() => {
     window.scrollTo({
       top: 220,
       left: 0,
       behavior: 'smooth'
     });
-  }
+  }, [location.pathname]);
 
-  render() {
-    const { url } = this.props.match;
+  const tribes = API.tribes.map((tribe) => (
+    <Route key={tribe} path={`${tribe}/*`} element={
+      <RouteElement component={Tribes} />
+    } />
+  ));
+  
+  return (
+    <div className="portal">
+      <Header />
+      <Routes>
+        <Route path="/" element={
+          <RouteElement component={Home} />
+        }/>
+        <Route path="Search" element={
+          <RouteElement component={Search} />
+        }/>
+        <Route path="Attacks/*" element={
+          <Category type="Attacks" component={<Attack />} {...({ location, navigate })} />
+        } />
+        <Route path="Battlegear/*" element={
+          <Category type="Battlegear" component={<Battlegear />} {...({ location, navigate })} />
+        }/>
+        <Route path="Creatures/*" element={
+          <Category type="Creatures" component={<Creature />} {...({ location, navigate })} />
+        }/>
+        <Route path="Locations/*" element={
+          <Category type="Locations" component={<Location />} {...({ location, navigate })} />
+        }/>
+        <Route path="Mugic/*" element={
+          <Category type="Mugic" component={<Mugic />} {...({ location, navigate })} />
+        }/>
+        {tribes}
+      </Routes> 
+    </div>
+  );
 
-    const tribes = API.tribes.map((tribe, i) => (<Route key={i} path={`${url}/${tribe}`} component={Tribes} />));
-
-    return (
-      <div className="portal">
-        <Header />
-        <Switch>
-          <Route exact path={url} component={Home} />
-          <Route path={`${url}/Search`} component={Search} />
-          <Route path={`${url}/Attacks`} render={(props) => <Category {...props} type="Attacks" component={Attack} />} />
-          <Route path={`${url}/Battlegear`} render={(props) => <Category {...props} type="Battlegear" component={Battlegear} />} />
-          <Route path={`${url}/Creatures`} render={(props) => <Category {...props} type="Creatures" component={Creature} />} />
-          <Route path={`${url}/Locations`} render={(props) => <Category {...props} type="Locations" component={Location} />} />
-          <Route path={`${url}/Mugic`} render={(props) => <Category {...props} type="Mugic" component={Mugic} />} />
-          {tribes}
-        </Switch> 
-      </div>
-    );
-  }
 }

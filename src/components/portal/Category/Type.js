@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
@@ -54,13 +54,13 @@ export default class Category extends React.Component {
       if (tribe) {
         if (path.length > 4) {
           base_path = false;
-          top_content = <Route path={`${this.props.match.url}/${tribe}/:card`} component={this.props.component} />;
+          top_content = <Route path={`${tribe}/:card`} element={React.cloneElement(this.props.component, this.props)} />;
         }
       }
       else {
         if (path.length > 3) {
           base_path = false;
-          top_content = <Route path={`${this.props.match.url}/:card`} component={this.props.component} />;
+          top_content = <Route path={`:card`} element={React.cloneElement(this.props.component, this.props)} />;
         }
       }
 
@@ -88,7 +88,7 @@ export default class Category extends React.Component {
     else {
       if (path.length > 3) {
         base_path = false;
-        top_content = (<Route path={`${this.props.match.url}/:card`} component={this.props.component} />);
+        top_content = (<Route path={`:card`} element={React.cloneElement(this.props.component, this.props)} />);
       }
 
       cat_title = this.props.type;
@@ -109,7 +109,7 @@ export default class Category extends React.Component {
 
     return (
       <div className={`entry ${type}`}>
-        <div className="entry_content">{top_content}</div>
+        <div className="entry_content"><Routes>{top_content}</Routes></div>
         <div className="cat_title"><Link to={`/portal/${this.props.type}`}>{cat_title}</Link></div>
         <div className="entry_nav">{bottom_nav}</div>
       </div>
