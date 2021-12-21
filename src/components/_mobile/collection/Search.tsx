@@ -40,7 +40,7 @@ const initInput = (() => {
     sets: cardSets,
     types: { attack: false, battlegear: false, creature: false, location: false, mugic: false },
     rarity: { common: false, uncommon: false, rare: false, 'super rare': false, 'ultra rare': false, promo: false },
-    tribes: { danian: false, 'm\'arrillian': false, mipedian: false, overworld: false, underworld: false, generic: false },
+    tribes: { danian: false, ['m\'arrillian']: false, mipedian: false, overworld: false, underworld: false, generic: false },
     elements: { fire: false, air: false, earth: false, water: false, none: false, and: false },
     disciplines: { courage: '', power: '', wisdom: '', speed: '', max: false },
     energy: { min: '', max: '' },
@@ -93,13 +93,15 @@ function Search ({ setContent, setInfo }) {
 
   useEffect(() => {
     if (location.search != prevSearch.current) {
+      setOpen(false);
       prevSearch.current = location.search;
       dispatchInput(parseQuery(initInput, location));
+      handleSearch();
     }
   }, [location.search]);
 
   const cleanInput = () => {
-    dispatchInput({ ...initInput });
+    dispatchInput(initInput);
   };
 
   const handleSearch = (event?: FormEvent) => {
@@ -108,8 +110,9 @@ function Search ({ setContent, setInfo }) {
       event.stopPropagation();
       
       const queryString = updateQuery(input);
-      prevSearch.current = `?${queryString}`;
-      navigate(`/collection/?${queryString}`);
+
+      prevSearch.current = queryString;
+      navigate(`/collection/${queryString}`);
       setOpen(false);
     }
 
@@ -141,8 +144,8 @@ function Search ({ setContent, setInfo }) {
   const handleClose = () => {setOpen(false)};
 
   const generate = (type: string, row: boolean, label: (item: string) => string | number | React.ReactElement) => {
-    return Object.keys(input[type]).map((item, i) => (
-      <FormControlLabel style={{ display: "inline" }} key={i} control={
+    return Object.keys(input[type]).map((item) => (
+      <FormControlLabel style={{ display: "inline" }} key={item} control={
         <Checkbox checked={input[type][item]} onChange={handleChange(item, type)} />
       } label={label(item)} />
     ));
@@ -359,7 +362,7 @@ function Search ({ setContent, setInfo }) {
 }
 
 const parseQuery = (init: typeof initInput, location) => {
-  const input = Object.assign({}, init);
+  const input = JSON.parse(JSON.stringify(init));
   const queryString = location.search.toLowerCase();
 
   const query = {} as any;
@@ -369,32 +372,34 @@ const parseQuery = (init: typeof initInput, location) => {
     query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
   }
 
-  // query -> input
-  queryList.forEach((d) => {
-    if (query[d]) {
-      query[d].split(',').map(item => {
-        input[d][item] = true;
-      });
-    }
-  });
+  if (Object.keys(query).length > 0) {
+    // query -> input
+    queryList.forEach((d) => {
+      if (query[d]) {
+        query[d].split(',').map(item => {
+          if (item) input[d][item] = true;
+        });
+      }
+    });
 
-  if (query.hasOwnProperty('name')) input.name = query.name;
-  if (query.hasOwnProperty('text')) input.text = query.text;
-  if (query.hasOwnProperty('subtypes')) input.subtypes = query.subtypes;
-  if (query.hasOwnProperty('courage')) input.disciplines.courage = query.courage;
-  if (query.hasOwnProperty('power')) input.disciplines.power = query.power;
-  if (query.hasOwnProperty('wisdom')) input.disciplines.wisdom = query.wisdom;
-  if (query.hasOwnProperty('speed')) input.disciplines.speed = query.speed;
-  if (query.hasOwnProperty('disc_max')) input.disciplines.max = !!query.disc_max;
-  if (query.hasOwnProperty('energy')) {
-    const q = query.energy.split(',');
-    if (q[0] >= 0) input.energy.min = q[0];
-    if (q[1] >= 0) input.energy.max = q[1];
-  }
-  if (query.hasOwnProperty('mcbp')) {
-    const q = query.mcbp.split(',');
-    if (q[0] >= 0) input.mcbp.min = q[0];
-    if (q[1] >= 0) input.mcbp.max = q[1];
+    if (query.hasOwnProperty('name')) input.name = query.name;
+    if (query.hasOwnProperty('text')) input.text = query.text;
+    if (query.hasOwnProperty('subtypes')) input.subtypes = query.subtypes;
+    if (query.hasOwnProperty('courage')) input.disciplines.courage = query.courage;
+    if (query.hasOwnProperty('power')) input.disciplines.power = query.power;
+    if (query.hasOwnProperty('wisdom')) input.disciplines.wisdom = query.wisdom;
+    if (query.hasOwnProperty('speed')) input.disciplines.speed = query.speed;
+    if (query.hasOwnProperty('disc_max')) input.disciplines.max = !!query.disc_max;
+    if (query.hasOwnProperty('energy')) {
+      const q = query.energy.split(',');
+      if (q[0] >= 0) input.energy.min = q[0];
+      if (q[1] >= 0) input.energy.max = q[1];
+    }
+    if (query.hasOwnProperty('mcbp')) {
+      const q = query.mcbp.split(',');
+      if (q[0] >= 0) input.mcbp.min = q[0];
+      if (q[1] >= 0) input.mcbp.max = q[1];
+    }
   }
 
   return input;
@@ -406,7 +411,7 @@ const updateQuery = (input) => {
   queryList.forEach(query => {
     let temp = "";
     Object.keys(input[query]).forEach((item) => {
-      if (input[query][item] == true) temp += `${item},`;
+      if (input[query][item] == true) temp += `${encodeURIComponent(item)},`;
     });
     if (temp.length > 0) {
       queryString += `${query}=${temp.replace(/\,$/, '&')}`;
@@ -437,7 +442,10 @@ const updateQuery = (input) => {
   }
 
   // Strip trailing &
-  queryString = queryString.replace(/\&$/, '');
+  // uriEncode single quote
+  queryString = queryString.replace(/\&$/, '').replace(/'/, "%27");
+
+  if (queryString.length > 0) queryString = `?${queryString}`;
 
   return queryString;
 };
