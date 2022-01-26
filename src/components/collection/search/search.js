@@ -320,11 +320,11 @@ export default function search_api(input) {
 
   // Non Loyal
   if (input.mull.mixed) {
-    attackResults = attackResults.limit(0);
+    // attackResults = attackResults.limit(0);
     creatureResults = creatureResults.find({ 'gsx$loyal': { '$lte': 0 }});
     battlegearResults = battlegearResults.find({ 'gsx$loyal': { '$lte': 0 }});
-    mugicResults = mugicResults.limit(0);
-    locationResults = locationResults.limit(0);
+    // mugicResults = mugicResults.limit(0);
+    // locationResults = locationResults.limit(0);
   }
 
   // Sets
