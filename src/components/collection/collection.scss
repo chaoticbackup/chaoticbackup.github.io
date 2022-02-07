@@ -39,7 +39,7 @@
     > .right {
       font-family: Roboto, Arial, sans-serif;
       float: right;
-      width: 70%;
+      width: 69%;
     }
 
     #side-menu {
@@ -283,7 +283,8 @@
   .Collapsible {
     margin-bottom: 5px;
     margin-top: 5px;
-    width: 96%;
+    width: 98%;
+    min-width: 262px;
   }
 
   .Collapsible__trigger {
