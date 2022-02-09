@@ -96,7 +96,7 @@ export default class Creature extends React.Component {
       <div className="card creature">
         <div className="fullcard">
           {/* style={{ backgroundImage: `url("${API.cardImage(card)}")` }} */}
-          <img src={API.cardImage(card)} />
+          <img src={API.cardImage(card)} width="250px" height="350px" />
           {!hideStats && (
             <div className="image-cover" >
               <div>

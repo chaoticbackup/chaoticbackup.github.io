@@ -28,7 +28,7 @@ export default class Location extends React.Component {
     );
     else return (
       <div className="card location">
-        <div className="fullcard"><img src={API.cardImage(card)} /></div>
+        <div className="fullcard"><img src={API.cardImage(card)} height="250px" width="350px"/></div>
         <div className="right">
           <Name name={card.gsx$name} />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} id={card.gsx$id} />
