@@ -87,10 +87,8 @@ export default class Home extends React.Component {
     localStorage.setItem("extended", this.ext);
   }
 
-  setStats = () => {
-    if (this.stats == "min") this.stats = "avg";
-    else if (this.stats == "avg") this.stats = "max";
-    else if (this.stats == "max") this.stats = "min";
+  setStats = (e) => {
+    this.stats = e.target.value;
     localStorage.setItem("stats", this.stats);
   }
 
@@ -151,7 +149,7 @@ export default class Home extends React.Component {
   };
 
   // This is a workaround to allow people interacting with the card list (copy and pasting) to still have focus on the form
-  handleOutOfForm = () => {
+  handleOutOfForm = (e) => {
     this.formRef.current.focus();
   }
 
@@ -164,30 +162,33 @@ export default class Home extends React.Component {
             <SearchForm formRef={this.formRef} handleContent={this.handleContent} {...this.props} />
           </div>
         </div>
-        <div className="right" onClick={this.handleOutOfForm}>
+        <div className="right">
           <div className="list-nav-top">
             {this.navigation()}
+            <select name="stats-display" value={this.stats} onChange={this.setStats}>
+              <option value={"min"}>Min Stats</option>
+              <option value={"avg"}>Average Stats</option>
+              <option value={"max"}>Max Stats</option>
+            </select>
+            <select name="full-card" value={this.ext} onChange={this.setExt}>
+              <option value={false}>Short Format</option>
+              <option value={true}>Extended Format</option>
+            </select>
             <div>
               <label htmlFor="hide-stats">Hide Stats</label><br />
               <input type="checkbox" id="hide-stats" checked={this.hideStats} onChange={this.setHideStats}></input>
             </div>
-            <button className="stats-button" onClick={this.setStats}>
-              {this.stats == "min" && "Min Stats"}
-              {this.stats == "avg" && "Average Stats"}
-              {this.stats == "max" && "Max Stats"}
-            </button>
-            <button className="ext-button" onClick={this.setExt}>
-              {this.ext ? "Extended Format" : "Short Format"}
-            </button>
           </div>
           <br />
-          <CardList 
-            cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} 
-            setImage={this.setImage}
-            ext={this.ext} 
-            stats={this.stats}
-            hideStats={this.hideStats}           
-          />
+          <div onClick={this.handleOutOfForm}>
+            <CardList 
+              cards={this.content.slice(this.n * (this.p-1), this.n * this.p)} 
+              setImage={this.setImage}
+              ext={this.ext} 
+              stats={this.stats}
+              hideStats={this.hideStats}           
+            />
+          </div>
           <br />
           {this.navigation()}
         </div>
