@@ -100,29 +100,29 @@ export default class Home extends React.Component {
   handleScroll = (event) => {
     event.preventDefault();
 
+    const 
+      h = document.documentElement, 
+      // b = document.body,
+      st = 'scrollTop',
+      sh = 'scrollHeight',
+      ch = 'clientHeight';
+      
+    const list = document.querySelector('.collection > .right');
+
     // Fix the side menu in place when scrolling down
     if (window.pageYOffset >= 235) {
-      const 
-        h = document.documentElement, 
-        // b = document.body,
-        st = 'scrollTop',
-        sh = 'scrollHeight',
-        ch = 'clientHeight';
+
       // const percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h[ch]) * 100;
       // let exp = h[ch] - (h[ch] * (percent - 85) / 100);
       const sm = document.getElementById("side-menu");
-      const list = document.querySelector('.collection > .right');
       const scrollBottom = (h[sh] - window.innerHeight - h[st]);
 
-      const setListHeight = (height) => {
-        if (list[ch] < window.innerHeight) {
-          list.style.minHeight = `${height}px`;
-        } 
-        else if (list[ch] === window.innerHeight) return;
-        else if (list.style.minHeight) {
-          list.style.minHeight = null;
-        }
-      };
+      if (list[ch] <= window.innerHeight) {
+        list.style.minHeight = `${window.innerHeight}px`;
+      } 
+      else if (list.style.minHeight) {
+        list.style.minHeight = null;
+      }
 
       // When nearing the end of the screen
       // (if element height offset is higher then height of screen)
@@ -140,11 +140,14 @@ export default class Home extends React.Component {
       else if (sm[ch] !== h[ch]) {
         fixedStyles.setFixed(window.innerHeight);
       }
-      
-      setListHeight(window.innerHeight);
     }
-    else if (fixedStyles.isFixed) {
-      fixedStyles.removeFixed();
+    else {
+      if (list.style.minHeight) {
+        list.style.minHeight = null;
+      }
+      if (fixedStyles.isFixed) {
+        fixedStyles.removeFixed();
+      }
     }
   };
 
@@ -199,14 +202,24 @@ export default class Home extends React.Component {
   navigation() {
     const numpages = Math.ceil(this.content.length / this.n);
 
+    const handleScroll = () => {
+      const player = document.getElementById("player");
+      player.scrollIntoView();
+    };
+
     const next = () => {
-      if (this.p < numpages) return (<button className="next-button" onClick={ () => {this.p++; window.scrollTo(0, 0)} }>next</button>);
+      if (this.p < numpages) return (<button className="next-button" onClick={ () => {this.p++; handleScroll()} }>next</button>);
       else return (<button className="next-button" disabled>next</button>);
     };
 
     const prev = () => {
-      if (this.p > 1) return (<button className="prev-button" onClick={ () => {this.p--; window.scrollTo(0, 0)} }>prev</button>);
+      if (this.p > 1) return (<button className="prev-button" onClick={ () => {this.p--; handleScroll()} }>prev</button>);
       else return (<button className="prev-button" disabled>prev</button>);
+    };
+
+    const handlePerPage = (e) => {
+      this.n = e.target.value;
+      this.p = 1;
     };
 
     return (
@@ -216,10 +229,10 @@ export default class Home extends React.Component {
         {/*<input type="text" style={{width: '40px'}} value={this.n}
           onChange={(event) => {let x = event.target.value; if (!isNaN(x)) this.n=x;}
         />*/}
-        <input type="button" value="5" disabled={this.n=="5"} onClick={(e) => this.n=e.target.value} />&nbsp;
-        <input type="button" value="10" disabled={this.n=="10"} onClick={(e) => this.n=e.target.value} />&nbsp;
-        <input type="button" value="20" disabled={this.n=="20"} onClick={(e) => this.n=e.target.value} />&nbsp;
-        <input type="button" value="50" disabled={this.n=="50"} onClick={(e) => this.n=e.target.value} />
+        <input type="button" value="5" disabled={this.n=="5"} onClick={handlePerPage} />&nbsp;
+        <input type="button" value="10" disabled={this.n=="10"} onClick={handlePerPage} />&nbsp;
+        <input type="button" value="20" disabled={this.n=="20"} onClick={handlePerPage} />&nbsp;
+        <input type="button" value="50" disabled={this.n=="50"} onClick={handlePerPage} />
       </div>
     );
   }

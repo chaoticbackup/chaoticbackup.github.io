@@ -103,6 +103,7 @@ export default function Collection (_props) {
 
   const handlePage = (event: React.ChangeEvent<unknown>, value: number) => {
     sp(value);
+    window.scroll(0, 0);
   };
 
   const handleExt = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +111,7 @@ export default function Collection (_props) {
     saveSettings({ extended: event.target.checked.toString() });
   };
 
-  const hanldeStats = (event: SelectChangeEvent<statsType>) => {
+  const handleStats = (event: SelectChangeEvent<statsType>) => {
     setStats(event.target.value as statsType);
     saveSettings({ stats: event.target.value as statsType });
   };
@@ -149,7 +150,7 @@ export default function Collection (_props) {
       count={Math.ceil(content.length / n)} 
       page={p} 
       onChange={handlePage}
-      sx={{ width: "350px " }}
+      sx={{ width: "350px" }}
     />
     <FormControl>
       <InputLabel htmlFor="stats-drop">Stats</InputLabel>
@@ -157,7 +158,7 @@ export default function Collection (_props) {
         id="stats-drop"
         value={stats}
         /* @ts-ignore */
-        onChange={hanldeStats}
+        onChange={handleStats}
         sx={{ width: "106px" }}
       >
         <MenuItem value="min">Min</MenuItem>
