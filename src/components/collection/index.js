@@ -247,15 +247,15 @@ const CardList = ({ cards, ...props }) => {
   return cards.map((card, i) => {
     switch (card.gsx$type) {
       case "Attacks":
-        return (<Attack card={card} key={i} {...props}/>);
+        return (<Attack card={card} key={card.gsx$name+card.gsx$set} {...props}/>);
       case "Battlegear":
-        return (<Battlegear card={card} key={i} {...props}/>);
+        return (<Battlegear card={card} key={card.gsx$name+card.gsx$set} {...props}/>);
       case "Creatures":
-        return (<Creature card={card} key={i} {...props}/>);
+        return (<Creature card={card} key={card.gsx$name+card.gsx$set} {...props}/>);
       case "Locations":
-        return (<Location card={card} key={i} {...props}/>);
+        return (<Location card={card} key={card.gsx$name+card.gsx$set} {...props}/>);
       case "Mugic":
-        return (<Mugic card={card} key={i} {...props}/>);
+        return (<Mugic card={card} key={card.gsx$name+card.gsx$set} {...props}/>);
       default:
         return (<div key={i}>Invalid Card Type</div>);
     }

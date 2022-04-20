@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Ability, FlavorText, Initiative, LocationIcon, Name, Rarity, Unique } from '../../Snippets';
 import API from '../../SpreadsheetData';
+import { Thumbnail } from './helpers';
 
 @inject((stores, props, context) => props) @observer
 export default class Location extends React.Component {
@@ -12,7 +13,7 @@ export default class Location extends React.Component {
 
     if (this.props.ext == false) return (
       <div className="card location">
-        <img className="thumb" style={{ float: 'left', width: '100px', height: '98px' }} src={API.base_image + (card.gsx$thumb||API.thumb_missing)} onClick={() => this.props.setImage(API.cardImage(card))} />
+        <Thumbnail {...this.props} />
         <div className="left">
           <Name name={card.gsx$name} />
           <Rarity set={card.gsx$set} rarity={card.gsx$rarity} />
