@@ -54,6 +54,17 @@
     "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
     "no-unused-vars": ["warn", { "argsIgnorePattern": "props|context|e", "varsIgnorePattern": "s" }],
     "no-useless-escape": "off",
+    "import/order": ["warn", {
+      "groups": [
+        ["builtin", "external", "internal"],
+        ["parent", "sibling", "index"]
+      ],
+      "newlines-between": "always-and-inside-groups",
+      "alphabetize": {
+        "order": "asc",
+        "caseInsensitive":true
+      }
+    }],
     "object-curly-newline": "off",
     "object-curly-spacing": ["warn", "always", {"objectsInObjects": false, "arraysInObjects": false}],
     "prefer-destructuring": ["warn", {
