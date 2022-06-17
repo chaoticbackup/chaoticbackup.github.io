@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { Donate } from '../Snippets';
 import "./home.scss";
 
@@ -55,7 +56,7 @@ export default class Home extends React.Component {
           <br /><br />
           <div>Made with <span className="heart">♥</span> by
             <br />Danude Sandstorm (Project Lead)
-            <br />Chiodosin1 and IvanArial98 (Data Contributions)
+            <br />Chiodosin1 and IvanAriel98 (Data Contributions)
             <br />Blitser, Afjak, and Chiodosin1 (Art and Knowledge)
           </div>
           <div>Do you like the site? You can donate to support it!</div>

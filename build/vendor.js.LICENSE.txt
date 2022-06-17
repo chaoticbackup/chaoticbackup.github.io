@@ -26,8 +26,10 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
 /**
- * React Router DOM v6.2.1
+ * React Router DOM v6.3.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -38,7 +40,7 @@ and limitations under the License.
  */
 
 /**
- * React Router v6.2.1
+ * React Router v6.3.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -55,7 +57,7 @@ and limitations under the License.
  * @copyright 2014-2019 Yotam Mann
  */
 
-/** @license MUI v5.4.1
+/** @license MUI v5.8.0
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
