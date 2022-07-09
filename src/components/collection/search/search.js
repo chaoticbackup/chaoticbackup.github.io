@@ -182,57 +182,49 @@ export default function search_api(input) {
 
   // Search by elements
   if (input.elements.none) {
-    if (!input.elements.and) {
-      const { fire, air, earth, water } = input.elements;
+    const { fire, air, earth, water } = input.elements;
 
+    // Note / None
+    if (!input.elements.and) {
+      // If any elements are present, then exclude them in the search
       if (fire || air || earth || water) {
-        if (input.elements.fire) {
-          attackResults = attackResults.where(obj =>  obj.gsx$fire == "");
-        }
-        if (input.elements.air) {
-          attackResults = attackResults.where(obj =>  obj.gsx$air == "");
-        }
-        if (input.elements.earth) {
-          attackResults = attackResults.where(obj =>  obj.gsx$earth == "");
-        }
-        if (input.elements.water) {
-          attackResults = attackResults.where(obj =>  obj.gsx$water == "");
-        }
-        /// ^((?!fire).)*$
-        // TODO ignore creature elements
-        creatureResults = creatureResults
-          .where(obj => (obj.gsx$elements == ''));
+        if (fire) attackResults = attackResults.where(obj => obj.gsx$fire == "");
+        if (air) attackResults = attackResults.where(obj => obj.gsx$air == "");
+        if (earth) attackResults = attackResults.where(obj => obj.gsx$earth == "");
+        if (water) attackResults = attackResults.where(obj => obj.gsx$water == "");
+
+        const el = ["fire", "air", "earth", "water"].reduce((prev, e) => 
+          prev + (input.elements[e] ? `(?!${e})`: '')
+        , "");
+
+        creatureResults = creatureResults.find({ 'gsx$elements':
+            { '$regex': new RegExp(`^(${el}.)*$`, "i") }
+        });
       } else {
         attackResults = attackResults
-          .where((obj) => {return (obj.gsx$fire == (''))})
-          .where((obj) => {return (obj.gsx$air == (''))})
-          .where((obj) => {return (obj.gsx$earth == (''))})
-          .where((obj) => {return (obj.gsx$water == (''))});
+          .where((obj) => obj.gsx$fire == (''))
+          .where((obj) => obj.gsx$air == (''))
+          .where((obj) => obj.gsx$earth == (''))
+          .where((obj) => obj.gsx$water == (''));
 
         creatureResults = creatureResults
           .where(obj => (obj.gsx$elements == ''));
       }
     }
     else {
-      attackResults = attackResults.where(
-        (obj) => (input.elements.fire ? obj.gsx$fire != "" : obj.gsx$fire == "")
-      ).where(
-        (obj) => (input.elements.air ? obj.gsx$air != "" : obj.gsx$air == "")
-      ).where(
-        (obj) => (input.elements.earth ? obj.gsx$earth != "" : obj.gsx$earth == "")
-      ).where(
-        (obj) => (input.elements.water ? obj.gsx$water != "" : obj.gsx$water == "")
-      );
+      attackResults = attackResults
+        .where((obj) => (fire ? obj.gsx$fire != "" : obj.gsx$fire == ""))
+        .where((obj) => (air ? obj.gsx$air != "" : obj.gsx$air == ""))
+        .where((obj) => (earth ? obj.gsx$earth != "" : obj.gsx$earth == ""))
+        .where((obj) => (water ? obj.gsx$water != "" : obj.gsx$water == ""));
 
-      let el = "";
-      ["fire", "air", "earth", "water"].forEach((element) => {
-        if (input.elements[element])
-          el += element + ", ";
-      });
+      const el = ["fire", "air", "earth", "water"].reduce((prev, e) =>
+        (input.elements[e]) ? `${prev},  ${e}` : prev
+      , "");
 
       if (el !== "") {
         creatureResults = creatureResults.find({ 'gsx$elements':
-            { '$regex': new RegExp("^" + el.substring(0, el.length-2) + "\s*$", 'i') }
+            { '$regex': new RegExp("^" + el + "\s*$", 'i') }
         });
       }
     }
