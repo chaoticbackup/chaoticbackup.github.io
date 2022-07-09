@@ -1,9 +1,10 @@
-import React from 'react';
 import { observable } from "mobx";
 import { observer, inject } from 'mobx-react';
+import React from 'react';
 import Collapsible from 'react-collapsible';
-import API from '../../SpreadsheetData';
+
 import { Loading } from '../../Snippets';
+import API from '../../SpreadsheetData';
 import search_api from './search';
 
 @inject((stores, props, context) => props) @observer
@@ -282,7 +283,7 @@ export default class SearchCollection extends React.Component {
             <label className="none"><input type="checkbox" name="none" checked={this.input.elements.none} onChange={e => this.handleChange(e, "elements")} /><span>None</span></label>
           </div>
           <div className="centeredButtons">
-            <input type="button" value={this.input.elements.none ? "none" : "or"} className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false}} />
+            <input type="button" value={this.input.elements.none ? "not" : "or"} className="and" disabled={!this.input.elements.and} onClick={(e)=>{this.input.elements.and=false}} />
             <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true}} />
           </div>
           <hr />

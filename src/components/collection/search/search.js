@@ -1,4 +1,5 @@
 import loki from 'lokijs';
+
 import API from '../../SpreadsheetData';
 
 function cleanInputRegex(input, check=true) {
@@ -182,24 +183,45 @@ export default function search_api(input) {
   // Search by elements
   if (input.elements.none) {
     if (!input.elements.and) {
-      attackResults = attackResults
-        .where((obj) => {return (obj.gsx$fire == (''))})
-        .where((obj) => {return (obj.gsx$air == (''))})
-        .where((obj) => {return (obj.gsx$earth == (''))})
-        .where((obj) => {return (obj.gsx$water == (''))});
+      const { fire, air, earth, water } = input.elements;
 
-      creatureResults = creatureResults
-        .where(obj => (obj.gsx$elements == ''));
+      if (fire || air || earth || water) {
+        if (input.elements.fire) {
+          attackResults = attackResults.where(obj =>  obj.gsx$fire == "");
+        }
+        if (input.elements.air) {
+          attackResults = attackResults.where(obj =>  obj.gsx$air == "");
+        }
+        if (input.elements.earth) {
+          attackResults = attackResults.where(obj =>  obj.gsx$earth == "");
+        }
+        if (input.elements.water) {
+          attackResults = attackResults.where(obj =>  obj.gsx$water == "");
+        }
+        /// ^((?!fire).)*$
+        // TODO ignore creature elements
+        creatureResults = creatureResults
+          .where(obj => (obj.gsx$elements == ''));
+      } else {
+        attackResults = attackResults
+          .where((obj) => {return (obj.gsx$fire == (''))})
+          .where((obj) => {return (obj.gsx$air == (''))})
+          .where((obj) => {return (obj.gsx$earth == (''))})
+          .where((obj) => {return (obj.gsx$water == (''))});
+
+        creatureResults = creatureResults
+          .where(obj => (obj.gsx$elements == ''));
+      }
     }
     else {
       attackResults = attackResults.where(
-        (obj) => {return (input.elements.fire ? obj.gsx$fire != ('') : obj.gsx$fire == (''))}
+        (obj) => (input.elements.fire ? obj.gsx$fire != "" : obj.gsx$fire == "")
       ).where(
-        (obj) => {return (input.elements.air ? obj.gsx$air != ('') : obj.gsx$air == (''))}
+        (obj) => (input.elements.air ? obj.gsx$air != "" : obj.gsx$air == "")
       ).where(
-        (obj) => {return (input.elements.earth ? obj.gsx$earth != ('') : obj.gsx$earth == (''))}
+        (obj) => (input.elements.earth ? obj.gsx$earth != "" : obj.gsx$earth == "")
       ).where(
-        (obj) => {return (input.elements.water ? obj.gsx$water != ('') : obj.gsx$water == (''))}
+        (obj) => (input.elements.water ? obj.gsx$water != "" : obj.gsx$water == "")
       );
 
       let el = "";
