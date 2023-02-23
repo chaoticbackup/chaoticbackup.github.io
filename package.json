@@ -28,6 +28,7 @@
     "react-collapsible": "^2.8.4",
     "react-digit-input": "^2.1.0",
     "react-dom": "^16.14.0",
+    "react-gtm-module": "^2.0.11",
     "react-interactive": "^1.1.2",
     "react-loadable": "^5.5.0",
     "react-onclickoutside": "^6.12.1",
