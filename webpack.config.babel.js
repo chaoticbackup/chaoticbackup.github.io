@@ -1,10 +1,11 @@
 /*eslint global-require: "off"*/
-const path = require('path');
-const webpack = require('webpack');
-const TerserWebpackPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack');
 require('@babel/register');
 
 module.exports = (env, argv) => {
@@ -27,19 +28,19 @@ module.exports = (env, argv) => {
       host: '0.0.0.0',
       port: 8000,
       hot: true,
-      publicPath: '/build/',
-      contentBase: __dirname,
-      watchContentBase: true,
-      historyApiFallback: {
-        index: 'index.html',
+      static: {                               
+        directory: path.join(__dirname, './public'),
+        publicPath: '/public',
+        watch: true
       },
+      historyApiFallback: true
     },
 
     output: {
       path: path.resolve(__dirname, 'build'),
       filename: '[name].js',
       chunkFilename: '[name].js',
-      publicPath: '/build/',
+      publicPath: devMode ? '/' : '/build/',
     },
 
     optimization: {
@@ -49,9 +50,6 @@ module.exports = (env, argv) => {
           parallel: true,
           extractComments: true,
           terserOptions: {
-            parse: {
-              ecma: 8
-            },
             output: {
               comments: false
             }
@@ -126,6 +124,9 @@ module.exports = (env, argv) => {
     // First array is dev only, second is production
     plugins: devMode 
       ? [
+        new HtmlWebpackPlugin({
+          template: 'index.html'
+        })
       ] : [
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({

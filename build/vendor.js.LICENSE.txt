@@ -29,7 +29,25 @@ and limitations under the License.
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /**
- * React Router DOM v6.3.0
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @mui/styled-engine v5.11.9
+ *
+ * @license MIT
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @remix-run/router v1.3.2
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -40,7 +58,18 @@ and limitations under the License.
  */
 
 /**
- * React Router v6.3.0
+ * React Router DOM v6.8.1
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+
+/**
+ * React Router v6.8.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -55,12 +84,6 @@ and limitations under the License.
  * @author Yotam Mann
  * @license http://opensource.org/licenses/MIT MIT License
  * @copyright 2014-2019 Yotam Mann
- */
-
-/** @license MUI v5.8.0
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
  */
 
 /** @license React v0.19.1
@@ -101,15 +124,6 @@ and limitations under the License.
 
 /** @license React v16.14.0
  * react.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/** @license React v17.0.2
- * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
