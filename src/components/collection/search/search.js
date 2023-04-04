@@ -218,9 +218,9 @@ export default function search_api(input) {
         .where((obj) => (earth ? obj.gsx$earth != "" : obj.gsx$earth == ""))
         .where((obj) => (water ? obj.gsx$water != "" : obj.gsx$water == ""));
 
-      const el = ["fire", "air", "earth", "water"].reduce((prev, e) =>
-        (input.elements[e]) ? `${prev},  ${e}` : prev
-      , "");
+      const el = ["fire", "air", "earth", "water"].filter((e) =>
+        input.elements[e]
+      ).join(', ');
 
       if (el !== "") {
         creatureResults = creatureResults.find({ 'gsx$elements':

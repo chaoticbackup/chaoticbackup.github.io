@@ -1,12 +1,12 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
-import RouteElement from './RouteElement';
 import useCheckMobileScreen from './_hooks/useCheckMobileScreen';
-import { PageNotFound, UnderConstruction, Loading } from './Snippets';
+import Base from './BaseStylesWrapper';
 import Create from './create';
 import Home from './home';
-import Base from './BaseStylesWrapper';
+import RouteElement from './RouteElement';
+import { PageNotFound, UnderConstruction, Loading } from './Snippets';
 
 const EnterTheCode = lazy(() => import('./entercode'));
 
