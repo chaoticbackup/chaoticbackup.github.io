@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import React, { FormEvent, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 import search_api from '../../collection/search/search';
 import { ElementIcon, TribeIcon } from '../../Snippets';
 import API, { sets } from '../../SpreadsheetData/API';
@@ -46,6 +47,7 @@ const initInput = (() => {
     energy: { min: '', max: '' },
     mcbp: { min: '', max: '' },
     mull: { unique: false, loyal: false, legendary: false, mixed: false },
+    exclusive: { starter: false, printed: false, online: false },
     gender: { ambiguous: false, female: false, male: false }
   };
 })();
@@ -56,10 +58,11 @@ const initExpand = ({
   bpmc: true,
   types: true,
   rarity: false,
-  sets: false
+  sets: false,
+  exclusive: false,
 });
 
-const queryList = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
+const queryList = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender", "exclusive"];
 
 const inputReducer = (state: typeof initInput, newState: Partial<typeof initInput>) => {
   return { ...state, ...newState };
@@ -332,6 +335,26 @@ function Search ({ setContent, setInfo }) {
               </AccordionSummary>
               <AccordionDetails>
                 <FormGroup>{sets}</FormGroup>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expand.exclusive}
+              onChange={handleExpand("sets")}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Exclusive</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <FormGroup row>
+                  <FormControlLabel control={
+                    <Checkbox checked={input.exclusive.starter} onChange={handleChange("starter", "exclusive")} />
+                  } label="Starter" />
+                  <FormControlLabel control={
+                    <Checkbox checked={input.exclusive.printed} onChange={handleChange("printed", "exclusive")} />
+                  } label="Printed" />
+                  <FormControlLabel control={
+                    <Checkbox checked={input.exclusive.online} onChange={handleChange("online", "exclusive")} />
+                  } label="Online" />
+                </FormGroup>
               </AccordionDetails>
             </Accordion>
           </Box>

@@ -71,7 +71,7 @@ export default class SearchCollection extends React.Component {
       energy: { min: '', max: '' },
       mcbp: { min: '', max: '' },
       mull: { unique: false, loyal: false, legendary: false, mixed: false },
-      exclusive: { starter: false, online: false },
+      exclusive: { starter: false, printed: false, online: false },
       gender: { ambiguous: false, female: false, male: false }
     };
     for (const key in API.sets) input.sets[key.toLowerCase()] = false;
@@ -167,6 +167,9 @@ export default class SearchCollection extends React.Component {
     event.preventDefault();
     event.stopPropagation();
     this.cleanInput();
+  }
+
+  handleExclusiveChange = (event) => {
   }
 
   handleChange = (event, obj) => {
@@ -358,8 +361,9 @@ export default class SearchCollection extends React.Component {
             collapsed={this.collapsed}
             onClick={this.handleTriggerClick}
           >
-            <div className="centeredCheckBox centeredSpacing">
+            <div className="centeredCheckBox centeredSpacing" style={{ width: "80%" }}>
               <label className="mull"><input type="checkbox" name="starter" checked={this.input.exclusive.starter} onChange={e => this.handleChange(e, "exclusive")} />Starter</label>
+              <label className="mull"><input type="checkbox" name="printed" checked={this.input.exclusive.printed} onChange={e => this.handleChange(e, "exclusive")} />Printed</label>
               <label className="mull"><input type="checkbox" name="online" checked={this.input.exclusive.online} onChange={e => this.handleChange(e, "exclusive")} />Online</label>
             </div>
           </CollapsibleWrapper>

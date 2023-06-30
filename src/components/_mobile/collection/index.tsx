@@ -3,7 +3,7 @@ import {
   Pagination, Paper, Select, SelectChangeEvent, Stack, styled, ThemeProvider, Typography, useMediaQuery
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Attack, Battlegear, Card as ChaoticCard, Location, Mugic, Creature } from '../../common/definitions';
+
 import AttackCard from './Attack';
 import BattlegearCard from './Battlegear';
 import { chaoticCardProps, statsType } from './CardBase';
@@ -12,6 +12,7 @@ import LocationCard from './Location';
 import MugicCard from './Mugic';
 import NavMenu from './NavMenu';
 import Search from './Search';
+import { Attack, Battlegear, Card as ChaoticCard, Location, Mugic, Creature } from '../../common/definitions';
 
 import './collection.scss';
 
@@ -192,7 +193,8 @@ export default function Collection (_props) {
   return (<ThemeProvider theme={theme}>
     <Paper square sx={{ 
       minHeight: "100vh", height: "100%", 
-      padding: theme.spacing(1),
+      backgroundColor: '#323338',
+      padding: 0
       // backgroundColor: "hsl(0deg 0% 97%)"
     }}>
       <Search {...({ setContent, setInfo })} />
@@ -232,19 +234,23 @@ export default function Collection (_props) {
         </>)}
       </AppBar>
       <Box sx={{ 
-        ["@media (min-width:917px)"]: { height: "58px" },
-        ["@media (max-width:917px)"]: { height: "98px" },
+        ["@media (min-width:904px)"]: { height: "58px" },
+        ["@media (max-width:904px)"]: { height: "90px" },
         ["@media (max-width:612px)"]: { height: "132px" },
         ["@media (max-width:600px)"]: { height: "152px" }
       }}/>
       {info.text ? (
         <Typography style={{ textAlign: 'left' }}>{info.text}</Typography>
-      ) : (
+      ) : (<>
         <CardList
           cards={content.slice(n * (p-1), n * p)}
           extend={handleExtendSingle}
           {...({ selected, ext, stats, hideStats })}
         />
+        <Box sx={{ 
+          ["@media (max-width:922px)"]: { height: "80px" },
+        }}/>
+      </>
       )}
     </Paper>
   </ThemeProvider>);
@@ -298,5 +304,5 @@ const CardList = ({ cards, selected, ext, ...props }: listProps) => {
   });
 
   // Limitation of typescript - error TS2605
-  return <>{list}</>;
+  return <div style={{ backgroundColor: "#fff", padding: 8 }}>{list}</div>;
 };

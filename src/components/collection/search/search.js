@@ -184,7 +184,7 @@ export default function search_api(input) {
   if (input.elements.none) {
     const { fire, air, earth, water } = input.elements;
 
-    // Note / None
+    //  None - Only (contains only selected elements)
     if (!input.elements.and) {
       // If any elements are present, then exclude them in the search
       if (fire || air || earth || water) {
@@ -211,6 +211,7 @@ export default function search_api(input) {
           .where(obj => (obj.gsx$elements == ''));
       }
     }
+    // None - Not (does not contain selected elements)
     else {
       attackResults = attackResults
         .where((obj) => (fire ? obj.gsx$fire != "" : obj.gsx$fire == ""))
@@ -244,10 +245,12 @@ export default function search_api(input) {
       }
     }
     if (elementsList.length > 0) {
+      // Must contain at least these elements
       if (input.elements.and) {
         creatureResults = creatureResults.find({ 'gsx$elements': { '$and': elementsList }});
         attackResults = attackResults.find({ '$and': elementsList2 });
       }
+      // Can contain any of these elements
       else {
         creatureResults = creatureResults.find({ 'gsx$elements': { '$or': elementsList }});
         attackResults = attackResults.find({ '$or': elementsList2 });
@@ -400,6 +403,16 @@ export default function search_api(input) {
     creatureResults = creatureResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
     locationResults = locationResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
     mugicResults = mugicResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+  }
+
+  // Printed
+  if (input.exclusive.printed) {
+    const exclusive = new RegExp("online", 'i');
+    attackResults = attackResults.where((obj) => !exclusive.test(obj.gsx$exclusive));
+    battlegearResults = battlegearResults.where((obj) => !exclusive.test(obj.gsx$exclusive));
+    creatureResults = creatureResults.where((obj) => !exclusive.test(obj.gsx$exclusive));
+    locationResults = locationResults.where((obj) => !exclusive.test(obj.gsx$exclusive));
+    mugicResults = mugicResults.where((obj) => !exclusive.test(obj.gsx$exclusive));
   }
 
   // Exclusive - Online
