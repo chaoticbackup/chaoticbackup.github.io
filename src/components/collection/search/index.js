@@ -3,9 +3,9 @@ import { observer, inject } from 'mobx-react';
 import React from 'react';
 import Collapsible from 'react-collapsible';
 
+import search_api from './search';
 import { Loading } from '../../Snippets';
 import API from '../../SpreadsheetData';
-import search_api from './search';
 
 @inject((stores, props, context) => props) @observer
 export default class SearchCollection extends React.Component {
@@ -13,7 +13,7 @@ export default class SearchCollection extends React.Component {
   @observable loading = false;
   @observable input;
   @observable collapsed;
-  list = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender"];
+  list = ["sets", "types", "rarity", "tribes", "elements", "mull", "gender", "exclusive"];
 
   constructor(props) {
     super(props);
@@ -39,12 +39,12 @@ export default class SearchCollection extends React.Component {
 
     if (collapsed) collapsed = JSON.parse(collapsed);
     else collapsed = {
-      disciplines: true,
       energy: true,
       bpmc: true,
       types: true,
       rarity: false,
-      sets: false
+      sets: false,
+      exclusive: false
     };
 
     this.collapsed = collapsed;
@@ -71,6 +71,7 @@ export default class SearchCollection extends React.Component {
       energy: { min: '', max: '' },
       mcbp: { min: '', max: '' },
       mull: { unique: false, loyal: false, legendary: false, mixed: false },
+      exclusive: { starter: false, online: false },
       gender: { ambiguous: false, female: false, male: false }
     };
     for (const key in API.sets) input.sets[key.toLowerCase()] = false;
@@ -287,24 +288,18 @@ export default class SearchCollection extends React.Component {
             <input type="button" value={this.input.elements.none ? "only" : "and"} className="and" disabled={this.input.elements.and} onClick={(e)=>{this.input.elements.and=true}} />
           </div>
           <hr />
-          <CollapsibleWrapper
-            type="disciplines"
-            title="Disciplines"
-            collapsed={this.collapsed}
-            onClick={this.handleTriggerClick} 
-          >
-            <div className="disciplines">
-              {disciplines}
-              <label>Max
-                <input 
-                  type="checkbox" name="max" 
-                  style={{ display: "inline", margin: "0px" }} 
-                  checked={this.input.disciplines.max} 
-                  onChange={e => this.handleChange(e, "disciplines")} 
-                />
-              </label>
-            </div>
-          </CollapsibleWrapper>
+          <div className="disciplines">
+            {disciplines}
+            <label>Max
+              <input 
+                type="checkbox" name="max" 
+                style={{ display: "inline", margin: "0px" }} 
+                checked={this.input.disciplines.max} 
+                onChange={e => this.handleChange(e, "disciplines")} 
+              />
+            </label>
+          </div>
+          <hr />
           <CollapsibleWrapper
             type="energy"
             title="Energy" 
@@ -353,13 +348,23 @@ export default class SearchCollection extends React.Component {
             collapsed={this.collapsed}
             onClick={this.handleTriggerClick} 
           >
-            <div className="setBox">
-              <div className="centeredCheckBox" id="sets">
-                {sets}
-              </div>
+            <div className="centeredCheckBox">
+              {sets}
+            </div>
+          </CollapsibleWrapper>
+          <CollapsibleWrapper
+            type="exclusive"
+            title="Exclusive"
+            collapsed={this.collapsed}
+            onClick={this.handleTriggerClick}
+          >
+            <div className="centeredCheckBox centeredSpacing">
+              <label className="mull"><input type="checkbox" name="starter" checked={this.input.exclusive.starter} onChange={e => this.handleChange(e, "exclusive")} />Starter</label>
+              <label className="mull"><input type="checkbox" name="online" checked={this.input.exclusive.online} onChange={e => this.handleChange(e, "exclusive")} />Online</label>
             </div>
           </CollapsibleWrapper>
           {/*<Collapsible trigger="Gender (fan content)">{gender}</Collapsible>*/}
+          <hr />
           <div className="centeredButtons">
             <input id="search" type="submit" value="Search" />
             <input id="search" type="button" value="Reset" onClick={this.reset} />

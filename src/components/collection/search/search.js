@@ -351,7 +351,7 @@ export default function search_api(input) {
   if (setsList.length === 0) {
     // Only show prototype cards when explicitly selected
     const keys = Object.keys(input.sets);
-    if (!input.sets.proto) keys.splice(keys.indexOf("proto"));
+    if (!input.sets.proto && input.name.length === 0) keys.splice(keys.indexOf("proto"));
     for (const i in keys) {
       setsList.push({ '$eq': keys[i].toUpperCase() });
     }
@@ -391,6 +391,26 @@ export default function search_api(input) {
   //   locationResults = locationResults.limit(0);
   //   mugicResults = mugicResults.limit(0);
   // }
+
+  // Exclusive - Starter
+  if (input.exclusive.starter) {
+    const exclusive = new RegExp("starter", 'i');
+    attackResults = attackResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    battlegearResults = battlegearResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    creatureResults = creatureResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    locationResults = locationResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    mugicResults = mugicResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+  }
+
+  // Exclusive - Online
+  if (input.exclusive.online) {
+    const exclusive = new RegExp("online", 'i');
+    attackResults = attackResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    battlegearResults = battlegearResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    creatureResults = creatureResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    locationResults = locationResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+    mugicResults = mugicResults.find({ 'gsx$exclusive': { '$regex': exclusive }});
+  }
 
   // Merge data
   const types = !(input.types.attack | input.types.battlegear | input.types.creature | input.types.location | input.types.mugic);
