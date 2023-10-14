@@ -1,5 +1,5 @@
 ## Dev Instructions
-Have Nodejs >=16 ([node installation](https://nodejs.org/en/)) installed on your machine. Then navigate to the top level of the project in a run ``npm install --legacy-peer-deps``
+Have Nodejs >=16 ([node installation](https://nodejs.org/en/)) installed on your machine. Then navigate to the top level of the project in a run ``npm install --legacy-peer-deps`` (note you may also need to run ``npm dedupe --force``)
 
 ### Development Running
 To run the website locally
