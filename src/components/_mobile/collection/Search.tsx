@@ -338,7 +338,7 @@ function Search ({ setContent, setInfo }) {
               </AccordionDetails>
             </Accordion>
             <Accordion expanded={expand.exclusive}
-              onChange={handleExpand("sets")}
+              onChange={handleExpand("exclusive")}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>Exclusive</Typography>
