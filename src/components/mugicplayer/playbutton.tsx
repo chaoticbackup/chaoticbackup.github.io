@@ -1,6 +1,7 @@
 import React from 'react';
-import { debounced } from '../debounce';
+
 import { MugicPlayer } from './mugicplayer';
+import { debounced } from '../debounce';
 const player = MugicPlayer.getInstance();
 
 export default (props: any) => {

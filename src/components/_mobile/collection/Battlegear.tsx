@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import { BattlegearIcon, Name } from '../../Snippets';
+
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from './CardBase';
 import { Battlegear } from '../../common/definitions';
+import { BattlegearIcon, Name } from '../../Snippets';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Unique, Flavor, Rarity } from './CardBase';
 
 const BattlegearCard: CardBase<Battlegear> = (props) => {
   const { card } = props;

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Interactive } from 'react-interactive';
-import API from '../SpreadsheetData';
-import { Loading } from '../Snippets';
-import style from '../../styles/style';
 import useDigitInput from 'react-digit-input';
+import { Interactive } from 'react-interactive';
+import { Link } from 'react-router-dom';
+
+import style from '../../styles/style';
+import { Loading } from '../Snippets';
+import API from '../SpreadsheetData';
+
 
 const s = Object.create(style);
 s.input = {

@@ -1,10 +1,11 @@
 import { Typography } from "@mui/material";
 import React from "react";
+
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from "./CardBase";
 import { Mugic } from "../../common/definitions";
 import { Name, TribeIcon, MugicIcon } from "../../Snippets";
 import { abilityText } from "../../Snippets/abilityText";
 import { uniqueText } from "../../Snippets/uniqueText";
-import { CardBase, CardComponent, Unique, Flavor, Rarity } from "./CardBase";
 
 
 const MugicCounter = ({ card }: { card: Mugic }) => {

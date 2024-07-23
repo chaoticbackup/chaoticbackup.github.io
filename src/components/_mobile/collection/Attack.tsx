@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+
+import { CardBase, CardComponent, Flavor, Unique, Rarity } from './CardBase';
 import { Attack } from "../../common/definitions";
 import { AttackIcon, ElementIcon, Name } from '../../Snippets';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Flavor, Unique, Rarity } from './CardBase';
 
 const AttackCard: CardBase<Attack> = (props) => {
   const { card } = props;

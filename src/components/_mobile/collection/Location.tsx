@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from './CardBase';
 import { Location } from '../../common/definitions';
 import { InitiativeIcon, LocationIcon, Name } from '../../Snippets';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Unique, Flavor, Rarity } from './CardBase';
 
 const LocationCard: CardBase<Location> = (props) => {
   const { card } = props;

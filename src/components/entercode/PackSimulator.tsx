@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Interactive } from 'react-interactive';
+import { Link } from 'react-router-dom';
+
 import { setupDB, generate, blankCard } from "./generate";
-import API from '../SpreadsheetData';
-import { Loading } from '../Snippets';
 import s from '../../styles/style';
+import { Loading } from '../Snippets';
+import API from '../SpreadsheetData';
 
 export default function PackSimulator () {
   const [loaded, setLoaded] = useState(false);

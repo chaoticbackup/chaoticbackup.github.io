@@ -1,17 +1,17 @@
 export class Note {
-    pitch: string;
-    octave: number;
-    time: number;
-    duration: number;
-    velocity: number;
+  pitch: string;
+  octave: number;
+  time: number;
+  duration: number;
+  velocity: number;
 
-    constructor(duration: number, time: number, value: {pitch: string, octave: number}, velocity?: number) {
-      this.duration = duration;
-      this.time = time;
-      this.pitch = value.pitch;
-      this.octave = value.octave;
-      if (velocity) this.velocity = velocity;
-    }
+  constructor(duration: number, time: number, value: {pitch: string, octave: number}, velocity?: number) {
+    this.duration = duration;
+    this.time = time;
+    this.pitch = value.pitch;
+    this.octave = value.octave;
+    if (velocity) this.velocity = velocity;
+  }
     
 }
 

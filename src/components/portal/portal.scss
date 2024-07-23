@@ -297,9 +297,6 @@
 
   /* The Modal (background) */
   .modal {
-    &.hidden {
-      display: none;
-    }
     position: fixed; /* Stay in place */
     z-index: 10; /* Sit on top */
     padding-top: 50px;
@@ -310,6 +307,10 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+
+    &.hidden {
+      display: none;
+    }
   }
   
   /* Modal Content (image) */

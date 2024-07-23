@@ -1,10 +1,11 @@
 import { Typography, styled } from '@mui/material';
 import React from 'react';
+
+import { CardBase, CardComponent, Unique, Flavor, Rarity } from "./CardBase";
 import { Creature } from "../../common/definitions";
 import { Name, TribeIcon, MugicIcon, ElementIcon, DisciplineIcon } from '../../Snippets';
 import { abilityText } from '../../Snippets/abilityText';
 import { uniqueText } from '../../Snippets/uniqueText';
-import { CardBase, CardComponent, Unique, Flavor, Rarity } from "./CardBase";
 
 const TribeLine = ({ card }: {card: Creature}) => {
   let types = card.gsx$types;
