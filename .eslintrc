@@ -1,6 +1,6 @@
 {
   "root": true,
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "plugins": [
     "babel",
     "react",
@@ -40,7 +40,7 @@
     "arrow-parens": "off",
     "dot-notation": "off",
     "eqeqeq": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["./webpack.config.babel.js"]}],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["./webpack.config.js"]}],
     "indent": ["error", 2, {
       "SwitchCase": 1,
       "MemberExpression": "off"

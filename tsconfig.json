@@ -52,6 +52,5 @@
   ],
   "exclude": [
     "build",
-    "**/*.spec.ts"
   ]
 }
