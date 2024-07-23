@@ -26,8 +26,6 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
-/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
-
 /**
  * @license React
  * react-is.production.min.js
@@ -39,7 +37,7 @@ and limitations under the License.
  */
 
 /**
- * @remix-run/router v1.9.0
+ * @remix-run/router v1.18.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -50,7 +48,7 @@ and limitations under the License.
  */
 
 /**
- * React Router DOM v6.16.0
+ * React Router DOM v6.25.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -61,7 +59,7 @@ and limitations under the License.
  */
 
 /**
- * React Router v6.16.0
+ * React Router v6.25.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -75,7 +73,7 @@ and limitations under the License.
  * Tone.js
  * @author Yotam Mann
  * @license http://opensource.org/licenses/MIT MIT License
- * @copyright 2014-2019 Yotam Mann
+ * @copyright 2014-2024 Yotam Mann
  */
 
 /** @license React v0.19.1
