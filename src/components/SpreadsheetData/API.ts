@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 import { observable } from "mobx";
+
 import CollectionDB from './CollectionDB';
 import spreadsheet_data from './meta_spreadsheet.json';
 import { Card } from '../common/definitions';
@@ -35,6 +36,7 @@ export const sets = {
   "BR": "Beyond Rare",
   "LR": "League Rewards",
   "PROMO": "Promotional",
+  "DATA": "Datamined",
   "PROTO": "Prototype"
 };
 

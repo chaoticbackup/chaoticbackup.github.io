@@ -15,7 +15,7 @@ export function LocationIcon(props) {
   
 export function RarityIcon(props) {
   const { set, rarity, size } = props;
-  return (<>{set !== 'PE1' && 
+  return (<>{!["PE1", "DATA", "PROTO"].includes(set) && 
     <img className={size || "icon16"} style={{ verticalAlign: 'middle' }} src={("/public/img/icons/set/" + set + "/" + rarity + ".png").toLowerCase()} />
   }</>);
 }
